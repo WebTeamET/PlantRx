@@ -83,15 +83,15 @@ body {
     --white: #ffffff;
     --black: #000000;
     --primary: #111827;
-    --secondary: #f59e0b;
-    --light-orange: #eab308;
+    --secondary: #c2a058;
+    --light-orange: #c2a058;
     --black37: #374151;
-    --cream: #fffeef;
+    --cream: #ffeede;
     --font: #4b5563;
-    --green: #059669;
+    --green: #385127;
     --green-500: #0BD294;
     --green-100: #C4FEDB;
-    --dark-yellow: #ca8a04;
+    --dark-yellow: #c2a058;
 
   --font-body: "Inter", sans-serif;
   --font-heading: "Inter", sans-serif;
@@ -1274,7 +1274,7 @@ iframe[src*="tawk.to"] {
 
   h2,
   .h2 {
-    @apply text-xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight;
+    @apply text-xl sm:text-4xl lg:text-5xl lg:leading-[55px] font-bold tracking-tight;
   }
 
   h3,
@@ -1285,7 +1285,7 @@ iframe[src*="tawk.to"] {
   }
 
   p {
-    @apply text-xs sm:text-sm lg:text-lg leading-relaxed;
+    @apply lg:text-2xl lg:leading-7 md:text-xl sm:text-lg leading-5 text-base;
   }
 
   a {

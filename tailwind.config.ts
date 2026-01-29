@@ -46,9 +46,9 @@ module.exports = {
         input: 'var(--input)',
         ring: 'var(--ring)',
 
-        gold: '#d4af37',
+        gold: '#c2a058',
         cream: '#fffeef',
-        green: '#059669',
+        green: '#385127',
         'light-orange': '#eab308',
       },
 

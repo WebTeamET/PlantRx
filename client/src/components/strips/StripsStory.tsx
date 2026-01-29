@@ -83,7 +83,7 @@ export default function StripStory() {
       >
         <div className="text-image sticky top-0 lg:h-screen w-full lg:overflow-hidden">
           <div className="container flex flex-col items-center justify-center h-full ">
-            <h2 className="font-body font-bold text-center max-w-xl md:max-w-[740px] xl:text-8xl xl:leading-25 lg:text-6xl lg:leading-23 md:text-5xl md:leading-17 mb-2">
+            <h2 className="text-center xl:text-8xl xl:leading-25 lg:text-6xl lg:leading-23 md:text-5xl md:leading-17 mb-2">
               {!isTablet ? (
                 <span className="flex flex-wrap justify-center"> 
                   {characters.map((item, i) => (
@@ -98,7 +98,7 @@ export default function StripStory() {
                 </span>
               ) : (
                 <span>
-                  <span className="text-green">Focus</span> That Fits{" "}
+                  <span className="text-green">Focus</span> That Fits
                   <span className="text-secondary">Your Day</span>
                 </span>
               )} 
@@ -208,7 +208,7 @@ function StoryImage({
 
   return (
     <motion.div
-      className="text-with-img absolute w-full max-w-[30%] z-20 pointer-events-none max-lg:!transform-none max-[1025px]:!top-[unset] max-[1025px]:bottom-[150px] max-sm:bottom-[100px] max-lg:!opacity-100"
+      className="text-with-img absolute w-full max-w-[25%] z-20 pointer-events-none max-lg:!transform-none max-[1025px]:!top-[unset] max-[1025px]:bottom-[150px] max-sm:bottom-[100px] max-lg:!opacity-100"
       style={{
         y,
         x,

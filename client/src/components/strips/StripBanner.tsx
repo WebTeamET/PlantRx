@@ -37,7 +37,7 @@ export default function StripBanner() {
                                                 className='relative font-bold font-heading'>
                                                 Mushroom <br className="max-lg:hidden"></br><span className="green">focus</span> <span className="orange">Strips</span>
                                             </motion.h1>
-                                            <RevealText tag="p" className="mt-5 !font-heading lg:*:!text-2xl lg:*:!leading-7 md:*:!text-xl sm:*:!text-lg *:!leading-5 *:!text-base">
+                                            <RevealText tag="p" className="mt-5 !font-heading ">
                                                 Enhance focus and everyday wellness with chocolate-flavored Mushroom Focus Strips powered by functional mushrooms.
                                             </RevealText>
                                         </Parallax>
