@@ -11,8 +11,8 @@ function SupplementBanner() {
     const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
     const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-    const mouseMoveX = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
-    const mouseMoveY = useTransform(smoothMouseY, [-0.5, 0.5], [-10, 10]);
+    const mouseMoveX = useTransform(smoothMouseX, [-0.5, 0.5], [-20, 20]);
+    const mouseMoveY = useTransform(smoothMouseY, [-0.5, 0.5], [-20, 20]);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const { clientX, clientY } = e;
@@ -55,12 +55,12 @@ function SupplementBanner() {
         <div 
             ref={containerRef} 
             onMouseMove={handleMouseMove} 
-            className="relative h-[300vh] bg-white"
+            className="relative h-[300vh]"
         >
         <div className="absolute w-full h-full z-9 block" style={{background: "radial-gradient(circle, rgba(194, 160, 88, 0.35) 0%, transparent 70%)"}} />
                 <div className="sticky top-[10%] flex items-center justify-center gap-[100px] flex-col h-screen overflow-hidden">
                     <div className="content-wrapper relative z-40 pt-20 flex flex-col items-center text-center">
-                        <h1 className='text-green xl:leading-[100px]'> 
+                        <h1 className='text-green xl:leading-[100px] font-recoletta'> 
                             <span className='text-gold'>
                                 <RevealText tag='span'>Dietary</RevealText>
                             </span>

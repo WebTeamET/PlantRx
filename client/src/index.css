@@ -2,6 +2,13 @@
 /* System fonts (Inter, Playfair Display) render with font-display: swap by default */
 
 /* Global Smooth Scrolling - Outside layers for proper cascade priority */
+@font-face {
+  font-family: "Recoletta";
+  src: url("/fonts/LttRecoleta-Bold.woff"); 
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -1411,7 +1418,49 @@ iframe[src*="tawk.to"] {
     @apply text-light-orange;
   }
 
-
+  /* .supplement-benefit-card .benefit-card-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.55, 0, .1, 1);
+    will-change: transform;
+  }
+  .supplement-benefit-card:hover .benefit-card-inner {
+    transform: rotateY(180deg);
+  }
+  .benefit-card-inner .card-inner-back {
+    transform: rotateY(180deg);
+  } */
+  .supplement-benefit-card.benefit-card-1 {
+    transform: translate(45%, -8%)rotate(30deg);
+  }
+  .supplement-benefit-card.benefit-card-2 {
+    transform: translate(11%, -7%)rotate(14deg);
+  }
+  .supplement-benefit-card.benefit-card-4 {
+    transform: translate(11%, 7%)rotate(-14deg);
+  }
+  .wt-dot__circle {
+    box-shadow: 0 0 0 8px #385127 inset,0 1px 5px #00000026;
+  }
+  .wt-dot__ringing {
+    animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite;
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite;
+  }
+  @keyframes pulsate {
+    0% {
+        -webkit-transform: scale(.1, .1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0;
+    }
+  }
   @keyframes header-slide-down {
     from { transform: translateY(-100%); }
     to { transform: translateY(0); }
@@ -1431,3 +1480,5 @@ iframe[src*="tawk.to"] {
 .animate-pulse-slow {
   animation: pulse-slow 8s ease-in-out infinite;
 }
+
+

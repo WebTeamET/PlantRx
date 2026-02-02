@@ -56,6 +56,7 @@ module.exports = {
         body: ['Inter', 'sans-serif'],
         heading: ['Playfair Display', 'serif'],
         playfair: ['Playfair Display', 'serif'],
+        recoletta: ['Recoletta', 'serif']
       },
 
 
