@@ -731,21 +731,26 @@ app.use(
   })
 );
 
-(async () => {
+/** Exported for Vercel serverless: returns the fully configured Express app. */
+export async function getApp(): Promise<{
+  app: express.Express;
+  server: import("http").Server;
+}> {
   const server = await registerRoutes(app);
 
   // Initialize currency rates system (non-blocking to ensure server starts)
-  (async () => {
-    try {
-      const { initializeCurrencyRates, scheduleCurrencyUpdates } = await import(
-        "./currency-service"
-      );
-      await initializeCurrencyRates();
-      scheduleCurrencyUpdates();
-    } catch (error) {
-      console.error("❌ Failed to initialize currency system:", error);
-    }
-  })().catch((err) => console.log("Currency system will retry later"));
+  if (!process.env.VERCEL) {
+    (async () => {
+      try {
+        const { initializeCurrencyRates, scheduleCurrencyUpdates } =
+          await import("./currency-service");
+        await initializeCurrencyRates();
+        scheduleCurrencyUpdates();
+      } catch (error) {
+        console.error("❌ Failed to initialize currency system:", error);
+      }
+    })().catch((err) => console.log("Currency system will retry later"));
+  }
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
@@ -781,20 +786,6 @@ app.use(
       stack: err.stack,
     });
 
-    // For bots on critical paths, ALWAYS return 200 with minimal content
-    //     if (isBot && isCriticalPath) {
-    //       if (req.path === '/') {
-    //         return res.status(200).send(`<!DOCTYPE html>
-    // <html><head><title>PlantRx - Natural Health Platform</title></head>
-    // <body><h1>PlantRx</h1><p>Natural health remedies and expert guidance.</p></body></html>`);
-    //       } else if (req.path === '/robots.txt') {
-    //         return res.status(200).type('text/plain').send('User-agent: *\nAllow: /\nSitemap: https://plantrxapp.com/sitemap.xml');
-    //       } else if (req.path === '/sitemap.xml') {
-    //         return res.status(200).type('application/xml').send('<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://plantrxapp.com/</loc></url></urlset>');
-    //       } else if (req.path === '/__health') {
-    //         return res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
-    //       }
-    //     }
     if (!res.headersSent) {
       res.status(500).send("Internal Server Error");
     }
@@ -818,12 +809,15 @@ app.use(
     });
   });
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const PORT = parseInt(process.env.PORT || "5000", 10);
-  server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Listening on http://0.0.0.0:${PORT}`);
+  return { app, server };
+}
+
+// Start the server when not running on Vercel (Vercel uses api/index.ts)
+if (!process.env.VERCEL) {
+  getApp().then(({ server }) => {
+    const PORT = parseInt(process.env.PORT || "5000", 10);
+    server.listen(PORT, "0.0.0.0", () => {
+      console.log(`Listening on http://0.0.0.0:${PORT}`);
+    });
   });
-})();
+}

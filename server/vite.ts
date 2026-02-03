@@ -154,7 +154,10 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const publicPath = path.resolve(import.meta.dirname, "public");
+  // On Vercel, serverless runs from project root; static files are in dist/public
+  const publicPath = process.env.VERCEL
+    ? path.join(process.cwd(), "dist", "public")
+    : path.resolve(import.meta.dirname, "public");
 
   if (!fs.existsSync(publicPath)) {
     throw new Error(
