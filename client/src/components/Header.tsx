@@ -303,7 +303,7 @@ export default function Header() {
                 Plant<span className="text-yellow-500 dark:text-yellow-400">R</span>x
               </span>
             </div> */}
-            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[180px] xl:w-[100px] w-[100px] h-auto"></img>
+            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
           </Link>
 
           {/* Desktop Navigation - Centered */}
@@ -397,7 +397,7 @@ export default function Header() {
               ))}
               
               {/* Pricing Link */}
-              <div className="relative group">
+              {/* <div className="relative group">
                 <Link
                   href="/pricing"
                   data-testid="nav-pricing-button"
@@ -409,14 +409,14 @@ export default function Header() {
                 >
                   {t('nav.pricing', 'Pricing')}
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             {/* Theme Toggle, Text Size & Language Selector - Right Side */}
-            <div className="flex items-center space-x-2 mr-3">
+            <div className="flex items-center mr-3">
               {/* Text Size Selector */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
