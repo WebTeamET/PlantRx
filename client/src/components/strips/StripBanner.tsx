@@ -14,13 +14,9 @@ export default function StripBanner() {
         animate: { opacity: 1, x: 0, transition: { delay: 1, duration: 1.5, ease: [0.33, 1, 0.68, 1] } },
     };
 
-    const iconLoadVars = (delay: number) => ({
-        initial: { opacity: 0, filter: "blur(15px)", scale: 0.7 },
-        animate: { opacity: 1, filter: "blur(0px)", scale: 1, transition: { delay, duration: 1 } },
-    });
 
     return (
-        <section className="hero-banner-section relative">
+        <section className="hero-banner-section relative product-section">
             <div className="relative lg:h-[calc(100dvh-96px)] h-[calc(100dvh)] w-full overflow-hidden max-lg:pt-20">
                 <div className="container h-full">
                     <div className="h-full w-full flex justify-center items-start lg:items-center">
@@ -34,10 +30,10 @@ export default function StripBanner() {
                                                 initial="initial"
                                                 animate="animate"
                                                 transition={{ duration: 1.1 }}
-                                                className='relative font-bold font-heading'>
-                                                Mushroom <br className="max-lg:hidden"></br><span className="green">focus</span> <span className="orange">Strips</span>
+                                                className='relative text-black'>
+                                                Mushroom <br className="max-xl:hidden"></br><span className="green">focus</span> <span className="text-secondary">Strips</span>
                                             </motion.h1>
-                                            <RevealText tag="p" className="mt-5 !font-heading ">
+                                            <RevealText tag="p" className="mt-5">
                                                 Enhance focus and everyday wellness with chocolate-flavored Mushroom Focus Strips powered by functional mushrooms.
                                             </RevealText>
                                         </Parallax>
@@ -66,14 +62,12 @@ export default function StripBanner() {
                                             </motion.div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
     );
 }

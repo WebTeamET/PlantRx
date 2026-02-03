@@ -2,10 +2,11 @@
 /* System fonts (Inter, Playfair Display) render with font-display: swap by default */
 
 /* Global Smooth Scrolling - Outside layers for proper cascade priority */
+
 @font-face {
   font-family: "Recoletta";
-  src: url("/fonts/LttRecoleta-Bold.woff"); 
-  font-weight: 700;
+  src: url("/fonts/LttRecoleta-SemiBold.woff"); 
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
@@ -1276,7 +1277,7 @@ iframe[src*="tawk.to"] {
 
   h1,
   .h1 {
-    @apply text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[80px] leading-[96px] font-bold tracking-tight;
+    @apply text-3xl sm:text-5xl md:text-6xl xl:text-7xl 2xl:text-[80px] xl:leading-[96px] font-bold tracking-tight;
   }
  
   h2,
@@ -1290,9 +1291,21 @@ iframe[src*="tawk.to"] {
            lg:text-3xl lg:leading-[40px]
            sm:text-2xl sm:leading-[32px];
   }
-
+  .product-section h1,
+  .product-section h2,
+  .product-section h3,
+  .product-section h4,
+  .product-section h5,
+  .product-section h6 {
+    @apply font-recoletta;
+  }
+  .product-section p ,
+  .product-section button ,
+  .product-section a {
+    @apply font-plusJakarta font-normal;
+  }
   p {
-    @apply lg:text-2xl lg:leading-7 md:text-xl sm:text-lg leading-5 text-base;
+    @apply lg:text-2xl lg:leading-8 md:text-xl sm:text-lg leading-5 text-base;
   }
 
   a {

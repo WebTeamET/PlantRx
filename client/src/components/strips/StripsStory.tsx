@@ -59,8 +59,8 @@ export default function StripStory() {
       const className = isFocusChar
         ? "text-green"
         : isDayChar
-        ? "text-secondary"  
-        : "";
+          ? "text-secondary"
+          : "";
 
       return { char, start, end, className };
     });
@@ -74,18 +74,80 @@ export default function StripStory() {
       "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
     ]
   );
-
+  const floatTransition = (duration: number, delay: number) => ({
+    scale: { duration: 2.2, ease: [0.22, 1, 0.36, 1], delay },
+    opacity: { duration: 2.2, delay },
+    y: {
+      duration: duration,
+      repeat: Infinity,
+      repeatType: "mirror" as const,
+      ease: "easeInOut",
+    }
+  });
   return (
-    <section className="product-story-section relative">
+    <section className="product-story-section relative product-section">
+      <motion.div
+        initial={{
+          y: 800,      
+          scale: 0,   
+          opacity: 0   
+        }}
+        animate={{
+          y: 0,        
+          scale: 1,    
+          opacity: 1   
+        }}
+        transition={{
+          duration: 2.5,            
+          ease: [0.22, 1, 0.36, 1], 
+          delay: 0.4               
+        }}
+        style={{ originX: 1, originY: 0 }} 
+        className="absolute top-32 -right-0 z-10 pointer-events-none max-w-[300px] max-lg:hidden rotate-90"
+      >
+        <img
+          src="mushroom-group.png"
+          alt="Mushroom Group"
+          className="object-contain h-full w-full block"
+        />
+      </motion.div>
+      <motion.div
+    initial={{
+        y: 800,      
+        x: -200,     
+        scale: 0,    
+        opacity: 0   
+    }}
+    animate={{
+        y: 0,        
+        x: 0,        
+        scale: 1,    
+        opacity: 1   
+    }}
+    transition={{
+        duration: 2.5,            
+        ease: [0.22, 1, 0.36, 1], 
+        delay: 0.4               
+    }}
+    style={{ originX: 0, originY: 0 }} 
+    className="absolute -top-0 -left-0 z-10 pointer-events-none 2xl:max-w-[250px] max-w-[200px] max-lg:hidden rotate-90"
+>
+    <img
+        src="mushroom-group-2.png"
+        alt="Mushroom Group"
+        className="object-contain h-full w-full block"
+    />
+</motion.div>
       <div
         ref={sectionRef}
-        className="relative lg:h-[800vh] h-auto lg:pt-52 lg:pb-60 max-sm:pt-10 pb-40"
+        className="relative lg:h-[800vh] h-auto lg:pb-60 max-sm:pt-10 pb-40 "
       >
         <div className="text-image sticky top-0 lg:h-screen w-full lg:overflow-hidden">
+
           <div className="container flex flex-col items-center justify-center h-full ">
-            <h2 className="text-center xl:text-8xl xl:leading-25 lg:text-6xl lg:leading-23 md:text-5xl md:leading-17 mb-2">
+            <h1 className="text-center mb-2 text-black">
               {!isTablet ? (
-                <span className="flex flex-wrap justify-center"> 
+                <span className="flex flex-wrap justify-center">
                   {characters.map((item, i) => (
                     <Character
                       key={i}
@@ -93,7 +155,7 @@ export default function StripStory() {
                       className={item.className}
                       progress={scrollYProgress}
                       range={[item.start, item.end]}
-                    /> 
+                    />
                   ))}
                 </span>
               ) : (
@@ -101,8 +163,8 @@ export default function StripStory() {
                   <span className="text-green">Focus</span> That Fits
                   <span className="text-secondary">Your Day</span>
                 </span>
-              )} 
-            </h2>
+              )}
+            </h1>
 
             <div className="mt-0 lg:mt-4 text-center z-10">
               {isTablet ? (
@@ -136,35 +198,35 @@ export default function StripStory() {
   );
 }
 
-interface CharacterProps { 
+interface CharacterProps {
   char: string;
-  className?: string; 
+  className?: string;
   progress: MotionValue<number>;
   range: [number, number];
 }
 
 function Character({ char, className = "", progress, range }: CharacterProps) {
-    const blur = useTransform(progress, range, [20, 0]);
-    const opacity = useTransform(progress, range, [0, 1]);
-    const y = useTransform(progress, range, [20, 0]);
-    
-    const filter = useMotionTemplate`blur(${blur}px)`;
-  
-    return (
-      <motion.span
-        className={className}
-        style={{
-          filter: filter, 
-          opacity,
-          y,
-          display: "inline-block",
-          whiteSpace: char === " " ? "pre" : "normal",
-        }}
-      >
-        {char}
-      </motion.span>
-    );
-  }
+  const blur = useTransform(progress, range, [20, 0]);
+  const opacity = useTransform(progress, range, [0, 1]);
+  const y = useTransform(progress, range, [20, 0]);
+
+  const filter = useMotionTemplate`blur(${blur}px)`;
+
+  return (
+    <motion.span
+      className={className}
+      style={{
+        filter: filter,
+        opacity,
+        y,
+        display: "inline-block",
+        whiteSpace: char === " " ? "pre" : "normal",
+      }}
+    >
+      {char}
+    </motion.span>
+  );
+}
 
 interface StoryImageProps {
   src: string;

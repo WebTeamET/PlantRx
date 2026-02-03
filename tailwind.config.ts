@@ -47,7 +47,7 @@ module.exports = {
         ring: 'var(--ring)',
 
         gold: '#c2a058',
-        cream: '#fffeef',
+        cream: '#ffeede',
         green: '#385127',
         'light-orange': '#eab308',
       },
@@ -56,7 +56,8 @@ module.exports = {
         body: ['Inter', 'sans-serif'],
         heading: ['Playfair Display', 'serif'],
         playfair: ['Playfair Display', 'serif'],
-        recoletta: ['Recoletta', 'serif']
+        recoletta: ['Recoletta', 'serif'],
+        plusJakarta: ["Plus Jakarta Sans", 'sans-serif']
       },
 
 

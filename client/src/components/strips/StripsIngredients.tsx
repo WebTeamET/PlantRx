@@ -24,11 +24,11 @@ interface FloatItem {
 
 
 const FLOAT_ITEMS: FloatItem[] = [
-  { id: 1, src: "/float-mushrrom.png", name: "Magic Mushroom", packX: -50, packY: -30, x: -650, y: -450, rotate: 720, scale: 1, delay: 0.1 },
-  { id: 2, src: "/float-mushroom2.png", name: "Golden Shroom", packX: -100, packY: -60, x: 750, y: 50, rotate: 720, scale: 1, delay: 0.25 },
+  { id: 1, src: "/float-mushroom-2.png", name: "Mushroom", packX: -50, packY: -30, x: -650, y: -450, rotate: 720, scale: 1, delay: 0.1 },
+  { id: 2, src: "/float-mushroom-new.png", name: "Mushroom", packX: -100, packY: -60, x: 750, y: 50, rotate: 720, scale: 1, delay: 0.25 },
   { id: 3, src: "/float-chocolate1.png", name: "Dark Chocolate", packX: 20, packY: -50, x: 650, y: -450, rotate: 720, scale: 1, delay: 0.15 },
   { id: 4, src: "/float-chocolate2.png", name: "Milk Chocolate", packX: 0, packY: -40, x: -750, y: -50, rotate: 720, scale: 1, delay: 0.25 },
-  { id: 5, src: "/float-mushroom2.png", name: "Wild Shroom", packX: 60, packY: -25, x: -600, y: 400, rotate: 720, scale: 1, delay: 0.35 },
+  { id: 5, src: "/float-mushroom-new.png", name: "Mushroom", packX: 60, packY: -25, x: -600, y: 400, rotate: 720, scale: 1, delay: 0.35 },
   { id: 6, src: "/brown-strips.png", name: "Candy Strips", packX: 10, packY: 0, x: 50, y: -700, rotate: 720, scale: 1, delay: 0.3 },
   { id: 7, src: "/brown-strips.png", name: "Sweet Strips", packX: 30, packY: 60, x: 600, y: 450, rotate: 720, scale: 1, delay: 0.4 },
   { id: 8, src: "/brown-strips.png", name: "Caramel Strips", packX: -30, packY: 55, x: -150, y: 650, rotate: 720, scale: 1, delay: 0.45 },
@@ -70,7 +70,7 @@ const StripsIngredients: React.FC = () => {
   );
 
   return (
-    <section ref={containerRef} className="product-box relative md:h-[600dvh] h-[500dvh]">
+    <section ref={containerRef} className="product-box relative md:h-[600dvh] h-[500dvh] product-section">
       <div className="product-box sticky lg:pt-52 top-0 flex h-screen w-full items-center justify-center overflow-hidden">
         <div className="relative w-[300px] h-[330px] md:w-[500px] md:h-[500px]">
           <div className="absolute top-0 left-0 w-full z-0">
@@ -105,7 +105,7 @@ const StripsIngredients: React.FC = () => {
           style={{ opacity: textOpacity, scale: textScale, filter: textBlur }}
           className="absolute bottom-14 text-center pointer-events-none z-30"
         >
-          <h2>UNBOX YOUR FOCUS</h2>
+          <h2 className="text-black">UNBOX YOUR FOCUS</h2>
         </motion.div>
       </div>
     </section>

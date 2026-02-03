@@ -291,8 +291,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group ml-1 sm:ml-2 sm:-ml-4 lg:-ml-6">
-            <div className="relative">
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group ml-1 sm:ml-2 sm:-ml-4">
+            {/* <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg sm:rounded-xl lg:rounded-2xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               <div className="relative w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-lg sm:rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
                 <Leaf className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-white" />
@@ -302,19 +302,20 @@ export default function Header() {
               <span className="text-xl sm:text-2xl lg:text-3xl font-bold luxury-heading text-gray-900 dark:text-white group-hover:scale-105 transition-transform duration-300">
                 Plant<span className="text-yellow-500 dark:text-yellow-400">R</span>x
               </span>
-            </div>
+            </div> */}
+            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[180px] xl:w-[100px] w-[100px] h-auto"></img>
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center justify-center flex-1">
-            <div className={`flex items-center ${language === 'ar' || language === 'he' ? 'space-x-reverse space-x-8' : 'space-x-8'}`}>
+          <div className="hidden lg:flex items-center justify-center">
+            <div className={`flex items-center ${language === 'ar' || language === 'he' ? 'space-x-reverse xl:space-x-5 space-x-2' : 'xl:space-x-5 space-x-2'}`}>
               {navigationItems.map((item, idx) => (
                 <div key={idx} className="relative group">
                   {item.href ? (
                     <Link
                       href={item.href}
                       data-testid={`nav-link-${item.href.replace(/\//g, '')}`}
-                      className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 ${
+                      className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 font-plusJakarta ${
                         location === item.href || (item.subItems && location.startsWith(item.href))
                           ? "text-yellow-600 dark:text-yellow-400 font-semibold"
                           : "text-gray-700 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-400"
@@ -400,7 +401,7 @@ export default function Header() {
                 <Link
                   href="/pricing"
                   data-testid="nav-pricing-button"
-                  className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap ${
+                  className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap font-plusJakarta ${
                     location === '/pricing'
                       ? "text-yellow-600 dark:text-yellow-400 font-semibold"
                       : "text-gray-700 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-400"
@@ -547,7 +548,7 @@ export default function Header() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="hidden sm:flex text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="hidden sm:flex text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-plusJakarta"
                   onClick={() => setLocation('/login')}
                   data-testid="header-sign-in-btn"
                 >
@@ -555,7 +556,7 @@ export default function Header() {
                   {t('ui.sign_in', 'Sign In')}
                 </Button>
                 <Button 
-                  className="luxury-button-primary hidden sm:flex text-sm"
+                  className="luxury-button-primary hidden sm:flex text-sm font-plusJakarta"
                   onClick={() => setLocation('/signup')}
                   data-testid="header-sign-up-btn"
                 >

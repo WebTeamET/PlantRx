@@ -55,18 +55,18 @@ function SupplementBanner() {
         <div 
             ref={containerRef} 
             onMouseMove={handleMouseMove} 
-            className="relative h-[300vh]"
+            className="relative h-[300vh] product-section"
         >
         <div className="absolute w-full h-full z-9 block" style={{background: "radial-gradient(circle, rgba(194, 160, 88, 0.35) 0%, transparent 70%)"}} />
                 <div className="sticky top-[10%] flex items-center justify-center gap-[100px] flex-col h-screen overflow-hidden">
                     <div className="content-wrapper relative z-40 pt-20 flex flex-col items-center text-center">
-                        <h1 className='text-green xl:leading-[100px] font-recoletta'> 
+                        <h1 className='text-green xl:leading-[100px]'> 
                             <span className='text-gold'>
                                 <RevealText tag='span'>Dietary</RevealText>
                             </span>
                             <RevealText tag='span'>Supplement</RevealText>
                         </h1>
-                        <RevealText tag='h3'>Fat Burner with MCT</RevealText>
+                        <RevealText tag='p'>Fat Burner with MCT</RevealText>
                     </div>
                     <motion.div 
                     initial={{ y: 800, opacity: 0 }} 
@@ -80,8 +80,6 @@ function SupplementBanner() {
                             }}
                             className="absolute top-[30%] left-[44%] w-[215px] h-auto object-contain z-50 pointer-events-none"
                         />
-
-                        
                         <motion.img
                             src="/sup-bottle-open.png"
                             className="object-contain drop-shadow-2xl max-w-[400px] block h-auto mx-auto relative z-20"

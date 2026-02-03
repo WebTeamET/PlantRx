@@ -14,7 +14,7 @@ function CollapsibleSection({ title, children, defaultOpen = false }: { title: s
   const [isOpen, setIsOpen] = useState(defaultOpen);
   
   return (
-    <div className="border-b border-gray-200 dark:border-gray-800 md:border-0">
+    <div className="border-b border-gray-200 dark:border-gray-800 md:border-0 ">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -81,7 +81,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 relative z-[9999]">
+      <footer className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 relative z-[9999] product-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Mobile Newsletter Section - Shown first on mobile */}
@@ -182,12 +182,15 @@ export default function Footer() {
           {/* Desktop Layout - Hidden on mobile */}
           <div className="hidden md:block py-12">
             {/* Logo */}
-            <div className="flex items-center space-x-3 mb-10">
+            {/* <div className="flex items-center space-x-3 mb-10">
               <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
                 <Leaf className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold text-gray-900 dark:text-white">PlantRx</span>
-            </div>
+            </div> */}
+            <Link href="/" className="flex items-center mb-10">
+            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
+          </Link>
 
             {/* Main Grid: 5 columns */}
             <div className="grid grid-cols-5 gap-8 mb-10">
@@ -273,7 +276,7 @@ export default function Footer() {
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   Help us grow by sharing your thoughts. Your feedback shapes the future of PlantRx.
                 </p>
-                <p className="text-sm font-medium text-amber-600 dark:text-amber-400 mb-4">
+                <p className="text-sm font-medium text-gold mb-4">
                   Get 15% off any purchase as a thank you!
                 </p>
                 <a 
@@ -281,7 +284,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => { e.preventDefault(); window.open('https://tally.so/r/xXjYaG', '_blank', 'noopener,noreferrer'); }}
-                  className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-md transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-gold hover:bg-amber-600 text-white font-medium rounded-md transition-colors cursor-pointer"
                   data-testid="button-feedback"
                 >
                   Share Feedback

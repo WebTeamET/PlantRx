@@ -44,7 +44,7 @@ export default function Strips() {
       >
         <a
           href="#"
-          className="luxury-button-primary flex items-center justify-center gap-3 font-playfair font-bold tracking-[2px] bg-linear-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-black h-10 sm:h-11 px-6 sm:px-8 rounded-md shadow-lg hover:opacity-90 transition">
+          className="luxury-button-primary flex items-center justify-center gap-3 font-bold tracking-[1px] bg-linear-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-black h-10 sm:h-11 px-6 sm:px-8 rounded-md shadow-lg hover:opacity-90 transition font-plusJakarta">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -65,7 +65,7 @@ export default function Strips() {
           <span>Add To Cart</span>
         </a>
       </motion.div>
-        <div className="relative z-10 bg-cream">
+        <div className="relative z-10 ">
             <SvgLayout /> 
             <StripBanner />
             <StripStory />

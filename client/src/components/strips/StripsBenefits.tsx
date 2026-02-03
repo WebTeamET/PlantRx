@@ -6,7 +6,7 @@ import { containerBlurVars, itemBlurLeftVars, itemBlurRightVars } from '@/animat
 function StripsBenefits() {
     
     return (
-        <div className='product-benefits relative overflow-hidden'>
+        <div className='product-benefits relative overflow-hidden product-section max-lg:pt-44 max-md:pt-10'>
             <div className='container'>
                 <div   
                     className='relative z-30'>
@@ -34,7 +34,7 @@ function StripsBenefits() {
                                     </svg>
 
                                 </div>
-                                <h2 className='font-semibold lg:max-w-xl'>Cognitive from <span className='green'>Lion’s Mane</span></h2>
+                                <h2 className='lg:max-w-xl text-black'>Cognitive from <span className='green'>Lion’s Mane</span></h2>
                                 <div className='content pt-[20px]'>
                                     <p>Hericium erinaceus (Lion’s Mane) has been used to support focus and cognitive wellness in everyday life.</p>
                                 </div>
@@ -61,7 +61,7 @@ function StripsBenefits() {
 
 
                             </div>
-                            <h2 className='font-semibold lg:max-w-xl'>Stamina-Promoting <span className='green'>Cordyceps</span></h2>
+                            <h2 className='lg:max-w-xl text-black'>Stamina-Promoting <span className='green'>Cordyceps</span></h2>
                             <div className='content pt-[20px]'>
                                 <p>Cordyceps sinensis is valued for its ability to help support normal energy metabolism and stamina.</p>
                             </div>
@@ -87,7 +87,7 @@ function StripsBenefits() {
 
 
                             </div>
-                            <h2 className='font-semibold lg:max-w-xl'>Maitake & Shiitake’s <span className='green'>Wellness Boost</span></h2>
+                            <h2 className='lg:max-w-xl text-black'>Maitake & Shiitake’s <span className='green'>Wellness Boost</span></h2>
                             <div className='content pt-[20px]'>
                                 <p>Grifola frondosa (Maitake) and Lentinus edodes (Shiitake) contribute natural compounds that help promote immune balance and antioxidant support.</p>
                             </div>
@@ -118,7 +118,7 @@ function StripsBenefits() {
 
                             </div>
 
-                            <h2 className='font-semibold lg:max-w-sm'>Chocolate Flavor, <span className='green'>Zero Fuss</span></h2>
+                            <h2 className='lg:max-w-sm'>Chocolate Flavor, <span className='green'>Zero Fuss</span></h2>
                             <div className='content pt-[20px]'>
                                 <p>These quick-dissolving strips deliver traditional mushroom benefits with no capsules needed — and in a rich, chocolatey flavor.</p>
                             </div>
