@@ -1,7 +1,10 @@
 // Firebase Admin SDK for server-side authentication
 import admin from 'firebase-admin';
 import { existsSync } from 'fs';
-import { glob } from 'glob';
+import pkg from 'glob';
+
+// `glob` is a CommonJS module – get the named export from the default import
+const { glob } = pkg as { glob: typeof import('glob')['glob'] };
 
 let adminApp: admin.app.App | null = null;
 
