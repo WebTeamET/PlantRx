@@ -104,11 +104,20 @@ app.use((req, res, next) => {
 
 // Apply security middleware first
 // app.use(httpsRedirect);
+// In production we normally force HTTPS, but skip this when accessing by raw IP
+// or localhost so the app can run on a bare VPS without a domain.
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] !== "https") {
-      return res.redirect(301, `https://${req.headers.host}${req.url}`);
+    const host = req.headers.host || "";
+    const isIpOrLocal =
+      host.startsWith("localhost") ||
+      host.startsWith("127.0.0.1") ||
+      /^[0-9.]+(:\d+)?$/.test(host);
+
+    if (!isIpOrLocal && req.headers["x-forwarded-proto"] !== "https") {
+      return res.redirect(301, `https://${host}${req.url}`);
     }
+
     next();
   });
 }
