@@ -35,9 +35,8 @@ const FLOAT_ITEMS: FloatItem[] = [
 ];
 
 
-
 const StripsIngredients: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile(1024);
 
   const { scrollYProgress } = useScroll({

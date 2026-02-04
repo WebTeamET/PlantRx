@@ -48,6 +48,8 @@ export default function StripStory() {
     offset: ["start start", "end end"],
   });
 
+  
+
   const characters = useMemo(() => {
     return title.split("").map((char, i) => {
       const start = Math.random() * 0.15;
@@ -88,22 +90,22 @@ export default function StripStory() {
     <section className="product-story-section relative product-section">
       <motion.div
         initial={{
-          y: 800,      
-          scale: 0,   
-          opacity: 0   
+          y: 800,
+          scale: 0,
+          opacity: 0
         }}
         animate={{
-          y: 0,        
-          scale: 1,    
-          opacity: 1   
+          y: 0,
+          scale: 1,
+          opacity: 1
         }}
         transition={{
-          duration: 2.5,            
-          ease: [0.22, 1, 0.36, 1], 
-          delay: 0.4               
+          duration: 2.5,
+          ease: [0.22, 1, 0.36, 1],
+          delay: 0.4
         }}
-        style={{ originX: 1, originY: 0 }} 
-        className="absolute top-32 -right-0 z-10 pointer-events-none max-w-[300px] max-lg:hidden rotate-90"
+        style={{ originX: 1, originY: 0 }}
+        className="absolute top-32 -right-0 z-10 pointer-events-none xl:max-w-[300px] max-w-[180px] max-lg:hidden rotate-90"
       >
         <img
           src="mushroom-group.png"
@@ -112,38 +114,37 @@ export default function StripStory() {
         />
       </motion.div>
       <motion.div
-    initial={{
-        y: 800,      
-        x: -200,     
-        scale: 0,    
-        opacity: 0   
-    }}
-    animate={{
-        y: 0,        
-        x: 0,        
-        scale: 1,    
-        opacity: 1   
-    }}
-    transition={{
-        duration: 2.5,            
-        ease: [0.22, 1, 0.36, 1], 
-        delay: 0.4               
-    }}
-    style={{ originX: 0, originY: 0 }} 
-    className="absolute -top-0 -left-0 z-10 pointer-events-none 2xl:max-w-[250px] max-w-[200px] max-lg:hidden rotate-90"
->
-    <img
-        src="mushroom-group-2.png"
-        alt="Mushroom Group"
-        className="object-contain h-full w-full block"
-    />
-</motion.div>
+        initial={{
+          y: 800,
+          x: -200,
+          scale: 0,
+          opacity: 0
+        }}
+        animate={{
+          y: 0,
+          x: 0,
+          scale: 1,
+          opacity: 1
+        }}
+        transition={{
+          duration: 2.5,
+          ease: [0.22, 1, 0.36, 1],
+          delay: 0.4
+        }}
+        style={{ originX: 0, originY: 0 }}
+        className="absolute 2xl:top-0 top-5 -left-0 z-10 pointer-events-none 2xl:max-w-[250px] max-w-[150px] max-lg:hidden rotate-90"
+      >
+        <img
+          src="mushroom-group-2.png"
+          alt="Mushroom Group"
+          className="object-contain h-full w-full block"
+        />
+      </motion.div>
       <div
         ref={sectionRef}
         className="relative lg:h-[800vh] h-auto lg:pb-60 max-sm:pt-10 pb-40 "
       >
         <div className="text-image sticky top-0 lg:h-screen w-full lg:overflow-hidden">
-
           <div className="container flex flex-col items-center justify-center h-full ">
             <h1 className="text-center mb-2 text-black">
               {!isTablet ? (
