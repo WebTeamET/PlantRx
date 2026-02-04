@@ -17,7 +17,6 @@ export default function Strips() {
   const handleClick = () => {
     setLoading(true);
 
-    // reset after animation finishes
     setTimeout(() => {
       setLoading(false);
     }, 3500);
@@ -68,11 +67,11 @@ export default function Strips() {
           </div>
           <div className="add-to-cart-btn shrink-0">
             <button 
-            className={`button relative overflow-hidden bg-green border-0 max-md:text-xs max-md:leading-[15px] text-white md:min-w-[150px] max-md:px-3 max-md:py-1 max-md:min-w-full max-md:min-h-[34px] ${loading ? "loading" : ""}`}
+            className={`button relative overflow-hidden bg-green border-0 max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-3 max-md:py-1 max-md:min-w-full max-md:min-h-[34px] ${loading ? "loading" : ""}`}
             onClick={handleClick}
             disabled={loading}
             >
-              <span className="text-sm leading-[26px] font-bold block relative max-md:text-xs max-md:leading-[15px] text-white">Add to cart</span>
+              <span className="text-base leading-[26px] font-semibold block relative max-md:text-xs max-md:leading-[15px] text-white tracking-[0.3px]">Add to cart</span>
               <div className="cart">
                 <svg viewBox="0 0 36 26">
                   <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>

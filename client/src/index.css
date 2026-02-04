@@ -1505,7 +1505,8 @@ iframe[src*="tawk.to"] {
   transition: transform .4s cubic-bezier(.36, 1.01, .32, 1.27);
 } 
 
-.add-to-cart-btn .button:active {
+.add-to-cart-btn .button:active ,
+.add-to-cart-btn .button:hover {
   --scale: .95;
 } 
 

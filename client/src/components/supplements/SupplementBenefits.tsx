@@ -29,27 +29,95 @@ function SupplementBenefits() {
         offset: ["start start", "end end"]
     });
 
-    // Existing Bottle 1 Transforms
     const bottleRotate = useTransform(scrollYProgress, [0, 0.8], [20, 1]);
-    const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.05]);
-    const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", "28vh"]);
+    const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.02]);
+    const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", "30vh"]);
     const bottleX = useTransform(scrollYProgress, [0, 0.8], ["0%", "60%"]);
 
-    // Existing UI Opacity
     const elementsOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-    // NEW: Side Bottles Animation
     const sideBottlesY = useTransform(scrollYProgress, [0.7, 0.9], ["100vh", "40vh"]);
 
+    const floatingIngredients = [
+        { 
+            id: 1, 
+            src: '/float-mushroom-new.png', 
+            alt: 'Cookie 1', 
+            position: { bottom: '8%', left: '20%' },
+            delay: 0.1,
+            rotate: -15,
+        },
+        { 
+            id: 2, 
+            src: '/float-mushroom-new.png', 
+            alt: 'Cookie 2', 
+            position: { bottom: '20%', left: '0' },
+            delay: 0.3,
+            rotate: 20,
+            blur: true
+        },
+        { 
+            id: 3, 
+            src: '/float-mushroom-2.png', 
+            alt: 'Strawberry 1', 
+            position: { bottom: '20%', right: '24%' },
+            delay: 0.2,
+            rotate: 10
+        },
+        { 
+            id: 4, 
+            src: '/float-mushroom-2.png', 
+            alt: 'Strawberry 2', 
+            position: { bottom: '10%', right: '2%' },
+            delay: 0.4,
+            rotate: -10,
+            blur: true 
+        },
+    ];
     return (
         <div ref={containerRef} className="benefits-section relative product-section">
             <div className="container mx-auto">
+            {floatingIngredients.map((item) => (
+                                <motion.div
+                                    key={item.id}
+                                    style={{ 
+                                        position: 'absolute',
+                                        ...item.position,
+                                        zIndex: 1
+                                    }}
+                                    initial={{ y: 300, opacity: 0, rotate: item.rotate }}
+                                    whileInView={{ y: 0, opacity: 1 }}
+                                    viewport={{ once: true, margin: "-10px" }}
+                                    transition={{ 
+                                        duration: 1.2, 
+                                        delay: item.delay, 
+                                        ease: [0.22, 1, 0.36, 1] 
+                                    }}
+                                >
+                                    <motion.div
+                                        animate={{ 
+                                            y: [0, -20, 0],
+                                            rotate: [item.rotate, item.rotate + 5, item.rotate]
+                                        }}
+                                        transition={{ 
+                                            duration: 5, 
+                                            repeat: Infinity, 
+                                            ease: "easeInOut",
+                                            delay: item.delay + 1 
+                                        }}
+                                        className={`w-28 md:w-36 ${item.blur ? 'blur-[2px]' : ''}`}
+                                    >
+                                        <img 
+                                            src={item.src} 
+                                            alt={item.alt} 
+                                            className="w-full h-auto drop-shadow-xl select-none pointer-events-none" 
+                                        />
+                                    </motion.div>
+                                </motion.div>
+                            ))}
                 <div className="flex flex-col md:flex-row gap-24 items-start">
-
                     <div className="md:w-1/2 sticky top-0 h-screen flex items-center z-20">
-                        <div className="image-wrapper w-full relative">
-                            
-                            {/* Rotating Circle */}
+                        <div className="image-wrapper w-full relative">             
                             <motion.div
                                 style={{ opacity: elementsOpacity }}
                                 className="absolute -top-[110px] -right-[40px] z-0 size-[350px] lg:size-[400px] pointer-events-none"
@@ -65,8 +133,6 @@ function SupplementBenefits() {
                                     </text>
                                 </svg>
                             </motion.div>
-
-                            {/* Hotspot Left */}
                             <motion.div 
                                 style={{ opacity: elementsOpacity }}
                                 className="absolute left-[30%] top-1/4 z-[12]"
@@ -87,7 +153,6 @@ function SupplementBenefits() {
                                 </AnimatePresence>
                             </motion.div>
 
-                            {/* Hotspot Right */}
                             <motion.div 
                                 style={{ opacity: elementsOpacity }}
                                 className="absolute right-[32%] top-[70%] z-[12]"
@@ -111,15 +176,14 @@ function SupplementBenefits() {
                             <motion.div
                                 style={{ 
                                     y: sideBottlesY,
-                                    x: "10%", 
+                                    x: "24%", 
                                     scale: 0.85,
                                     willChange: "transform"
                                 }}
                                 className="max-w-[600px] absolute inset-0 mx-auto aspect-square z-5"
                             >
-                                <img src='/supplement-front-view.png' alt='supplement-left' className='w-full h-full object-contain blur-[1px]' />
+                                <img src='/supplement-front-view.png' alt='supplement-left' className='w-full h-full object-contain ' />
                             </motion.div>
-
                             <motion.div
                                 style={{ 
                                     rotate: bottleRotate,
@@ -128,7 +192,7 @@ function SupplementBenefits() {
                                     scale: bottleScale,
                                     willChange: "transform"
                                 }}
-                                className="max-w-[600px] mx-auto aspect-square relative z-10"
+                                className="max-w-xl mx-auto aspect-square relative z-10"
                             >
                                 <img src='/supplement-front-view.png' alt='supplement' className='w-full h-full object-contain' />
                             </motion.div>
@@ -136,13 +200,13 @@ function SupplementBenefits() {
                             <motion.div
                                 style={{ 
                                     y: sideBottlesY,
-                                    x: "110%", 
+                                    x: "96%", 
                                     scale: 0.85,
                                     willChange: "transform"
                                 }}
                                 className="max-w-[600px] absolute inset-0 mx-auto aspect-square z-5"
                             >
-                                <img src='/supplement-front-view.png' alt='supplement-right' className='w-full h-full object-contain blur-[1px]' />
+                                <img src='/supplement-front-view.png' alt='supplement-right' className='w-full h-full object-contain ' />
                             </motion.div>
 
                         </div>
@@ -210,12 +274,13 @@ function SupplementBenefits() {
                                 </div>
                             </div>
                         </motion.div>
-                        <div className='h-screen'></div>
+                        <div className='h-[1200px] benefits-bottom-section relative w-full overflow-hidden mt-20'>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
 export default SupplementBenefits;

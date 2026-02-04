@@ -16,7 +16,7 @@ function StripsBenefits() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ amount: 0.4 }}
-                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-[140px]'>
+                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-20'>
                         <motion.div 
                         variants={itemBlurLeftVars as any}
                         className='pro-bx-content lg:max-w-[50%] xl:max-w-[40%] max-w-full w-full'>
@@ -93,7 +93,7 @@ function StripsBenefits() {
                             </div>
                         </motion.div>
                         <div className='outline-svg'>
-                            <img src="/benefits-3.svg" alt="product" className='mx-auto max-w-[70%] lg:ml-auto lg:mr-0' width={600} height={600} />
+                            <img src="/strip-benefit-3.png" alt="product" className='mx-auto max-w-[80%] lg:ml-auto lg:mr-0' width={600} height={600} />
                         </div>
                     </motion.div>
 
