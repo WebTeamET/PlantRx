@@ -17,22 +17,22 @@ interface ImageData {
 
 const imageData: ImageData[] = [
   {
-    src: "/image-story-1.png",
+    src: "/mushroom-strip-story_1.png",
     range: [0.35, 0.45, 0.55, 0.65],
     side: "left",
     align: "3%",
     targetTop: "25%",
   },
   {
-    src: "/image-story-2.png",
+    src: "/mushroom-strip-story2.png", 
     range: [0.5, 0.6, 0.7, 0.8],
     side: "right",
     align: "3%",
     targetTop: "30%",
   },
   {
-    src: "/image-story-3.png",
-    range: [0.65, 0.75, 0.85, 0.95],
+    src: "/mushroom-strip-story_3.png",
+    range: [0.65, 0.75, 0.85, 0.95], 
     side: "left",
     align: "3%",
     targetTop: "35%",
@@ -108,7 +108,7 @@ export default function StripStory() {
         className="absolute top-32 -right-0 z-10 pointer-events-none xl:max-w-[300px] max-w-[180px] max-lg:hidden rotate-90"
       >
         <img
-          src="mushroom-group.png"
+          src="/mushroom-group.png"
           alt="Mushroom Group"
           className="object-contain h-full w-full block"
         />
@@ -135,7 +135,7 @@ export default function StripStory() {
         className="absolute 2xl:top-0 top-5 -left-0 z-10 pointer-events-none 2xl:max-w-[250px] max-w-[150px] max-lg:hidden rotate-90"
       >
         <img
-          src="mushroom-group-2.png"
+          src="/mushroom-group-2.png"
           alt="Mushroom Group"
           className="object-contain h-full w-full block"
         />

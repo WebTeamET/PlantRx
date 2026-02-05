@@ -114,7 +114,7 @@ function SupplementBenefits() {
                                         />
                                     </motion.div>
                                 </motion.div>
-                            ))}
+            ))}
                 <div className="flex flex-col md:flex-row gap-24 items-start">
                     <div className="md:w-1/2 sticky top-0 h-screen flex items-center z-20">
                         <div className="image-wrapper w-full relative">             

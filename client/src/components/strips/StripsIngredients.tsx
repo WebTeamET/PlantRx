@@ -24,7 +24,7 @@ interface FloatItem {
 
 
 const FLOAT_ITEMS: FloatItem[] = [
-  { id: 1, src: "/float-mushroom-2.png", name: "Mushroom", packX: -50, packY: -30, x: -650, y: -450, rotate: 720, scale: 1, delay: 0.1 },
+  { id: 1, src: "/float-mushroom-2.png", name: "Mushroom", packX: -50, packY: -42, x: -650, y: -450, rotate: 720, scale: 1, delay: 0.1 },
   { id: 2, src: "/float-mushroom-new.png", name: "Mushroom", packX: -100, packY: -60, x: 750, y: 50, rotate: 720, scale: 1, delay: 0.25 },
   { id: 3, src: "/float-chocolate1.png", name: "Dark Chocolate", packX: 20, packY: -50, x: 650, y: -450, rotate: 720, scale: 1, delay: 0.15 },
   { id: 4, src: "/float-chocolate2.png", name: "Milk Chocolate", packX: 0, packY: -40, x: -750, y: -50, rotate: 720, scale: 1, delay: 0.25 },
@@ -93,7 +93,7 @@ const StripsIngredients: React.FC = () => {
             className="absolute top-0 left-0 w-full pointer-events-none"
           >
             <img
-              src="/Product-lid.png"
+              src="/mushroom-strip-box-lid.png"
               alt="Lid"
               className="w-full h-auto block drop-shadow-2xl"
             />

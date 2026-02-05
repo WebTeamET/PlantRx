@@ -1277,7 +1277,7 @@ iframe[src*="tawk.to"] {
 
   h1,
   .h1 {
-    @apply text-3xl sm:text-5xl md:text-6xl xl:text-7xl 2xl:text-[80px] xl:leading-[96px] font-bold tracking-tight;
+    @apply text-3xl sm:text-5xl md:text-6xl xl:text-7xl 2xl:text-[80px] xl:leading-[98px] font-bold tracking-tight;
   }
  
   h2,
@@ -1315,7 +1315,9 @@ iframe[src*="tawk.to"] {
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-
+  .parent-link-wrapper {
+    @apply after:absolute after:top-0 after:left-0 after:w-full after:h-full after:block after:z-[99];
+  }
   .navigation-panel .nav-item {
     @apply lg:text-lg text-base leading-6 font-medium text-primary;
   }

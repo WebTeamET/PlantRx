@@ -39,30 +39,29 @@ export default function StripBanner() {
                                         </Parallax>
                                     </div>
                                 </div>
-
                                 <div className="lg:w-7/12 w-full relative flex justify-center items-center">
                                     <div className="relative z-50">
-                                        <div className="relative w-[300px] h-[300px] max-[575px]:w-[270px] xl:w-[450px] xl:h-[450px]">
-                                            <div className="img-bg">
+                                        <div className="relative ">
+                                            <div className="img-bg w-[300px] h-[300px] max-[575px]:w-[270px] xl:w-[450px] xl:h-[450px]">
                                                 <img
-                                                    src="/public/product-empty-new.webp"
+                                                    src="/mushroom-strip_label_box.png"
                                                     alt="Box"
                                                     width={450}
                                                     height={450}
-                                                    className="drop-shadow-2xl"
+                                                    className="drop-shadow-2xl h-full w-full object-contain"
                                                 />
                                             </div>
                                             <motion.div
                                                 variants={imgFrontLoadVars as any}
                                                 initial="initial"
                                                 animate="animate"
-                                                className="img-front absolute top-0 left-0"
+                                                className="img-front absolute xl:top-[17px] xl:-left-2 top-[11px] -left-[5px] max-[575px]:top-1.5 max-[575px]:-left-1 w-[302px] h-[302px] max-[575px]:w-[270px] max-[575px]:h-[308px] xl:w-[455px] xl:h-[450px]"
                                             >
-                                                <img src="/public/product-fill-new.webp" alt="Label" width={450} height={450} />
+                                                <img src="/mushroom-strip_label_layer-new.png" alt="Label" className="h-full w-full object-contain" />
                                             </motion.div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>

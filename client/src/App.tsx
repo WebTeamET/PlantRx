@@ -99,7 +99,8 @@ const Settings = lazy(() => import("@/pages/Settings"));
 const AuthDiagnostic = lazy(() => import("@/pages/AuthDiagnostic"));
 const OrderDetails = lazy(() => import("@/pages/OrderDetails"));
 const Header = lazy(() => import("@/components/Header"));
-const Strips = lazy(() => import("@/pages/Strips"));
+const StripCategory = lazy(() => import("@/pages/Strips"));
+const MushroomFocusStrips = lazy(() => import("@/pages/strips/MushroomFocusStrips"));
 
 // High-Value SEO Content Pages
 const HowNaturalRemediesHeal = lazy(
@@ -225,7 +226,11 @@ function Router() {
             <Route path="/remedies/articles" component={RemedyArticlesHub} />
             <Route
               path="/strips"
-              component={Strips}
+              component={StripCategory}
+            />
+            <Route
+              path="/strips/mushroom-focus-strips"
+              component={MushroomFocusStrips}
             />
             <Route
               path="/essential-oils"
