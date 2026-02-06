@@ -51,18 +51,37 @@ export default function RevealText({
               whileInView: 'visible',
               viewport: { amount: 0.4 },
               className,
-              style: { transformStyle: 'preserve-3d' },
+              style: { 
+                transformStyle: 'preserve-3d',
+                transform: 'translateZ(0)', // Force GPU
+                willChange: 'transform'
+              },
             }
-          : { className, style: { transformStyle: 'preserve-3d' } })}
+          : { 
+              className, 
+              style: { 
+                transformStyle: 'preserve-3d',
+                transform: 'translateZ(0)'
+              } 
+            })}
       >
         {words.map((word, i) => (
           <span
             key={`${word}-${i}`}
             className="inline-block overflow-hidden"
+            style={{ 
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
           >
             <motion.span
               variants={wordRisePerspective}
-              className="inline-block backface-hidden"
+              className="inline-block"
+              style={{
+                backfaceVisibility: 'hidden',
+                transform: 'translateZ(0)',
+                willChange: 'transform, opacity'
+              }}
             >
               {word}
               <span>&nbsp;</span>

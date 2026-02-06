@@ -5,19 +5,39 @@ import RevealText from "@/utils/RevealText";
 
 export default function StripBanner() {
     const wordVars = {
-        initial: { opacity: 0, filter: "blur(10px)", y: 15 },
-        animate: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.8 } },
-    };
+        initial: { 
+          opacity: 0, 
+          filter: "blur(10px)", 
+          transform: "translate3d(0, 15px, 0)" 
+        },
+        animate: { 
+          opacity: 1, 
+          filter: "blur(0px)", 
+          transform: "translate3d(0, 0, 0)", 
+          transition: { duration: 0.8 } 
+        },
+      };
 
     const imgFrontLoadVars = {
-        initial: { opacity: 0, x: 253 },
-        animate: { opacity: 1, x: 0, transition: { delay: 1, duration: 1.5, ease: [0.33, 1, 0.68, 1] } },
-    };
+        initial: { 
+          opacity: 0, 
+          transform: 'translate3d(253px, 0, 0)' 
+        },
+        animate: { 
+          opacity: 1, 
+          transform: 'translate3d(0, 0, 0)',
+          transition: { 
+            delay: 1, 
+            duration: 1.5, 
+            ease: [0.33, 1, 0.68, 1]
+          } 
+        },
+      };
 
 
     return (
         <section className="hero-banner-section relative product-section">
-            <div className="relative lg:h-[calc(100dvh-96px)] h-[calc(100dvh)] w-full overflow-hidden max-lg:pt-20">
+            <div className="relative lg:h-[calc(100dvh-96px)] h-[calc(100dvh)] w-full overflow-hidden max-lg:pt-[55px]">
                 <div className="container h-full">
                     <div className="h-full w-full flex justify-center items-start lg:items-center">
                         <div className="w-full relative z-10">
@@ -31,7 +51,7 @@ export default function StripBanner() {
                                                 animate="animate"
                                                 transition={{ duration: 1.1 }}
                                                 className='relative text-black'>
-                                                Mushroom <br className="max-xl:hidden"></br><span className="green">focus</span> <span className="text-secondary">Strips</span>
+                                                Mushroom <br className="max-xl:hidden"></br><span className="green">Focus </span><span className="text-secondary"> Strips</span>
                                             </motion.h1>
                                             <RevealText tag="p" className="mt-5">
                                                 Enhance focus and everyday wellness with chocolate-flavored Mushroom Focus Strips powered by functional mushrooms.

@@ -105,7 +105,7 @@ export default function StripStory() {
           delay: 0.4
         }}
         style={{ originX: 1, originY: 0 }}
-        className="absolute top-32 -right-0 z-10 pointer-events-none xl:max-w-[300px] max-w-[180px] max-lg:hidden rotate-90"
+        className="absolute top-[20rem] -right-0 z-10 pointer-events-none xl:max-w-[300px] max-w-[180px] max-lg:hidden rotate-90"
       >
         <img
           src="/mushroom-group.png"
@@ -162,7 +162,7 @@ export default function StripStory() {
               ) : (
                 <span>
                   <span className="text-green">Focus</span> That Fits
-                  <span className="text-secondary">Your Day</span>
+                  <span className="text-secondary block">Your Day</span>
                 </span>
               )}
             </h1>

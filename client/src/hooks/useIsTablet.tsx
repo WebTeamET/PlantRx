@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export function useIsTablet(min = 768, max = 1440) {
+export function useIsTablet(breakpoint = 1024) {
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    const check = () => {
-      const w = window.innerWidth;
-      setIsTablet(w >= min && w < max);
-    };
+    const checkScreen = () => setIsTablet(window.innerWidth < breakpoint);
+    checkScreen();
 
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [min, max]);
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, [breakpoint]);
 
   return isTablet;
 }

@@ -5,10 +5,8 @@ module.exports = {
     './client/index.html',
     './client/src/**/*.{js,jsx,ts,tsx}',
   ],
-
   theme: {
     extend: {
-
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -16,7 +14,6 @@ module.exports = {
         xl: '12px',
         '4xl': '2rem',
       },
-
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
@@ -53,9 +50,9 @@ module.exports = {
       },
 
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        heading: ['Playfair Display', 'serif'],
-        playfair: ['Playfair Display', 'serif'],
+        body: ["Plus Jakarta Sans", 'sans-serif'],
+        heading: ['Recoletta', 'serif'],
+        playfair: ["Plus Jakarta Sans", 'sans-serif'],
         recoletta: ['Recoletta', 'serif'],
         plusJakarta: ["Plus Jakarta Sans", 'sans-serif']
       },

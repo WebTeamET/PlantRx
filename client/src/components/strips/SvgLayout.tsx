@@ -1,8 +1,6 @@
 import React from "react";
 
 const SvgLayout = () => {
-
-
     return (
         <div className="">
             <div className="fixed inset-0 bg-transparent opacity-50 max-lg:hidden">

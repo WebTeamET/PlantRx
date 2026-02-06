@@ -56,20 +56,9 @@ const StripsIngredients: React.FC = () => {
   const lidRotate = useTransform(smoothProgress, [0, 0.25], [0, -20]);
   const lidOpacity = useTransform(smoothProgress, [0.3, 0.4], [1, 0]);
 
-  const textOpacity = useTransform(
-    smoothProgress,
-    [0.2, 0.3, 0.8, 0.9],
-    [0, 1, 1, 0]
-  );
-  const textScale = useTransform(smoothProgress, [0.2, 0.3], [0.9, 1]);
-  const textBlur = useTransform(
-    smoothProgress,
-    [0.2, 0.3, 0.8, 0.9],
-    ["blur(12px)", "blur(0px)", "blur(0px)", "blur(12px)"]
-  );
 
   return (
-    <section ref={containerRef} className="product-box relative md:h-[600dvh] h-[500dvh] product-section">
+    <section ref={containerRef} className="product-box relative md:h-[600dvh] h-[400dvh] product-section">
       <div className="product-box sticky lg:pt-52 top-0 flex h-screen w-full items-center justify-center overflow-hidden">
         <div className="relative w-[300px] h-[330px] md:w-[500px] md:h-[500px]">
           <div className="absolute top-0 left-0 w-full z-0">
@@ -77,6 +66,10 @@ const StripsIngredients: React.FC = () => {
               src="/Product-fill-box.png"
               alt="Box"
               className="w-full h-auto block"
+              style={{ 
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
+              }}
             />
           </div>
 
@@ -89,7 +82,14 @@ const StripsIngredients: React.FC = () => {
           ))}
 
           <motion.div
-            style={{ y: lidY, rotate: lidRotate, opacity: lidOpacity, zIndex: 20 }}
+            style={{ 
+              y: lidY, 
+              rotate: lidRotate, 
+              opacity: lidOpacity, 
+              zIndex: 20,
+              backfaceVisibility: 'hidden',
+              transform: 'translateZ(0)'
+            }}
             className="absolute top-0 left-0 w-full pointer-events-none"
           >
             <img
@@ -99,13 +99,6 @@ const StripsIngredients: React.FC = () => {
             />
           </motion.div>
         </div>
-
-        <motion.div
-          style={{ opacity: textOpacity, scale: textScale, filter: textBlur }}
-          className="absolute bottom-14 text-center pointer-events-none z-30"
-        >
-          <h2 className="text-black">UNBOX YOUR FOCUS</h2>
-        </motion.div>
       </div>
     </section>
   );
@@ -158,16 +151,26 @@ const FloatingElement: React.FC<FloatingElementProps> = ({
 
   return (
     <motion.div
-      style={{ x, y, opacity: containerOpacity, zIndex: 10,
+      style={{ 
+        x, 
+        y, 
+        opacity: containerOpacity, 
+        zIndex: 10,
         translateX: "-50%", 
-        translateY: "-50%" 
-       }}
+        translateY: "-50%",
+        backfaceVisibility: 'hidden',
+        transform: 'translateZ(0)'
+      }}
       className="box-img absolute left-1/2 top-1/2 pointer-events-none flex flex-col items-center gap-1 sm:gap-2 w-max max-md:!top-[50%]"
     >
       <motion.img
         src={item.src}
         alt={item.name}
-        style={{ scale: imgScale, rotate }}
+        style={{ 
+          scale: imgScale, 
+          rotate,
+          backfaceVisibility: 'hidden'
+        }}
         className={`object-contain drop-shadow-2xl origin-center
         w-[120px] h-[120px]
         md:w-52 md:h-52
@@ -180,7 +183,11 @@ const FloatingElement: React.FC<FloatingElementProps> = ({
       />
 
       <motion.p
-        style={{ opacity: textOpacity, scale: textScale }}
+        style={{ 
+          opacity: textOpacity, 
+          scale: textScale,
+          backfaceVisibility: 'hidden'
+        }}
         className="text-[10px]! xs:!text-xs sm:!text-sm font-bold text-white/95 drop-shadow-2xl text-center px-1.5 xs:px-2 sm:px-3 md:px-4 py-0.5 xs:py-1 sm:py-1.5 md:py-2 bg-gradient-to-r from-green/80 via-green/90 to-green/80 backdrop-blur-md rounded-full shadow-2xl whitespace-nowrap min-w-[60px] xs:min-w-[70px] sm:min-w-[85px] md:min-w-[100px] tracking-wide leading-tight"
       >
         {item.name}

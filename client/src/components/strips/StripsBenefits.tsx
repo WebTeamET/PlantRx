@@ -50,7 +50,7 @@ function StripsBenefits() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ amount: 0.4 }}
-                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-[140px] flex-row-reverse'>
+                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-20 flex-row-reverse'>
                         <motion.div 
                         variants={itemBlurRightVars as any}
                         className='pro-bx-content lg:max-w-[50%] xl:max-w-[40%] max-w-full w-full'>
@@ -76,7 +76,7 @@ function StripsBenefits() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ amount: 0.4 }}
-                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-[140px]'>
+                    className='flex max-lg:flex-col h-auto items-center lg:justify-between justify-start lg:gap-5 gap-12 max-lg:mb-25 mb-20'>
                         <motion.div 
                         variants={itemBlurLeftVars as any}
                         className='pro-bx-content lg:max-w-[50%] xl:max-w-[40%] max-w-full w-full'>

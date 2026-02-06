@@ -40,7 +40,6 @@ export default function MushroomFocusStrips() {
   }, []);
   return (
     <>
-      <CustomCursor />
       <motion.div
         className="fixed md:bottom-10 bottom-5 z-[999] flex justify-center items-center w-full product-section px-5"
         animate={{
@@ -56,7 +55,7 @@ export default function MushroomFocusStrips() {
         <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white md:px-5 px-3 md:py-2 py-3">
           <div className="flex items-center md:gap-5 gap-2">
             <div className="image-wrapper md:size-[100px] size-[70px] shrink-0"> 
-              <img src="/Mushroom-focus-strips.png" alt="prodyct-image" className="w-full h-full object-contain"></img>
+              <img src="/Mushroom-focus-strip.png" alt="prodyct-image" className="w-full h-full object-contain"></img>
             </div>
             <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black">
               <h4 className="md:text-xl text-base max-[370px]:text-sm">Mushroom Focus Strip</h4>
