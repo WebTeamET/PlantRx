@@ -29,13 +29,13 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
         mouseY.set(yPct);
     };
     return (
-        <div ref={containerRef} onMouseMove={handleMouseMove} className="collection-banner relative product-section xl:h-[160vh] h-[150vh]">
+        <div ref={containerRef} onMouseMove={handleMouseMove} className="collection-banner relative product-section xl:h-[160dvh] lg:h-[150dvh] sm:h-[calc(100dvh-64px)] h-[calc(100dvh-56px)]">
             <motion.div
                 variants={containerVariants as any}
                 initial="hidden"
                 animate="visible"
-                className=" flex items-center justify-start text-center flex-col h-full px-4 sm:px-6 lg:px-8 md:pb-[100px] pb-[55px]">
-                <div className='sticky xl:top-[20%] sm:top-[40%] top-[20%] -translate-1/2 xl:h-[52vh] sm:h-[60vh] h-[50vh] w-full'>
+                className=" flex items-center md:justify-start justify-center text-center flex-col h-full px-4 sm:px-6 lg:px-8 md:pb-[100px] pb-[55px]">
+                <div className='md:sticky xl:top-[20%] sm:top-[40%] top-[20%] -translate-1/2 xl:h-[52vh] sm:h-[60vh] lg:h-[50vh] w-full'>
                     {!isMobile &&
                         data.floatingElements.map(
                             (item: { id: React.Key | null | undefined; position: MotionStyle | undefined; rotate: string | number | CustomValueType | null | undefined; delay: number; blur: any; src: string | undefined; alt: string | undefined; }) => (
@@ -111,10 +111,10 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
                         </motion.p>
                     </div>
                 </div>
-                <div className="image-wrapper max-md:pt-16">
+                <div className="image-wrapper max-md:pt-24">
                     <div className="flex justify-start">
                         {data.productImages.map((image: string) => (
-                            <div className="flex items-center justify-center first:-mt-52 last:-mt-60">
+                            <div className="flex items-center justify-center md:first:-mt-52 first:-mt-24 md:last:-mt-60 last:-mt-24">
                                 <motion.div
                                     variants={itemScaleUpVariants}
                                     style={{

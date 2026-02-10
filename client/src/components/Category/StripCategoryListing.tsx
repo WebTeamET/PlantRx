@@ -7,7 +7,7 @@ import ProductGrid from './ProductGrid';
 function StripCategoryListing() {
   return (
     <>
-    <SvgLayout />
+      <SvgLayout />
       <CollectionBanner data={stripsProductData.collection} />
       <ProductGrid data={stripsProductData.products} />
     </>

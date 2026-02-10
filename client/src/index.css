@@ -1275,7 +1275,7 @@ iframe[src*="tawk.to"] {
 
   h1,
   .h1 {
-    @apply text-4xl md:text-5xl xl:text-7xl 2xl:text-[80px] xl:leading-[98px] tracking-tight;
+    @apply text-4xl leading-[46px] md:text-5xl md:leading-[60px] xl:text-7xl 2xl:text-[80px] xl:leading-[98px] tracking-tight;
   }
  
   h2,
@@ -1301,7 +1301,7 @@ iframe[src*="tawk.to"] {
     @apply font-plusJakarta font-normal;
   }
   p {
-    @apply lg:text-2xl lg:leading-8 md:text-xl sm:text-lg leading-5 text-base;
+    @apply xl:text-2xl xl:leading-8 md:text-xl sm:text-lg leading-5 text-base;
   }
 
   a {
@@ -1492,6 +1492,7 @@ iframe[src*="tawk.to"] {
   animation: pulse-slow 8s ease-in-out infinite;
 }
 
+@media only screen and (min-width: 768px) {
 
 .add-to-cart-btn .button {
   --cart: #fff;
@@ -1622,4 +1623,6 @@ iframe[src*="tawk.to"] {
   100% {
     transform: translateX(140px) rotate(-18deg);
   }
+}
+  
 }
