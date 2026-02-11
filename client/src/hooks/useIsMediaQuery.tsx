@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(false);
+export function useIsMediaQuery(breakpoint = 1024) {
+  const [isMedia, setIsMedia] = useState(false);
 
   useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < breakpoint);
+    const checkScreen = () => setIsMedia(window.innerWidth < breakpoint);
     checkScreen();
 
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, [breakpoint]);
 
-  return isMobile;
+  return isMedia;
 }

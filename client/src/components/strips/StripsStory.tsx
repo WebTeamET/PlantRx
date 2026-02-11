@@ -1,8 +1,8 @@
 import RevealText from "@/utils/RevealText";
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from "framer-motion";
 import { useRef, useMemo } from "react";
-import { useIsTablet } from "@/hooks/useIsTablet";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
+
 
 const title = "Focus That Fits Your Day";
 const lines = ["Clean energy and clarity in a simple daily strip."];
@@ -41,7 +41,7 @@ const imageData: ImageData[] = [
 
 export default function StripStory() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const isTablet = useIsMobile(1024);
+  const isTablet = useIsMediaQuery(1024);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,

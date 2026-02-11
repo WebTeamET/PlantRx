@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard2';
 import { motion } from 'framer-motion';
-import { useIsMobile } from '@/hooks/useIsMobile';
 import { slideUpVariants, containerVariants } from '@/animation/framerMotionVariants';
 
 interface ProductGridProps {

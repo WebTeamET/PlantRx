@@ -1,6 +1,6 @@
 import { CustomValueType, motion, MotionStyle, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import React, { useRef } from 'react';
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 import { itemScaleUpVariants, slideUpVariants, containerVariants } from '@/animation/framerMotionVariants';
 
 
@@ -9,7 +9,7 @@ interface CollectionBannerProps {
 }
 
 const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
-    const isMobile = useIsMobile(1024);
+    const isMobile = useIsMediaQuery(1024);
     const containerRef = useRef(null);
 
     const mouseX = useMotionValue(0);

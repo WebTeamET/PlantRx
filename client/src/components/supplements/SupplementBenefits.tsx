@@ -2,11 +2,12 @@ import { containerVariants, slideUpVariants } from '@/animation/framerMotionVari
 import RevealText from '@/utils/RevealText';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import React, { useRef, useState } from 'react';
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 
 function SupplementBenefits() {
-    const isTablet = useIsMobile(1025);
-    const isMobile = useIsMobile(768);
+    const isSmallDesktop = useIsMediaQuery(1536);
+    const isTablet = useIsMediaQuery(1280);
+    const isMobile = useIsMediaQuery(768);
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeLeft, setActiveLeft] = useState(false);
     const [activeRight, setActiveRight] = useState(false);
@@ -33,10 +34,10 @@ function SupplementBenefits() {
         offset: ["start start", "end end"]
     });
 
-    const bottleRotate = useTransform(scrollYProgress, [0, 0.8], [20, 1]);
+    const bottleRotate = useTransform(scrollYProgress, [0, 0.8], [20, 0]);
     const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.02]);
-    const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", isMobile ? "27vh" : "35vh"]);
-    const bottleX = useTransform(scrollYProgress, [0, 0.8], ["0%", "59%"]);
+    const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", isMobile ? "27vh" : "33vh"]);
+    const bottleX = useTransform(scrollYProgress, [0, 0.8], ["0%", isSmallDesktop ? "70%" : "59%"]);
 
     const elementsOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
@@ -103,7 +104,7 @@ function SupplementBenefits() {
 
     return (
         <div ref={containerRef} className="benefits-section relative product-section">
-            <div className="container mx-auto max-[1024px]:mt-24">
+            <div className="container mx-auto max-[1024px]:mt-24 max-md:mt-10">
                 {floatingIngredients.map((item) => (
                     <motion.div
                         key={item.id}
@@ -142,16 +143,35 @@ function SupplementBenefits() {
                         </motion.div>
                     </motion.div>
                 ))}
-                <div className="inline-block">
-                    <div className="xl:sticky top-0 xl:h-dvh max-lg:mb-10 flex xl:items-center items-start z-20 float-left">
-                        <div className="image-wrapper w-full relative max-md:overflow-hidden">
+                <div className="inline-block max-md:flex max-md:flex-col">
+                    <div className="xl:sticky top-0 xl:h-dvh max-lg:mb-10 flex xl:items-center items-start z-20 float-left justify-center">
+                        <div className="image-wrapper w-full max-md:w-auto relative max-md:overflow-hidden max-md:pt-10">
                             <motion.div
-                                style={{ opacity: isTablet ? 1 : elementsOpacity }}
-                                className="absolute -top-[110px] -right-[40px] z-0 size-[350px] lg:size-[400px] pointer-events-none"
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                style={{
+                                    opacity: isTablet ? 1 : elementsOpacity,
+                                    backfaceVisibility: 'hidden',
+                                    transformOrigin: 'center center'
+                                }}
+                                className="absolute lg:-top-[110px] md:-top-[90px] -top-[10px] lg:-right-[40px] -right-5 z-0 size-[220px] md:size-[300px] lg:size-[400px] pointer-events-none"
+                                animate={{
+                                    rotate: 360,
+
+                                }}
+                                transition={{
+                                    duration: 15,
+                                    repeat: Infinity,
+                                    ease: "linear",
+                                    repeatType: "loop"
+                                }}
                             >
-                                <svg viewBox="0 0 300 300" className="w-full h-full overflow-visible">
+                                <svg
+                                    viewBox="0 0 300 300"
+                                    className="w-full h-full overflow-visible"
+                                    style={{
+                                        transform: 'translateZ(0)',
+                                        backfaceVisibility: 'hidden'
+                                    }}
+                                >
                                     <defs>
                                         <path id="circlePath" d="M 150, 150 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
                                     </defs>
@@ -162,7 +182,7 @@ function SupplementBenefits() {
                             </motion.div>
                             <motion.div
                                 style={{ opacity: isTablet ? 1 : elementsOpacity }}
-                                className="absolute left-[30%] top-1/4 z-[12]"
+                                className="absolute left-[30%] top-1/4 z-[12] max-md:hidden"
                             >
                                 <button onClick={handleLeftClick} className='relative size-9 group'>
                                     <div className="wt-dot">
@@ -182,7 +202,7 @@ function SupplementBenefits() {
 
                             <motion.div
                                 style={{ opacity: isTablet ? 1 : elementsOpacity }}
-                                className="absolute right-[32%] top-[70%] z-[12]"
+                                className="absolute right-[32%] top-[70%] z-[12] max-md:hidden"
                             >
                                 <button onClick={handleRightClick} className="relative size-9">
                                     <div className="wt-dot">
@@ -194,7 +214,7 @@ function SupplementBenefits() {
                                     {activeRight && (
                                         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="absolute left-12 top-0 p-4 w-[200px] bg-green rounded-xl shadow-xl *:text-white ">
                                             <h3 className="text-lg">Product Amount:</h3>
-                                            <p className="text-base">90 capsules</p>
+                                            <p className="text-base">60 capsules</p>
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -203,14 +223,14 @@ function SupplementBenefits() {
                                 <motion.div
                                     style={{
                                         y: sideBottlesY,
-                                        x: "24%",
+                                        x: isSmallDesktop ? "33%" : "24%",
                                         scale: 0.85,
                                         willChange: "transform"
                                     }}
                                     transition={{ duration: 1.8, repeat: Infinity, ease: "linear" }}
                                     className="max-w-[600px] absolute inset-0 mx-auto aspect-square z-5"
                                 >
-                                    <img src='/supplement-front-view.png' alt='supplement-left' className='w-full h-full object-contain ' />
+                                    <img src='/mushroom-complex-10x-supplement-new.png' alt='supplement-left' className='w-full h-full object-contain ' />
                                 </motion.div>
                             )}
                             {!isTablet ? (
@@ -224,23 +244,23 @@ function SupplementBenefits() {
                                     }}
                                     className="2xl:max-w-xl xl:max-w-[32rem] lg:max-w-md max-w-sm mx-auto aspect-square relative z-10"
                                 >
-                                    <img src='/supplement-front-view.png' alt='supplement' className='w-full h-full object-contain' />
+                                    <img src='/mushroom-complex-10x-supplement-new.png' alt='supplement' className='w-full h-full object-contain' />
                                 </motion.div>
                             ) :
                                 <motion.div
                                     style={{
                                         rotate: '20deg'
                                     }}
-                                    className="xl:max-w-xl lg:max-w-md max-w-sm mx-auto aspect-square relative z-10"
+                                    className="xl:max-w-xl lg:max-w-md max-w-[22rem] mx-auto aspect-square relative z-10"
                                 >
-                                    <img src='/supplement-front-view.png' alt='supplement' className='w-full h-full object-contain' />
+                                    <img src='/mushroom-complex-10x-supplement-new.png' alt='supplement' className='w-full h-full object-contain' />
                                 </motion.div>
                             }
                             {!isTablet && (
                                 <motion.div
                                     style={{
                                         y: sideBottlesY,
-                                        x: "95%",
+                                        x: isSmallDesktop ? "106%" : "95%",
                                         scale: 0.85,
                                         willChange: "transform"
                                     }}
@@ -248,26 +268,35 @@ function SupplementBenefits() {
                                     transition={{ duration: 1.8, repeat: Infinity, ease: "linear" }}
                                     className="max-w-[600px] absolute inset-0 mx-auto aspect-square z-5"
                                 >
-                                    <img src='/supplement-front-view.png' alt='supplement-right' className='w-full h-full object-contain ' />
+                                    <img src='/mushroom-complex-10x-supplement-new.png' alt='supplement-right' className='w-full h-full object-contain' />
                                 </motion.div>
                             )}
                         </div>
                     </div>
-                    <div className="float-right xl:pl-16 lg:pl-5 xl:pt-[20vh]">
+                    <div className="float-right xl:pl-16 lg:pl-5 xl:pt-[20vh] max-xl:md:w-1/2">
                         <motion.div
                             variants={containerVariants as any}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ amount: 0.2, once: true }}
-                            className='2xl:max-w-xl xl:max-w-[40rem] lg:max-w-md md:max-w-xs *:text-black'
+                            className='2xl:max-w-xl xl:max-w-[40rem] *:text-black'
                         >
                             <motion.h2
                                 variants={slideUpVariants as any}
-                                className="xl:mb-6 mb-4"><span className='text-gold'>Fat Burner </span>with <span className='text-green'>MCT</span></motion.h2>
+                                className="xl:mb-6 mb-4"><span className='text-gold'>Mushroom </span>Complex <span className='text-green'>10 X</span></motion.h2>
                             <motion.p
                                 variants={slideUpVariants as any}
-                                className="xl:mb-10 mb-5">
-                                Fat Burner with MCT is designed to support healthy weight loss through vitamins and other active components.
+                                className="xl:mb-10 mb-4">
+                                This mushroom 10 X complex combines the top most valuable and sought-after medicinal mushrooms all in one easy-to-swallow capsule.                            </motion.p>
+                            <motion.p
+                                variants={slideUpVariants as any}
+                                className="hidden max-md:block mb-3">
+                                <strong>Product Amount:</strong> 60 capsules
+                            </motion.p>
+                            <motion.p
+                                variants={slideUpVariants as any}
+                                className="hidden max-md:block mb-3">
+                                <strong>Gross Weight:</strong> 0.2lb (90.7g)
                             </motion.p>
 
                             <div className="">
@@ -276,7 +305,7 @@ function SupplementBenefits() {
                                     className="border-b border-green">
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'ingredients' ? null : 'ingredients')}
-                                        className="w-full py-5 flex justify-between items-center xl:text-2xl text-xl !font-medium"
+                                        className="w-full md:py-5 py-3 flex justify-between items-center xl:text-2xl text-xl !font-medium"
                                     >
                                         Ingredients
                                         <span className={`transition-transform duration-300 ${openAccordion === 'ingredients' ? 'rotate-45' : ''}`}>+</span>
@@ -296,31 +325,56 @@ function SupplementBenefits() {
                                         )}
                                     </AnimatePresence>
                                 </motion.div>
-
                                 <motion.div
                                     variants={slideUpVariants as any}
-                                    className="border-b border-green">
+                                    className="border-b border-green"
+                                >
                                     <button
                                         onClick={() => setOpenAccordion(openAccordion === 'usage' ? null : 'usage')}
-                                        className="w-full py-5 flex justify-between items-center xl:text-2xl text-xl !font-medium"
+                                        className="w-full md:py-5 py-3 flex justify-between items-center xl:text-2xl text-xl !font-medium"
                                     >
                                         How to Use
-                                        <span className={`transition-transform duration-300 ${openAccordion === 'usage' ? 'rotate-45' : ''}`}>+</span>
+                                        <span
+                                            className={`transition-transform duration-300 ${openAccordion === 'usage' ? 'rotate-45' : ''}`}
+                                            style={{ backfaceVisibility: 'hidden' }}
+                                        >
+                                            +
+                                        </span>
                                     </button>
-                                    <AnimatePresence>
+                                    <AnimatePresence initial={false}>
                                         {openAccordion === 'usage' && (
                                             <motion.div
                                                 initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: 'auto', opacity: 1, transform: "translate3d(0, 0, 0)" }}
-                                                exit={{ height: 0, opacity: 0, transform: "translate3d(0, 0, 0)" }}
+                                                animate={{
+                                                    height: 'auto',
+                                                    opacity: 1,
+                                                    transition: {
+                                                        height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
+                                                        opacity: { duration: 0.25, delay: 0.1 }
+                                                    }
+                                                }}
+                                                exit={{
+                                                    height: 0,
+                                                    opacity: 0,
+                                                    transition: {
+                                                        height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
+                                                        opacity: { duration: 0.2 }
+                                                    }
+                                                }}
+                                                style={{
+                                                    backfaceVisibility: 'hidden',
+                                                    transform: 'translateZ(0)'
+                                                }}
                                                 className="overflow-hidden"
                                             >
-                                                <p className="pb-6 text-black text-base">
-                                                    Take 4 capsules daily with meals or as directed. For best results, take 2 capsules before breakfast and dinner with water, alongside a balanced diet and exercise.
-                                                </p>
+                                                <div style={{ backfaceVisibility: 'hidden' }}>
+                                                    <p className="pb-6 text-black text-base">
+                                                        Take 4 capsules daily with meals or as directed. For best results, take 2 capsules before breakfast and dinner with water, alongside a balanced diet and exercise.
+                                                    </p>
+                                                </div>
                                             </motion.div>
                                         )}
-                                    </AnimatePresence>
+                                    </AnimatePresence> 
                                 </motion.div>
                             </div>
                         </motion.div>
@@ -333,7 +387,7 @@ function SupplementBenefits() {
                         className='xl:py-32 pb-20 pt-32 xl:h-dvh benefits-bottom-section relative z-[99] w-full overflow-hidden'>
                         <motion.h2
                             variants={slideUpVariants as any}
-                            className='text-center'>Benefits of Fat Burner with MCT</motion.h2>
+                            className='text-center'><span className='text-gold'>Benefits</span> of Mushroom Complex 10 X</motion.h2>
                         <div className="flex items-stretch justify-between gap-3 overflow-visible mt-10 flex-wrap max-xl:max-w-[40rem] max-xl:mx-auto max-md:flex-col">
                             {benefitsData.map((benefit, index) => (
                                 <div key={index} className="bg-white custom-transition border border-green rounded-full px-[14px] py-2 flex flex-1 max-xl:flex-[calc(50%-12px)] max-md:flex-1 justify-center relative after:absolute after:inset-0 after:block after:w-full after:h-full after:bg-green after:rounded-full after:z-[1] after:transition-all after:scale-0 hover:after:scale-[1] group after:duration-300 shadow-md">

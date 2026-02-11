@@ -1,12 +1,12 @@
 import RevealText from '@/utils/RevealText';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import React, { useRef } from 'react'
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 import { containerVariants, slideUpVariants } from '@/animation/framerMotionVariants';
 
 function SupplementBanner() {
     const containerRef = useRef(null);
-    const isMobile = useIsMobile(768);
+    const isMobile = useIsMediaQuery(768);
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -78,7 +78,7 @@ function SupplementBanner() {
             className="relative md:h-[310vh] product-section"
         >
             <div className="absolute w-full h-full z-9 block" style={{ background: "radial-gradient(circle, rgba(194, 160, 88, 0.35) 0%, transparent 70%)" }} />
-            <div className="sticky top-[12%] flex items-center xl:justify-start justify-center md:gap-[100px] gap-5 flex-col md:h-screen sm:h-[calc(100dvh-64px)] h-[calc(100dvh-56px)] overflow-hidden md:pb-20">
+            <div className="sticky top-[12%] flex items-center xl:justify-start justify-center md:gap-[100px] gap-5 flex-col md:h-[110dvh] sm:h-[calc(100dvh-64px)] h-[calc(100dvh-56px)] overflow-hidden md:pb-20">
                 <motion.div 
                 variants={containerVariants as any}
                 initial="hidden"
@@ -87,13 +87,14 @@ function SupplementBanner() {
                 className="content-wrapper relative z-40 xl:pt-20 md:pt-0 flex flex-col items-center text-center container">
                     <motion.h1 
                     variants={slideUpVariants as any}
-                    className='text-green xl:leading-[100px] mb-5'>
+                    className='text-green xl:leading-[100px] md:mb-5 mb-3'>
                         <span className='text-gold'>Dietary </span>
                         <span>Supplement</span>
                     </motion.h1>
                     <motion.p
+                    className='!font-medium'
                     variants={slideUpVariants as any}
-                    >Fat Burner with MCT</motion.p>
+                    >Mushroom Complex 10 X</motion.p>
                 </motion.div>
                 <motion.div
                     initial={{ y: 800, opacity: 0 }}
@@ -105,22 +106,20 @@ function SupplementBanner() {
                         style={{
                             y: yLid, x: xLid, rotate: rotateZ, rotateX: rotateX
                         }}
-                        className="absolute md:top-[30%] md:left-[44%] md:w-[215px] w-[160px] top-[42%] left-[43%] h-auto object-contain z-50 pointer-events-none max-md:!-translate-y-[174px] max-md:!-rotate-[360deg]"
+                        className="absolute md:top-[31%] md:left-[44%] md:w-[215px] w-[160px] top-[43%] left-[43%] h-auto object-contain z-50 pointer-events-none max-md:!-translate-y-[174px] max-md:!-rotate-[360deg]"
                     />
                     <motion.img
-                        src="/sup-bottle-open.png"
-                        className="object-contain drop-shadow-2xl md:max-w-[400px] max-w-[300px] block h-auto mx-auto relative z-40"
+                        src="/mushroom-complex-x-sup-open.png"
+                        className="object-contain drop-shadow-2xl md:max-w-[420px] max-w-[300px] block h-auto mx-auto relative z-40"
                     />
                 </motion.div>
                 <div className="flex justify-center items-center">
                     {supplements.map((sup, index) => {
                         const imageNumber = (index % 8) + 1;
                         const popRange = [sup.delay, sup.delay + 0.08];
-
                         const scale = useTransform(scrollYProgress, popRange, [isMobile ? sup.scale : 0, sup.scale]);
                         const opacity = useTransform(scrollYProgress, popRange, [0, 1]);
                         const drift = useTransform(scrollYProgress, [sup.delay, 1], [0, -60]);
-
                         return (
                             <motion.img
                                 key={index}

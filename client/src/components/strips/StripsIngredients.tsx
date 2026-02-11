@@ -6,7 +6,7 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 
 
 interface FloatItem {
@@ -37,7 +37,7 @@ const FLOAT_ITEMS: FloatItem[] = [
 
 const StripsIngredients: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile(1024);
+  const isMobile = useIsMediaQuery(1024);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

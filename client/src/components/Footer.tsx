@@ -189,7 +189,7 @@ export default function Footer() {
               <span className="text-2xl font-bold text-gray-900 dark:text-white">PlantRx</span>
             </div> */}
             <Link href="/" className="flex items-center mb-10">
-            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
+            <img src="/logo-green.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
           </Link>
 
             {/* Main Grid: 5 columns */}

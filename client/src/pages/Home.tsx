@@ -457,20 +457,17 @@ export default function Home() {
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
               <span
                 className="text-gray-800 dark:text-white block sm:inline"
-                style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Welcome to{" "}
               </span>
               <span className="relative">
                 <span
                   className="text-emerald-600 dark:text-emerald-400"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   Plant
                 </span>
                 <span
                   className="text-amber-500 dark:text-amber-400 font-black"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   R
                 </span>

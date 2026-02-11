@@ -303,7 +303,7 @@ export default function Header() {
                 Plant<span className="text-yellow-500 dark:text-yellow-400">R</span>x
               </span>
             </div> */}
-            <img src="/new-logo_1.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
+            <img src="/logo-green.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
           </Link>
 
           {/* Desktop Navigation - Centered */}
@@ -315,10 +315,10 @@ export default function Header() {
                     <Link
                       href={item.href}
                       data-testid={`nav-link-${item.href.replace(/\//g, '')}`}
-                      className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 font-plusJakarta ${
+                      className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 font-body ${
                         location === item.href || (item.subItems && location.startsWith(item.href))
-                          ? "text-yellow-600 dark:text-yellow-400 font-semibold"
-                          : "text-gray-700 dark:text-gray-300 hover:text-yellow-600 dark:hover:text-yellow-400"
+                          ? "text-gold dark:text-gold font-semibold"
+                          : "text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold"
                       }`}
                       onMouseEnter={() => {
                         if (item.href === '/remedies') {

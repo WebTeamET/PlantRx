@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import React, { useState } from 'react'
-import { useIsTablet } from '@/hooks/useIsTablet'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 import { slideUpVariants } from '@/animation/framerMotionVariants'
 
 interface Product {
@@ -28,8 +27,8 @@ const ingredientPositions = [
 function ProductCard({ product }: ProductCardProps) {
   const [loading, setLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const isTablet = useIsTablet(1200);
-  const isMobile = useIsMobile(768);
+  const isTablet = useIsMediaQuery(1200);
+  const isMobile = useIsMediaQuery(768);
 
   const handleClick = () => {
     setLoading(true);
