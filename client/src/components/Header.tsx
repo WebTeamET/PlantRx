@@ -416,7 +416,7 @@ export default function Header() {
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             {/* Theme Toggle, Text Size & Language Selector - Right Side */}
-            <div className="flex items-center mr-3">
+            <div className="flex items-center">
               {/* Text Size Selector */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -492,7 +492,7 @@ export default function Header() {
             <Button 
               variant="ghost" 
               size="sm" 
-              className="w-10 h-10 relative hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+              className="w-10 h-10 relative hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 !m-0"
               onClick={() => setCartOpen(true)}
               data-testid="header-cart-button"
             >
@@ -571,7 +571,7 @@ export default function Header() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="lg:hidden min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400"
+                  className="lg:hidden min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 !ml-0"
                 >
                   <Menu className="w-5 h-5" />
                 </Button>

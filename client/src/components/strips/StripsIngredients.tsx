@@ -56,7 +56,6 @@ const StripsIngredients: React.FC = () => {
   const lidRotate = useTransform(smoothProgress, [0, 0.25], [0, -20]);
   const lidOpacity = useTransform(smoothProgress, [0.3, 0.4], [1, 0]);
 
-
   return (
     <section ref={containerRef} className="product-box relative md:h-[600dvh] h-[400dvh] product-section">
       <div className="product-box sticky lg:pt-52 top-0 flex h-screen w-full items-center justify-center overflow-hidden">

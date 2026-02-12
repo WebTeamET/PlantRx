@@ -12,6 +12,7 @@ function SupplementBenefits() {
     const [activeLeft, setActiveLeft] = useState(false);
     const [activeRight, setActiveRight] = useState(false);
     const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+    
 
     const handleLeftClick = () => {
         setActiveLeft(prev => {
@@ -35,7 +36,7 @@ function SupplementBenefits() {
     });
 
     const bottleRotate = useTransform(scrollYProgress, [0, 0.8], [20, 0]);
-    const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.02]);
+    const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.01]);
     const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", isMobile ? "27vh" : "33vh"]);
     const bottleX = useTransform(scrollYProgress, [0, 0.8], ["0%", isSmallDesktop ? "70%" : "59%"]);
 

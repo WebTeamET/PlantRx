@@ -2,11 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import React, { useState } from 'react'
 import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 import { slideUpVariants } from '@/animation/framerMotionVariants'
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
   id: string
   title: string
-  price: number
+  price: number | string
   productLink: string
   cardBgColor: string
   productImage: string
@@ -27,14 +28,23 @@ const ingredientPositions = [
 function ProductCard({ product }: ProductCardProps) {
   const [loading, setLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const { addToCart, setCartOpen } = useCart();
   const isTablet = useIsMediaQuery(1200);
   const isMobile = useIsMediaQuery(768);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // Logic from Store.tsx for consistent Shopify cart integration
+      const success = await addToCart(product as any, product.id);
+      if (success) {
+        setCartOpen(true);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    } finally {
       setLoading(false);
-    }, 3500);
+    }
   };
 
   return (
@@ -125,4 +135,4 @@ function ProductCard({ product }: ProductCardProps) {
   )
 }
 
-export default ProductCard 
+export default ProductCard

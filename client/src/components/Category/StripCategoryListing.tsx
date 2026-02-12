@@ -9,9 +9,9 @@ function StripCategoryListing() {
     <>
       <SvgLayout />
       <CollectionBanner data={stripsProductData.collection} />
-      <ProductGrid data={stripsProductData.products} />
+      <ProductGrid />
     </>
   )
 }
 
-export default StripCategoryListing
+export default StripCategoryListing 

@@ -1,13 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard2';
 import { motion } from 'framer-motion';
 import { slideUpVariants, containerVariants } from '@/animation/framerMotionVariants';
+import { shopifyService, type ShopifyProduct } from '@/lib/shopify';
 
 interface ProductGridProps {
-    data: Array<any>;
+    data?: Array<any>;
 }
 
-function ProductGrid({ data }: ProductGridProps) {
+function ProductGrid({ data: initialData }: ProductGridProps) {
+    const [products, setProducts] = useState<any[]>(initialData || []);
+    const [loading, setLoading] = useState(!initialData);
+
+    useEffect(() => {
+        if (!initialData) {
+            const loadProducts = async () => {
+                try {
+                    setLoading(true);
+                    const fetchedProducts = await shopifyService.fetchProducts();
+                    
+                    const mappedProducts = fetchedProducts.map((p: ShopifyProduct) => ({
+                        id: p.id,
+                        title: p.title,
+                        price: p.variants?.[0]?.price?.amount ?? "0.00",
+                        productLink: `/store/${p.handle}`,
+                        productImage: p.images?.[0]?.src ?? '',
+                        cardBgColor: '#F3F4F6',
+                        ingredients: [],
+                    }));
+                    setProducts(mappedProducts);
+                } catch (error) {
+                    console.error('Error fetching Shopify products:', error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            loadProducts();
+        }
+    }, [initialData]);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold"></div>
+            </div>
+        );
+    }
+
     return (
         <motion.div 
         variants={containerVariants as any}
@@ -24,9 +63,10 @@ function ProductGrid({ data }: ProductGridProps) {
                 </motion.h2>
                 <div 
                 className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch">
-                    {data && data.map((product, idx) => (
+                    {products && products.map((product, idx) => (
                         <ProductCard key={product.id || idx} product={product} />
                     ))}
+                    
                 </div>
             </div>
         </motion.div>
