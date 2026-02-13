@@ -1,6 +1,6 @@
 import AddToCart from "@/components/SticktATC";
 import SupplementBanner from "@/components/supplements/SupplementBanner";
-import SupplementBenefits from "@/components/supplements/SupplementBenefits";
+import SupplementBenefits from "@/components/supplements/SupplementDetails";
   
 export default function Supplements() {
   return (

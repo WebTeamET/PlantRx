@@ -289,7 +289,7 @@ export function GoldTrialBanner() {
         data-testid="gold-trial-banner"
       >
         {/* Premium Gold Gradient Background */}
-        <div className="relative bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 dark:from-amber-700 dark:via-yellow-600 dark:to-amber-700">
+        <div className="relative bg-gradient-to-r from-gold/90 via-gold to-gold/70 dark:from-amber-700 dark:via-yellow-600 dark:to-amber-700">
           {/* Initial flash effect for first visit */}
           {isFirstVisit && !hasAnimated && (
             <motion.div
@@ -431,7 +431,7 @@ export function GoldTrialBanner() {
                       <Button
                         onClick={handleStartTrial}
                         disabled={startTrialMutation.isPending}
-                        className="relative bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group border-2 border-white/30"
+                        className="relative btn-green text-white font-bold px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 group"
                         data-testid="start-trial-button"
                       >
                         <span className="relative flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
@@ -447,7 +447,7 @@ export function GoldTrialBanner() {
                                 <span className="text-sm sm:text-base font-bold">Sign Up Free Now</span>
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                               </span>
-                              <span className="text-xs text-white/80 hidden sm:block">No credit card required</span>
+                              <span className="text-xs text-white hidden sm:block">No credit card required</span>
                             </>
                           )}
                         </span>
@@ -471,7 +471,7 @@ export function GoldTrialBanner() {
         </div>
 
         {/* Bottom Gold Accent Line */}
-        <div className="h-1 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400" />
+        <div className="h-1 bg-gradient-to-r from-gold/60 via-gold/70 to-gold/90" />
       </motion.div>
       </AnimatePresence>
 

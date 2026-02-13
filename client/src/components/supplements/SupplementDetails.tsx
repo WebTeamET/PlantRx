@@ -1,10 +1,9 @@
-import { containerVariants, slideUpVariants } from '@/animation/framerMotionVariants';
-import RevealText from '@/utils/RevealText';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { containerVariants, itemScaleUpVariants, slideUpVariants } from '@/animation/framerMotionVariants';
+import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import React, { useRef, useState } from 'react';
 import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
 
-function SupplementBenefits() {
+function SupplementDetails() {
     const isSmallDesktop = useIsMediaQuery(1536);
     const isTablet = useIsMediaQuery(1280);
     const isMobile = useIsMediaQuery(768);
@@ -12,7 +11,7 @@ function SupplementBenefits() {
     const [activeLeft, setActiveLeft] = useState(false);
     const [activeRight, setActiveRight] = useState(false);
     const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-    
+    const [showIngredients, setShowIngredients] = useState(false);
 
     const handleLeftClick = () => {
         setActiveLeft(prev => {
@@ -43,6 +42,12 @@ function SupplementBenefits() {
     const elementsOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     const sideBottlesY = useTransform(scrollYProgress, [0.8, 0.9], ["100vh", "40vh"]);
+
+    useMotionValueEvent(scrollYProgress, "change", (latest) => {
+        if (latest > 0.85 && !showIngredients) {
+            setShowIngredients(true);
+        }
+    });
 
     const floatingIngredients = [
         {
@@ -88,18 +93,27 @@ function SupplementBenefits() {
             blur: true
         },
     ];
-    const benefitsData = [
+    const ingredients = [
         {
-            "title": "Controls appetite"
+            "title": "Reishi Mushroom Extract"
         },
         {
-            "title": "Facilitates metabolic performance"
+            "title": "Shiitake Mushroom Extract"
         },
         {
-            "title": "Liver health"
+            "title": "Lions Mane"
         },
         {
-            "title": "Cardiovascular health",
+            "title": "Cordyceps Sinensis Powder",
+        },
+        {
+            "title": "Hypromellose"
+        },
+        {
+            "title": "Microcrystalline Cellulose"
+        },
+        {
+            "title": "Magnesium Stearate"
         }
     ]
 
@@ -303,31 +317,6 @@ function SupplementBenefits() {
                             <div className="">
                                 <motion.div
                                     variants={slideUpVariants as any}
-                                    className="border-b border-green">
-                                    <button
-                                        onClick={() => setOpenAccordion(openAccordion === 'ingredients' ? null : 'ingredients')}
-                                        className="w-full md:py-5 py-3 flex justify-between items-center xl:text-2xl text-xl !font-medium"
-                                    >
-                                        Ingredients
-                                        <span className={`transition-transform duration-300 ${openAccordion === 'ingredients' ? 'rotate-45' : ''}`}>+</span>
-                                    </button>
-                                    <AnimatePresence>
-                                        {openAccordion === 'ingredients' && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: 'auto', opacity: 1, transform: "translate3d(0, 0, 0)" }}
-                                                exit={{ height: 0, opacity: 0, transform: "translate3d(0, 0, 0)" }}
-                                                className="overflow-hidden"
-                                            >
-                                                <p className="pb-6 text-black text-base">
-                                                    Vitamin C (as acerbic acid), Vitamin B6 (as Pyridoxine HCL), Choline (as choline bitartrate), Chromium (as chromium polynicotinate), Medium Chain Triglycerides Oil, CLA (Conjugated Linoleic Acid), GLA (Gamma-Linolenic Acid), Bladderwrack Thallus Powder, Inositol, Gymnema Sylvestre Leaf (25% Extract), Garcinia Cambogia Fruit Extract (50% hydroxycitric acid)
-                                                </p>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </motion.div>
-                                <motion.div
-                                    variants={slideUpVariants as any}
                                     className="border-b border-green"
                                 >
                                     <button
@@ -383,23 +372,42 @@ function SupplementBenefits() {
                     <motion.div
                         variants={containerVariants as any}
                         initial="hidden"
-                        whileInView="visible"
-                        viewport={{ amount: 0.2, once: true }}
-                        className='xl:py-32 pb-20 pt-32 xl:h-dvh benefits-bottom-section relative z-[99] w-full overflow-hidden'>
+                        animate={showIngredients ? "visible" : "hidden"} 
+                        className='xl:pt-32 xl:pb-[500px] pb-20 pt-32 benefits-bottom-section relative w-full overflow-hidden ingredients-container'
+                    >
                         <motion.h2
                             variants={slideUpVariants as any}
-                            className='text-center'><span className='text-gold'>Benefits</span> of Mushroom Complex 10 X</motion.h2>
-                        <div className="flex items-stretch justify-between gap-3 overflow-visible mt-10 flex-wrap max-xl:max-w-[40rem] max-xl:mx-auto max-md:flex-col">
-                            {benefitsData.map((benefit, index) => (
-                                <div key={index} className="bg-white custom-transition border border-green rounded-full px-[14px] py-2 flex flex-1 max-xl:flex-[calc(50%-12px)] max-md:flex-1 justify-center relative after:absolute after:inset-0 after:block after:w-full after:h-full after:bg-green after:rounded-full after:z-[1] after:transition-all after:scale-0 hover:after:scale-[1] group after:duration-300 shadow-md">
-                                    <p className='text-base leading-[21px] text-center text-green group-hover:text-white !font-medium relative z-[2]'>{benefit.title}</p>
-                                </div>
+                            className='text-center h1'
+                        >
+                            Active <span className='text-gold'>Ingredients</span>
+                        </motion.h2>
+                        <motion.p
+                            variants={slideUpVariants as any}
+                            className='text-center mt-5 max-w-xl mx-auto'
+                        >
+                            We select each ingredient for its quality, effectiveness, and the benefits it delivers.
+                        </motion.p>
+                            
+                        <motion.div 
+                            variants={containerVariants as any}
+                            className="flex items-stretch justify-center gap-5 overflow-visible xl:mt-20 mt-10 flex-wrap max-xl:max-w-[40rem] max-xl:mx-auto max-md:flex-col"
+                        >
+                            {ingredients.map((ingredient, index) => (
+                                <motion.div 
+                                    key={index} 
+                                    className="bg-white border border-green rounded-md xl:p-5 p-3 flex justify-center relative group shadow-md"
+                                    variants={itemScaleUpVariants}
+                                >
+                                    <p className='group-hover:text-gold text-lg leading-6 text-center text-green !font-semibold relative z-[2]'>
+                                        {ingredient.title}
+                                    </p>
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     </motion.div>
                 </div>
             </div>
         </div>
     )
 }
-export default SupplementBenefits;
+export default SupplementDetails;

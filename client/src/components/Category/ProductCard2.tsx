@@ -35,7 +35,6 @@ function ProductCard({ product }: ProductCardProps) {
   const handleClick = async () => {
     setLoading(true);
     try {
-      // Logic from Store.tsx for consistent Shopify cart integration
       const success = await addToCart(product as any, product.id);
       if (success) {
         setCartOpen(true);
@@ -61,7 +60,7 @@ function ProductCard({ product }: ProductCardProps) {
 
       <div className="card-inner flex flex-col lg:gap-5 gap-3 rounded-lg h-full">
         <div
-          className="card-image-wrapper p-10 aspect-square rounded-lg relative overflow-visible"
+          className="card-image-wrapper aspect-square rounded-lg relative overflow-visible"
           style={{ background: product.cardBgColor }}
         >
           <img
@@ -117,17 +116,11 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="add-to-cart-btn flex justify-center relative z-[41] ">
           <button
-            className={`button overflow-hidden bg-green border-0 text-white min-w-[180px]  ${loading ? "loading" : ""}`}
+            className={`ctm-button btn-green  ${loading ? "loading" : ""}`}
             onClick={handleClick}
             disabled={loading}
           >
-            <span className="text-base leading-[26px] font-semibold block relative text-white tracking-[0.3px]">Add to cart</span>
-            <div className="cart">
-              <svg viewBox="0 0 36 26">
-                <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
-                <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
-              </svg>
-            </div>
+            Add to cart
           </button>
         </div>
       </div>

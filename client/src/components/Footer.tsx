@@ -284,7 +284,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => { e.preventDefault(); window.open('https://tally.so/r/xXjYaG', '_blank', 'noopener,noreferrer'); }}
-                  className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-gold hover:bg-amber-600 text-white font-medium rounded-md transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center w-full px-4 py-2.5 btn-green text-white font-medium rounded-md transition-colors cursor-pointer"
                   data-testid="button-feedback"
                 >
                   Share Feedback

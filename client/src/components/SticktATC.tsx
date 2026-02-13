@@ -50,20 +50,14 @@ function AddToCart() {
             </div>
           </div>
           <div className="add-to-cart-btn shrink-0">
-            <button 
-            className={`button relative overflow-hidden bg-green border-0 max-md:text-xs max-md:leading-[15px] text-white md:min-w-[150px] max-md:px-3 max-md:py-1 max-md:min-w-full max-md:min-h-[34px] ${loading ? "loading" : ""}`}
+          <button
+            className={`ctm-button btn-green  ${loading ? "loading" : ""}`}
             onClick={handleClick}
             disabled={loading}
-            >
-              <span className="text-sm leading-[26px] font-bold block relative max-md:text-xs max-md:leading-[15px] text-white">Add to cart</span>
-              <div className="cart">
-                <svg viewBox="0 0 36 26">
-                  <polyline points="1 2.5 6 2.5 10 18.5 25.5 18.5 28.5 7.5 7.5 7.5"></polyline>
-                  <polyline points="15 13.5 17 15.5 22 10.5"></polyline>
-                </svg>
-              </div>
-            </button> 
-          </div>
+          >
+            Add to cart
+          </button>
+        </div>
         </div>
       </motion.div>
   )

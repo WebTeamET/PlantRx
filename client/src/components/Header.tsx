@@ -556,7 +556,7 @@ export default function Header() {
                   {t('ui.sign_in', 'Sign In')}
                 </Button>
                 <Button 
-                  className="luxury-button-primary hidden sm:flex text-sm font-plusJakarta"
+                  className="luxury-button-primary hidden sm:flex text-sm font-plusJakarta btn-green"
                   onClick={() => setLocation('/signup')}
                   data-testid="header-sign-up-btn"
                 >

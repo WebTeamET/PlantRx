@@ -5,9 +5,9 @@ export const stripsProductData =
             "title": "What’s your pick?",
             // "productImage": "/strips-collection-banner-images.png",
             "productImages": [
-              "Sustained-energy-alertness.png",
-              "Mushroom-focus-strip.png",
-              "Digestive-support-gut-balance.png",
+              "Sustained-energy-alertness-product.png",
+              "mushroom-focus-strips-product.png",
+              "Digestive-support-gut-balance-product.png",
             ],
             floatingElements: [
               { 
@@ -70,48 +70,76 @@ export const stripsProductData =
               }
             ]
         },
-        "products": [
+        products: [
           {
-            "id": "product-1",
-            "title": "Mushroom Focus Strips",
-            "price": 99.99,
-            "productLink": "/strips/mushroom-focus-strips",
-            "cardBgColor": "#f2e2da",
-            "productImage": "Mushroom-focus-strip.png",
-            "ingredients": [
+            id: "product-1",
+            title: "Mushroom Focus Strips",
+            ingredients: [
               "float-chocolate1.png",
               "float-mushroom-2.png",
               "float-chocolate2.png",
-              "float-mushroom-new.png"
-            ]
+              "float-mushroom-new.png",
+            ],
           },
           {
-            "id": "product-2",
-            "title": "Sustained Energy & Alertness",
-            "price": 99.99,
-            "productLink": "/strips/herbal-energy-capsules",
-            "cardBgColor": "#fcefdf",
-            "productImage": "Sustained-energy-alertness.png",
-            "ingredients": [
-              "energy-element-2.png", 
-              "energy-element-1.png",
-              "strips-collection-element-4.png",
-              "strips-collection-element-3.png"
-            ]
-          },
-          {
-            "id": "product-3",
-            "title": "Digestive support & gut balance",
-            "price": 99.99,
-            "productLink": "/strips/daily-gut-support",
-            "cardBgColor": "#fef2f6",
-            "productImage": "Digestive-support-gut-balance.png",
-            "ingredients": [
+            id: "product-2",
+            title: "Digestive + Gut Health Strips",
+            ingredients: [
               "strips-collection-element-1.png",
               "strips-collection-element-2.png",
               "strips-collection-element-1.png",
-              "strips-collection-element-2.png"
-            ]
-          }
-        ]
+              "strips-collection-element-2.png",
+            ],
+          },
+          {
+            id: "product-3",
+            title: "Iron Strips",
+            ingredients: [
+              "iron-raspberry-element-1.png",
+              "strips-collection-element-1.png",
+              "iron-raspberry-element-1.png",
+              "strips-collection-element-1.png",
+            ],
+          },
+          {
+            id: "product-4", 
+            title: "Sleep Strips",
+            ingredients: [
+              "sleep-raspberry-element-2.png",
+              "sleep-raspberry-element-2.png",
+              "sleep-raspberry-element-1.png",
+              "sleep-raspberry-element-1.png",
+            ], 
+          },
+          {
+            id: "product-5",
+            title: "Recovery & Post-Drink Support Strips",
+            ingredients: [
+              "beauty-mango-element-2.png",
+              "beauty-mango-element-1.png",
+              "support-orange-element.png",
+              "support-orange-element.png",
+            ],
+          }, 
+          {
+            id: "product-6",
+            title: "Energy Strips",
+            ingredients: [
+              "energy-element-2.png",
+              "energy-element-1.png",
+              "strips-collection-element-4.png",
+              "strips-collection-element-3.png",
+            ],
+          },
+          {
+            id: "product-7",
+            title: "Beauty + Collagen Strips",
+            ingredients: [
+              "beauty-mango-element-1.png",
+              "beauty-mango-element-1.png",
+              "beauty-mango-element-2.png",
+              "beauty-mango-element-2.png",
+            ],
+          },
+        ],
     }      

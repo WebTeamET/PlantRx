@@ -1363,21 +1363,25 @@ iframe[src*="tawk.to"] {
   .button,
   .ctm-button {
     @apply relative inline-flex overflow-hidden z-[1] cursor-pointer w-fit
-           font-bold font-body uppercase text-cream text-lg text-center
+           !font-semibold font-body uppercase text-cream text-lg text-center
            leading-[22px] items-center justify-center
            px-[32px] py-3 border duration-300 ease-out
            rounded-[2rem]
            lg:min-h-[45px]
            sm:min-h-[40px] sm:px-6 sm:py-[10px] sm:text-base sm:leading-[21px]
-           transition-[color,background-color,border-color,transform,box-shadow];
+           transition-all;
   }
 
   .btn-green {
-    @apply bg-primary text-cream border border-primary;
+    @apply bg-green text-white;
+    background-image: linear-gradient(to right, #385127 0%, #c2a058 51%, #385127 100%);
+    background-size: 200% auto;
+    transition: 0.5s;
   }
 
-  .btn-cream {
-    @apply bg-cream text-primary border border-cream;
+  .btn-green:hover {
+    background-position: right center;
+    @apply text-white;
   }
 
   .custom-transition {
@@ -1492,7 +1496,7 @@ iframe[src*="tawk.to"] {
   animation: pulse-slow 8s ease-in-out infinite;
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
 
 .add-to-cart-btn .button {
   --cart: #fff;
@@ -1522,7 +1526,6 @@ iframe[src*="tawk.to"] {
   --t: 12px;
 }
 
-/* Cart */
 .add-to-cart-btn .button .cart {
   position: absolute;
   left: 50%;
@@ -1559,7 +1562,6 @@ iframe[src*="tawk.to"] {
   transition: transform 1.2s ease var(--fill-d);
 }
 
-/* Cart SVG */
 .add-to-cart-btn .button .cart svg {
   z-index: 1;
   width: 36px;
@@ -1580,7 +1582,6 @@ iframe[src*="tawk.to"] {
   transition: stroke-dashoffset .4s ease var(--offset-d);
 }
 
-/* Loading State */
 .add-to-cart-btn .button.loading {
   --scale: .95;
   --span-y: -32px;
@@ -1595,7 +1596,6 @@ iframe[src*="tawk.to"] {
   animation: cart 3.4s linear forwards .2s;
 }
 
-/* Animation */
 @keyframes cart {
   12.5% {
     transform: translateX(-60px) rotate(-18deg);
@@ -1625,4 +1625,4 @@ iframe[src*="tawk.to"] {
   }
 }
   
-}
+} */
