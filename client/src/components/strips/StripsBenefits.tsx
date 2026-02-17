@@ -6,7 +6,7 @@ import { containerBlurVars, itemBlurLeftVars, itemBlurRightVars } from '@/animat
 function StripsBenefits() {
     
     return (
-        <div className='product-benefits relative overflow-hidden product-section max-lg:pt-44 max-md:pt-10'>
+        <div className='product-benefits relative overflow-hidden product-section pb-40 max-lg:py-44 max-md:py-10'>
             <div className='container'>
                 <div   
                     className='relative z-30'>

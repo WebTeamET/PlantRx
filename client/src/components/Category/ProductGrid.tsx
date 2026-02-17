@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard2';
 import { motion } from 'framer-motion';
 import { slideUpVariants, containerVariants } from '@/animation/framerMotionVariants';
-import { shopifyService, type ShopifyProduct } from '@/lib/shopify';
+import { shopifyService, type ShopifyProduct,getProductIngredients } from '@/lib/shopify';
 import { stripsProductData } from './CategoryData';
 
 
@@ -22,11 +22,13 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                     const fetchedProducts = await shopifyService.fetchProducts();
                     
                     const mappedProducts = fetchedProducts.map((p: ShopifyProduct) => {
-                        // Find matching static data for ingredients and color
                         const staticMatch = stripsProductData.products.find(
                             sp => sp.title.toLowerCase() === p.title.toLowerCase()
                         );
-
+                        const metafieldIngredients = getProductIngredients(p);
+                        const finalIngredients = metafieldIngredients.length > 0 
+                            ? metafieldIngredients 
+                            : (staticMatch?.ingredients || []);
                         return {
                             id: p.id,
                             title: p.title,
@@ -34,7 +36,8 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                             productLink: `/strips/${p.handle}`,
                             productImage: p.images[0]?.url || '',
                             cardBgColor: '#F3F4F6', 
-                            ingredients: staticMatch?.ingredients || [] 
+                            ingredients: finalIngredients
+
                         };
                     });
                     

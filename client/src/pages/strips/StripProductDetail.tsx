@@ -157,12 +157,12 @@ export default function StripProductDetail() {
         </StripBanner>
 
         <StripStory />
-        <StripsBenefits />
         <StripsIngredients />
-        {/* <StripsTrustSignals /> */}
         <div id="how-to-use">
           <StripHowToUse />
         </div>
+        <StripsBenefits />
+        {/* <StripsTrustSignals /> */}
       </div>
     </>
   );

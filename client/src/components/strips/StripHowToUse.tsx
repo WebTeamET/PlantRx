@@ -1,19 +1,17 @@
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion'
-
-/* ---------------------------------- */
-/* Types */
-/* ---------------------------------- */
+import React, { useRef } from "react"
+import {
+  motion,
+  useScroll,
+  useTransform,
+  MotionValue,
+  useSpring
+} from "framer-motion"
 
 interface Slide {
   title: string
   description: string
   image: string
 }
-
-/* ---------------------------------- */
-/* Data */
-/* ---------------------------------- */
 
 const slides: Slide[] = [
   {
@@ -38,143 +36,90 @@ const slides: Slide[] = [
   }
 ]
 
-/* ---------------------------------- */
-/* Slide Card */
-/* ---------------------------------- */
-
 function SlideCard({
   index,
-  scrollYProgress,
+  scrollIndex,
   totalSlides,
   slide
 }: {
   index: number
-  scrollYProgress: MotionValue<number>
+  scrollIndex: MotionValue<number>
   totalSlides: number
   slide: Slide
 }) {
+  const range = [index - 1, index, index + 1]
+  const outputRange = [90, 0, -90]
 
-  const segmentSize = 1 / (totalSlides - 1)
-  const center = index * segmentSize
-
-  // Dead zone where rotation stays at 0deg
-  const deadZone = segmentSize * 0.1
-
-  const inputRange = [
-    Math.max(0, center - segmentSize),
-    center - deadZone,
-    center,
-    center + deadZone,
-    Math.min(1, center + segmentSize)
-  ]
-
-  const rotate = useTransform(
-    scrollYProgress,
-    inputRange,
-    [60, 0, 0, 0, -60]
-  )
-
-  const smoothRotate = useSpring(rotate, {
-    stiffness: 70,
-    damping: 22,
-    mass: 0.8
+  const rotateRaw = useTransform(scrollIndex, range, outputRange)
+  const rotate = useSpring(rotateRaw, {
+    stiffness: 120,
+    damping: 20,
+    restDelta: 0.001
   })
 
   return (
     <motion.div
-      className="flex-shrink-0 w-screen flex items-center justify-center how-to-use-slide"
-      style={{ rotate: smoothRotate }}
+      className="flex-shrink-0 flex items-center justify-center absolute left-0 top-0 h-full w-full origin-[center_104.166667vw]"
+      style={{
+        rotate: rotate,
+        zIndex: totalSlides - index, 
+      }}
     >
-      <div className="relative max-w-[40vw] w-full bg-green rounded-xl overflow-hidden shadow-2xl">
-
-        {/* Text */}
-        <div className="relative z-10 p-6 text-center *:text-white">
-          <h3 className="mb-3 text-3xl font-semibold">
-            {slide.title}
-          </h3>
-          <p className="text-lg max-w-md mx-auto">
-            {slide.description}
-          </p>
-        </div>
-
-        {/* Image */}
-        <div className="h-[500px] p-4">
-          <div className="w-full h-full rounded-lg overflow-hidden">
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              loading="lazy"
-            />
+      <div className="card-inner w-full bg-green rounded-lg relative">
+        {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
+        <div className="relative z-10 p-7 text-center *:text-white">
+            <h3 className="mb-3">
+              {slide.title}
+            </h3>
+            <p className="xl:text-xl max-w-md mx-auto">
+              {slide.description}
+            </p>
+          </div>
+          <div className="h-[400px] p-4">
+            <div className="w-full h-full rounded-lg overflow-hidden">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
-
-      </div>
     </motion.div>
   )
 }
 
-/* ---------------------------------- */
-/* Main Section */
-/* ---------------------------------- */
-
 function StripHowToUse() {
-
   const containerRef = useRef<HTMLDivElement>(null)
-
-  const SCROLL_HEIGHT = "400vh"
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   })
 
-  // Move exactly one slide per step
-  const maxTranslate = -((slides.length - 1) * 100)
-
-  const transformRaw = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, maxTranslate]
-  )
-
-  const smoothX = useSpring(transformRaw, {
-    stiffness: 60,
-    damping: 25,
-    mass: 0.9
-  })
-
-  const x = useTransform(smoothX, v => `${v}vw`)
+  const scrollIndex = useTransform(scrollYProgress, [0, 1], [0, slides.length - 1])
 
   return (
-    <div
+    <section
       ref={containerRef}
-      className="relative w-full"
-      style={{ height: SCROLL_HEIGHT }}
+      className="how-to-wrapper relative"
+      style={{ height: `${slides.length * 100}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-gray-50 flex items-center">
-
-        <motion.div
-          style={{
-            x,
-            width: `${slides.length * 100}vw`,
-            perspective: 1200
-          }}
-          className="flex"
-        >
+      <div className="how-to-sticky sticky top-[50px] flex h-screen items-center justify-center overflow-hidden perspective-[1000px]">
+        <div className="how-to-stage relative w-full 2xl:max-w-[800px] max-w-[700px] aspect-[3/4]">
           {slides.map((slide, index) => (
             <SlideCard
               key={index}
               index={index}
               slide={slide}
-              scrollYProgress={scrollYProgress}
+              scrollIndex={scrollIndex}
               totalSlides={slides.length}
             />
           ))}
-        </motion.div>
-
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 

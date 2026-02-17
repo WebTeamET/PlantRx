@@ -17,29 +17,29 @@ interface ImageData {
 interface StripStoryProps {
   product?: ShopifyProduct | null;
 }
-const imageData: ImageData[] = [
-  {
-    src: "/mushroom-strip-story_1.png",
-    range: [0.35, 0.45, 0.55, 0.65],
-    side: "left",
-    align: "3%",
-    targetTop: "25%",
-  },
-  {
-    src: "/mushroom-strip-story2.png", 
-    range: [0.5, 0.6, 0.7, 0.8],
-    side: "right",
-    align: "3%",
-    targetTop: "30%",
-  },
-  {
-    src: "/mushroom-strip-story_3.png",
-    range: [0.65, 0.75, 0.85, 0.95], 
-    side: "left",
-    align: "3%",
-    targetTop: "35%",
-  },
-];
+// const imageData: ImageData[] = [
+//   {
+//     src: "/mushroom-strip-story_1.png",
+//     range: [0.35, 0.45, 0.55, 0.65],
+//     side: "left",
+//     align: "3%",
+//     targetTop: "25%",
+//   },
+//   {
+//     src: "/mushroom-strip-story2.png", 
+//     range: [0.5, 0.6, 0.7, 0.8],
+//     side: "right",
+//     align: "3%",
+//     targetTop: "30%",
+//   },
+//   {
+//     src: "/mushroom-strip-story_3.png",
+//     range: [0.65, 0.75, 0.85, 0.95], 
+//     side: "left",
+//     align: "3%",
+//     targetTop: "35%",
+//   },
+// ];
 
 export default function StripStory({ product }: StripStoryProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -90,6 +90,29 @@ export default function StripStory({ product }: StripStoryProps) {
       ease: "easeInOut",
     }
   });
+  const imageData = [
+    {
+      src: sideIngredients[2] || "/mushroom-strip-story_1.png",
+      range: [0.35, 0.45, 0.55, 0.65],
+      side: "left" as const,
+      align: "3%",
+      targetTop: "25%",
+    },
+    {
+      src: sideIngredients[1] || "/mushroom-strip-story2.png", 
+      range: [0.5, 0.6, 0.7, 0.8],
+      side: "right" as const,
+      align: "3%",
+      targetTop: "30%",
+    },
+    {
+      src: sideIngredients[0] || "/mushroom-strip-story_3.png",
+      range: [0.65, 0.75, 0.85, 0.95], 
+      side: "left" as const,
+      align: "3%",
+      targetTop: "35%",
+    },
+  ];
   return (
     <section className="product-story-section relative product-section">
       <motion.div
