@@ -1626,3 +1626,7 @@ iframe[src*="tawk.to"] {
 }
   
 } */
+.how-to-use-slide {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}

@@ -1,122 +1,181 @@
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  MotionValue
-} from "framer-motion";
-import React, { useRef } from "react";
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion'
 
-const slides = [
-  "/img1.jpg",
-  "/img2.jpg",
-  "/img3.jpg",
-  "/img4.jpg"
-];
+/* ---------------------------------- */
+/* Types */
+/* ---------------------------------- */
 
-// Card dimensions for layout / transforms
-const CARD_WIDTH = 320;
-
-function StripHowToUse() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    // Full "path" of the gallery is tied to the section height
-    offset: ["start start", "end end"]
-  });
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative z-10"
-      style={{ height: "400vh" }} // Use standard vh or dvh
-    >
-      <div className="sticky top-0 h-screen overflow-hidden bg-neutral-950">
-        
-        {/* Perspective Container */}
-        <div
-          className="relative w-full h-full flex items-center justify-center"
-          style={{ perspective: "1200px", overflow: "visible" }}
-        >
-          {/* Centered stage; each card positions itself along a 3D arc */}
-          <div className="relative w-full h-full">
-            {slides.map((src, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <RotatingCard
-                  index={i}
-                  progress={scrollYProgress}
-                  total={slides.length}
-                  src={src}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+interface Slide {
+  title: string
+  description: string
+  image: string
 }
 
-export default StripHowToUse;
+/* ---------------------------------- */
+/* Data */
+/* ---------------------------------- */
 
-type CardProps = {
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-  src: string;
-};
+const slides: Slide[] = [
+  {
+    title: "Open & Take",
+    description: "Open the tin and gently take out one oral strip with clean, dry hands.",
+    image: "/attached_assets/remedy_images/Classic%20Turmeric%20Golden%20Milk%20Elixir.jpg"
+  },
+  {
+    title: "Place Under Tongue",
+    description: "Place the strip on or under your tongue for optimal absorption.",
+    image: "/attached_assets/remedy_images/Healing%20Aloe%20Burn%20Recovery%20Gel.jpg"
+  },
+  {
+    title: "Let It Dissolve",
+    description: "Allow the strip to fully dissolve—no chewing, no water needed.",
+    image: "/attached_assets/remedy_images/Calming%20Lavender%20Stress%20Relief%20Balm.jpg"
+  },
+  {
+    title: "Enjoy the Benefits",
+    description: "Experience fast absorption and convenient, anytime support. Take only one strip per day.",
+    image: "/attached_assets/remedy_images/Natural%20Olive%20Oil%20Hair%20Mask.jpg"
+  }
+]
 
-function RotatingCard({ index, total, progress, src }: CardProps) {
-  // 1. Map the 0-1 scroll progress to the integer index of the cards.
-  //    e.g., if we have 4 cards, the value goes from 0 to 3.
-  const currentScrollIndex = useTransform(progress, [0, 1], [0, total - 1]);
+/* ---------------------------------- */
+/* Slide Card */
+/* ---------------------------------- */
 
-  // 2. Relative offset of this card from the "active" (center) index
-  const offset = useTransform(currentScrollIndex, (v) => index - v);
+function SlideCard({
+  index,
+  scrollYProgress,
+  totalSlides,
+  slide
+}: {
+  index: number
+  scrollYProgress: MotionValue<number>
+  totalSlides: number
+  slide: Slide
+}) {
 
-  // 3. Map offset to a circular arc using polar coordinates
-  const angleStep = Math.PI / 6; // 30deg between cards
-  const radius = 550; // distance from the viewer / curve radius
+  const segmentSize = 1 / (totalSlides - 1)
+  const center = index * segmentSize
 
-  const angle = useTransform(offset, (v) => v * angleStep);
-  const x = useTransform(angle, (a) => Math.sin(a) * radius);
-  const z = useTransform(angle, (a) => (Math.cos(a) - 1) * radius);
+  // Dead zone where rotation stays at 0deg
+  const deadZone = segmentSize * 0.1
 
-  // 4. Rotate so the card roughly faces the viewer as it comes to center
-  const rotateY = useTransform(angle, (a) => (-a * 180) / Math.PI);
+  const inputRange = [
+    Math.max(0, center - segmentSize),
+    center - deadZone,
+    center,
+    center + deadZone,
+    Math.min(1, center + segmentSize)
+  ]
 
-  // 5. Scale & opacity based on how far from center the card is
-  const scale = useTransform(offset, [-2, -1, 0, 1, 2], [0.7, 0.85, 1, 0.85, 0.7]);
-  const opacity = useTransform(offset, [-2, -1, 0, 1, 2], [0.2, 0.5, 1, 0.5, 0.2]);
+  const rotate = useTransform(
+    scrollYProgress,
+    inputRange,
+    [60, 0, 0, 0, -60]
+  )
 
-  // 6. Blur side cards a bit for depth
-  const blurValue = useTransform(offset, [-2, -1, 0, 1, 2], [6, 3, 0, 3, 6]);
-  const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
+  const smoothRotate = useSpring(rotate, {
+    stiffness: 70,
+    damping: 22,
+    mass: 0.8
+  })
 
   return (
     <motion.div
-      style={{
-        x,
-        z,
-        rotateY,
-        scale,
-        opacity,
-        filter,
-        transformStyle: "preserve-3d",
-        width: CARD_WIDTH,
-        height: 460
-      }}
-      className="relative rounded-xl overflow-hidden bg-white shadow-2xl"
+      className="flex-shrink-0 w-screen flex items-center justify-center how-to-use-slide"
+      style={{ rotate: smoothRotate }}
     >
-      <img
-        src={src}
-        className="w-full h-full object-cover"
-        alt={`Slide ${index}`}
-      />
+      <div className="relative max-w-[40vw] w-full bg-green rounded-xl overflow-hidden shadow-2xl">
+
+        {/* Text */}
+        <div className="relative z-10 p-6 text-center *:text-white">
+          <h3 className="mb-3 text-3xl font-semibold">
+            {slide.title}
+          </h3>
+          <p className="text-lg max-w-md mx-auto">
+            {slide.description}
+          </p>
+        </div>
+
+        {/* Image */}
+        <div className="h-[500px] p-4">
+          <div className="w-full h-full rounded-lg overflow-hidden">
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+      </div>
     </motion.div>
-  );
+  )
 }
+
+/* ---------------------------------- */
+/* Main Section */
+/* ---------------------------------- */
+
+function StripHowToUse() {
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const SCROLL_HEIGHT = "400vh"
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
+  // Move exactly one slide per step
+  const maxTranslate = -((slides.length - 1) * 100)
+
+  const transformRaw = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, maxTranslate]
+  )
+
+  const smoothX = useSpring(transformRaw, {
+    stiffness: 60,
+    damping: 25,
+    mass: 0.9
+  })
+
+  const x = useTransform(smoothX, v => `${v}vw`)
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      style={{ height: SCROLL_HEIGHT }}
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-gray-50 flex items-center">
+
+        <motion.div
+          style={{
+            x,
+            width: `${slides.length * 100}vw`,
+            perspective: 1200
+          }}
+          className="flex"
+        >
+          {slides.map((slide, index) => (
+            <SlideCard
+              key={index}
+              index={index}
+              slide={slide}
+              scrollYProgress={scrollYProgress}
+              totalSlides={slides.length}
+            />
+          ))}
+        </motion.div>
+
+      </div>
+    </div>
+  )
+}
+
+export default StripHowToUse

@@ -1,6 +1,185 @@
 // Frontend Shopify service using server API endpoints
 
+// GraphQL Query for fetching products with metafields
+export const PRODUCT_QUERY = `
+  query getProductByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+      id
+      title
+      handle
+      descriptionHtml
+      featuredImage {
+        url
+        altText
+      }
+      images(first: 10) {
+        edges {
+          node {
+            id
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            availableForSale
+            price {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+      vendor
+      productType
+      tags
+      
+      # Metafields with file_reference type (like hero_banner)
+      heroBanner: metafield(namespace: "custom", key: "hero_banner") {
+        id
+        namespace
+        key
+        type
+        value
+        reference {
+          ... on MediaImage {
+            image {
+              url
+              altText
+            }
+          }
+        }
+      }
+      
+      # Other metafields (adjust as needed)
+      productIngredients: metafield(namespace: "custom", key: "product_ingredients") {
+        id
+        namespace
+        key
+        type
+        value
+        references(first: 10) {
+          edges {
+            node {
+              ... on MediaImage {
+                image {
+                  url
+                  altText
+                }
+              }
+              ... on GenericFile {
+                url
+              }
+            }
+          }
+        }
+      }
+      
+      productCardIngredientsImage: metafield(namespace: "custom", key: "product_card_ingredients_image") {
+        id
+        namespace
+        key
+        type
+        value
+        reference {
+          ... on MediaImage {
+            image {
+              url
+              altText
+            }
+          }
+        }
+      }
+      
+      sideIngredient: metafield(namespace: "custom", key: "side_ingredient") {
+        id
+        namespace
+        key
+        type
+        value
+        references(first: 10) {
+          edges {
+            node {
+              ... on MediaImage {
+                image {
+                  url
+                  altText
+                }
+              }
+              ... on GenericFile {
+                url
+              }
+            }
+          }
+        }
+      }
+
+      imageWithText: metafield(namespace: "custom", key: "image_with_text") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 // Types for Shopify data
+export interface ShopifyMetafield {
+  id?: string;
+  namespace: string;
+  key: string;
+  value?: string;
+  type?: string;
+
+  reference?: {
+    image?: {
+      url: string;
+      altText?: string;
+    };
+  };
+
+  references?: {
+    edges?: Array<{
+      node: {
+        image?: {
+          url: string;
+          altText?: string;
+        };
+        url?: string;
+      };
+    }>;
+    nodes?: Array<{
+      image?: {
+        url: string;
+        altText?: string;
+      };
+      url?: string;
+    }>;
+  };
+}
+
+
+
 export interface ShopifyProduct {
   id: string;
   title: string;
@@ -8,22 +187,43 @@ export interface ShopifyProduct {
   handle: string;
   images: Array<{
     id: string;
-    src: string;
+    url: string;
     altText?: string;
   }>;
+  heroBanner?: ShopifyMetafield;
+  productIngredients?: ShopifyMetafield;
+  productCardIngredientsImage?: ShopifyMetafield;
+  sideIngredient?: ShopifyMetafield;
+  productMetafields?: ShopifyMetafield[];
+  activeTitle?: string;
+  activeDescription?: string;
+  
   variants: Array<{
     id: string;
     title: string;
+    availableForSale: boolean;
     price: {
       amount: string;
       currencyCode: string;
     };
-    available: boolean;
   }>;
+
   vendor?: string;
   productType?: string;
   tags: string[];
+  
+  // Derived fields from server
+  ingredients?: string[];
+  sideIngredients?: string[];
+  imageWithText?: {
+    title: string;
+    description: string;
+    icon: string;
+    image: string;
+    isLeft: boolean;
+  }[];
 }
+
 
 export interface ShopifyCart {
   id: string;
@@ -55,19 +255,190 @@ export interface ShopifyCart {
   webUrl: string;
 }
 
-// Shopify service functions
+export const getMetafieldImage = (
+  product: ShopifyProduct,
+  namespace: string,
+  key: string
+): string | undefined => {
+  if (namespace === "custom") {
+    if (key === "hero_banner" && product.heroBanner?.reference?.image?.url) {
+      return product.heroBanner.reference.image.url;
+    }
+    if (key === "product_ingredients" && product.productIngredients?.reference?.image?.url) {
+      return product.productIngredients.reference.image.url;
+    }
+    if (key === "product_card_ingredients_image" && product.productCardIngredientsImage?.reference?.image?.url) {
+      return product.productCardIngredientsImage.reference.image.url;
+    }
+  }
+  
+  return product.productMetafields?.find(
+    (field) => field.namespace === namespace && field.key === key
+  )?.reference?.image?.url;
+};
+
+/**
+ * Helper function to extract ingredients array from productIngredients metafield
+ * Handles list.file_reference type with references.edges structure
+ */
+export const getProductIngredients = (product: ShopifyProduct): string[] => {
+  // If ingredients are already extracted by server, use them
+  if (product.ingredients && product.ingredients.length > 0) {
+    return product.ingredients;
+  }
+
+  // Otherwise, extract from metafield
+  if (!product.productIngredients) {
+    return [];
+  }
+
+  const metafield = product.productIngredients;
+  let ingredients: string[] = [];
+
+  // 1. Try references.edges (list.file_reference with proper GraphQL structure)
+  if (metafield.references?.edges && metafield.references.edges.length > 0) {
+    ingredients = metafield.references.edges
+      .map((edge) => edge.node.image?.url || edge.node.url)
+      .filter((url): url is string => Boolean(url));
+  }
+  // 2. Try references.nodes (alternative structure)
+  else if (metafield.references?.nodes && metafield.references.nodes.length > 0) {
+    ingredients = metafield.references.nodes
+      .map((node) => node.image?.url || node.url)
+      .filter((url): url is string => Boolean(url));
+  }
+  // 3. Try singular reference (single file_reference)
+  else if (metafield.reference?.image?.url) {
+    ingredients = [metafield.reference.image.url];
+  }
+  // 4. Try parsing value JSON array (fallback when references aren't fetched)
+  else if (metafield.value) {
+    try {
+      const parsed = JSON.parse(metafield.value);
+      if (Array.isArray(parsed)) {
+        // These are GIDs, but we can't fetch them client-side
+        // Server should handle this, but log for debugging
+        console.warn('[getProductIngredients] Found GIDs in value, but references not fetched:', parsed);
+      }
+    } catch (e) {
+      // Not JSON, ignore
+    }
+  }
+
+  return ingredients;
+};
+
+/**
+ * Helper function to extract side ingredients array from sideIngredient metafield
+ * Handles list.file_reference type with references.edges structure
+ */
+export const getSideIngredients = (product: ShopifyProduct): string[] => {
+  // If side ingredients are already extracted by server, use them
+  if (product.sideIngredients && product.sideIngredients.length > 0) {
+    return product.sideIngredients;
+  }
+
+  // Otherwise, extract from metafield
+  if (!product.sideIngredient) {
+    return [];
+  }
+
+  const metafield = product.sideIngredient;
+  let sideIngredients: string[] = [];
+
+  // 1. Try references.edges (list.file_reference with proper GraphQL structure)
+  if (metafield.references?.edges && metafield.references.edges.length > 0) {
+    sideIngredients = metafield.references.edges
+      .map((edge) => edge.node.image?.url || edge.node.url)
+      .filter((url): url is string => Boolean(url));
+  }
+  // 2. Try references.nodes (alternative structure)
+  else if (metafield.references?.nodes && metafield.references.nodes.length > 0) {
+    sideIngredients = metafield.references.nodes
+      .map((node) => node.image?.url || node.url)
+      .filter((url): url is string => Boolean(url));
+  }
+  // 3. Try singular reference (single file_reference)
+  else if (metafield.reference?.image?.url) {
+    sideIngredients = [metafield.reference.image.url];
+  }
+  // 4. Try parsing value JSON array (fallback when references aren't fetched)
+  else if (metafield.value) {
+    try {
+      const parsed = JSON.parse(metafield.value);
+      if (Array.isArray(parsed)) {
+        // These are GIDs, but we can't fetch them client-side
+        // Server should handle this, but log for debugging
+        console.warn('[getSideIngredients] Found GIDs in value, but references not fetched:', parsed);
+      }
+    } catch (e) {
+      // Not JSON, ignore
+    }
+  }
+
+  return sideIngredients;
+};
+
+export const getMetafieldValue = (
+  product: ShopifyProduct,
+  namespace: string,
+  key: string
+): string | undefined => {
+  if (namespace === "custom") {
+    if (key === "hero_banner" && product.heroBanner?.value) {
+      return product.heroBanner.value;
+    }
+    if (key === "product_ingredients" && product.productIngredients?.value) {
+      return product.productIngredients.value;
+    }
+    if (key === "product_card_ingredients_image" && product.productCardIngredientsImage?.value) {
+      return product.productCardIngredientsImage.value;
+    }
+  }
+  
+  return product.productMetafields?.find(
+    (field) => field.namespace === namespace && field.key === key
+  )?.value;
+};
+
+
 export const shopifyService = {
   // Fetch all products
   async fetchProducts(): Promise<ShopifyProduct[]> {
     try {
-      const response = await fetch('/api/shopify/products');
+      
+      // Add cache-busting parameter
+      const cacheBuster = `?_=${Date.now()}`;
+      const response = await fetch(`/api/shopify/products${cacheBuster}`);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
       const products = await response.json();
+      
+      console.log(`📦 CLIENT: Received ${products.length} products from API`);
+      
+      if (products.length > 0) {
+        const firstProduct = products[0];
+        console.log('🔍 CLIENT: First product keys:', Object.keys(firstProduct));
+        console.log('🔍 CLIENT: First product title:', firstProduct.title);
+        console.log('🔍 CLIENT: Has heroBanner?', 'heroBanner' in firstProduct);
+        console.log('🔍 CLIENT: Has productIngredients?', 'productIngredients' in firstProduct);
+        console.log('🔍 CLIENT: Has productCardIngredientsImage?', 'productCardIngredientsImage' in firstProduct);
+        
+        if (firstProduct.heroBanner) {
+          console.log('✅ CLIENT: heroBanner found!', firstProduct.heroBanner);
+        } else {
+          console.log('❌ CLIENT: heroBanner is undefined/null');
+        }
+        
+        console.log('🔍 CLIENT: Full first product:', firstProduct);
+      }
+      
       return products;
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('❌ CLIENT: Error fetching products:', error);
       return [];
     }
   },
@@ -75,11 +446,23 @@ export const shopifyService = {
   // Fetch single product by handle (not implemented for server API yet)
   async fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
     try {
+      console.log(`🔍 CLIENT: Fetching product by handle: ${handle}`);
+      
       // For now, fetch all products and find by handle
       const products = await this.fetchProducts();
-      return products.find(p => p.handle === handle) || null;
+      const product = products.find(p => p.handle === handle) || null;
+      
+      if (product) {
+        console.log(`✅ CLIENT: Found product "${product.title}"`);
+        console.log('🔍 CLIENT: Product has heroBanner?', !!product.heroBanner);
+        console.log('🔍 CLIENT: Full product object:', product);
+      } else {
+        console.log(`❌ CLIENT: Product with handle "${handle}" not found`);
+      }
+      
+      return product;
     } catch (error) {
-      console.error('Error fetching product:', error);
+      console.error('❌ CLIENT: Error fetching product:', error);
       return null;
     }
   },

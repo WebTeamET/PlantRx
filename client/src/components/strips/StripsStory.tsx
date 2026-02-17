@@ -2,10 +2,10 @@ import RevealText from "@/utils/RevealText";
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from "framer-motion";
 import { useRef, useMemo } from "react";
 import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
+import { ShopifyProduct, getSideIngredients } from "@/lib/shopify";
 
-
-const title = "Focus That Fits Your Day";
-const lines = ["Clean energy and clarity in a simple daily strip."];
+// const title = "Focus That Fits Your Day";
+// const lines = ["Clean energy and clarity in a simple daily strip."];
 
 interface ImageData {
   src: string;
@@ -14,7 +14,9 @@ interface ImageData {
   align: string;
   targetTop: string;
 }
-
+interface StripStoryProps {
+  product?: ShopifyProduct | null;
+}
 const imageData: ImageData[] = [
   {
     src: "/mushroom-strip-story_1.png",
@@ -39,10 +41,12 @@ const imageData: ImageData[] = [
   },
 ];
 
-export default function StripStory() {
+export default function StripStory({ product }: StripStoryProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const isTablet = useIsMediaQuery(1024);
-
+  const activeTitle = product?.activeTitle || "Focus That Fits Your Day";
+  const activeDesc = product?.activeDescription || "Clean energy and clarity in a simple daily strip.";
+  const sideIngredients = product ? getSideIngredients(product) : [];
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -51,7 +55,7 @@ export default function StripStory() {
   
 
   const characters = useMemo(() => {
-    return title.split("").map((char, i) => {
+    return activeTitle.split("").map((char, i) => {
       const start = Math.random() * 0.15;
       const end = start + 0.15;
 
@@ -66,7 +70,7 @@ export default function StripStory() {
 
       return { char, start, end, className };
     });
-  }, []);
+  }, [activeTitle]);
 
   const clipPath = useTransform(
     scrollYProgress,
@@ -169,11 +173,12 @@ export default function StripStory() {
 
             <div className="mt-0 lg:mt-4 text-center z-10">
               {isTablet ? (
-                lines.map((text, i) => (
-                  <motion.div key={i} style={{ clipPath }}>
-                    {text}
-                  </motion.div>
-                ))
+                // lines.map((text, i) => (
+                //   <motion.div key={i} style={{ clipPath }}>
+                //     {text}
+                //   </motion.div>
+                // ))
+                <motion.div style={{ clipPath }}>{activeDesc}</motion.div>
               ) : (
                 <RevealText tag="p">
                   Clean energy and clarity in a simple daily strip.
@@ -187,7 +192,7 @@ export default function StripStory() {
               key={i}
               src={img.src}
               progress={scrollYProgress}
-              range={img.range}
+              range={img.range as [number, number, number, number]}
               side={img.side}
               align={img.align}
               targetTop={img.targetTop}

@@ -102,6 +102,8 @@ const Header = lazy(() => import("@/components/Header"));
 const StripCategory = lazy(() => import("@/pages/Strips"));
 const MushroomFocusStrips = lazy(() => import("@/pages/strips/MushroomFocusStrips"));
 
+const StripProductDetail = lazy(() => import("@/pages/strips/StripProductDetail") );
+
 // High-Value SEO Content Pages
 const HowNaturalRemediesHeal = lazy(
   () => import("@/pages/content/HowNaturalRemediesHeal")
@@ -228,10 +230,7 @@ function Router() {
               path="/strips"
               component={StripCategory}
             />
-            <Route
-              path="/strips/mushroom-focus-strips"
-              component={MushroomFocusStrips}
-            />
+             <Route path="/strips/:handle" component={StripProductDetail} />
             <Route
               path="/essential-oils"
               component={EssentialOils}
@@ -251,8 +250,8 @@ function Router() {
             <Route path="/workouts" component={Workouts} />
             <Route path="/community" component={Community} />
             <Route path="/experts" component={Experts} />
-            <Route path="/store/:handle" component={ProductDetail} />
-            <Route path="/store" component={Store} />
+            <Route path="/strips/:handle" component={StripProductDetail} />
+            {/* <Route path="/store" component={Store} /> */}
             <Route
               path="/collections/Products"
               component={() => {

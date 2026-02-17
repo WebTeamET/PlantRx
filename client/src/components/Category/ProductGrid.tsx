@@ -31,8 +31,8 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                             id: p.id,
                             title: p.title,
                             price: p.variants[0]?.price.amount || "0.00",
-                            productLink: `/store/${p.handle}`,
-                            productImage: p.images[0]?.src || '',
+                            productLink: `/strips/${p.handle}`,
+                            productImage: p.images[0]?.url || '',
                             cardBgColor: '#F3F4F6', 
                             ingredients: staticMatch?.ingredients || [] 
                         };
