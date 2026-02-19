@@ -1,6 +1,7 @@
 "use client";
+import Header from "@/components/Header";
+import { SEOHead } from "@/components/SEOHead";
 import StripBanner from "@/components/strips/StripBanner";
-import StripHowToUse from "@/components/strips/StripHowToUse";
 import StripsBenefits from "@/components/strips/StripsBenefits";
 import StripsIngredients from "@/components/strips/StripsIngredients";
 import StripStory from "@/components/strips/StripsStory";
@@ -92,6 +93,12 @@ export default function StripProductDetail() {
 
   return (
     <>
+      <SEOHead
+        title={`${product.title} | PlantRx`}
+        description={product.description.substring(0, 160)}
+        ogImage={product.images?.[0]?.url}
+      />
+      
       {/* Dynamic Floating CTA */}
       <motion.div
         className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
@@ -108,9 +115,9 @@ export default function StripProductDetail() {
         <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white md:px-5 px-3 md:py-2 py-3 border border-gray-100 dark:border-gray-800">
           <div className="flex items-center md:gap-5 gap-2">
             <div className="image-wrapper md:size-[100px] size-[70px] shrink-0">
-              <img
-                src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"}
-                alt={product.images?.[0]?.altText || product.title}
+              <img 
+                src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"} 
+                alt={product.title} 
                 className="w-full h-full object-contain"
               />
             </div>
@@ -153,16 +160,22 @@ export default function StripProductDetail() {
         <SvgLayout />
         
         <StripBanner product={product}>
-      
+           <Button
+            onClick={() => setLocation("/strips")}
+            variant="ghost"
+            className="mb-4 lg:mb-6 text-black hover:text-green dark:text-gray-300 dark:hover:text-white product-section"
+          >
+            {/* <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Strips */}
+          </Button>
         </StripBanner>
 
-        <StripStory />
+        <StripStory product={product} />
+        <StripsBenefits product={product} />
         <StripsIngredients />
-        <div id="how-to-use">
-          <StripHowToUse />
-        </div>
-        <StripsBenefits />
-        {/* <StripsTrustSignals /> */}
+
+        {/* Observer Target for Hide CTA */}
+        <div ref={footerRef} className="h-20" />
       </div>
     </>
   );

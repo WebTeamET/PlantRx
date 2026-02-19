@@ -14,7 +14,7 @@ export const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.45,
+      staggerChildren: 0.30,
       delayChildren: 0.1,
     },
   },
@@ -138,3 +138,22 @@ export const itemBlurVars: Variants = {
     },
   },
 }
+
+export const slideUpPerspectiveVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 120,
+    rotateX: -35,
+    transformOrigin: "50% 0%",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transformOrigin: "50% 0%",
+    transition: {
+      duration: 1.3,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};

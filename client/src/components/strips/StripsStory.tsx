@@ -135,7 +135,7 @@ export default function StripStory({ product }: StripStoryProps) {
         className="absolute top-[20rem] -right-0 z-10 pointer-events-none xl:max-w-[300px] max-w-[180px] max-lg:hidden rotate-90"
       >
         <img
-          src="/mushroom-group.png"
+          src={sideIngredients[3] || "/mushroom-group.png"}
           alt="Mushroom Group"
           className="object-contain h-full w-full block"
         />
@@ -162,7 +162,7 @@ export default function StripStory({ product }: StripStoryProps) {
         className="absolute 2xl:top-0 top-5 -left-0 z-10 pointer-events-none 2xl:max-w-[250px] max-w-[150px] max-lg:hidden rotate-90"
       >
         <img
-          src="/mushroom-group-2.png"
+          src={sideIngredients[4] || "/mushroom-group-2.png"}
           alt="Mushroom Group"
           className="object-contain h-full w-full block"
         />

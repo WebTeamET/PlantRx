@@ -1,4 +1,4 @@
-import { containerVariants, itemScaleUpVariants, slideUpVariants } from '@/animation/framerMotionVariants';
+import { containerVariants, itemScaleUpVariants, slideUpPerspectiveVariants } from '@/animation/framerMotionVariants';
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import React, { useRef, useState } from 'react';
 import { useIsMediaQuery } from '@/hooks/useIsMediaQuery';
@@ -10,8 +10,21 @@ function SupplementDetails() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeLeft, setActiveLeft] = useState(false);
     const [activeRight, setActiveRight] = useState(false);
-    const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+    const [openAccordion, setOpenAccordion] = useState<number | null>(null);
     const [showIngredients, setShowIngredients] = useState(false);
+
+    const accordionItems = [
+      {
+        title: 'Suggested Use',
+        content:
+          'As a dietary supplement take two (2) vegetable capsules once a day. For best results take 20-30 min before a meal with an 8oz (240 ml) glass of water or as directed by your healthcare professional.'
+      },
+      {
+        title: 'Before You Use',
+        content:
+          'Do not exceed recommended dose. Pregnant or nursing mothers, children under the age of 18, and individuals with a known medical condition should consult a physician before using this or any dietary supplement.'
+      }
+    ];
 
     const handleLeftClick = () => {
         setActiveLeft(prev => {
@@ -36,15 +49,25 @@ function SupplementDetails() {
 
     const bottleRotate = useTransform(scrollYProgress, [0, 0.8], [20, 0]);
     const bottleScale = useTransform(scrollYProgress, [0, 0.8], [1, 1.01]);
-    const bottleY = useTransform(scrollYProgress, [0, 0.8], ["0vh", isMobile ? "27vh" : "33vh"]);
+    const bottleY = useTransform(scrollYProgress, [0.1, 0.8], ["0vh", isMobile ? "27vh" : "33vh"]);
     const bottleX = useTransform(scrollYProgress, [0, 0.8], ["0%", isSmallDesktop ? "70%" : "59%"]);
 
-    const elementsOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+    const elementsOpacity = useTransform(
+      scrollYProgress,
+      [0, 0.2],
+      [1, 0]
+    );
 
     const sideBottlesY = useTransform(scrollYProgress, [0.8, 0.9], ["100vh", "40vh"]);
 
+    const bgOverlayOpacity = useTransform(
+      scrollYProgress,
+      [0.65, 0.9],
+      [0, 1]
+    );
+
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        if (latest > 0.85 && !showIngredients) {
+        if (latest > 0.45 && !showIngredients) {
             setShowIngredients(true);
         }
     });
@@ -118,9 +141,21 @@ function SupplementDetails() {
     ]
 
     return (
-        <div ref={containerRef} className="benefits-section relative product-section">
+        <motion.div
+            ref={containerRef}
+            className="benefits-section relative product-section 2xl:pb-[130px] pb-[100px]"
+        >
+            {/* Scroll Overlay */}
+            <motion.div
+                style={{ opacity: bgOverlayOpacity }}
+                transition={{
+                    duration: 1.2,
+                    ease: [0.22, 1, 0.36, 1]
+                }}
+                className="absolute inset-0 bg-[#a6bf94] max-xl:hidden"
+            />
             <div className="container mx-auto max-[1024px]:mt-24 max-md:mt-10">
-                {floatingIngredients.map((item) => (
+                {floatingIngredients.map((item) => ( 
                     <motion.div
                         key={item.id}
                         style={{
@@ -293,79 +328,86 @@ function SupplementDetails() {
                             variants={containerVariants as any}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ amount: 0.2, once: true }}
+                            viewport={{ amount: 0.1, once: true }}
                             className='2xl:max-w-xl xl:max-w-[40rem] *:text-black'
                         >
                             <motion.h2
-                                variants={slideUpVariants as any}
+                                variants={slideUpPerspectiveVariants as any}
                                 className="xl:mb-6 mb-4"><span className='text-gold'>Mushroom </span>Complex <span className='text-green'>10 X</span></motion.h2>
                             <motion.p
-                                variants={slideUpVariants as any}
+                                variants={slideUpPerspectiveVariants as any}
                                 className="xl:mb-10 mb-4">
                                 This mushroom 10 X complex combines the top most valuable and sought-after medicinal mushrooms all in one easy-to-swallow capsule.                            </motion.p>
                             <motion.p
-                                variants={slideUpVariants as any}
+                                variants={slideUpPerspectiveVariants as any}
                                 className="hidden max-md:block mb-3">
                                 <strong>Product Amount:</strong> 60 capsules
                             </motion.p>
                             <motion.p
-                                variants={slideUpVariants as any}
+                                variants={slideUpPerspectiveVariants as any}
                                 className="hidden max-md:block mb-3">
                                 <strong>Gross Weight:</strong> 0.2lb (90.7g)
                             </motion.p>
 
-                            <div className="">
+                            <div className='space-y-5'>
+                              {accordionItems.map((item, index) => (
                                 <motion.div
-                                    variants={slideUpVariants as any}
-                                    className="border-b border-green"
+                                  key={index}
+                                  variants={slideUpPerspectiveVariants as any}
+                                  className="border-b border-green"
                                 >
-                                    <button
-                                        onClick={() => setOpenAccordion(openAccordion === 'usage' ? null : 'usage')}
-                                        className="w-full md:py-5 py-3 flex justify-between items-center xl:text-2xl text-xl !font-medium"
+                                  <button
+                                    onClick={() =>
+                                      setOpenAccordion(prev => (prev === index ? null : index))
+                                    }
+                                    className="w-full md:py-5 py-3 flex justify-between items-center xl:text-2xl text-xl !font-medium"
+                                  >
+                                    {item.title}
+                                    <span
+                                      className={`transition-transform duration-300 ${
+                                        openAccordion === index ? 'rotate-45' : ''
+                                      }`}
+                                      style={{ backfaceVisibility: 'hidden' }}
                                     >
-                                        How to Use
-                                        <span
-                                            className={`transition-transform duration-300 ${openAccordion === 'usage' ? 'rotate-45' : ''}`}
-                                            style={{ backfaceVisibility: 'hidden' }}
-                                        >
-                                            +
-                                        </span>
-                                    </button>
-                                    <AnimatePresence initial={false}>
-                                        {openAccordion === 'usage' && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{
-                                                    height: 'auto',
-                                                    opacity: 1,
-                                                    transition: {
-                                                        height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
-                                                        opacity: { duration: 0.25, delay: 0.1 }
-                                                    }
-                                                }}
-                                                exit={{
-                                                    height: 0,
-                                                    opacity: 0,
-                                                    transition: {
-                                                        height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
-                                                        opacity: { duration: 0.2 }
-                                                    }
-                                                }}
-                                                style={{
-                                                    backfaceVisibility: 'hidden',
-                                                    transform: 'translateZ(0)'
-                                                }}
-                                                className="overflow-hidden"
-                                            >
-                                                <div style={{ backfaceVisibility: 'hidden' }}>
-                                                    <p className="pb-6 text-black text-base">
-                                                        Take 4 capsules daily with meals or as directed. For best results, take 2 capsules before breakfast and dinner with water, alongside a balanced diet and exercise.
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence> 
+                                      +
+                                    </span>
+                                  </button>
+                                  <AnimatePresence initial={false}>
+                                    {openAccordion === index && (
+                                      <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{
+                                          height: 'auto',
+                                          opacity: 1,
+                                          transition: {
+                                            height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
+                                            opacity: { duration: 0.25, delay: 0.1 }
+                                          }
+                                        }}
+                                        exit={{
+                                          height: 0,
+                                          opacity: 0,
+                                          transition: {
+                                            height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
+                                            opacity: { duration: 0.2 }
+                                          }
+                                        }}
+                                        style={{
+                                          backfaceVisibility: 'hidden',
+                                          transform: 'translateZ(0)'
+                                        }}
+                                        className="overflow-hidden"
+                                      >
+                                        <div style={{ backfaceVisibility: 'hidden' }}>
+                                          <p className="pb-6 text-black text-lg">
+                                            {item.content}
+                                          </p>
+                                        </div>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
                                 </motion.div>
+                              ))}
                             </div>
                         </motion.div>
                     </div>
@@ -373,29 +415,33 @@ function SupplementDetails() {
                         variants={containerVariants as any}
                         initial="hidden"
                         animate={showIngredients ? "visible" : "hidden"} 
-                        className='xl:pt-32 xl:pb-[500px] pb-20 pt-32 benefits-bottom-section relative w-full overflow-hidden ingredients-container'
-                    >
-                        <motion.h2
-                            variants={slideUpVariants as any}
-                            className='text-center h1'
-                        >
-                            Active <span className='text-gold'>Ingredients</span>
-                        </motion.h2>
-                        <motion.p
-                            variants={slideUpVariants as any}
-                            className='text-center mt-5 max-w-xl mx-auto'
-                        >
-                            We select each ingredient for its quality, effectiveness, and the benefits it delivers.
-                        </motion.p>
-                            
+                        className='xl:pt-32 xl:pb-[500px] pb-20 pt-32 benefits-bottom-section relative z-[1] w-full overflow-hidden ingredients-container'
+                    >  
+                        <div className="flex flex-col items-center">
+                            <motion.div 
+                            variants={slideUpPerspectiveVariants as any}
+                            className="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-primary/80 bg-green/10 dark:bg-emerald-900/40 text-green dark:text-emerald-200 border-green dark:border-green mb-4 text-sm sm:text-base px-4 sm:px-7 py-2 font-semibold tracking-wide uppercase">Ingredients</motion.div>
+                            <motion.h2
+                                variants={slideUpPerspectiveVariants as any}
+                                className='text-center h1'
+                            >
+                                Inside the  <span className='text-gold'>Formula</span>
+                            </motion.h2>
+                            <motion.p
+                                variants={slideUpPerspectiveVariants as any}
+                                className='text-center mt-5 max-w-xl mx-auto'
+                            >
+                                We select each ingredient for its quality, effectiveness, and the benefits it delivers.
+                            </motion.p>
+                        </div>
                         <motion.div 
                             variants={containerVariants as any}
-                            className="flex items-stretch justify-center gap-5 overflow-visible xl:mt-20 mt-10 flex-wrap max-xl:max-w-[40rem] max-xl:mx-auto max-md:flex-col"
+                            className="flex items-stretch justify-center gap-5 overflow-visible xl:mt-14 mt-10 flex-wrap max-xl:max-w-[40rem] max-xl:mx-auto max-md:flex-col"
                         >
                             {ingredients.map((ingredient, index) => (
                                 <motion.div 
                                     key={index} 
-                                    className="bg-white border border-green rounded-md xl:p-5 p-3 flex justify-center relative group shadow-md"
+                                    className="bg-white rounded-md xl:p-5 p-3 flex justify-center relative group shadow-md"
                                     variants={itemScaleUpVariants}
                                 >
                                     <p className='group-hover:text-gold text-lg leading-6 text-center text-green !font-semibold relative z-[2]'>
@@ -407,7 +453,10 @@ function SupplementDetails() {
                     </motion.div>
                 </div>
             </div>
-        </div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className='absolute -bottom-0.5 w-full left-0 z-[99]'>
+            <path fill="#fff" fill-opacity="1" d="M0,256L48,234.7C96,213,192,171,288,170.7C384,171,480,213,576,224C672,235,768,213,864,192C960,171,1056,149,1152,154.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </motion.div>
     )
 }
 export default SupplementDetails;

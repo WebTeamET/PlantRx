@@ -75,7 +75,7 @@ function SupplementBanner() {
         <div
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative md:h-[310vh] product-section"
+            className="relative md:h-[320vh] product-section"
         >
             <div className="absolute w-full h-full z-9 block" style={{ background: "radial-gradient(circle, rgba(194, 160, 88, 0.35) 0%, transparent 70%)" }} />
             <div className="sticky top-[12%] flex items-center xl:justify-start justify-center md:gap-[100px] gap-5 flex-col md:h-[110dvh] sm:h-[calc(100dvh-64px)] h-[calc(100dvh-56px)] overflow-hidden md:pb-20">

@@ -1630,3 +1630,6 @@ iframe[src*="tawk.to"] {
   transform-origin: 50% 50%;
   will-change: transform;
 }
+.inner-text-white > * {
+  @apply text-white;
+}
