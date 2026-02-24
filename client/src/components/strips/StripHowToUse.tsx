@@ -66,7 +66,7 @@ function SlideCard({
       }}
     >
       <div className="card-inner w-full bg-green rounded-lg relative">
-        <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div>
+        {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
         <div className="relative z-10 p-7 text-center *:text-white">
             <h3 className="mb-3">
               {slide.title}

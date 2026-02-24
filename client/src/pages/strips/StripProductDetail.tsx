@@ -2,6 +2,7 @@
 import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
 import StripBanner from "@/components/strips/StripBanner";
+import StripHowToUse from "@/components/strips/StripHowToUse";
 import StripsBenefits from "@/components/strips/StripsBenefits";
 import StripsIngredients from "@/components/strips/StripsIngredients";
 import StripStory from "@/components/strips/StripsStory";
@@ -173,6 +174,7 @@ export default function StripProductDetail() {
         <StripStory product={product} />
         <StripsBenefits product={product} />
         <StripsIngredients />
+        <StripHowToUse />
 
         {/* Observer Target for Hide CTA */}
         <div ref={footerRef} className="h-20" />
