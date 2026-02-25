@@ -7,6 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 interface Product {
   id: string
   title: string
+  variantId: string;
   price: number | string
   productLink: string
   cardBgColor: string
@@ -35,7 +36,7 @@ function ProductCard({ product }: ProductCardProps) {
   const handleClick = async () => {
     setLoading(true);
     try {
-      const success = await addToCart(product as any, product.id);
+      const success = await addToCart(product as any, product.variantId);
       if (success) {
         setCartOpen(true);
       }

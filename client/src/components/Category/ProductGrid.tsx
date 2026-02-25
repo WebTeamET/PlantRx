@@ -32,6 +32,7 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                         return {
                             id: p.id,
                             title: p.title,
+                            variantId: p.variants[0]?.id || "",
                             price: p.variants[0]?.price.amount || "0.00",
                             productLink: `/strips/${p.handle}`,
                             productImage: p.images[0]?.url || '',
