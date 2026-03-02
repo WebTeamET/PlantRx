@@ -16,7 +16,7 @@ import { getReturnState, clearReturnState, restoreScrollPosition, resetContentCo
 
 export default function Login() {
   useEnhancedPageTracking('auth', 'login');
-  
+
   // Set modal active flag for trust popup coordination
   useEffect(() => {
     (window as any).PLANT_RX_MODAL_ACTIVE = true;
@@ -24,7 +24,7 @@ export default function Login() {
       (window as any).PLANT_RX_MODAL_ACTIVE = false;
     };
   }, []);
-  
+
   const [, setLocation] = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,9 +53,9 @@ export default function Login() {
           isAuthenticated: true,
           provider: 'google'
         };
-        
+
         localStorage.setItem('plantrx-user', JSON.stringify(userData));
-        
+
         // Check for return state and navigate accordingly
         resetContentCounts(); // Reset click counts after successful login
         const returnState = getReturnState();
@@ -93,7 +93,7 @@ export default function Login() {
 
       // Use Firebase email authentication
       await emailSignIn(email, password);
-      
+
       // Success will be handled by the onAuthStateChanged listener
     } catch (error: any) {
       const errorMessage = getAuthErrorMessage(error);
@@ -114,18 +114,18 @@ export default function Login() {
       // Success will be handled by the onAuthStateChanged listener
     } catch (error: any) {
       console.error('Google sign in error:', error);
-      
+
       // Wait a moment to see if auth actually succeeded
       setTimeout(() => {
         // Only show error if user is still not authenticated
         if (!auth.currentUser) {
           // Don't show error if user cancelled or if redirecting
-          if (error.code !== 'auth/popup-closed-by-user' && 
-              error.code !== 'auth/cancelled-popup-request' &&
-              !error.message.includes('Redirecting to Google')) {
-            
+          if (error.code !== 'auth/popup-closed-by-user' &&
+            error.code !== 'auth/cancelled-popup-request' &&
+            !error.message.includes('Redirecting to Google')) {
+
             const errorMessage = getAuthErrorMessage(error);
-            
+
             // Special handling for domain authorization error
             if (error.code === 'auth/unauthorized-domain') {
               toast({
@@ -156,15 +156,15 @@ export default function Login() {
       // Success will be handled by the onAuthStateChanged listener
     } catch (error: any) {
       console.error('Apple sign in error:', error);
-      
+
       // Wait a moment to see if auth actually succeeded
       setTimeout(() => {
         // Only show error if user is still not authenticated
         if (!auth.currentUser) {
           // Don't show error if user cancelled or if redirecting
-          if (error.code !== 'auth/popup-closed-by-user' && 
-              error.code !== 'auth/cancelled-popup-request' &&
-              !error.message.includes('Redirecting to Apple')) {
+          if (error.code !== 'auth/popup-closed-by-user' &&
+            error.code !== 'auth/cancelled-popup-request' &&
+            !error.message.includes('Redirecting to Apple')) {
             const errorMessage = getAuthErrorMessage(error);
             toast({
               title: "Apple Sign In Failed",
@@ -181,8 +181,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <SEOHead 
+    <div className="relative min-h-screen bg-gradient-to-br from-green-50 via-white to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+
+      {/* Your existing content here */}
+      <SEOHead
         title="Sign In - PlantRx Expert Natural Health Platform"
         description="Sign in to your PlantRx account to access personalized natural remedies, expert consultations, and exclusive wellness content."
         keywords="sign in, login, PlantRx account, natural health platform, wellness login"
@@ -190,160 +192,53 @@ export default function Login() {
         noindex={true}
       />
 
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 lg:py-16">
-        {/* Mobile/Tablet Layout (hidden on laptop+) */}
-        <div className="max-w-md mx-auto xl:hidden flex items-center justify-center min-h-screen">
-          <div className="w-full">
-            <div className="text-center mb-6 sm:mb-8">
-              <div className="flex items-center justify-center mb-4 sm:mb-6">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-xl">
-                  <Leaf className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Welcome Back
-              </h1>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-                Sign in to continue your natural health journey
-              </p>
-            </div>
-            
-            <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border border-white/20 dark:border-gray-700/20">
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="h-12 sm:h-14 text-base border-gray-300 dark:border-gray-600 rounded-lg sm:rounded-xl"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300">Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="h-12 sm:h-14 text-base border-gray-300 dark:border-gray-600 rounded-lg sm:rounded-xl pr-12"
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-0 top-0 h-12 sm:h-14 px-3 sm:px-4 py-2 hover:bg-transparent"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
-                      ) : (
-                        <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold bg-green-600 hover:bg-green-700 text-white rounded-lg sm:rounded-xl" 
-                  disabled={isLoading || isGoogleLoading || isAppleLoading}
-                >
-                  {isLoading ? "Signing In..." : "Sign In"}
-                </Button>
-              </form>
+      <div className="container mx-auto mx-auto px-3 sm:px-4 py-10 sm:py-8 lg:py-16">
 
-              <div className="flex items-center my-6">
-                <Separator className="flex-1" />
-                <span className="px-4 text-sm sm:text-base text-gray-500 dark:text-gray-400">or</span>
-                <Separator className="flex-1" />
-              </div>
-
-              <div className="space-y-3">
-                <Button 
-                  onClick={handleGoogleSignIn}
-                  variant="outline"
-                  className="w-full h-12 sm:h-14 text-base font-medium border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg sm:rounded-xl"
-                  disabled={isLoading || isGoogleLoading || isAppleLoading}
-                >
-                  <FaGoogle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-red-500" />
-                  {isGoogleLoading ? "Signing in with Google..." : "Continue with Google"}
-                </Button>
-
-                <Button 
-                  onClick={handleAppleSignIn}
-                  variant="outline"
-                  className="w-full h-12 sm:h-14 text-base font-medium border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg sm:rounded-xl"
-                  disabled={isLoading || isGoogleLoading || isAppleLoading}
-                >
-                  <FaApple className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-gray-900 dark:text-white" />
-                  {isAppleLoading ? "Signing in with Apple..." : "Continue with Apple"}
-                </Button>
-              </div>
-              
-              <div className="mt-6 text-center">
-                <span className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Don't have an account? </span>
-                <Link href="/signup" className="text-sm sm:text-base text-green-600 hover:text-green-700 font-semibold">
-                  Sign up here
-                </Link>
-              </div>
-              
-              <div className="mt-4 text-center">
-                <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-                  ← Back to PlantRx
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        
         {/* Laptop/Desktop Layout (visible on xl+ screens) */}
-        <div className="hidden xl:block max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 gap-16 items-center min-h-screen">
+        <div className="block">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 max-lg:gap-10 items-center min-h-screen">
             {/* Left Side - Welcome Message */}
             <div className="space-y-8">
               {/* Logo Section */}
               <div className="flex items-center space-x-4 mb-12">
-                <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-3xl flex items-center justify-center shadow-xl">
+                {/* <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-3xl flex items-center justify-center shadow-xl">
                   <Leaf className="w-10 h-10 text-white" />
-                </div>
+                </div> */}
                 <div>
-                  <h1 className="text-4xl font-bold text-gray-900 dark:text-white">PlantRx</h1>
-                  <p className="text-lg text-gray-600 dark:text-gray-300">Expert Natural Health Platform</p>
+                  <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+                    <img src="/logo-green.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto mb-3"></img>
+                  </h1>
+                  <p className="text-lg text-primary dark:text-gray-300">Expert Natural Health Platform</p>
                 </div>
               </div>
-              
+
               {/* Welcome Message */}
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back!</h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              <div className="space-y-5">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Welcome Back!</h2>
+                <p className="text-base sm:text-lg text-primary dark:text-gray-300 leading-relaxed">
                   Continue your natural wellness journey with personalized remedies, expert guidance, and a supportive community dedicated to your health.
                 </p>
-                <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6 border border-green-100 dark:border-green-800">
-                  <p className="text-green-800 dark:text-green-200 font-medium">
-                    🌿 Over 181+ verified natural remedies waiting for you
+                <div className="bg-gold/10 dark:bg-green-900/20 rounded-2xl p-4 border border-gold dark:border-green-800">
+                  <p className="text-base sm:text-lg text-green-800 dark:text-green-200 font-medium">
+                    🌿  Over 181+ verified natural remedies waiting for you
                   </p>
                 </div>
               </div>
             </div>
-            
+
             {/* Right Side - Login Form */}
-            <div className="flex items-center justify-center">
-              <div className="w-full max-w-md">
-                <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/20 dark:border-gray-700/20">
+            <div className="relative flex items-center justify-center">
+              
+              <div className="w-full">
+                <div className="bg-gold/10 dark:bg-gray-800/60 backdrop-blur-sm rounded-sm p-8 shadow-xl border border-white/20 dark:border-gray-700/20 rounded-xl">
                   <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Sign In</h1>
-                    <p className="text-gray-600 dark:text-gray-300">Access your PlantRx account</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Sign In</h1>
+                    <p className="text-lg text-primary dark:text-gray-300">Access your PlantRx account</p>
                   </div>
-                  
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="email-desktop" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</Label>
+                      <Label htmlFor="email-desktop" className="text-sm font-medium text-primary dark:text-gray-300">Email</Label>
                       <Input
                         id="email-desktop"
                         type="email"
@@ -351,11 +246,11 @@ export default function Login() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="h-12 text-base border-gray-300 dark:border-gray-600 rounded-xl"
+                        className="!h-12 !text-sm !border-gold dark:border-gray-600 rounded-xl"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="password-desktop" className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</Label>
+                      <Label htmlFor="password-desktop" className="text-sm font-medium text-primary dark:text-gray-300">Password</Label>
                       <div className="relative">
                         <Input
                           id="password-desktop"
@@ -364,69 +259,71 @@ export default function Login() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           required
-                          className="h-12 text-base border-gray-300 dark:border-gray-600 rounded-xl pr-12"
+                          className="!h-12 !text-sm !border-gold dark:border-gray-600 rounded-xl pr-12"
                         />
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
-                          className="absolute right-0 top-0 h-12 px-4 py-2 hover:bg-transparent"
+                          className="absolute right-0 top-1/2 -translate-y-1/2 h-12 px-4 py-2 hover:bg-transparent"
                           onClick={() => setShowPassword(!showPassword)}
                         >
                           {showPassword ? (
-                            <EyeOff className="h-5 w-5 text-gray-400" />
+                            <EyeOff className="h-4 w-4 text-primary" />
                           ) : (
-                            <Eye className="h-5 w-5 text-gray-400" />
+                            <Eye className="h-4 w-4 text-primary" />
                           )}
                         </Button>
                       </div>
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full h-12 text-base font-semibold bg-green-600 hover:bg-green-700 text-white rounded-xl" 
-                      disabled={isLoading || isGoogleLoading || isAppleLoading}
-                    >
-                      {isLoading ? "Signing In..." : "Sign In"}
-                    </Button>
+                    <div className="w-full mx-auto flex justify-center">
+                      <Button
+                        type="submit"
+                        className="ctm-button btn-green mx-auto w-max !border-none !min-w-[200px]"
+                        disabled={isLoading || isGoogleLoading || isAppleLoading}
+                      >
+                        {isLoading ? "Signing In..." : "Sign In"}
+                      </Button>
+                    </div>
                   </form>
 
-                  <div className="flex items-center my-6">
+                  <div className="flex items-center my-5 max-sm:my-3">
                     <Separator className="flex-1" />
-                    <span className="px-4 text-sm text-gray-500 dark:text-gray-400">or</span>
+                    <span className="px-4 text-sm sm:text-base text-primary dark:text-gray-400">or</span>
                     <Separator className="flex-1" />
                   </div>
 
                   <div className="space-y-4">
-                    <Button 
+                    <Button
                       onClick={handleGoogleSignIn}
                       variant="outline"
-                      className="w-full h-14 text-lg font-semibold border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl shadow-sm hover:shadow-md transition-all"
+                      className="ctm-button btn-green min-w-full hover:!text-white hover:!border-none !border-none max-sm:!text-base max-sm:!px-4"
                       disabled={isLoading || isGoogleLoading || isAppleLoading}
                     >
-                      <FaGoogle className="w-5 h-5 mr-3 text-red-500" />
+                      <FaGoogle className="!w-4 !h-3.5 text-white" />
                       {isGoogleLoading ? "Signing in with Google..." : "Continue with Google"}
                     </Button>
 
-                    <Button 
+                    <Button
                       onClick={handleAppleSignIn}
                       variant="outline"
-                      className="w-full h-14 text-lg font-semibold border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 rounded-xl shadow-sm hover:shadow-md transition-all"
+                      className="ctm-button btn-green min-w-full hover:!text-white hover:!border-none !border-none max-sm:!text-base max-sm:!px-4"
                       disabled={isLoading || isGoogleLoading || isAppleLoading}
                     >
-                      <FaApple className="w-5 h-5 mr-3 text-gray-900 dark:text-white" />
+                      <FaApple className="w-5 h-5 text-white" />
                       {isAppleLoading ? "Signing in with Apple..." : "Continue with Apple"}
                     </Button>
                   </div>
-          
+
                   <div className="mt-6 text-center">
                     <span className="text-sm text-gray-600 dark:text-gray-400">Don't have an account? </span>
-                    <Link href="/signup" className="text-sm text-green-600 hover:text-green-700 font-semibold">
+                    <Link href="/signup" className="text-sm text-green-600 hover:!text-green font-semibold">
                       Sign up here
                     </Link>
                   </div>
-                  
+
                   <div className="mt-4 text-center">
-                    <Link href="/" className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                    <Link href="/" className="text-sm text-gray-500 hover:text-green hover:font-bold dark:text-gray-400 dark:hover:text-gray-300">
                       ← Back to PlantRx
                     </Link>
                   </div>

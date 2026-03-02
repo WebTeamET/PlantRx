@@ -1,10 +1,7 @@
 // Firebase Admin SDK for server-side authentication
 import admin from 'firebase-admin';
 import { existsSync } from 'fs';
-import pkg from 'glob';
-
-// `glob` is a CommonJS module – get the named export from the default import
-const { glob } = pkg as { glob: typeof import('glob')['glob'] };
+import { globSync } from 'glob';
 
 let adminApp: admin.app.App | null = null;
 
@@ -13,7 +10,7 @@ function checkForCommittedSecrets() {
   try {
     const patterns = ['**/attached_assets/*firebase*adminsdk*.json', '**/attached_assets/*service-account*.json'];
     for (const pattern of patterns) {
-      const files = glob.sync(pattern, { ignore: 'node_modules/**' });
+      const files = globSync(pattern, { ignore: 'node_modules/**' });
       if (files.length > 0) {
         console.error(`🚨 SECURITY ALERT: Found committed service account files: ${files.join(', ')}`);
         console.error('🚨 These files contain private keys and must be removed immediately!');

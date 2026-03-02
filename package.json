@@ -82,6 +82,7 @@
     "firebase": "^12.1.0",
     "firebase-admin": "^13.4.0",
     "framer-motion": "^11.13.1",
+    "glob": "^13.0.6",
     "google-auth-library": "^10.3.0",
     "html2canvas": "^1.4.1",
     "input-otp": "^1.4.2",
