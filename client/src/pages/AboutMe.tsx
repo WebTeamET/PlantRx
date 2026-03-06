@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, User, Lightbulb, Heart, Target, ChevronRight, ExternalLink, Sparkles, Leaf, BookOpen, Code, Rocket, Star, Zap, Award, Package, Users, TrendingUp, Store, Layers, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SiLinkedin } from "react-icons/si";
+import { SiLinkerd } from "react-icons/si";
 import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import founderPhoto from "@assets/IMG_5496_1765046081124.jpeg";
 
@@ -373,7 +373,7 @@ export default function AboutMe() {
               onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/mirza-zayan-beg-6b3b82285', '_blank', 'noopener,noreferrer'); }}
               className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 bg-[#0077B5] hover:bg-[#006699] text-white rounded-xl font-medium text-sm sm:text-base transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 hover:-translate-y-0.5 group cursor-pointer"
             >
-              <SiLinkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <SiLinkerd className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Connect on LinkedIn
               <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>

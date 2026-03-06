@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Leaf, Instagram, ChevronDown, ChevronUp, Mail, Send } from "lucide-react";
-import { SiTiktok, SiFacebook, SiX, SiLinkedin, SiPinterest } from "react-icons/si";
+import { SiTiktok, SiFacebook, SiX, SiLinkerd, SiPinterest } from "react-icons/si";
 import { useState } from "react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useMutation } from "@tanstack/react-query";
@@ -139,7 +139,7 @@ export default function Footer() {
                 <SiX className="w-5 h-5 text-gray-700 dark:text-gray-300" />
               </a>
               <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="LinkedIn">
-                <SiLinkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                <SiLinkerd className="w-5 h-5 text-gray-700 dark:text-gray-300" />
               </a>
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
-                      <SiLinkedin className="w-4 h-4" /> LinkedIn
+                      <SiLinkerd className="w-4 h-4" /> LinkedIn
                     </a>
                   </li>
                 </ul>

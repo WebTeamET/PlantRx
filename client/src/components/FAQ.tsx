@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 
 interface FAQItem {
   question: string;
@@ -39,7 +41,8 @@ export function FAQ({ items, title = "Frequently Asked Questions", className = "
       <CardContent className="pt-0">
         <div className="space-y-2 sm:space-y-3">
           {items.map((item, index) => (
-            <div 
+            <motion.div 
+            variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
               key={index}
               className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
               data-testid={`faq-item-${index}`}
@@ -68,7 +71,7 @@ export function FAQ({ items, title = "Frequently Asked Questions", className = "
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </CardContent>

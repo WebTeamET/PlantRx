@@ -30,6 +30,7 @@ import { useRef, useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import PlanRxCreator from "@/components/PlanRxCreator";
+import { SplitText } from "@/utils/SplitText";
 
 const blueprintTypes = [
   {
@@ -350,7 +351,7 @@ export default function ToolsBlueprintDesigner() {
         <meta name="description" content="Design comprehensive wellness blueprints and health plans with the PlantRx Blueprint Designer." />
       </Helmet>
 
-      <ScrollProgress />
+      {/* <ScrollProgress /> */}
 
       <div ref={containerRef} className="overflow-x-hidden">
         
@@ -384,11 +385,9 @@ export default function ToolsBlueprintDesigner() {
               </FloatingElement>
             </FadeInSection>
             
-            <FadeInSection delay={0.2}>
               <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3 sm:mb-6 lg:mb-8 leading-tight">
-                {t('home.planrx.title', 'Wellness Blueprint Designer')}
+                <SplitText text={t('home.planrx.title', 'Wellness Blueprint Designer')} />
               </h1>
-            </FadeInSection>
             
             <FadeInSection delay={0.4}>
               <p className="text-sm sm:text-xl lg:text-2xl xl:text-3xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">

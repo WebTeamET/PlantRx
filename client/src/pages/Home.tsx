@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Lenis from "lenis";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +27,8 @@ import affiliateBannerImage from "@assets/affiliate members at plantrx_176416833
 import { GoldTrialBanner } from "@/components/GoldTrialBanner";
 import { ArticleCarousel } from "@/components/ArticleCarousel";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { containerVariants, slideRightVariants, slideUpVariants } from "@/animation/framerMotionVariants";
+import { container, SplitText } from "@/utils/SplitText";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,6 +46,27 @@ export default function Home() {
   const { toast } = useToast();
   const { t } = useTranslation();
 
+  // lenis
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+    });
+
+    let rafId: number;
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
+
   // Check authentication status
   useEffect(() => {
     const unsubscribe = onAuthStateChanged((currentUser) => {
@@ -59,10 +83,10 @@ export default function Home() {
     staleTime: 10 * 60 * 1000, // 10 minutes cache
     gcTime: 30 * 60 * 1000, // 30 minutes in memory
   });
-  
+
   // Type-safe access to remedies
   const remedies = Array.isArray(featuredRemedies) ? featuredRemedies : [];
-  
+
   // Set content ready after initial data loads
   useEffect(() => {
     if (!isLoadingFeatured && remedies.length >= 0) {
@@ -80,7 +104,7 @@ export default function Home() {
     staleTime: 5 * 60 * 1000, // 5 minutes cache
     gcTime: 15 * 60 * 1000,
   });
-  
+
   // Type-safe access to articles
   const mostClicked = Array.isArray(mostClickedData) ? mostClickedData : [];
   const blogPosts = mostClicked;
@@ -98,13 +122,13 @@ export default function Home() {
     setIsSearching(true);
     try {
       // Simple client-side search through featured remedies
-      const filtered = remedies.filter((remedy: any) => 
+      const filtered = remedies.filter((remedy: any) =>
         remedy.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         remedy.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         remedy.ingredients?.some((ing: string) => ing.toLowerCase().includes(searchQuery.toLowerCase()))
       );
       setSearchResults(filtered);
-      
+
       if (filtered.length === 0) {
         toast({
           title: "No results found",
@@ -152,7 +176,7 @@ export default function Home() {
     setIsGenerating(true);
     try {
       console.log("🤖 Generating AI-powered remedy...");
-      
+
       const response = await fetch('/api/generate-remedy', {
         method: 'POST',
         headers: {
@@ -170,21 +194,21 @@ export default function Home() {
       }
 
       const remedy = await response.json();
-      
+
       setGeneratedRemedy(remedy);
       setIsSaved(false); // Reset saved state for new remedy
       toast({
         title: "🌿 Expert Remedy Generated!",
         description: "Your personalized natural remedy has been crafted by our AI health experts.",
       });
-      
+
       console.log("✅ Remedy generated successfully:", remedy.name);
     } catch (error: any) {
       console.error("❌ Remedy generation error:", error);
-      
+
       let errorTitle = "Generation Failed";
       let errorDescription = "Unable to generate remedy at this time. Please try again.";
-      
+
       if (error.message?.includes("only provide guidance on health")) {
         errorTitle = "Health Topic Required";
         errorDescription = "I can only provide guidance on health and wellness topics. Please ask about natural remedies, nutrition, fitness, or other health concerns.";
@@ -193,7 +217,7 @@ export default function Home() {
       } else if (error.message?.includes("Incomplete remedy")) {
         errorDescription = "Please try rephrasing your health concern for better results.";
       }
-      
+
       toast({
         title: errorTitle,
         description: errorDescription,
@@ -213,7 +237,7 @@ export default function Home() {
       const authCheck = await fetch('/api/auth/me', {
         credentials: 'include'
       });
-      
+
       if (!authCheck.ok) {
         toast({
           title: "Authentication required",
@@ -268,7 +292,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen luxury-gradient-bg">
-      <SEOHead 
+      <SEOHead
         title="PlantRx — Expert Natural Remedies & Herbal Health Platform | 166+ Verified Solutions"
         description="Discover 166+ verified plant-based remedies, backed by experts. Get personalized natural solutions for better health. Free symptom checker & expert chat included!"
         keywords="PlantRx, PlantRx app, PlantRx natural health, natural remedies, herbal medicine, plant based medicine, alternative medicine, holistic health, natural healing, herbal remedies, wellness platform, health technology, symptom checker, remedy finder, natural health app, plant medicine, organic remedies, traditional medicine, integrative health, preventive medicine"
@@ -292,7 +316,7 @@ export default function Home() {
             "query-input": "required name=search_term_string"
           },
           "hasOfferCatalog": {
-            "@type": "OfferCatalog", 
+            "@type": "OfferCatalog",
             "name": "Natural Remedies",
             "itemListElement": [
               {
@@ -308,16 +332,16 @@ export default function Home() {
         }}
       />
       <Header />
-      
+
       {/* Gold Trial Promotional Banner */}
       <GoldTrialBanner />
-      
+
       {/* Interactive Animated Hero Section */}
-      <section className="relative py-10 sm:py-16 lg:py-28 mobile-safe-area ios-safe-area-top min-h-[85vh] sm:min-h-[90vh] flex items-center">
+      <section className="relative py-10 sm:py-16 lg:py-28 mobile-safe-area ios-safe-area-top min-h-[85vh] sm:min-h-[90vh] flex items-center overflow-hidden">
         {/* Animated gradient background layers */}
-        
+
         {/* Animated mesh gradient */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0"
           animate={{
             background: [
@@ -328,7 +352,7 @@ export default function Home() {
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-        
+
         {/* Floating botanical icons - decorative layer positioned around edges */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Edge-positioned floating icons - avoiding center content */}
@@ -366,13 +390,12 @@ export default function Home() {
                 delay: i * 0.25,
               }}
             >
-              <div className={`w-6 h-6 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-sm ${
-                item.icon === 'leaf' 
-                  ? 'bg-green/15 dark:bg-emerald-400/15' 
-                  : item.icon === 'sparkle' 
-                    ? 'bg-gold/35 dark:bg-amber-400/15' 
+              <div className={`w-6 h-6 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-sm ${item.icon === 'leaf'
+                  ? 'bg-green/15 dark:bg-emerald-400/15'
+                  : item.icon === 'sparkle'
+                    ? 'bg-gold/35 dark:bg-amber-400/15'
                     : 'bg-rose-500/10 dark:bg-rose-400/10'
-              }`}>
+                }`}>
                 {item.icon === 'leaf' && <Leaf className="w-3 h-3 sm:w-5 sm:h-5 text-green dark:text-emerald-400" />}
                 {item.icon === 'sparkle' && <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 text-gold dark:text-amber-400" />}
                 {item.icon === 'heart' && <Heart className="w-3 h-3 sm:w-5 sm:h-5 text-rose-500 dark:text-rose-400" />}
@@ -380,7 +403,7 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-        
+
         {/* Animated orbs with glow */}
         <motion.div
           className="absolute top-20 left-[5%] w-40 h-40 sm:w-72 sm:h-72 rounded-full blur-3xl"
@@ -404,11 +427,11 @@ export default function Home() {
           }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
         />
-        
+
         {/* Center glow pulse */}
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-[500px] sm:h-[500px] rounded-full"
-          style={{ 
+          style={{
             background: "radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(217, 119, 6, 0.1) 40%, transparent 70%)",
             filter: "blur(60px)"
           }}
@@ -418,7 +441,7 @@ export default function Home() {
           }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
-        
+
         {/* Main content */}
         <div className="max-w-6xl mx-auto text-center relative z-10 px-4 w-full">
           {/* Animated trust badge */}
@@ -430,7 +453,7 @@ export default function Home() {
             style={{ willChange: "transform, opacity" }}
             className="mb-6 sm:mb-8"
           >
-            <motion.div 
+            <motion.div
               className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
@@ -443,74 +466,61 @@ export default function Home() {
               <Sparkles className="w-4 h-4 text-gold" />
             </motion.div>
           </motion.div>
-          
+
           {/* Animated PlantRx Title with Split Text Effect */}
-          <motion.div
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          
+          <div
             className="mb-4 sm:mb-6"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
+            <h1 
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
               <span
                 className="text-gray-800 dark:text-white block sm:inline"
               >
-                Welcome to{" "}
+                <SplitText text="Welcome to " />
               </span>
               <span className="relative">
                 <span
                   className="text-green dark:text-emerald-400"
                 >
-                  Plant
+                   <SplitText text="Plant" />
                 </span>
                 <span
                   className="text-gold dark:text-amber-400 font-black"
                 >
-                  R
+                  <SplitText text="R" /> 
                 </span>
                 <span
                   className="text-green dark:text-emerald-400 font-black"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  x
+                  <SplitText text="x" />
                 </span>
-                {/* Decorative leaf - hidden on mobile to prevent overlap */}
-                <motion.div
-                  className="absolute -top-6 -right-6 hidden sm:block"
-                  animate={{ rotate: [-5, 5, -5], y: [0, -3, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Leaf className="w-8 h-8 text-green dark:text-emerald-400 drop-shadow-lg" />
-                </motion.div>
               </span>
             </h1>
-          </motion.div>
-          
+          </div>
+
           {/* Animated subtitle */}
           <motion.p
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto font-body leading-relaxed"
           >
             {t('home.hero.subtitle', 'Expert natural remedies that work. No chemicals. No side effects. Real results.')}
           </motion.p>
-          
+
           {/* CTA Buttons with hover effects */}
           <motion.div
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: 0.15, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button 
+              <Button
                 onClick={() => navigateTo('/remedies')}
                 className="group relative px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold btn-green"
                 data-testid="hero-explore-remedies"
@@ -522,9 +532,9 @@ export default function Home() {
                 </span>
               </Button>
             </motion.div>
-            
+
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button 
+              <Button
                 onClick={() => navigateTo('/smart-tools')}
                 variant="outline"
                 className="group px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold border-2 border-green dark:border-emerald-600 text-green dark:text-emerald-300 hover:bg-green dark:hover:bg-emerald-900/30 hover:text-white rounded-2xl backdrop-blur-sm"
@@ -538,7 +548,7 @@ export default function Home() {
               </Button>
             </motion.div>
           </motion.div>
-          
+
           {/* Quick links row - Enhanced with icons and modern styling */}
           <motion.div
             initial={{ opacity: 0.92, y: 24 }}
@@ -548,7 +558,12 @@ export default function Home() {
             style={{ willChange: "transform, opacity" }}
             className="mt-8 sm:mt-12"
           >
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <motion.div 
+            variants={containerVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               {[
                 { href: '/store', label: 'Shop Store', icon: 'store', external: false },
                 { href: '/blog', label: 'Read Articles', icon: 'book', external: false },
@@ -564,6 +579,7 @@ export default function Home() {
                   className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 text-gray-700 dark:text-gray-300 hover:bg-green/10 dark:hover:bg-emerald-900/30 hover:border-green dark:hover:border-emerald-700 hover:text-green dark:hover:text-emerald-300 transition-all duration-300 cursor-pointer font-medium text-sm sm:text-base shadow-sm hover:shadow-md"
                   whileHover={{ y: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  variants={slideRightVariants as any}
                 >
                   {link.icon === 'store' && (
                     <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green group-hover:text-green transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -593,22 +609,22 @@ export default function Home() {
                   )}
                 </motion.a>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
-          
+
           {/* Research backing */}
           <motion.div
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: 0.25, ease: "easeOut" }}
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             style={{ willChange: "transform, opacity" }}
             className="mt-8 sm:mt-10 flex flex-col items-center text-center"
           >
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500 mb-2 max-w-lg">
               {t('home.hero.research', 'All remedies backed by scientific research.')}
             </p>
-            <a 
+            <a
               href="https://www.ncbi.nlm.nih.gov/pubmed"
               target="_blank"
               rel="noopener noreferrer"
@@ -625,7 +641,7 @@ export default function Home() {
       <section className="py-8 sm:py-20 lg:py-28 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header - Clean and minimal on mobile */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0.92, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
@@ -641,11 +657,11 @@ export default function Home() {
               </span>
             </div>
             <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-5 tracking-tight leading-tight">
-              {t('home.articles.title', 'Popular Articles')}
+              <SplitText text={t('home.articles.title', 'Popular Articles')} />
             </h2>
-            <p className="text-xs sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
+            <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
               {t('home.articles.subtitle', 'Discover our most popular wellness guides loved by thousands of readers')}
-            </p>
+            </motion.p>
           </motion.div>
 
           {/* Two Premium Carousels - Tighter spacing on mobile */}
@@ -670,7 +686,7 @@ export default function Home() {
 
           {/* View All Articles CTA - Compact on mobile */}
           {blogPosts.length > 0 && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0.92, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -695,34 +711,31 @@ export default function Home() {
       <section className="py-8 sm:py-16 lg:py-24 bg-gradient-to-b from-white via-emerald-50/30 to-white dark:from-gray-900 dark:via-emerald-900/10 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <motion.div 
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          <div
             className="text-center mb-6 sm:mb-12 lg:mb-16"
           >
             <Badge className="bg-green/10 dark:bg-emerald-900/40 text-green dark:text-emerald-200 border-green dark:border-green mb-2 sm:mb-4 text-[10px] sm:text-xs px-2.5 sm:px-4 py-1 sm:py-2 font-semibold tracking-wide">
               OUR METHODOLOGY
             </Badge>
-            <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4 tracking-tight">
-              How PlantRx Develops Every Remedy
+            <h2
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4 tracking-tight">
+              <SplitText text="How PlantRx Develops Every Remedy" />
             </h2>
-            <p className="text-xs sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
+            <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
               A rigorous 4-step scientific process ensuring every remedy meets the highest standards of efficacy and safety
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
 
           {/* 4-Step Process Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+          <motion.div
+          variants={containerVariants as any}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {/* Step 1: Deep Theoretical & Historical Analysis */}
             <motion.div
-              initial={{ opacity: 0.92, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.35, delay: 0, ease: "easeOut" }}
-              style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
@@ -745,15 +758,11 @@ export default function Home() {
 
             {/* Step 2: Scientific Research & Evidence Review */}
             <motion.div
-              initial={{ opacity: 0.92, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.35, delay: 0.06, ease: "easeOut" }}
-              style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-              <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <Search className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
@@ -772,15 +781,11 @@ export default function Home() {
 
             {/* Step 3: Expert Evaluation & Safety Screening */}
             <motion.div
-              initial={{ opacity: 0.92, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.35, delay: 0.12, ease: "easeOut" }}
-              style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-              <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
@@ -799,15 +804,11 @@ export default function Home() {
 
             {/* Step 4: Real-World Testing & Final Selection */}
             <motion.div
-              initial={{ opacity: 0.92, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.35, delay: 0.18, ease: "easeOut" }}
-              style={{ willChange: "transform, opacity" }}
+            variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-              <div className="absolute -inset-0.5 bg-gradient-to-br from-green/50 to-green/50 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-              <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/50 to-green/50 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <Leaf className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
@@ -823,26 +824,26 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Featured Remedies Section */}
       <section className="py-10 sm:py-10 lg:py-14 bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          <div
             className="text-center mb-6 sm:mb-8"
           >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-3">Explore Remedies</h2>
-            <p className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
+            <h2 
+            className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-3">
+              <SplitText text="Explore Remedies"/>
+            </h2>
+            <motion.p 
+            variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+            className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
               Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green-600 dark:text-green-400 hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green-600 dark:text-green-400 hover:underline">ginger for digestion</a>
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
 
           {isLoadingFeatured ? (
             <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
@@ -853,7 +854,7 @@ export default function Home() {
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(featuredRemedies as any[]).slice(0, 3).map((remedy: any, index: number) => (
-                <motion.div 
+                <motion.div
                   key={remedy.id}
                   initial={{ opacity: 0.92, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -868,12 +869,8 @@ export default function Home() {
             </div>
           )}
 
-          <motion.div 
-            initial={{ opacity: 0.92, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, delay: 0.2, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          <motion.div
+            variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
             className="text-center mt-8 sm:mt-10"
           >
             <Link href="/remedies">
@@ -895,7 +892,7 @@ export default function Home() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             style={{ willChange: "transform, opacity" }}
           >
-            <div 
+            <div
               className="group relative bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_20px_50px_rgb(0,0,0,0.4)] transition-all duration-500 border border-gray-100 dark:border-gray-800"
               data-testid="affiliate-banner"
             >
@@ -903,8 +900,22 @@ export default function Home() {
               <div className="flex flex-col md:flex-row items-center">
                 {/* Image Container */}
                 <div className="w-full md:w-1/2 p-4 sm:p-6">
-                  <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-500">
-                    <img 
+                  <motion.div
+                    initial={{
+                      clipPath: 'inset(0 100% 0 0)',
+                      WebkitClipPath: 'inset(0 100% 0 0)'
+                    }}
+                    whileInView={{
+                      clipPath: 'inset(0 0% 0 0)',
+                      WebkitClipPath: 'inset(0 0% 0 0)'
+                    }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                    viewport={{ once: true }}
+                    style={{
+                      transformOrigin: 'left'
+                    }}
+                    className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-500">
+                    <img
                       src={affiliateBannerImage}
                       alt="PlantRx Affiliate Partners - Trusted Natural Health Team"
                       className="w-full h-auto object-cover transform group-hover:scale-[1.02] transition-transform duration-700 ease-out"
@@ -913,11 +924,12 @@ export default function Home() {
                     />
                     {/* Subtle gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Text Content */}
-                <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
+                <div 
+                className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
                   {/* Badge */}
                   <div className="inline-flex items-center gap-2 mb-4 justify-center md:justify-start">
                     <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-green dark:bg-emerald-900/40 text-white dark:text-emerald-400 rounded-full">
@@ -967,13 +979,15 @@ export default function Home() {
 
       {/* NEW: Understanding Clinical Herbal Medicine Section - 350+ Words - COLLAPSIBLE */}
       <section className="py-8 sm:py-12 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+        variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+        className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <Collapsible>
             <CollapsibleTrigger asChild>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-[80px] sm:min-h-[96px] rounded-2xl border-[3px] border-green dark:border-emerald-700 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md"
-              > 
+              >
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-emerald-400  rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green/20">
                     <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -988,46 +1002,41 @@ export default function Home() {
                 <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500 dark:text-gray-400 transition-transform group-data-[state=open]:rotate-180 flex-shrink-0" />
               </Button>
             </CollapsibleTrigger>
-            
+
             <CollapsibleContent className="mt-6">
               <div className="prose prose-lg max-w-none dark:prose-invert p-6 bg-gray-50 dark:bg-gray-800/50 rounded-2xl">
-            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-              Clinical herbal medicine is the professional practice of using plant-based remedies to prevent and treat health conditions, grounded in both traditional knowledge systems and contemporary scientific research. Unlike casual herbal use, clinical herbalism requires rigorous training in plant identification, pharmacology, drug interactions, proper dosing, and contraindications. At PlantRx, we apply these clinical standards to every remedy in our database, ensuring you receive professional-grade guidance backed by peer-reviewed research and centuries of documented use.
-            </p>
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Clinical herbal medicine is the professional practice of using plant-based remedies to prevent and treat health conditions, grounded in both traditional knowledge systems and contemporary scientific research. Unlike casual herbal use, clinical herbalism requires rigorous training in plant identification, pharmacology, drug interactions, proper dosing, and contraindications. At PlantRx, we apply these clinical standards to every remedy in our database, ensuring you receive professional-grade guidance backed by peer-reviewed research and centuries of documented use.
+                </p>
 
-            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-              Our platform represents a new generation of natural health resources that combines the best of three worlds: traditional herbal wisdom from systems like Ayurveda and Traditional Chinese Medicine, cutting-edge phytochemical research from modern laboratories, and clinical experience from practicing herbalists treating real patients. This comprehensive approach means you're not just getting old folk remedies or unproven "natural" claims – you're accessing remedies that have been validated through multiple lenses of evidence and refined over generations of use.
-            </p>
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Our platform represents a new generation of natural health resources that combines the best of three worlds: traditional herbal wisdom from systems like Ayurveda and Traditional Chinese Medicine, cutting-edge phytochemical research from modern laboratories, and clinical experience from practicing herbalists treating real patients. This comprehensive approach means you're not just getting old folk remedies or unproven "natural" claims – you're accessing remedies that have been validated through multiple lenses of evidence and refined over generations of use.
+                </p>
 
-            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-              Each remedy undergoes a thorough verification process where we examine historical documentation, review published clinical trials, assess safety profiles, identify potential drug interactions, and confirm proper preparation methods. We don't include every plant that's ever been used medicinally – only those with substantial evidence of both efficacy and safety. This means our collection of 166+ remedies represents the most reliable natural treatments available, suitable for addressing common health concerns from digestive issues and sleep problems to pain management and immune support.
-            </p>
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Each remedy undergoes a thorough verification process where we examine historical documentation, review published clinical trials, assess safety profiles, identify potential drug interactions, and confirm proper preparation methods. We don't include every plant that's ever been used medicinally – only those with substantial evidence of both efficacy and safety. This means our collection of 166+ remedies represents the most reliable natural treatments available, suitable for addressing common health concerns from digestive issues and sleep problems to pain management and immune support.
+                </p>
 
-            <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-              Whether you're new to natural medicine or an experienced practitioner, PlantRx provides the depth of information needed to make informed decisions. Every remedy includes detailed preparation instructions with specific measurements, recommended dosing schedules, expected timelines for results, important safety warnings, and guidance on when professional medical care is necessary. We believe natural medicine should be both accessible and professional – making it easy to get started while maintaining the highest standards of safety and effectiveness.
-            </p>
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Whether you're new to natural medicine or an experienced practitioner, PlantRx provides the depth of information needed to make informed decisions. Every remedy includes detailed preparation instructions with specific measurements, recommended dosing schedules, expected timelines for results, important safety warnings, and guidance on when professional medical care is necessary. We believe natural medicine should be both accessible and professional – making it easy to get started while maintaining the highest standards of safety and effectiveness.
+                </p>
               </div>
             </CollapsibleContent>
           </Collapsible>
-        </div>
+        </motion.div>
       </section>
 
       {/* SEO Enhancement - FAQ Section */}
       <section className="py-6 sm:py-12 bg-white dark:bg-slate-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mobile: Compact FAQ with limited items */}
-          <motion.div 
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          <div
             className="sm:hidden"
           >
             <Collapsible>
               <CollapsibleTrigger asChild>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-400 transition-all mb-4"
                 >
                   <div className="flex items-center">
@@ -1039,7 +1048,7 @@ export default function Home() {
                   <ChevronDown className="w-4 h-4 transition-transform" />
                 </Button>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent>
                 <FAQ
                   title=""
@@ -1061,50 +1070,46 @@ export default function Home() {
                 />
               </CollapsibleContent>
             </Collapsible>
-          </motion.div>
+          </div>
 
           {/* Desktop: Full FAQ */}
-          <motion.div 
-            initial={{ opacity: 0.92, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            style={{ willChange: "transform, opacity" }}
+          <motion.div
+                        variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
             className="hidden sm:block"
           >
             <FAQ
-                title="Frequently Asked Questions"
-                items={[
-                  {
-                    question: "What's the best natural remedy for better sleep?",
-                    answer: "Valerian root, chamomile tea, and passionflower are proven sleep aids backed by clinical research. Our most effective remedy combines magnesium-rich herbs with calming nervines taken 30-60 minutes before bed. Most users report improved sleep quality within 3-5 days of consistent use. For chronic insomnia, we recommend pairing herbal support with sleep hygiene improvements."
-                  },
-                  {
-                    question: "How can I boost my immune system naturally?",
-                    answer: "Elderberry syrup, echinacea, and medicinal mushrooms like reishi and turkey tail are scientifically proven immune boosters. Our immune support protocol combines vitamin C-rich herbs with adaptogenic mushrooms for both prevention and active defense. Take daily during cold/flu season or at first signs of illness. Studies show elderberry can reduce cold duration by 2-4 days."
-                  },
-                  {
-                    question: "What helps with chronic inflammation and joint pain?",
-                    answer: "Turmeric (curcumin) with black pepper is our top anti-inflammatory remedy, with over 10,000 published studies supporting its efficacy. Clinical doses of 500-1000mg curcumin daily reduce inflammatory markers like C-reactive protein within 2-4 weeks. Ginger, boswellia, and omega-3 rich herbs also provide powerful natural pain relief without the stomach issues of NSAIDs."
-                  },
-                  {
-                    question: "Are natural remedies safe to use with my medications?",
-                    answer: "Many herbs are safe, but some interact with medications. St. John's Wort affects birth control and antidepressants. Ginkgo and garlic increase bleeding risk with blood thinners. Each remedy page includes detailed drug interaction warnings. Always consult your doctor or pharmacist before combining herbs with prescription medications, especially blood thinners, diabetes drugs, or antidepressants."
-                  },
-                  {
-                    question: "How do I know if a remedy is actually working?",
-                    answer: "Track specific symptoms before starting (pain level 1-10, sleep hours, energy rating). Most acute remedies work within hours to days (ginger for nausea, peppermint for headaches). Chronic condition remedies need 2-8 weeks of consistent use. Each remedy page lists expected timelines. If no improvement after the stated period at proper dosing, the remedy may not suit your body chemistry."
-                  },
-                  {
-                    question: "What's better: fresh herbs, teas, or supplements?",
-                    answer: "It depends on the herb and condition. Fresh ginger and garlic retain volatile oils best. Standardized extracts (like 95% curcumin or 0.8% valerenic acid) ensure consistent therapeutic doses for chronic conditions. Teas work well for gentle daily support but may lack clinical-strength concentrations. We specify the most effective form for each remedy based on research and traditional use."
-                  },
-                  {
-                    question: "Can pregnant or breastfeeding women use these remedies?",
-                    answer: "Some herbs are safe during pregnancy (ginger for morning sickness, red raspberry leaf in third trimester), but many are contraindicated. Never use: dong quai, black cohosh, pennyroyal, or high-dose herbs without medical supervision. Each remedy includes clear pregnancy/nursing safety information. When in doubt, consult a certified herbalist or midwife experienced in botanical medicine during pregnancy."
-                  }
-                ]}
-              />
+              title="Frequently Asked Questions"
+              items={[
+                {
+                  question: "What's the best natural remedy for better sleep?",
+                  answer: "Valerian root, chamomile tea, and passionflower are proven sleep aids backed by clinical research. Our most effective remedy combines magnesium-rich herbs with calming nervines taken 30-60 minutes before bed. Most users report improved sleep quality within 3-5 days of consistent use. For chronic insomnia, we recommend pairing herbal support with sleep hygiene improvements."
+                },
+                {
+                  question: "How can I boost my immune system naturally?",
+                  answer: "Elderberry syrup, echinacea, and medicinal mushrooms like reishi and turkey tail are scientifically proven immune boosters. Our immune support protocol combines vitamin C-rich herbs with adaptogenic mushrooms for both prevention and active defense. Take daily during cold/flu season or at first signs of illness. Studies show elderberry can reduce cold duration by 2-4 days."
+                },
+                {
+                  question: "What helps with chronic inflammation and joint pain?",
+                  answer: "Turmeric (curcumin) with black pepper is our top anti-inflammatory remedy, with over 10,000 published studies supporting its efficacy. Clinical doses of 500-1000mg curcumin daily reduce inflammatory markers like C-reactive protein within 2-4 weeks. Ginger, boswellia, and omega-3 rich herbs also provide powerful natural pain relief without the stomach issues of NSAIDs."
+                },
+                {
+                  question: "Are natural remedies safe to use with my medications?",
+                  answer: "Many herbs are safe, but some interact with medications. St. John's Wort affects birth control and antidepressants. Ginkgo and garlic increase bleeding risk with blood thinners. Each remedy page includes detailed drug interaction warnings. Always consult your doctor or pharmacist before combining herbs with prescription medications, especially blood thinners, diabetes drugs, or antidepressants."
+                },
+                {
+                  question: "How do I know if a remedy is actually working?",
+                  answer: "Track specific symptoms before starting (pain level 1-10, sleep hours, energy rating). Most acute remedies work within hours to days (ginger for nausea, peppermint for headaches). Chronic condition remedies need 2-8 weeks of consistent use. Each remedy page lists expected timelines. If no improvement after the stated period at proper dosing, the remedy may not suit your body chemistry."
+                },
+                {
+                  question: "What's better: fresh herbs, teas, or supplements?",
+                  answer: "It depends on the herb and condition. Fresh ginger and garlic retain volatile oils best. Standardized extracts (like 95% curcumin or 0.8% valerenic acid) ensure consistent therapeutic doses for chronic conditions. Teas work well for gentle daily support but may lack clinical-strength concentrations. We specify the most effective form for each remedy based on research and traditional use."
+                },
+                {
+                  question: "Can pregnant or breastfeeding women use these remedies?",
+                  answer: "Some herbs are safe during pregnancy (ginger for morning sickness, red raspberry leaf in third trimester), but many are contraindicated. Never use: dong quai, black cohosh, pennyroyal, or high-dose herbs without medical supervision. Each remedy includes clear pregnancy/nursing safety information. When in doubt, consult a certified herbalist or midwife experienced in botanical medicine during pregnancy."
+                }
+              ]}
+            />
           </motion.div>
         </div>
       </section>
