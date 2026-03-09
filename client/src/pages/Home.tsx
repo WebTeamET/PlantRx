@@ -475,7 +475,7 @@ export default function Home() {
             <h1 
             className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
               <span
-                className="text-gray-800 dark:text-white block sm:inline"
+                className="text-black dark:text-white block sm:inline"
               >
                 <SplitText text="Welcome to " />
               </span>
@@ -506,7 +506,7 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto font-body leading-relaxed"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-black dark:text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto font-body leading-relaxed"
           >
             {t('home.hero.subtitle', 'Expert natural remedies that work. No chemicals. No side effects. Real results.')}
           </motion.p>
@@ -576,7 +576,7 @@ export default function Home() {
                   onClick={link.external ? (e) => { e.preventDefault(); window.open(link.href, '_blank', 'noopener,noreferrer'); } : (e) => { e.preventDefault(); navigateTo(link.href); }}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 text-gray-700 dark:text-gray-300 hover:bg-green/10 dark:hover:bg-emerald-900/30 hover:border-green dark:hover:border-emerald-700 hover:text-green dark:hover:text-emerald-300 transition-all duration-300 cursor-pointer font-medium text-sm sm:text-base shadow-sm hover:shadow-md"
+                  className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 text-black dark:text-gray-300 hover:bg-green/10 dark:hover:bg-emerald-900/30 hover:border-green dark:hover:border-emerald-700 hover:text-green dark:hover:text-emerald-300 transition-all duration-300 cursor-pointer font-medium text-sm sm:text-base shadow-sm hover:shadow-md"
                   whileHover={{ y: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   variants={slideRightVariants as any}
@@ -656,7 +656,7 @@ export default function Home() {
                 {t('home.articles.badge', 'Expert Insights')}
               </span>
             </div>
-            <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-5 tracking-tight leading-tight">
+            <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-2 sm:mb-5 tracking-tight leading-tight">
               <SplitText text={t('home.articles.title', 'Popular Articles')} />
             </h2>
             <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
@@ -718,10 +718,10 @@ export default function Home() {
               OUR METHODOLOGY
             </Badge>
             <h2
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4 tracking-tight">
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-2 sm:mb-4 tracking-tight">
               <SplitText text="How PlantRx Develops Every Remedy" />
             </h2>
-            <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
+            <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-base lg:text-lg text-black dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
               A rigorous 4-step scientific process ensuring every remedy meets the highest standards of efficacy and safety
             </motion.p>
           </div>
@@ -746,10 +746,10 @@ export default function Home() {
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 01</span>
                   </div>
-                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-tight">
+                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Deep Theoretical & Historical Analysis
                   </h3>
-                  <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-4 sm:line-clamp-none">
+                  <p className="text-xs sm:text-sm lg:text-base text-black dark:text-gray-400 leading-relaxed line-clamp-4 sm:line-clamp-none">
                     Every remedy begins long before it is created. We study how different cultures used the ingredient, what traditional medicine believed about it, and whether those beliefs were consistent across history.
                   </p>
                 </div>
@@ -769,7 +769,7 @@ export default function Home() {
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 02</span>
                   </div>
-                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-tight">
+                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Scientific Research & Evidence Review
                   </h3>
                   <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-4 sm:line-clamp-none">
@@ -792,7 +792,7 @@ export default function Home() {
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 03</span>
                   </div>
-                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-tight">
+                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Expert Evaluation & Safety Screening
                   </h3>
                   <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-4 sm:line-clamp-none">
@@ -815,7 +815,7 @@ export default function Home() {
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 04</span>
                   </div>
-                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-tight">
+                  <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Real-World Testing & Final Selection
                   </h3>
                   <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-4 sm:line-clamp-none">
@@ -835,7 +835,7 @@ export default function Home() {
             className="text-center mb-6 sm:mb-8"
           >
             <h2 
-            className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-3">
+            className="text-xl sm:text-2xl lg:text-3xl font-bold text-black dark:text-white mb-3 sm:mb-3">
               <SplitText text="Explore Remedies"/>
             </h2>
             <motion.p 
@@ -852,21 +852,21 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            <motion.div 
+            variants={containerVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(featuredRemedies as any[]).slice(0, 3).map((remedy: any, index: number) => (
                 <motion.div
-                  key={remedy.id}
-                  initial={{ opacity: 0.92, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.35, delay: index * 0.08, ease: "easeOut" }}
-                  style={{ willChange: "transform, opacity" }}
+                  variants={slideUpVariants as any}
                   className="hover-lift h-full"
                 >
                   <RemedyCard remedy={remedy} />
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           <motion.div
@@ -938,7 +938,7 @@ export default function Home() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-black dark:text-white mb-3 leading-tight">
                     Partner with PlantRx
                   </h3>
 
@@ -993,7 +993,7 @@ export default function Home() {
                     <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div className="text-left flex-1 min-w-0 space-y-0.5 sm:space-y-1">
-                    <h2 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white leading-tight">
+                    <h2 className="text-base sm:text-xl font-bold text-black dark:text-white leading-tight">
                       What is Clinical Herbal Medicine?
                     </h2>
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Click to learn about our approach</p>

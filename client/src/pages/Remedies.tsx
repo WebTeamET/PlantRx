@@ -14,6 +14,7 @@ import { useTranslation } from "@/contexts/TranslationContext";
 import { useLuxuryLoader } from "@/components/LuxuryLoader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { SplitText } from "@/utils/SplitText";
 
 export default function Remedies() {
   const { t } = useTranslation();
@@ -369,8 +370,8 @@ export default function Remedies() {
                   size="sm"
                   onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
                   className={`h-10 px-3 rounded-xl border-2 transition-all ${showAdvancedFilters
-                      ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
-                      : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                    ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400"
                     }`}
                   data-testid="mobile-advanced-filters-btn"
                 >
@@ -452,7 +453,7 @@ export default function Remedies() {
               {/* Horizontal Scrolling Category Pills */}
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                  <span className="w-1.5 h-1.5 bg-green/50 rounded-full"></span>
                   <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Categories</span>
                 </div>
                 <div className="overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
@@ -657,63 +658,52 @@ export default function Remedies() {
           </div>
 
           {/* Leaf icon with glow */}
-          <motion.div
-            variants={slideUpVariants as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-          >
+          <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             <div className="flex justify-center mb-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-emerald-400/30 dark:bg-emerald-500/20 rounded-full blur-xl scale-150"></div>
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25 rotate-3">
-                  <span className="text-2xl sm:text-3xl">🌿</span>
+                <div className="absolute inset-0 shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] dark:bg-emerald-500/20 rounded-full blur-xl scale-150"></div>
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-green dark:bg-emerald-400 rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] rotate-3 shadow-lg">
+                  <span className="text-2xl sm:text-3xl invert-[1] filter brightness-0">🌿</span>
                 </div>
               </div>
             </div>
-          </motion.div>
 
-          {/* Badge with shimmer effect */}
-          <motion.div
-            variants={slideUpVariants as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-          >
-            <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-50 via-white to-emerald-50 dark:from-emerald-900/50 dark:via-gray-800/80 dark:to-emerald-900/50 border border-emerald-200/60 dark:border-emerald-700/50 mb-5 sm:mb-6 shadow-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent dark:via-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="relative w-2.5 h-2.5 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full">
-                <span className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-50"></span>
-              </span>
-              <span className="relative text-xs sm:text-sm font-semibold bg-gradient-to-r from-emerald-700 via-green-600 to-teal-600 dark:from-emerald-300 dark:via-green-400 dark:to-teal-300 bg-clip-text text-transparent tracking-wide uppercase">
-                Natural Remedies Collection
-              </span>
+
+            {/* Badge with shimmer effect */}
+            <div
+            >
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20">
+                <span className="flex h-2.5 w-2.5 sm:h-3 sm:w-3 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-full w-full bg-green"></span>
+                </span>
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 tracking-wide">
+                  Natural Remedies Collection
+                </span>
+              </div>
             </div>
           </motion.div>
 
           {/* Main Title with gradient */}
           <h1
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-5 tracking-tight leading-tight px-2">
-            <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
-              {t('remedies.title', '166+ Expert-Verified')}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-5 tracking-tight leading-tight px-2 mt-5">
+            <span className="text-black dark:from-white dark:via-gray-100 dark:to-white text-transparent">
+              <SplitText className="text-black" text={t('remedies.title', '166+ Expert-Verified')} />
             </span>
             <br className="sm:hidden" />
-            <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-teal-500 dark:from-emerald-400 dark:via-green-400 dark:to-teal-400 bg-clip-text text-transparent">
-              {' '}Natural Remedies
-            </span>
           </h1>
 
           {/* Decorative divider */}
           <div className="flex items-center justify-center gap-3 mb-4 sm:mb-5">
-            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-600"></div>
-            <div className="w-2 h-2 bg-emerald-400 dark:bg-emerald-500 rounded-full"></div>
-            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-600"></div>
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
+            <div className="w-2 h-2 bg-gold dark:bg-emerald-500 rounded-full"></div>
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
           </div>
 
 
           {/* Subtitle */}
           <p
-            className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto luxury-body leading-relaxed px-4">
+            className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-4">
             {t('remedies.subtitle', 'Explore our comprehensive database of verified natural remedies, each carefully curated by experts to provide safe and effective solutions for your health needs.')}
           </p>
         </div>
@@ -727,15 +717,15 @@ export default function Remedies() {
         >
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8">
             {/* Animated background layer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white via-emerald-50/50 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-100/40 via-transparent to-transparent dark:from-emerald-900/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green/10 via-transparent to-transparent dark:from-emerald-900/20"></div>
 
             {/* Decorative corner accents */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-200/30 to-transparent dark:from-emerald-800/20 rounded-bl-full"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-teal-200/30 to-transparent dark:from-teal-800/20 rounded-tr-full"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green/5 to-transparent dark:from-emerald-800/20 rounded-bl-full"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-teal-800/20 rounded-tr-full"></div>
 
             {/* Content container */}
-            <div className="relative border border-emerald-200/50 dark:border-emerald-800/30 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
+            <div className="relative border border-green dark:border-emerald-800/30 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
 
               {/* Header with icon and animated elements */}
               <motion.div
@@ -747,8 +737,8 @@ export default function Remedies() {
                 <div className="flex items-start gap-4 mb-5 sm:mb-6">
                   {/* Animated search icon */}
                   <div className="relative shrink-0">
-                    <div className="absolute inset-0 bg-emerald-400/20 dark:bg-emerald-500/15 rounded-2xl blur-lg scale-125 animate-pulse-slow"></div>
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25 group">
+                    <div className="absolute inset-0 bg-gold/20 dark:bg-emerald-500/15 rounded-2xl blur-lg scale-125 animate-pulse-slow"></div>
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gold via-green-500 to-gold rounded-2xl flex items-center justify-center shadow-lg shadow-green/25 group">
                       <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform group-hover:scale-110" />
                       {/* Orbiting dot */}
                       <div className="absolute w-2 h-2 bg-white/80 rounded-full animate-orbit"></div>
@@ -757,11 +747,11 @@ export default function Remedies() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-black dark:text-white">
                         Find Your Perfect Natural Remedy
                       </h3>
-                      <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
-                        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                      <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold dark:bg-emerald-900/50 text-white dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 bg-green rounded-full animate-pulse"></span>
                         Smart
                       </span>
                     </div>
@@ -782,11 +772,11 @@ export default function Remedies() {
                 >
                   <div className="relative group">
                     {/* Glow effect on focus */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 rounded-2xl opacity-0 group-focus-within:opacity-20 blur-lg transition-opacity duration-500"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-green via-green-400 to-green/50 rounded-2xl opacity-0 group-focus-within:opacity-20 blur-lg transition-opacity duration-500"></div>
 
                     <div className="relative flex items-center">
                       <div className="absolute left-3 sm:left-4 z-10">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center shadow-md shadow-emerald-500/20 group-focus-within:scale-105 transition-transform duration-300">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green to-green-500 rounded-xl flex items-center justify-center shadow-md shadow-emerald-500/20 group-focus-within:scale-105 transition-transform duration-300">
                           <Search className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                         </div>
                       </div>
@@ -794,7 +784,7 @@ export default function Remedies() {
                         placeholder={t('remedies.search.placeholder', 'Search remedies, ingredients, or health concerns...')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-14 sm:pl-16 pr-12 py-3 sm:py-4 min-h-[48px] sm:min-h-[56px] text-sm sm:text-base border-2 border-gray-200 dark:border-gray-700 rounded-xl sm:rounded-2xl focus:border-emerald-400 dark:focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/15 bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                        className="pl-14 sm:pl-16 pr-12 py-3 sm:py-4 min-h-[48px] sm:min-h-[56px] text-sm sm:text-base border-2 border-gray-200 dark:border-gray-700 rounded-xl sm:rounded-2xl focus:border-green dark:focus:border-emerald-400 focus:ring-4 focus:ring-green bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         data-testid="search-input"
                       />
                       {searchQuery && (
@@ -843,8 +833,8 @@ export default function Remedies() {
                       variant="outline"
                       onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
                       className={`text-xs sm:text-sm rounded-xl border-2 min-h-[40px] sm:min-h-[44px] px-4 sm:px-5 font-medium transition-all duration-300 ${showAdvancedFilters
-                          ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 shadow-md shadow-emerald-500/10'
-                          : 'border-gray-200 dark:border-gray-600 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+                        ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 shadow-md shadow-emerald-500/10'
+                        : 'border-gray-200 dark:border-gray-600 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
                         }`}
                       data-testid="advanced-filters-toggle"
                     >
@@ -950,8 +940,8 @@ export default function Remedies() {
                       onClick={() => setShowAllCategories(!showAllCategories)}
                       className="flex items-center gap-2 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors group"
                     >
-                      <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center transition-transform duration-300 ${showAllCategories ? 'rotate-90' : ''}`}>
-                        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 dark:text-emerald-400" />
+                      <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green/50 dark:bg-emerald-900/50 flex items-center justify-center transition-transform duration-300 ${showAllCategories ? 'rotate-90' : ''}`}>
+                        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white dark:text-emerald-400" />
                       </span>
                       <span>Filter by category</span>
                       <span className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500">
@@ -985,10 +975,10 @@ export default function Remedies() {
                   {/* Category grid - Always visible on lg+, expandable on smaller screens */}
                   <div
                     className={`
-                  overflow-hidden transition-all duration-500 ease-out
-                  lg:max-h-none lg:opacity-100
-                  ${showAllCategories ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'}
-                `}
+    overflow-hidden transition-all duration-500 ease-out
+    lg:max-h-none lg:opacity-100
+    ${showAllCategories ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'}
+  `}
                   >
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-2.5 pt-2 lg:pt-0 pb-1">
                       {categories.map((category) => {
@@ -1001,16 +991,16 @@ export default function Remedies() {
                               setShowAllCategories(false);
                             }}
                             className={`
-                          inline-flex items-center justify-center gap-1.5 sm:gap-2
-                          px-3 sm:px-4 py-2.5 sm:py-3
-                          rounded-xl text-xs sm:text-sm font-medium
-                          transition-all duration-300 ease-out
-                          active:scale-95 
-                          ${isSelected
-                                ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-emerald-500/25"
-                                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:shadow-md hover:shadow-emerald-500/10"
+            inline-flex items-center justify-center gap-1.5 sm:gap-2
+            px-3 sm:px-4 py-2.5 sm:py-3
+            rounded-xl text-xs sm:text-sm
+            transition-all duration-500 ease-out
+            active:scale-95
+            ${isSelected
+                                ? "btn-green text-white shadow-lg shadow-[#385127]/25"
+                                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gold dark:border-gray-700 hover:border-gold dark:hover:border-emerald-500 hover:text-gold dark:hover:text-emerald-400 hover:shadow-md hover:shadow-gold/10"
                               }
-                        `}
+          `}
                             data-testid={`filter-${category.value}`}
                           >
                             {category.icon && (
@@ -1203,8 +1193,8 @@ export default function Remedies() {
                       <div
                         key={i}
                         className={`w-2 h-2 rounded-full ${i < 3
-                            ? 'bg-gradient-to-r from-emerald-400 to-teal-400'
-                            : 'bg-gray-300 dark:bg-gray-600'
+                          ? 'bg-gradient-to-r from-emerald-400 to-teal-400'
+                          : 'bg-gray-300 dark:bg-gray-600'
                           }`}
                       />
                     ))}
@@ -1278,16 +1268,16 @@ export default function Remedies() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.4 }}
       >
-        <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-900/10 dark:via-teal-900/10 dark:to-cyan-900/10 py-8 sm:py-12">
+        <div className="bg-gradient-to-br from-gold/50 via-gold/50 to-gold-50 dark:from-emerald-900/10 dark:via-teal-900/10 dark:to-cyan-900/10 py-8 sm:py-12">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <Collapsible>
               <CollapsibleTrigger asChild>
                 <Button
                   variant="outline"
-                  className="w-full flex items-center justify-between p-6 rounded-2xl border-2 border-emerald-200 dark:border-emerald-800 hover:border-emerald-400 dark:hover:border-emerald-600 bg-white dark:bg-gray-900 transition-all group"
+                  className="!h-auto w-full flex items-center justify-between p-6 rounded-2xl border-2 border-green/50 dark:border-emerald-800 hover:border-green dark:hover:border-emerald-600 !bg-white dark:bg-gray-900 transition-all group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-green rounded-xl flex items-center justify-center">
                       <BookOpen className="w-5 h-5 text-white" />
                     </div>
                     <div className="text-left">
