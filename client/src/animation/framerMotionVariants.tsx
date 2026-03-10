@@ -74,6 +74,20 @@ export const slideUpVariants: Variants = {
     },
   },
 };
+export const slideRightVariantsFast: Variants = {
+  hidden: {
+    transform: 'translate3d(-100px, 0, 0)',
+    opacity: 0,
+  },
+  visible: {
+    transform: 'translate3d(0, 0, 0)',
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.30, 1],
+    },
+  },
+};
 export const slideRightVariants: Variants = {
   hidden: {
     transform: 'translate3d(-100px, 0, 0)',

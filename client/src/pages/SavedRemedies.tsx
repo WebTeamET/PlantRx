@@ -3,11 +3,18 @@ import { Bookmark, AlertCircle } from "lucide-react";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
+import { SplitText } from "@/utils/SplitText";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { motion } from "framer-motion";
 
 export default function SavedRemedies() {
   const { data: savedRemedies = [], isLoading } = useQuery<any[], any, any[], any>({
     queryKey: ["/api/saved-remedies"],
   });
+
+  function t(arg0: string, arg1: string): string {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
@@ -17,23 +24,25 @@ export default function SavedRemedies() {
         keywords="saved remedies, favorites, natural remedies, plantrx"
         noindex={true}
       />
-      
+
       <Header />
-      
+
       <div className="min-h-screen luxury-gradient-bg">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
           <div className="max-w-6xl mx-auto">
             {/* Page Header */}
             <div className="mb-6 sm:mb-8 lg:mb-10">
               <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                <Bookmark className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-500" />
+                <Bookmark className="w-6 h-6 sm:w-8 sm:h-8 text-gold" />
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-                  Saved Remedies
+                  <span className="text-black dark:text-white">
+                    <SplitText className="text-black dark:text-white" text="Saved Remedies" />
+                  </span>
                 </h1>
               </div>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300">
+              <motion.p variants={slideUpVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0 }} className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300">
                 Your personal collection of favorite natural remedies
-              </p>
+              </motion.p>
             </div>
 
             {isLoading ? (
@@ -44,17 +53,18 @@ export default function SavedRemedies() {
                 </p>
               </div>
             ) : savedRemedies.length === 0 ? (
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 sm:p-6 lg:p-8 text-center">
-                <AlertCircle className="w-10 h-10 sm:w-12 sm:h-12 text-blue-500 mx-auto mb-3 sm:mb-4" />
+
+              <motion.div variants={slideUpVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0 }} className="bg-gold/10 dark:bg-blue-900/20 border border-gold dark:border-blue-800 rounded-xl p-4 sm:p-6 lg:p-8 text-center">
+                <AlertCircle className="w-10 h-10 sm:w-12 sm:h-12 text-gold mx-auto mb-3 sm:mb-4" />
                 <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mb-4">
                   No saved remedies yet. Explore remedies and save your favorites!
                 </p>
                 <Link href="/remedies">
-                  <button className="px-4 sm:px-6 py-2 sm:py-3 min-h-[44px] bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-semibold rounded-lg transition-all text-sm sm:text-base">
+                  <button className="ctm-button btn-green">
                     Browse Remedies
                   </button>
                 </Link>
-              </div>
+              </motion.div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 {(savedRemedies as any[]).map((remedy: any) => (

@@ -9,14 +9,14 @@ import { Input } from "@/components/ui/input";
 import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { 
-  Search, 
-  Leaf, 
-  Heart, 
-  Brain, 
-  Dumbbell, 
-  Apple, 
-  Sparkles, 
+import {
+  Search,
+  Leaf,
+  Heart,
+  Brain,
+  Dumbbell,
+  Apple,
+  Sparkles,
   ArrowRight,
   Clock,
   User,
@@ -25,6 +25,8 @@ import {
   FlaskConical
 } from "lucide-react";
 import { format } from "date-fns";
+import { SplitText } from "@/utils/SplitText";
+import { containerVariants, itemScaleUpVariants, slideRightVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 
 type Article = {
   id: number;
@@ -45,11 +47,11 @@ const categories = [
     name: "Nutrition",
     description: "Science-backed dietary guidance for optimal health and disease prevention",
     icon: Apple,
-    color: "from-green-500 to-emerald-600",
-    bgLight: "bg-green-50",
+    // color: "from-green to-green",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-green-900/20",
-    borderColor: "border-green-200 dark:border-green-800",
-    textColor: "text-green-700 dark:text-green-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/nutrition"
   },
   {
@@ -57,11 +59,11 @@ const categories = [
     name: "Herbs & Remedies",
     description: "Traditional herbal medicine meets modern clinical research",
     icon: Leaf,
-    color: "from-emerald-500 to-teal-600",
-    bgLight: "bg-emerald-50",
+    // color: "from-green to-green",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-emerald-900/20",
-    borderColor: "border-emerald-200 dark:border-emerald-800",
-    textColor: "text-emerald-700 dark:text-emerald-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/herbs-remedies"
   },
   {
@@ -69,11 +71,11 @@ const categories = [
     name: "Wellness",
     description: "Holistic approaches to mind-body balance and self-care practices",
     icon: Heart,
-    color: "from-rose-500 to-pink-600",
-    bgLight: "bg-rose-50",
+    // color: "from-green to-green",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-rose-900/20",
-    borderColor: "border-rose-200 dark:border-rose-800",
-    textColor: "text-rose-700 dark:text-rose-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/wellness"
   },
   {
@@ -81,11 +83,11 @@ const categories = [
     name: "Fitness & Body",
     description: "Natural training methods, recovery techniques, and athletic performance",
     icon: Dumbbell,
-    color: "from-orange-500 to-amber-600",
-    bgLight: "bg-orange-50",
+    // color: "from-orange-500 to-amber-600",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-orange-900/20",
-    borderColor: "border-orange-200 dark:border-orange-800",
-    textColor: "text-orange-700 dark:text-orange-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/fitness"
   },
   {
@@ -93,11 +95,11 @@ const categories = [
     name: "Healthy Foods",
     description: "Superfoods, meal planning, and nutritional powerhouses for vitality",
     icon: Apple,
-    color: "from-lime-500 to-green-600",
-    bgLight: "bg-lime-50",
+    // color: "from-lime-500 to-green-600",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-lime-900/20",
-    borderColor: "border-lime-200 dark:border-lime-800",
-    textColor: "text-lime-700 dark:text-lime-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/healthy-foods"
   },
   {
@@ -105,11 +107,11 @@ const categories = [
     name: "Mental Health",
     description: "Natural approaches to stress, anxiety, focus, and emotional wellness",
     icon: Brain,
-    color: "from-purple-500 to-violet-600",
-    bgLight: "bg-purple-50",
+    // color: "from-purple-500 to-violet-600",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-purple-900/20",
-    borderColor: "border-purple-200 dark:border-purple-800",
-    textColor: "text-purple-700 dark:text-purple-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/mental-health"
   },
   {
@@ -117,11 +119,11 @@ const categories = [
     name: "Skin & Beauty",
     description: "Natural skincare routines and plant-based beauty solutions",
     icon: Sparkles,
-    color: "from-pink-500 to-rose-600",
-    bgLight: "bg-pink-50",
+    // color: "from-pink-500 to-rose-600",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-pink-900/20",
-    borderColor: "border-pink-200 dark:border-pink-800",
-    textColor: "text-pink-700 dark:text-pink-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/skin-beauty"
   },
   {
@@ -129,11 +131,11 @@ const categories = [
     name: "Science",
     description: "Latest research and clinical studies in natural medicine",
     icon: FlaskConical,
-    color: "from-cyan-500 to-blue-600",
-    bgLight: "bg-cyan-50",
+    // color: "from-cyan-500 to-blue-600",
+    bgLight: "bg-gold/20",
     bgDark: "dark:bg-cyan-900/20",
-    borderColor: "border-cyan-200 dark:border-cyan-800",
-    textColor: "text-cyan-700 dark:text-cyan-400",
+    borderColor: "border-gold dark:border-green-800",
+    textColor: "text-black dark:text-green-400",
     href: "/articles/science"
   }
 ];
@@ -151,7 +153,7 @@ export default function Articles() {
 
   const filteredArticles = useMemo(() => {
     let articles = allArticles;
-    
+
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       articles = articles.filter(article =>
@@ -161,15 +163,15 @@ export default function Articles() {
         article.category?.toLowerCase().includes(query)
       );
     }
-    
+
     if (activeCategory) {
-      articles = articles.filter(article => 
+      articles = articles.filter(article =>
         article.category?.toLowerCase() === activeCategory.toLowerCase()
       );
     }
-    
+
     // Sort alphabetically by title
-    return [...articles].sort((a, b) => 
+    return [...articles].sort((a, b) =>
       a.title.toLowerCase().localeCompare(b.title.toLowerCase())
     );
   }, [allArticles, searchQuery, activeCategory]);
@@ -187,7 +189,7 @@ export default function Articles() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
-      <SEOHead 
+      <SEOHead
         title="Health Articles - Expert Wellness Guides & Natural Remedies | PlantRx"
         description="Explore expert-curated health articles covering nutrition, herbal remedies, wellness, fitness, mental health, and natural skincare. Science-backed guides updated weekly."
         keywords="health articles, natural remedies, nutrition guides, wellness tips, herbal medicine, mental health, skincare, PlantRx"
@@ -209,61 +211,74 @@ export default function Articles() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             {/* Icon */}
-            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 mb-4 sm:mb-5 lg:mb-6 shadow-lg shadow-emerald-500/25">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl mb-4 sm:mb-5 lg:mb-6 bg-green dark:bg-emerald-400 rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] rotate-3 shadow-lg">
               <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
             </div>
-            
+
             {/* Title */}
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 lg:mb-6 leading-tight tracking-tight">
-              Health & Wellness Articles
+              <SplitText text="Health & Wellness Articles" />
             </h1>
-            
+
             {/* Subtitle */}
-            <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 lg:mb-10 leading-relaxed max-w-2xl mx-auto">
+            <motion.p variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0 }} className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 lg:mb-10 leading-relaxed max-w-2xl mx-auto">
               Expert-curated guides on natural health, backed by science and traditional wisdom. Discover evidence-based approaches to wellness.
-            </p>
+            </motion.p>
 
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8">
-              <div className="relative">
-                <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Search articles, topics, or remedies..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 h-11 sm:h-12 lg:h-14 text-sm sm:text-base rounded-lg sm:rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
-                  data-testid="articles-search-input"
-                />
-                {searchQuery && (
-                  <Button 
-                    type="button"
-                    variant="ghost" 
-                    size="sm"
-                    onClick={() => setSearchQuery("")}
-                    className="min-h-[44px] absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    Clear
-                  </Button>
-                )}
-              </div>
-            </form>
+            <motion.div variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0 }}>
+              <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8">
+                <div className="relative">
+                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search articles, topics, or remedies..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 h-11 sm:h-12 lg:h-14 text-sm sm:text-base rounded-lg sm:rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+                    data-testid="articles-search-input"
+                  />
+                  {searchQuery && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSearchQuery("")}
+                      className="min-h-[44px] absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      Clear
+                    </Button>
+                  )}
+                </div>
+              </form>
+            </motion.div>
 
             {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm text-gray-500 dark:text-gray-500">
-              <span className="flex items-center gap-1.5 sm:gap-2">
-                <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500" />
-                Updated Weekly
-              </span>
-              <span className="flex items-center gap-1.5 sm:gap-2">
-                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500" />
-                {allArticles.length}+ Articles
-              </span>
-              <span className="flex items-center gap-1.5 sm:gap-2">
-                <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500" />
-                Expert Authors
-              </span>
-            </div>
+            <motion.div variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0 }}>
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm text-gray-500 dark:text-gray-500">
+                <span className="flex items-center gap-1.5 sm:gap-2">
+                  <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
+                  Updated Weekly
+                </span>
+                <span className="flex items-center gap-1.5 sm:gap-2">
+                  <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
+                  {allArticles.length}+ Articles
+                </span>
+                <span className="flex items-center gap-1.5 sm:gap-2">
+                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
+                  Expert Authors
+                </span>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -275,7 +290,7 @@ export default function Articles() {
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
               Search Results for "{searchQuery}"
             </h2>
-            
+
             {filteredArticles.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 {filteredArticles.map((article) => (
@@ -301,7 +316,7 @@ export default function Articles() {
             <div className="absolute top-0 left-1/4 w-64 h-64 bg-emerald-100/30 dark:bg-emerald-900/10 rounded-full blur-3xl -z-10"></div>
             <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-teal-100/30 dark:bg-teal-900/10 rounded-full blur-3xl -z-10"></div>
           </div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Animated Header */}
             <ScrollReveal variant="fadeUp" delay={0.1}>
@@ -309,107 +324,93 @@ export default function Articles() {
                 {/* Animated icon */}
                 <div className="inline-flex items-center justify-center mb-5">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/30 via-green-400/30 to-teal-400/30 rounded-2xl blur-xl animate-pulse-slow"></div>
-                    <div className="relative w-16 h-16 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/30">
+                    {/* <div className="absolute inset-0 bg-green rounded-2xl blur-xl animate-pulse-slow"></div> */}
+                    <div className="relative w-16 h-16 bg-green rounded-2xl flex items-center justify-center">
                       <Leaf className="w-8 h-8 text-white animate-float-slow" />
                     </div>
                     {/* Orbiting dot */}
                     <div className="absolute w-2.5 h-2.5 bg-white/80 rounded-full animate-orbit shadow-lg"></div>
                   </div>
                 </div>
-                
+
                 {/* Title with gradient */}
-                <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 sm:mb-4">
-                  <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
-                    Browse by 
+                <motion.h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 sm:mb-4">
+                  <SplitText text="Browse by Category" />
+                  {/* <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
+                    Browse by
                   </span>
                   <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-teal-500 dark:from-emerald-400 dark:via-green-400 dark:to-teal-400 bg-clip-text text-transparent">
                     {" "}Category
-                  </span>
-                </h2>
-                
+                  </span> */}
+                </motion.h2>
+
                 {/* Decorative divider */}
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-600"></div>
-                  <div className="w-2 h-2 bg-emerald-400 dark:bg-emerald-500 rounded-full animate-pulse"></div>
-                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-600"></div>
+                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
+                  <div className="w-2 h-2 bg-gold dark:bg-emerald-500 rounded-full animate-pulse"></div>
+                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
                 </div>
-                
-                <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+
+                <motion.p variants={slideUpVariants as any}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0 }} className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 lg:mb-10 leading-relaxed max-w-2xl mx-auto">
                   Explore our collection of expert-written articles organized by health topic
-                </p>
+                </motion.p>
               </div>
             </ScrollReveal>
 
             {/* Animated Categories Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            <motion.div variants={containerVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
               {categories.map((category, index) => {
                 const IconComponent = category.icon;
                 return (
                   <motion.div
+                    variants={itemScaleUpVariants as any}
                     key={category.id}
-                    initial={{ opacity: 0, y: 40, scale: 0.92 }}
-                    whileInView={{ 
-                      opacity: 1, 
-                      y: 0, 
-                      scale: 1,
-                    }}
-                    viewport={{ once: true, margin: "-60px", amount: 0.2 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 80,
-                      damping: 18,
-                      delay: index * 0.06,
-                    }}
-                    whileHover={{ 
-                      y: -12,
-                      scale: 1.03,
-                      transition: { type: "spring", stiffness: 400, damping: 25 }
-                    }}
                     className="group/cat relative"
                   >
                     {/* Animated glow effect on hover */}
-                    <motion.div 
+                    <motion.div
                       className="absolute -inset-3 rounded-3xl blur-xl -z-10"
                       initial={{ opacity: 0 }}
-                      whileHover={{ 
+                      whileHover={{
                         opacity: 1,
                         background: `linear-gradient(135deg, ${category.id === 'nutrition' ? 'rgba(34, 197, 94, 0.3)' : category.id === 'herbs-remedies' ? 'rgba(16, 185, 129, 0.3)' : category.id === 'wellness' ? 'rgba(168, 85, 247, 0.3)' : category.id === 'fitness-body' ? 'rgba(249, 115, 22, 0.3)' : category.id === 'healthy-foods' ? 'rgba(234, 179, 8, 0.3)' : category.id === 'mental-health' ? 'rgba(139, 92, 246, 0.3)' : category.id === 'skin-beauty' ? 'rgba(236, 72, 153, 0.3)' : 'rgba(6, 182, 212, 0.3)'} 0%, transparent 100%)`
                       }}
                       transition={{ duration: 0.4 }}
                     />
-                    
-                    {/* Shine effect */}
+
                     <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none z-10">
-                      <div className="absolute inset-0 opacity-0 group-hover/cat:opacity-100 transition-opacity duration-500">
+                      <div className="absolute inset-0 opacity-0 group/cat:opacity-100 transition-opacity duration-500">
                         <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover/cat:animate-shine"></div>
                       </div>
                     </div>
-                    
+
                     <Link href={category.href}>
-                      <Card 
+                      <Card
                         className={`h-full cursor-pointer overflow-hidden border-2 ${category.borderColor} ${category.bgLight} ${category.bgDark} hover:shadow-2xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 transition-all duration-300`}
                         data-testid={`category-card-${category.id}`}
                       >
                         <CardContent className="p-3 sm:p-4 lg:p-6 relative">
                           {/* Icon with animated background */}
                           <div className="relative mb-3 sm:mb-4">
-                            <div className={`absolute inset-0 w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-gradient-to-br ${category.color} rounded-lg sm:rounded-xl blur-md opacity-40 group-hover/cat:opacity-60 transition-opacity`}></div>
-                            <div className={`relative w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center shadow-lg group-hover/cat:scale-110 group-hover/cat:rotate-3 transition-all duration-300`}>
+                            <div className={`absolute inset-0 w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-gradient-to-br  rounded-lg sm:rounded-xl blur-md transition-opacity`}></div>
+                            <div className={`relative w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-green flex items-center justify-center transition-all duration-300`}>
                               <IconComponent className="w-5 h-5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                             </div>
                           </div>
-                          
+
                           {/* Title */}
                           <h3 className={`text-sm sm:text-base lg:text-lg font-bold ${category.textColor} mb-1 sm:mb-2 group-hover/cat:underline underline-offset-2`}>
                             {category.name}
                           </h3>
-                          
+
                           {/* Description */}
                           <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2 sm:mb-3 lg:mb-4 line-clamp-2">
                             {category.description}
                           </p>
-                          
+
                           {/* Arrow with animation */}
                           <div className={`flex items-center gap-1 text-xs sm:text-sm font-medium ${category.textColor} group-hover/cat:gap-2.5 transition-all duration-300`}>
                             <span>View Articles</span>
@@ -421,30 +422,30 @@ export default function Articles() {
                   </motion.div>
                 );
               })}
-            </div>
-            
+            </motion.div>
+
             {/* Bottom decoration */}
             <ScrollReveal variant="fadeUp" delay={0.4}>
               <div className="flex items-center justify-center gap-3 mt-10 sm:mt-14">
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-700"></div>
+                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-700"></div>
                 <div className="flex items-center gap-1.5">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
+                    className="w-1.5 h-1.5 bg-gold rounded-full"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                    className="w-2 h-2 bg-emerald-500 rounded-full"
+                    className="w-2 h-2 bg-gold rounded-full"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                    className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
+                    className="w-1.5 h-1.5 bg-gold rounded-full"
                   />
                 </div>
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent dark:via-emerald-700"></div>
+                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-700"></div>
               </div>
             </ScrollReveal>
           </div>
@@ -482,10 +483,10 @@ export default function Articles() {
                   variant={activeCategory === null ? "default" : "outline"}
                   size="sm"
                   onClick={() => { setActiveCategory(null); setVisibleCount(12); }}
-                  className={`min-h-[44px] text-xs sm:text-sm ${activeCategory === null 
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+                  className={`min-h-[44px] text-xs sm:text-sm ${activeCategory === null
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                     : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  }`}
+                    }`}
                   data-testid="filter-all"
                 >
                   All ({allArticles.length})
@@ -498,10 +499,10 @@ export default function Articles() {
                       variant={activeCategory === category.id ? "default" : "outline"}
                       size="sm"
                       onClick={() => { setActiveCategory(category.id); setVisibleCount(12); }}
-                      className={`min-h-[44px] text-xs sm:text-sm ${activeCategory === category.id 
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+                      className={`min-h-[44px] text-xs sm:text-sm ${activeCategory === category.id
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                         : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`}
+                        }`}
                       data-testid={`filter-${category.id}`}
                     >
                       {category.name} ({count})
@@ -515,7 +516,7 @@ export default function Articles() {
             <ScrollReveal variant="fadeUp" delay={0.2}>
               <div className="relative mb-6 sm:mb-8">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-50/50 via-transparent to-teal-50/50 dark:from-emerald-950/20 dark:via-transparent dark:to-teal-950/20 rounded-2xl -z-10"></div>
-                
+
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-4 px-5 rounded-2xl border border-emerald-100/50 dark:border-emerald-900/30">
                   <div className="flex items-center gap-4">
                     <div className="relative">
@@ -524,7 +525,7 @@ export default function Articles() {
                         <Sparkles className="w-6 h-6 text-white animate-float-slow" />
                       </div>
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
@@ -545,7 +546,7 @@ export default function Articles() {
                       </p>
                     </div>
                   </div>
-                  
+
                   {activeCategory ? (
                     <Button
                       variant="ghost"
@@ -563,11 +564,10 @@ export default function Articles() {
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 200 }}
-                          className={`w-2 h-2 rounded-full ${
-                            i < 3 
-                              ? 'bg-gradient-to-r from-emerald-400 to-teal-400' 
-                              : 'bg-gray-300 dark:bg-gray-600'
-                          }`}
+                          className={`w-2 h-2 rounded-full ${i < 3
+                            ? 'bg-gradient-to-r from-emerald-400 to-teal-400'
+                            : 'bg-gray-300 dark:bg-gray-600'
+                            }`}
                         />
                       ))}
                     </div>
@@ -599,13 +599,13 @@ export default function Articles() {
                 ))}
               </div>
             ) : filteredArticles.length === 0 ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: "spring" }}
                 className="text-center py-10 sm:py-12 lg:py-16"
               >
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -633,9 +633,9 @@ export default function Articles() {
                     <motion.div
                       key={article.id}
                       initial={{ opacity: 0, y: 40, scale: 0.92 }}
-                      whileInView={{ 
-                        opacity: 1, 
-                        y: 0, 
+                      whileInView={{
+                        opacity: 1,
+                        y: 0,
                         scale: 1,
                       }}
                       viewport={{ once: true, margin: "-80px", amount: 0.15 }}
@@ -645,7 +645,7 @@ export default function Articles() {
                         damping: 18,
                         delay: (index % 3) * 0.08,
                       }}
-                      whileHover={{ 
+                      whileHover={{
                         y: -10,
                         scale: 1.02,
                         transition: { type: "spring", stiffness: 400, damping: 25 }
@@ -653,10 +653,10 @@ export default function Articles() {
                       className="group/card relative"
                     >
                       {/* Animated glow effect on hover */}
-                      <motion.div 
+                      <motion.div
                         className="absolute -inset-3 rounded-3xl blur-xl -z-10"
                         initial={{ opacity: 0 }}
-                        whileHover={{ 
+                        whileHover={{
                           opacity: 1,
                           background: "linear-gradient(135deg, rgba(52, 211, 153, 0.25) 0%, rgba(16, 185, 129, 0.2) 50%, rgba(20, 184, 166, 0.25) 100%)"
                         }}
@@ -664,7 +664,7 @@ export default function Articles() {
                       />
                       {/* Shine effect on card */}
                       <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none z-10">
-                        <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 duration-500">
                           <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover/card:animate-shine"></div>
                         </div>
                       </div>
@@ -743,10 +743,10 @@ export default function Articles() {
 
 function ArticleCard({ article }: { article: Article }) {
   const categoryInfo = categories.find(c => c.id === article.category?.toLowerCase()) || categories[0];
-  
+
   return (
     <Link href={`/blog/${article.slug}`}>
-      <div 
+      <div
         className="group h-[320px] sm:h-[400px] lg:h-[450px] cursor-pointer"
         data-testid={`article-card-${article.id}`}
       >
@@ -756,18 +756,18 @@ function ArticleCard({ article }: { article: Article }) {
             {/* Thumbnail */}
             <div className="relative h-24 sm:h-40 lg:h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
               {article.featuredImage ? (
-                <img 
-                  src={article.featuredImage} 
+                <img
+                  src={article.featuredImage}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   loading="lazy"
                 />
               ) : (
-                <div className={`w-full h-full bg-gradient-to-br ${categoryInfo.color} flex items-center justify-center`}>
+                <div className={`w-full h-full bg-gradient-to-br flex items-center justify-center`}>
                   <categoryInfo.icon className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white/50" />
                 </div>
               )}
-              
+
               {/* Category Badge */}
               <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
                 <Badge className={`text-[10px] sm:text-sm px-1.5 py-0.5 sm:px-2 sm:py-1 ${categoryInfo.bgLight} ${categoryInfo.bgDark} ${categoryInfo.textColor} border ${categoryInfo.borderColor} font-medium`}>
@@ -781,12 +781,12 @@ function ArticleCard({ article }: { article: Article }) {
               <h3 className="text-[11px] sm:text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-3 line-clamp-2 leading-tight">
                 {article.title}
               </h3>
-              
+
               {/* Excerpt - hidden on mobile */}
               <p className="hidden sm:block text-sm text-gray-600 dark:text-gray-400 mb-3 lg:mb-4 line-clamp-2 leading-relaxed">
                 {article.excerpt}
               </p>
-              
+
               {/* Meta Info */}
               <div className="flex items-center text-[10px] sm:text-xs text-gray-500 dark:text-gray-500 mb-1 sm:mb-3 lg:mb-4">
                 <div className="flex items-center gap-1 sm:gap-3">
@@ -798,7 +798,7 @@ function ArticleCard({ article }: { article: Article }) {
                   )}
                 </div>
               </div>
-              
+
               {/* Read More */}
               <div className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                 <span>READ</span>
@@ -828,7 +828,7 @@ function ArticleCard({ article }: { article: Article }) {
               <p className="text-[10px] sm:text-sm text-gray-700 dark:text-gray-300 leading-snug line-clamp-3 sm:line-clamp-4 mb-1 sm:mb-3 lg:mb-4">
                 {article.excerpt}
               </p>
-              
+
               {/* Quick Info - hidden on mobile */}
               <div className="hidden sm:block space-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
