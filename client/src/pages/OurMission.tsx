@@ -98,7 +98,7 @@ export default function OurMission() {
         </div>
 
         {/* Content wrapper with vertical spacing */}
-        <div className="mb-16 sm:mb-20">
+        <div className="mb-10 sm:mb-20">
 
           {/* Breadcrumb - Mobile optimized with wrapping */}
           <motion.div variants={slideUpVariants as any}
@@ -135,7 +135,7 @@ export default function OurMission() {
           </motion.div>
 
           {/* Hero Section */}
-          <FadeInSection delay={0.1} className="text-center mb-10 sm:mb-12 relative mt-5">
+          <FadeInSection delay={0.1} className="text-center mb-10 sm:mb-12 relative mt-5 max-sm:mt-10">
             <motion.div variants={slideUpVariants as any}
               initial="hidden"
               whileInView="visible"
@@ -183,7 +183,7 @@ export default function OurMission() {
                   className="inline-flex items-center gap-2 px-4 sm:px-8 py-2.5 sm:py-4 ctm-button btn-green border-none !capitalize text-white rounded-full font-bold text-sm sm:text-lg lg:text-xl cursor-none"
                 >
                   <Sparkles className="w-4 h-4 sm:w-6 sm:h-6" />
-                  <span>PlantRx solves that problem.</span>
+                  <span className="font-bold text-sm sm:text-lg lg:text-xl">PlantRx solves that problem.</span>
                 </motion.div>
               </CardContent>
             </Card>

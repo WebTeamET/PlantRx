@@ -2,15 +2,15 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
-import { 
-  FileText, 
-  Sparkles, 
-  Download, 
-  Utensils, 
-  Dumbbell, 
-  Heart, 
-  Leaf, 
-  CheckCircle, 
+import {
+  FileText,
+  Sparkles,
+  Download,
+  Utensils,
+  Dumbbell,
+  Heart,
+  Leaf,
+  CheckCircle,
   ArrowRight,
   ArrowDown,
   ArrowLeft,
@@ -78,9 +78,9 @@ const features = [
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  
+
   return (
-    <motion.div 
+    <motion.div
       className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left z-50"
       style={{ scaleX: scrollYProgress }}
     />
@@ -93,9 +93,9 @@ function ParallaxSection({ children, offset = 50 }: { children: React.ReactNode;
     target: ref,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
-  
+
   return (
     <motion.div ref={ref} style={{ y }}>
       {children}
@@ -106,14 +106,14 @@ function ParallaxSection({ children, offset = 50 }: { children: React.ReactNode;
 function FadeInSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0.92, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0.92, y: 24 }}
-      transition={{ 
-        duration: 0.35, 
+      transition={{
+        duration: 0.35,
         delay,
         ease: "easeOut"
       }}
@@ -155,12 +155,12 @@ function FeedbackForm() {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     setIsSubmitting(false);
     setIsSubmitted(true);
     toast({
@@ -215,11 +215,10 @@ function FeedbackForm() {
               data-testid={`rating-star-${star}`}
             >
               <Star
-                className={`w-10 h-10 transition-colors ${
-                  star <= (hoveredRating || rating)
-                    ? "text-yellow-400 fill-yellow-400"
-                    : "text-gray-300 dark:text-gray-600"
-                }`}
+                className={`w-10 h-10 transition-colors ${star <= (hoveredRating || rating)
+                  ? "text-yellow-400 fill-yellow-400"
+                  : "text-gray-300 dark:text-gray-600"
+                  }`}
               />
             </motion.button>
           ))}
@@ -288,7 +287,7 @@ export default function ToolsBlueprintDesigner() {
   const [showCtaOptions, setShowCtaOptions] = useState(false);
   const [showCreator, setShowCreator] = useState(false);
   const [selectedPlanType, setSelectedPlanType] = useState<'diet' | 'workout' | 'skincare' | 'wellness' | 'healing' | undefined>(undefined);
-  
+
   useEffect(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
     return () => {
@@ -314,7 +313,7 @@ export default function ToolsBlueprintDesigner() {
     setShowCreator(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  
+
   if (showCreator) {
     return (
       <UpgradeInterstitial feature={Feature.WELLNESS_BLUEPRINT_DESIGNER}>
@@ -322,7 +321,7 @@ export default function ToolsBlueprintDesigner() {
           <title>Create Your Blueprint | PlantRx</title>
           <meta name="description" content="Answer a few questions to create your personalized wellness blueprint." />
         </Helmet>
-        
+
         <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
           <div className="max-w-6xl mx-auto px-4 py-6">
             <motion.button
@@ -337,8 +336,8 @@ export default function ToolsBlueprintDesigner() {
               Back to Blueprint Designer
             </motion.button>
           </div>
-          
-          <PlanRxCreator user={null} onAuthRequired={() => {}} initialPlanType={selectedPlanType} />
+
+          <PlanRxCreator user={null} onAuthRequired={() => { }} initialPlanType={selectedPlanType} />
         </div>
       </UpgradeInterstitial>
     );
@@ -354,53 +353,37 @@ export default function ToolsBlueprintDesigner() {
       {/* <ScrollProgress /> */}
 
       <div ref={containerRef} className="overflow-x-hidden">
-        
+
         {/* Hero Section - Full viewport with scroll indicator */}
-        <section className="min-h-[70vh] sm:min-h-[90vh] relative flex flex-col items-center justify-center py-10 sm:py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+        <section className="min-h-[70vh] sm:min-h-[90vh] relative flex flex-col items-center justify-center py-10 sm:py-20 bg-gold/20 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
           {/* Animated background elements - GPU accelerated */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div 
-              className="absolute top-20 left-10 w-72 h-72 bg-purple-300/20 dark:bg-purple-500/10 rounded-full blur-3xl will-change-transform"
-              animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div 
-              className="absolute bottom-20 right-10 w-96 h-96 bg-blue-300/20 dark:bg-blue-500/10 rounded-full blur-3xl will-change-transform"
-              animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-300/10 dark:bg-pink-500/5 rounded-full blur-3xl will-change-transform"
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            />
           </div>
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <FadeInSection>
-              <FloatingElement duration={4}>
-                <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl sm:rounded-3xl mx-auto mb-4 sm:mb-8 flex items-center justify-center shadow-2xl">
-                  <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white" />
-                </div>
-              </FloatingElement>
-            </FadeInSection>
-            
-              <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3 sm:mb-6 lg:mb-8 leading-tight">
-                <SplitText text={t('home.planrx.title', 'Wellness Blueprint Designer')} />
-              </h1>
-            
+            <motion.div>
+              <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-green rounded-2xl sm:rounded-3xl mx-auto mb-4 sm:mb-8 flex items-center justify-center shadow-2xl">
+                <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white" />
+              </div>
+            </motion.div>
+
+
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
+              <SplitText text="Wellness Blueprint Designer" />
+            </h1>
+
             <FadeInSection delay={0.4}>
-              <p className="text-sm sm:text-xl lg:text-2xl xl:text-3xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
+              <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
                 Transform your health journey with personalized plans created in minutes
               </p>
             </FadeInSection>
-            
+
             <FadeInSection delay={0.6}>
               <motion.div
                 onClick={scrollToBlueprintTypes}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 sm:gap-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+                className="inline-flex items-center gap-2 sm:gap-4 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
               >
                 <Sparkles className="w-5 h-5 sm:w-7 sm:h-7" />
                 <span>Start Creating Now</span>
@@ -444,7 +427,7 @@ export default function ToolsBlueprintDesigner() {
                     className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
                   >
                     <div className="relative inline-block mb-3 sm:mb-6">
-                      <motion.div 
+                      <motion.div
                         className={`w-12 h-12 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl`}
                         whileHover={{ rotate: [0, -5, 5, 0] }}
                         transition={{ duration: 0.5 }}
@@ -490,7 +473,7 @@ export default function ToolsBlueprintDesigner() {
                     <Card className="h-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-purple-400 dark:hover:border-purple-500 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
                       <div className={`h-1 sm:h-2 bg-gradient-to-r ${type.color}`} />
                       <CardContent className="p-3 sm:p-8 pt-3 sm:pt-6 text-center flex flex-col items-center h-full">
-                        <motion.div 
+                        <motion.div
                           className={`w-10 h-10 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br ${type.color} mb-3 sm:mb-6 mt-1 sm:mt-2 flex items-center justify-center shadow-xl`}
                           whileHover={{ rotate: 360 }}
                           transition={{ duration: 0.6 }}
@@ -518,7 +501,7 @@ export default function ToolsBlueprintDesigner() {
         <section className="py-12 sm:py-24 lg:py-32 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
           {/* Animated background patterns */}
           <div className="absolute inset-0 opacity-20">
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 w-full h-full"
               style={{
                 backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)',
@@ -536,19 +519,19 @@ export default function ToolsBlueprintDesigner() {
                   <Sparkles className="w-10 h-10 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-8 text-yellow-300" />
                 </FloatingElement>
               </FadeInSection>
-              
+
               <FadeInSection delay={0.2}>
                 <h2 className="text-xl sm:text-3xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-6">
                   Ready to Transform Your Health?
                 </h2>
               </FadeInSection>
-              
+
               <FadeInSection delay={0.4}>
                 <p className="text-sm sm:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-10 max-w-2xl mx-auto px-2">
                   Join thousands who have created personalized wellness blueprints. Your journey to better health starts here.
                 </p>
               </FadeInSection>
-              
+
               <FadeInSection delay={0.6}>
                 <motion.div
                   onClick={() => setShowCtaOptions(!showCtaOptions)}
@@ -570,7 +553,7 @@ export default function ToolsBlueprintDesigner() {
               {/* Inline Blueprint Type Options */}
               <motion.div
                 initial={false}
-                animate={{ 
+                animate={{
                   height: showCtaOptions ? "auto" : 0,
                   opacity: showCtaOptions ? 1 : 0,
                   marginTop: showCtaOptions ? 40 : 0
@@ -595,33 +578,33 @@ export default function ToolsBlueprintDesigner() {
                       transition={{ delay: 0.1 + index * 0.1, duration: 0.4, ease: "easeOut" }}
                       onClick={() => handleSelectBlueprintType(type.planType)}
                     >
-                      <motion.div 
+                      <motion.div
                         whileHover={{ y: -6, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden cursor-pointer group h-full shadow-xl hover:shadow-2xl transition-all duration-300"
                       >
                         {/* Top gradient accent bar */}
                         <div className={`h-1.5 bg-gradient-to-r ${type.color}`} />
-                        
+
                         <div className="p-6 pt-5">
                           {/* Icon with gradient fill */}
                           <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${type.color} mb-5 flex items-center justify-center shadow-lg mx-auto group-hover:scale-110 transition-transform duration-300`}>
                             <type.icon className="w-8 h-8 text-white" />
                           </div>
-                          
+
                           {/* Title */}
                           <h4 className="text-gray-900 dark:text-white font-bold text-lg text-center mb-2">{type.title}</h4>
-                          
+
                           {/* Description */}
                           <p className="text-gray-500 dark:text-gray-400 text-sm text-center mb-5 leading-relaxed line-clamp-2">{type.description}</p>
-                          
+
                           {/* CTA Button */}
                           <div className={`w-full py-3 rounded-xl bg-gradient-to-r ${type.color} text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-xl transition-all`}>
                             Get Started
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                           </div>
                         </div>
-                        
+
                         {/* Subtle corner decoration */}
                         <div className={`absolute -bottom-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br ${type.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
                       </motion.div>
@@ -629,7 +612,7 @@ export default function ToolsBlueprintDesigner() {
                   ))}
                 </div>
               </motion.div>
-              
+
               <FadeInSection delay={0.8}>
                 <div className="mt-6 sm:mt-12 flex flex-wrap justify-center gap-3 sm:gap-8 text-white/80">
                   <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
@@ -709,7 +692,7 @@ export default function ToolsBlueprintDesigner() {
                       Help us improve the Blueprint Designer. Share your thoughts, suggestions, or ideas!
                     </p>
                   </div>
-                  
+
                   <FeedbackForm />
                 </CardContent>
               </Card>

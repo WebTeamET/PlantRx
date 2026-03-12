@@ -26,7 +26,7 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
         const xPct = (clientX / window.innerWidth) - 0.5;
         const yPct = (clientY / window.innerHeight) - 0.5;
         mouseX.set(xPct);
-        mouseY.set(yPct);
+        mouseY.set(yPct);  
     };
     return (
         <div ref={containerRef} onMouseMove={handleMouseMove} className="collection-banner relative product-section xl:h-[160dvh] lg:h-[150dvh] sm:h-[calc(100dvh-64px)] h-[calc(100dvh-56px)]">
