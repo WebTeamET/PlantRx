@@ -31,6 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import PlanRxCreator from "@/components/PlanRxCreator";
 import { SplitText } from "@/utils/SplitText";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 
 const blueprintTypes = [
   {
@@ -361,54 +362,57 @@ export default function ToolsBlueprintDesigner() {
           </div>
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div>
+            <motion.div
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <div className="w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-green rounded-2xl sm:rounded-3xl mx-auto mb-4 sm:mb-8 flex items-center justify-center shadow-2xl">
                 <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white" />
               </div>
             </motion.div>
 
-
             <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
               <SplitText text="Wellness Blueprint Designer" />
             </h1>
 
-            <FadeInSection delay={0.4}>
+            <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
                 Transform your health journey with personalized plans created in minutes
               </p>
-            </FadeInSection>
+            </motion.div>
 
-            <FadeInSection delay={0.6}>
+            <motion.div
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+              className="inline-flex items-center gap-2 sm:gap-4 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+            >
+              <Sparkles className="w-5 h-5 sm:w-7 sm:h-7" />
+              <span>Start Creating Now</span>
               <motion.div
-                onClick={scrollToBlueprintTypes}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 sm:gap-4 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <Sparkles className="w-5 h-5 sm:w-7 sm:h-7" />
-                <span>Start Creating Now</span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" />
-                </motion.div>
+                <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" />
               </motion.div>
-            </FadeInSection>
+            </motion.div>
+
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section className="py-12 sm:py-24 lg:py-32 bg-white dark:bg-gray-900 relative">
+        <section className="py-8 sm:py-10 lg:py-20 bg-white dark:bg-gray-900 relative">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection className="text-center mb-8 sm:mb-16">
-              <span className="text-purple-600 dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
+              </motion.div>
               <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
-                How It Works
+                <SplitText text="How It Works" />
               </h2>
-              <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Create your personalized blueprint in three simple steps
-              </p>
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                  Create your personalized blueprint in three simple steps
+                </p>
+              </motion.div>
             </FadeInSection>
 
             {/* Timeline connector */}
@@ -700,7 +704,7 @@ export default function ToolsBlueprintDesigner() {
           </div>
         </section>
 
-      </div>
-    </UpgradeInterstitial>
+      </div >
+    </UpgradeInterstitial >
   );
 }
