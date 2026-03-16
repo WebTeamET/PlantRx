@@ -31,14 +31,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import PlanRxCreator from "@/components/PlanRxCreator";
 import { SplitText } from "@/utils/SplitText";
-import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { containerVariants, slideRightVariants, slideUpVariants } from "@/animation/framerMotionVariants";
 
 const blueprintTypes = [
   {
     icon: Utensils,
     title: "Custom Diet Plans",
     description: "Personalized nutrition blueprints based on your goals and dietary preferences.",
-    color: "from-orange-500 to-red-500",
     bgColor: "bg-orange-50 dark:bg-orange-900/20",
     planType: "diet" as const
   },
@@ -46,7 +45,6 @@ const blueprintTypes = [
     icon: Dumbbell,
     title: "Fitness Routines",
     description: "Tailored workout plans for strength, cardio, or weight management.",
-    color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-50 dark:bg-blue-900/20",
     planType: "workout" as const
   },
@@ -54,7 +52,6 @@ const blueprintTypes = [
     icon: Heart,
     title: "Skincare Regimens",
     description: "Complete skincare routines with product recommendations.",
-    color: "from-pink-500 to-rose-500",
     bgColor: "bg-pink-50 dark:bg-pink-900/20",
     planType: "skincare" as const
   },
@@ -62,7 +59,6 @@ const blueprintTypes = [
     icon: Leaf,
     title: "Wellness Programs",
     description: "Holistic health blueprints for mind, body, and soul.",
-    color: "from-green-500 to-emerald-500",
     bgColor: "bg-green-50 dark:bg-green-900/20",
     planType: "wellness" as const
   }
@@ -199,10 +195,10 @@ function FeedbackForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Star Rating */}
       <div className="text-center">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <motion.label variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
           How would you rate the Blueprint Designer?
-        </label>
-        <div className="flex justify-center gap-2">
+        </motion.label>
+        <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex justify-center gap-2">
           {[1, 2, 3, 4, 5].map((star) => (
             <motion.button
               key={star}
@@ -223,7 +219,7 @@ function FeedbackForm() {
               />
             </motion.button>
           ))}
-        </div>
+        </motion.div>
         {rating > 0 && (
           <motion.p
             initial={{ opacity: 0, y: -10 }}
@@ -257,7 +253,7 @@ function FeedbackForm() {
           disabled={isSubmitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-3 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
           data-testid="submit-feedback-btn"
         >
           {isSubmitting ? (
@@ -416,9 +412,12 @@ export default function ToolsBlueprintDesigner() {
             </FadeInSection>
 
             {/* Timeline connector */}
-            <div className="hidden md:block absolute left-1/2 top-[280px] w-px h-[200px] bg-gradient-to-b from-purple-500 to-pink-500 opacity-30" />
+            {/* <div className="hidden md:block absolute left-1/2 top-[280px] w-px h-[200px] bg-gradient-to-b from-purple-500 to-pink-500 opacity-30" /> */}
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 lg:gap-12">
+            <motion.div variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 lg:gap-12">
               {[
                 { step: 1, icon: Target, title: "Choose Your Blueprint", description: "Select from diet, fitness, skincare, or wellness plans tailored to your needs." },
                 { step: 2, icon: FileText, title: "Answer Questions", description: "Tell us about your goals, preferences, and lifestyle in our guided questionnaire." },
@@ -426,19 +425,18 @@ export default function ToolsBlueprintDesigner() {
               ].map((item, index) => (
                 <FadeInSection key={item.step} delay={index * 0.2} className="h-full">
                   <motion.div
-                    whileHover={{ y: -10, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+                    variants={slideUpVariants as any}
+                    className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
                   >
                     <div className="relative inline-block mb-3 sm:mb-6">
                       <motion.div
-                        className={`w-12 h-12 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-xl`}
+                        className={`w-12 h-12 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gold flex items-center justify-center shadow-xl`}
                         whileHover={{ rotate: [0, -5, 5, 0] }}
                         transition={{ duration: 0.5 }}
                       >
                         <item.icon className="w-6 h-6 sm:w-10 sm:h-10 text-white" />
                       </motion.div>
-                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-white dark:bg-gray-900 border-2 sm:border-4 border-purple-500 flex items-center justify-center text-xs sm:text-lg font-bold text-purple-600 dark:text-purple-400 shadow-lg">
+                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-green dark:bg-gray-900 border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-lg font-bold text-white dark:text-purple-400 shadow-lg">
                         {item.step}
                       </div>
                     </div>
@@ -447,26 +445,36 @@ export default function ToolsBlueprintDesigner() {
                   </motion.div>
                 </FadeInSection>
               ))}
-            </div>
+            </motion.div>
           </div>
+
         </section>
 
         {/* Blueprint Types Section */}
-        <section ref={blueprintTypesRef} className="py-12 sm:py-24 lg:py-32 bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-900 dark:to-purple-900/10">
+        <section ref={blueprintTypesRef} className="py-12 sm:py-24 lg:py-32 bg-gold/20 dark:from-gray-900 dark:to-purple-900/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeInSection className="text-center mb-6 sm:mb-16">
-              <span className="text-purple-600 dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Categories</span>
+            <FadeInSection className="text-center mb-8 sm:mb-16">
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Categories</span>
+              </motion.div>
               <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
-                Choose Your Blueprint
+                <SplitText text="Choose Your Blueprint" />
               </h2>
-              <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Four specialized categories designed to transform your wellness journey
-              </p>
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                  Four specialized categories designed to transform your wellness journey
+                </p>
+              </motion.div>
             </FadeInSection>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+            <motion.div variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {blueprintTypes.map((type, index) => (
-                <FadeInSection key={type.title} delay={index * 0.1}>
+                <motion.div variants={slideUpVariants as any} key={type.title}>
                   <motion.div
                     onClick={() => handleSelectBlueprintType(type.planType)}
                     whileHover={{ y: -15, scale: 1.03 }}
@@ -474,20 +482,18 @@ export default function ToolsBlueprintDesigner() {
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="cursor-pointer h-full"
                   >
-                    <Card className="h-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-purple-400 dark:hover:border-purple-500 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
-                      <div className={`h-1 sm:h-2 bg-gradient-to-r ${type.color}`} />
+                    <Card className="h-full bg-white dark:bg-gray-800 border-none dark:border-gray-700 dark:hover:border-purple-500 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                      <div className={`h-1 sm:h-2 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto]`} />
                       <CardContent className="p-3 sm:p-8 pt-3 sm:pt-6 text-center flex flex-col items-center h-full">
                         <motion.div
-                          className={`w-10 h-10 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br ${type.color} mb-3 sm:mb-6 mt-1 sm:mt-2 flex items-center justify-center shadow-xl`}
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.6 }}
+                          className={`w-10 h-10 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] mb-3 sm:mb-6 mt-1 sm:mt-2 flex items-center justify-center shadow-xl`}
                         >
                           <type.icon className="w-5 h-5 sm:w-10 sm:h-10 text-white" />
                         </motion.div>
                         <h3 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-3">{type.title}</h3>
                         <p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed flex-grow line-clamp-2 sm:line-clamp-none">{type.description}</p>
                         <div className="mt-3 sm:mt-6 pt-2 sm:pt-4 border-t border-gray-100 dark:border-gray-700 w-full">
-                          <span className="text-xs sm:text-sm font-semibold text-purple-600 dark:text-purple-400 flex items-center justify-center gap-1 sm:gap-2 group-hover:gap-4 transition-all">
+                          <span className="text-xs sm:text-sm font-semibold text-green dark:text-purple-400 flex items-center justify-center gap-1 sm:gap-2 group-hover:gap-4 transition-all">
                             Get Started
                             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                           </span>
@@ -495,14 +501,14 @@ export default function ToolsBlueprintDesigner() {
                       </CardContent>
                     </Card>
                   </motion.div>
-                </FadeInSection>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Main CTA Section with Parallax */}
-        <section className="py-12 sm:py-24 lg:py-32 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
+        <section className="py-12 sm:py-24 lg:py-32 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] relative overflow-hidden">
           {/* Animated background patterns */}
           <div className="absolute inset-0 opacity-20">
             <motion.div
@@ -516,185 +522,187 @@ export default function ToolsBlueprintDesigner() {
             />
           </div>
 
-          <ParallaxSection offset={30}>
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-              <FadeInSection>
-                <FloatingElement duration={3}>
-                  <Sparkles className="w-10 h-10 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-8 text-yellow-300" />
-                </FloatingElement>
-              </FadeInSection>
 
-              <FadeInSection delay={0.2}>
-                <h2 className="text-xl sm:text-3xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-6">
-                  Ready to Transform Your Health?
-                </h2>
-              </FadeInSection>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            {/* <FadeInSection> */}
+            {/* <FloatingElement duration={3}> */}
+            <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <Sparkles className="w-10 h-10 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-8 text-white" />
+            </motion.div>
+            {/* </FloatingElement> */}
+            {/* </FadeInSection> */}
 
-              <FadeInSection delay={0.4}>
-                <p className="text-sm sm:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-10 max-w-2xl mx-auto px-2">
-                  Join thousands who have created personalized wellness blueprints. Your journey to better health starts here.
-                </p>
-              </FadeInSection>
 
-              <FadeInSection delay={0.6}>
-                <motion.div
-                  onClick={() => setShowCtaOptions(!showCtaOptions)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-2 sm:gap-4 bg-white text-purple-700 px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer hover:bg-gray-50 transition-colors"
-                >
-                  <FileText className="w-5 h-5 sm:w-7 sm:h-7" />
-                  <span>Create My Blueprint Now</span>
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" />
-                  </motion.div>
-                </motion.div>
-              </FadeInSection>
+            <h2 className="text-xl sm:text-3xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-6">
+              <SplitText text="Ready to Transform Your Health?" />
+            </h2>
 
-              {/* Inline Blueprint Type Options */}
+
+            <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <p className="text-sm sm:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-10 max-w-2xl mx-auto px-2">
+                Join thousands who have created personalized wellness blueprints. Your journey to better health starts here.
+              </p>
+            </motion.div>
+
+
+            <motion.div
+              className="inline-flex items-center gap-2 sm:gap-4 bg-white text-green px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer hover:bg-gray-50"
+            >
+              <FileText className="w-5 h-5 sm:w-7 sm:h-7" />
+              <span>Create My Blueprint Now</span>
               <motion.div
-                initial={false}
-                animate={{
-                  height: showCtaOptions ? "auto" : 0,
-                  opacity: showCtaOptions ? 1 : 0,
-                  marginTop: showCtaOptions ? 40 : 0
-                }}
-                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                className="overflow-hidden w-full max-w-5xl mx-auto"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={showCtaOptions ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ delay: 0.2, duration: 0.3 }}
-                  className="text-white/90 text-lg mb-6 font-medium"
-                >
-                  Choose your blueprint type to get started:
-                </motion.p>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 px-4">
-                  {blueprintTypes.map((type, index) => (
+                <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" />
+              </motion.div>
+            </motion.div>
+
+            {/* Inline Blueprint Type Options */}
+            <motion.div
+              initial={false}
+              animate={{
+                height: showCtaOptions ? "auto" : 0,
+                opacity: showCtaOptions ? 1 : 0,
+                marginTop: showCtaOptions ? 40 : 0
+              }}
+              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden w-full max-w-5xl mx-auto"
+            >
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={showCtaOptions ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+                className="text-white/90 text-lg mb-6 font-medium"
+              >
+                Choose your blueprint type to get started:
+              </motion.p>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 px-4">
+                {blueprintTypes.map((type, index) => (
+                  <motion.div
+                    key={type.title}
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={showCtaOptions ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
+                    transition={{ delay: 0.1 + index * 0.1, duration: 0.4, ease: "easeOut" }}
+                    onClick={() => handleSelectBlueprintType(type.planType)}
+                  >
                     <motion.div
-                      key={type.title}
-                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                      animate={showCtaOptions ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-                      transition={{ delay: 0.1 + index * 0.1, duration: 0.4, ease: "easeOut" }}
-                      onClick={() => handleSelectBlueprintType(type.planType)}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden cursor-pointer group h-full shadow-xl hover:shadow-2xl transition-all duration-300"
                     >
-                      <motion.div
-                        whileHover={{ y: -6, scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden cursor-pointer group h-full shadow-xl hover:shadow-2xl transition-all duration-300"
-                      >
-                        {/* Top gradient accent bar */}
-                        <div className={`h-1.5 bg-gradient-to-r ${type.color}`} />
+                      {/* Top gradient accent bar */}
+                      <div className={`h-1.5 bg-gradient-to-r`} />
 
-                        <div className="p-6 pt-5">
-                          {/* Icon with gradient fill */}
-                          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${type.color} mb-5 flex items-center justify-center shadow-lg mx-auto group-hover:scale-110 transition-transform duration-300`}>
-                            <type.icon className="w-8 h-8 text-white" />
-                          </div>
-
-                          {/* Title */}
-                          <h4 className="text-gray-900 dark:text-white font-bold text-lg text-center mb-2">{type.title}</h4>
-
-                          {/* Description */}
-                          <p className="text-gray-500 dark:text-gray-400 text-sm text-center mb-5 leading-relaxed line-clamp-2">{type.description}</p>
-
-                          {/* CTA Button */}
-                          <div className={`w-full py-3 rounded-xl bg-gradient-to-r ${type.color} text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-xl transition-all`}>
-                            Get Started
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                          </div>
+                      <div className="p-6 pt-5">
+                        {/* Icon with gradient fill */}
+                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br mb-5 flex items-center justify-center shadow-lg mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                          <type.icon className="w-8 h-8 text-white" />
                         </div>
 
-                        {/* Subtle corner decoration */}
-                        <div className={`absolute -bottom-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br ${type.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+                        {/* Title */}
+                        <h4 className="text-gray-900 dark:text-white font-bold text-lg text-center mb-2">{type.title}</h4>
 
-              <FadeInSection delay={0.8}>
-                <div className="mt-6 sm:mt-12 flex flex-wrap justify-center gap-3 sm:gap-8 text-white/80">
-                  <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
-                    <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
-                    Expert-designed
-                  </span>
-                  <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
-                    <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
-                    Ready in 5 minutes
-                  </span>
-                  <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
-                    <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
-                    Beautiful PDFs
-                  </span>
-                </div>
-              </FadeInSection>
-            </div>
-          </ParallaxSection>
+                        {/* Description */}
+                        <p className="text-gray-500 dark:text-gray-400 text-sm text-center mb-5 leading-relaxed line-clamp-2">{type.description}</p>
+
+                        {/* CTA Button */}
+                        <div className={`w-full py-3 rounded-xl bg-gradient-to-r text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg group-hover:shadow-xl transition-all`}>
+                          Get Started
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+
+                      {/* Subtle corner decoration */}
+                      <div className={`absolute -bottom-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br opacity-10 group-hover:opacity-20 transition-opacity`} />
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+
+            <motion.div className="mt-6 sm:mt-12 flex flex-wrap justify-center gap-3 sm:gap-8 text-white/80">
+              <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
+                <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
+                Expert-designed
+              </span>
+              <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
+                <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
+                Ready in 5 minutes
+              </span>
+              <span className="flex items-center gap-1 sm:gap-2 text-xs sm:text-lg">
+                <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-300" />
+                Beautiful PDFs
+              </span>
+            </motion.div>
+
+          </div>
         </section>
 
         {/* Features Grid */}
         <section className="py-12 sm:py-24 lg:py-32 bg-white dark:bg-gray-900">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeInSection className="text-center mb-6 sm:mb-16">
-              <span className="text-purple-600 dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Benefits</span>
+            <FadeInSection className="text-center mb-8 sm:mb-16">
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Benefits</span>
+              </motion.div>
               <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
-                Why Choose Our Blueprints?
+                <SplitText text="Why Choose Our Blueprints?" />
               </h2>
+
             </FadeInSection>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
+            <motion.div variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
               {features.map((feature, index) => (
                 <FadeInSection key={feature.title} delay={index * 0.1} className="h-full">
                   <motion.div
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300 }}
                     className="h-full"
                   >
-                    <Card className="h-full bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-100 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-all">
-                      <CardContent className="p-3 sm:p-8 pt-3 sm:pt-6 h-full flex flex-col">
-                        <motion.div
-                          whileHover={{ rotate: [0, -10, 10, 0] }}
-                          transition={{ duration: 0.5 }}
-                          className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mt-1 sm:mt-2 mb-3 sm:mb-5 shadow-lg"
-                        >
-                          <feature.icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                        </motion.div>
-                        <h3 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{feature.title}</h3>
-                        <p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 flex-grow">{feature.description}</p>
-                      </CardContent>
-                    </Card>
+                    <motion.div className="h-full" variants={slideUpVariants as any}>
+                      <Card className="h-full bg-gold/20 dark:from-gray-800 dark:to-gray-900 border-none dark:border-gray-700 dark:hover:border-purple-600 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-all">
+                        <CardContent className="p-3 sm:p-8 pt-3 sm:pt-6 h-full flex flex-col">
+                          <div
+                            className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] flex items-center justify-center mt-1 sm:mt-2 mb-3 sm:mb-5 shadow-lg"
+                          >
+                            <feature.icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
+                          </div>
+                          <h3 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{feature.title}</h3>
+                          <p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 flex-grow">{feature.description}</p>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
                   </motion.div>
                 </FadeInSection>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Feedback Section */}
-        <section className="py-12 sm:py-24 lg:py-32 bg-gradient-to-br from-gray-50 to-purple-50/50 dark:from-gray-900 dark:to-purple-900/20">
+        <section className="py-12 sm:py-24 lg:py-32 bg-gold/20 dark:from-gray-900 dark:to-purple-900/20">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <FadeInSection>
               <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl rounded-2xl sm:rounded-3xl overflow-hidden">
                 <CardContent className="p-4 sm:p-8 lg:p-12">
                   <div className="text-center mb-4 sm:mb-8">
                     <motion.div
-                      className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl sm:rounded-2xl mx-auto mb-3 sm:mb-6 flex items-center justify-center shadow-lg"
+                      className="w-12 h-12 sm:w-16 sm:h-16 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] rounded-xl sm:rounded-2xl mx-auto mb-3 sm:mb-6 flex items-center justify-center shadow-lg"
                       whileHover={{ rotate: [0, -5, 5, 0] }}
                       transition={{ duration: 0.5 }}
                     >
                       <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </motion.div>
-                    <h2 className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
-                      We'd Love Your Feedback
+                    <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+                      <SplitText text="We'd Love Your Feedback" />
                     </h2>
-                    <p className="text-xs sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+                    <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
                       Help us improve the Blueprint Designer. Share your thoughts, suggestions, or ideas!
-                    </p>
+                    </motion.p>
                   </div>
 
                   <FeedbackForm />

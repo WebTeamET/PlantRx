@@ -747,660 +747,515 @@ export default function InteractiveMuscleMap() {
   }
 
   return (
-    <div className="w-full space-y-4 overflow-x-auto">
-      {/* Interactive Body Map */}
-      <Card className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <CardContent className="p-4">
-          {/* Simple CSS for clean interactions */}
-          <style>{`
-            .body-container {
-              background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            }
-            .dark .body-container {
-              background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            }
-            .muscle-dot {
-              transition: filter 0.2s ease;
-            }
-            .muscle-dot:hover {
-              filter: brightness(1.3);
-            }
-          `}</style>
+<div className="w-full space-y-4 overflow-x-auto">
+  {/* Interactive Body Map */}
+  <Card className="bg-gold/5 dark:from-gray-900 dark:to-gray-800 border border-gold/20">
+    <CardContent className="p-4">
+      <style>{`
+        .body-container {
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .dark .body-container {
+          background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .muscle-dot {
+          transition: filter 0.2s ease;
+        }
+        .muscle-dot:hover {
+          filter: brightness(1.3);
+        }
+      `}</style>
 
-          <div className="relative mx-auto max-w-md">
-            {/* Clean, Modern Human Body Model */}
-            <div className="body-container relative w-full h-[520px] rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md">
+      <div className="relative mx-auto max-w-md">
+        <div className="body-container relative w-full h-[520px] rounded-lg border border-gold/30 dark:border-gold/10 overflow-hidden shadow-md">
+          <svg viewBox="0 0 300 400" className="w-full h-full" style={{ maxHeight: "520px" }}>
+            <defs>
+              <linearGradient id="bodyGradient" x1="30%" y1="0%" x2="70%" y2="100%">
+                <stop offset="0%" stopColor="#f1f5f9" />
+                <stop offset="50%" stopColor="#e2e8f0" />
+                <stop offset="100%" stopColor="#cbd5e1" />
+              </linearGradient>
+            </defs>
 
-              <svg
-                viewBox="0 0 300 400"
-                className="w-full h-full"
-                style={{ maxHeight: "520px" }}
-              >
-                {/* Define advanced gradients and effects */}
-                <defs>
-                  {/* Clean body gradient */}
-                  <linearGradient id="bodyGradient" x1="30%" y1="0%" x2="70%" y2="100%">
-                    <stop offset="0%" stopColor="#f1f5f9" />
-                    <stop offset="50%" stopColor="#e2e8f0" />
-                    <stop offset="100%" stopColor="#cbd5e1" />
-                  </linearGradient>
-                </defs>
+            <g className="body-outline">
+              {/* Head */}
+              <ellipse cx="150" cy="30" rx="18" ry="22" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" />
+              {/* Neck */}
+              <path d="M 142 50 Q 150 48 158 50 L 158 62 Q 150 64 142 62 Z" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" />
+              {/* Torso */}
+              <path d="M 115 65 Q 130 58 150 58 Q 170 58 185 65 Q 192 74 194 84 L 194 102 Q 190 112 182 120 L 175 135 Q 168 145 158 150 L 150 155 Q 142 150 132 145 L 125 135 Q 118 120 110 112 L 106 102 Q 106 84 115 65 Z" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" />
+              {/* Chest definition */}
+              <path d="M 128 78 Q 138 83 150 80 Q 162 83 172 78" stroke="#94a3b8" strokeWidth="1" fill="none" />
+              <path d="M 132 90 Q 142 95 150 92 Q 158 95 168 90" stroke="#94a3b8" strokeWidth="1" fill="none" />
+              {/* Arms */}
+              <ellipse cx="98" cy="90" rx="16" ry="34" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" transform="rotate(-8 98 90)" />
+              <ellipse cx="202" cy="90" rx="16" ry="34" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" transform="rotate(8 202 90)" />
+              {/* Forearms */}
+              <ellipse cx="88" cy="135" rx="13" ry="30" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" transform="rotate(-12 88 135)" />
+              <ellipse cx="212" cy="135" rx="13" ry="30" fill="url(#bodyGradient)" stroke="#64748b" strokeWidth="1.5" transform="rotate(12 212 135)" />
+              {/* Hands */}
+              <ellipse cx="82" cy="172" rx="10" ry="16" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.5)" strokeWidth="1.8" />
+              <ellipse cx="218" cy="172" rx="10" ry="16" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.5)" strokeWidth="1.8" />
+              {/* Core/abdomen */}
+              <path d="M 138 155 Q 150 150 162 155 L 168 180 Q 165 195 160 208 L 150 220 Q 140 208 135 195 Q 132 180 138 155 Z" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.8)" strokeWidth="3" />
+              {/* Ab definition */}
+              <path d="M 140 165 Q 150 162 160 165" stroke="rgba(194,160,88,0.7)" strokeWidth="1.5" fill="none" />
+              <path d="M 140 178 Q 150 175 160 178" stroke="rgba(194,160,88,0.7)" strokeWidth="1.5" fill="none" />
+              <path d="M 141 191 Q 150 188 159 191" stroke="rgba(194,160,88,0.7)" strokeWidth="1.5" fill="none" />
+              <path d="M 142 204 Q 150 201 158 204" stroke="rgba(194,160,88,0.7)" strokeWidth="1.5" fill="none" />
+              <line x1="150" y1="160" x2="150" y2="208" stroke="rgba(194,160,88,0.6)" strokeWidth="1.2" />
+              {/* Pelvis/glutes */}
+              <ellipse cx="150" cy="230" rx="30" ry="22" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.7)" strokeWidth="2.5" />
+              {/* Thighs */}
+              <ellipse cx="128" cy="275" rx="19" ry="42" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.7)" strokeWidth="2.5" transform="rotate(-3 128 275)" />
+              <ellipse cx="172" cy="275" rx="19" ry="42" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.7)" strokeWidth="2.5" transform="rotate(3 172 275)" />
+              {/* Quadricep lines */}
+              <path d="M 121 255 Q 128 252 135 255" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 121 272 Q 128 269 135 272" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 121 289 Q 128 286 135 289" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 255 Q 172 252 179 255" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 272 Q 172 269 179 272" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 289 Q 172 286 179 289" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              {/* Knees */}
+              <circle cx="128" cy="322" r="10" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.6)" strokeWidth="2.2" />
+              <circle cx="172" cy="322" r="10" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.6)" strokeWidth="2.2" />
+              {/* Calves */}
+              <ellipse cx="128" cy="365" rx="15" ry="38" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.7)" strokeWidth="2.5" />
+              <ellipse cx="172" cy="365" rx="15" ry="38" fill="url(#bodyGradient)" stroke="rgba(56,81,39,0.7)" strokeWidth="2.5" />
+              {/* Calf lines */}
+              <path d="M 121 350 Q 128 347 135 350" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 121 365 Q 128 362 135 365" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 121 380 Q 128 377 135 380" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 350 Q 172 347 179 350" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 365 Q 172 362 179 365" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+              <path d="M 165 380 Q 172 377 179 380" stroke="rgba(194,160,88,0.6)" strokeWidth="1.3" fill="none" />
+            </g>
 
-                {/* Clean Anatomical Human Body Model */}
-                <g className="body-outline">
-                  {/* Head */}
-                  <ellipse cx="150" cy="30" rx="18" ry="22" 
-                           fill="url(#bodyGradient)" 
-                           stroke="#64748b" 
-                           strokeWidth="1.5" />
-                  
-                  {/* Neck */}
-                  <path d="M 142 50 Q 150 48 158 50 L 158 62 Q 150 64 142 62 Z" 
-                        fill="url(#bodyGradient)" 
-                        stroke="#64748b" 
-                        strokeWidth="1.5" />
-                  
-                  {/* Torso */}
-                  <path d="M 115 65 Q 130 58 150 58 Q 170 58 185 65 Q 192 74 194 84 L 194 102 Q 190 112 182 120 L 175 135 Q 168 145 158 150 L 150 155 Q 142 150 132 145 L 125 135 Q 118 120 110 112 L 106 102 Q 106 84 115 65 Z" 
-                        fill="url(#bodyGradient)" 
-                        stroke="#64748b" 
-                        strokeWidth="1.5" />
-                  
-                  {/* Chest definition */}
-                  <path d="M 128 78 Q 138 83 150 80 Q 162 83 172 78" stroke="#94a3b8" strokeWidth="1" fill="none" />
-                  <path d="M 132 90 Q 142 95 150 92 Q 158 95 168 90" stroke="#94a3b8" strokeWidth="1" fill="none" />
-                  
-                  {/* Arms */}
-                  <ellipse cx="98" cy="90" rx="16" ry="34" 
-                           fill="url(#bodyGradient)" 
-                           stroke="#64748b" 
-                           strokeWidth="1.5" 
-                           transform="rotate(-8 98 90)" />
-                  <ellipse cx="202" cy="90" rx="16" ry="34" 
-                           fill="url(#bodyGradient)" 
-                           stroke="#64748b" 
-                           strokeWidth="1.5" 
-                           transform="rotate(8 202 90)" />
-                  
-                  {/* Forearms */}
-                  <ellipse cx="88" cy="135" rx="13" ry="30" 
-                           fill="url(#bodyGradient)" 
-                           stroke="#64748b" 
-                           strokeWidth="1.5" 
-                           transform="rotate(-12 88 135)" />
-                  <ellipse cx="212" cy="135" rx="13" ry="30" 
-                           fill="url(#bodyGradient)" 
-                           stroke="#64748b" 
-                           strokeWidth="1.5" 
-                           transform="rotate(12 212 135)" />
-                  
-                  {/* Hands with realistic proportions */}
-                  <ellipse cx="82" cy="172" rx="10" ry="16" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.5)" 
-                           strokeWidth="1.8" />
-                  <ellipse cx="218" cy="172" rx="10" ry="16" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.5)" 
-                           strokeWidth="1.8" />
-                  
-                  {/* Enhanced core/abdomen with detailed 6-pack definition */}
-                  <path d="M 138 155 Q 150 150 162 155 L 168 180 Q 165 195 160 208 L 150 220 Q 140 208 135 195 Q 132 180 138 155 Z" 
-                        fill="url(#bodyGradient)" 
-                        stroke="rgba(99, 102, 241, 0.8)" 
-                        strokeWidth="3"
-                        filter="url(#holographic)" />
-                  
-                  {/* Detailed ab definition with 3D effect */}
-                  <path d="M 140 165 Q 150 162 160 165" stroke="rgba(59, 130, 246, 0.7)" strokeWidth="1.5" fill="none" />
-                  <path d="M 140 178 Q 150 175 160 178" stroke="rgba(59, 130, 246, 0.7)" strokeWidth="1.5" fill="none" />
-                  <path d="M 141 191 Q 150 188 159 191" stroke="rgba(59, 130, 246, 0.7)" strokeWidth="1.5" fill="none" />
-                  <path d="M 142 204 Q 150 201 158 204" stroke="rgba(59, 130, 246, 0.7)" strokeWidth="1.5" fill="none" />
-                  <line x1="150" y1="160" x2="150" y2="208" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.2" />
-                  
-                  {/* Enhanced pelvis/glutes with 3D shading */}
-                  <ellipse cx="150" cy="230" rx="30" ry="22" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.7)" 
-                           strokeWidth="2.5"
-                           filter="url(#holographic)" />
-                  
-                  {/* Detailed thigh muscles with anatomical accuracy */}
-                  <ellipse cx="128" cy="275" rx="19" ry="42" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.7)" 
-                           strokeWidth="2.5" 
-                           transform="rotate(-3 128 275)"
-                           filter="url(#holographic)" />
-                  <ellipse cx="172" cy="275" rx="19" ry="42" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.7)" 
-                           strokeWidth="2.5" 
-                           transform="rotate(3 172 275)"
-                           filter="url(#holographic)" />
-                  
-                  {/* Quadricep definition with 3D muscle lines */}
-                  <path d="M 121 255 Q 128 252 135 255" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 121 272 Q 128 269 135 272" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 121 289 Q 128 286 135 289" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 255 Q 172 252 179 255" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 272 Q 172 269 179 272" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 289 Q 172 286 179 289" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  
-                  {/* Enhanced knees with proper anatomy */}
-                  <circle cx="128" cy="322" r="10" 
-                          fill="url(#bodyGradient)" 
-                          stroke="rgba(99, 102, 241, 0.6)" 
-                          strokeWidth="2.2" />
-                  <circle cx="172" cy="322" r="10" 
-                          fill="url(#bodyGradient)" 
-                          stroke="rgba(99, 102, 241, 0.6)" 
-                          strokeWidth="2.2" />
-                  
-                  {/* Detailed calf muscles with 3D definition */}
-                  <ellipse cx="128" cy="365" rx="15" ry="38" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.7)" 
-                           strokeWidth="2.5"
-                           filter="url(#holographic)" />
-                  <ellipse cx="172" cy="365" rx="15" ry="38" 
-                           fill="url(#bodyGradient)" 
-                           stroke="rgba(99, 102, 241, 0.7)" 
-                           strokeWidth="2.5"
-                           filter="url(#holographic)" />
-                  
-                  {/* Calf definition with muscle striations */}
-                  <path d="M 121 350 Q 128 347 135 350" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 121 365 Q 128 362 135 365" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 121 380 Q 128 377 135 380" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 350 Q 172 347 179 350" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 365 Q 172 362 179 365" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                  <path d="M 165 380 Q 172 377 179 380" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1.3" fill="none" />
-                </g>
-                
-                {/* Simple Dot Indicators for Muscle Groups */}
-                {Object.entries(MUSCLE_GROUPS).map(([muscle, data]) => {
-                  const isSelected = selectedMuscle === muscle;
-                  const isHovered = hoveredMuscle === muscle;
-                  
-                  return (
-                    <g key={muscle}>
-                      {/* Clean dot indicator */}
-                      <circle
-                        cx={data.position.x}
-                        cy={data.position.y}
-                        r={isSelected ? "8" : isHovered ? "6" : "4"}
-                        fill={data.color}
-                        stroke="white"
-                        strokeWidth="2"
-                        className="muscle-dot cursor-pointer"
-                        onClick={() => handleMuscleSelect(muscle)}
-                        onMouseEnter={() => setHoveredMuscle(muscle)}
-                        onMouseLeave={() => setHoveredMuscle(null)}
-                      />
-                      
-                      {/* Clean, readable muscle label on hover */}
-                      {isHovered && (
-                        <g className="transition-all duration-300">
-                          {/* Simple background for label */}
-                          <rect
-                            x={data.position.x - (data.name.length * 4)}
-                            y={data.position.y - 35}
-                            width={data.name.length * 8}
-                            height="18"
-                            fill="rgba(0, 0, 0, 0.85)"
-                            stroke={data.color}
-                            strokeWidth="1"
-                            rx="6"
-                            className="drop-shadow-lg"
-                          />
-                          
-                          {/* Clear, readable muscle name */}
-                          <text
-                            x={data.position.x}
-                            y={data.position.y - 23}
-                            textAnchor="middle"
-                            className="font-medium fill-white pointer-events-none"
-                            style={{ 
-                              fontSize: '12px'
-                            }}
-                          >
-                            {data.name}
-                          </text>
-                        </g>
-                      )}
-                    </g>
-                  );
-                })}
-
-
-              </svg>
-
-
-            </div>
-          </div>
-
-          {/* Clean Muscle Selection Buttons */}
-          <div className="mt-4 space-y-3 w-full">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Select Muscle Group
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Click on the body or choose from the options below
-              </p>
-            </div>
-            
-            <div className="w-full overflow-x-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 min-w-full">
-              {Object.entries(MUSCLE_GROUPS).map(([muscle, data]) => {
-                const sessionCount = getActualSessionCount(muscle);
-                const isSelected = selectedMuscle === muscle;
-                return (
-                  <Button
-                    key={muscle}
-                    variant="outline"
+            {/* Muscle Dot Indicators */}
+            {Object.entries(MUSCLE_GROUPS).map(([muscle, data]) => {
+              const isSelected = selectedMuscle === muscle;
+              const isHovered = hoveredMuscle === muscle;
+              return (
+                <g key={muscle}>
+                  <circle
+                    cx={data.position.x}
+                    cy={data.position.y}
+                    r={isSelected ? "8" : isHovered ? "6" : "4"}
+                    fill={data.color}
+                    stroke="white"
+                    strokeWidth="2"
+                    className="muscle-dot cursor-pointer"
                     onClick={() => handleMuscleSelect(muscle)}
-                    className={`
-                      relative flex items-center gap-2 h-auto p-3 transition-all duration-500
-                      border-2 rounded-xl overflow-hidden group
-                      ${isSelected 
-                        ? `border-${data.color} bg-gradient-to-r from-${data.color}/20 to-${data.color}/10 shadow-lg shadow-${data.color}/25` 
-                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
-                      }
-                      hover:scale-105 hover:shadow-xl transform-gpu
-                      bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm
-                    `}
-                    style={{
-                      boxShadow: isSelected 
-                        ? `0 0 20px ${data.color}33, inset 0 1px 0 rgba(255,255,255,0.1)` 
-                        : "0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.1)",
-                      borderColor: isSelected ? data.color : undefined
-                    }}
-                  >
-                    {/* Animated background overlay */}
-                    <div 
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                    onMouseEnter={() => setHoveredMuscle(muscle)}
+                    onMouseLeave={() => setHoveredMuscle(null)}
+                  />
+                  {isHovered && (
+                    <g className="transition-all duration-300">
+                      <rect
+                        x={data.position.x - (data.name.length * 4)}
+                        y={data.position.y - 35}
+                        width={data.name.length * 8}
+                        height="18"
+                        fill="rgba(0, 0, 0, 0.85)"
+                        stroke={data.color}
+                        strokeWidth="1"
+                        rx="6"
+                        className="drop-shadow-lg"
+                      />
+                      <text
+                        x={data.position.x}
+                        y={data.position.y - 23}
+                        textAnchor="middle"
+                        className="font-medium fill-white pointer-events-none"
+                        style={{ fontSize: '12px' }}
+                      >
+                        {data.name}
+                      </text>
+                    </g>
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+      </div>
+
+      {/* Muscle Selection Buttons */}
+      <div className="mt-4 space-y-3 w-full">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Select Muscle Group</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Click on the body or choose from the options below</p>
+        </div>
+
+        <div className="w-full overflow-x-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 min-w-full">
+            {Object.entries(MUSCLE_GROUPS).map(([muscle, data]) => {
+              const sessionCount = getActualSessionCount(muscle);
+              const isSelected = selectedMuscle === muscle;
+              return (
+                <Button
+                  key={muscle}
+                  variant="outline"
+                  onClick={() => handleMuscleSelect(muscle)}
+                  className={`
+                    relative flex items-center gap-2 !h-auto p-3 transition-all duration-500
+                    border-2 rounded-xl overflow-hidden group
+                    ${isSelected
+                      ? 'border-gold bg-gold/10 shadow-lg shadow-gold/25'
+                      : 'border-gold/30 dark:border-gray-600 hover:border-gold dark:hover:border-gold/50'
+                    }
+                    hover:scale-105 hover:shadow-xl transform-gpu
+                    bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm
+                  `}
+                  style={{
+                    boxShadow: isSelected
+                      ? `0 0 20px rgba(194,160,88,0.2), inset 0 1px 0 rgba(255,255,255,0.1)`
+                      : "0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.1)",
+                    borderColor: isSelected ? '#c2a058' : undefined
+                  }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: `linear-gradient(135deg, rgba(194,160,88,0.1), transparent)` }}
+                  />
+                  <div className="relative flex items-center justify-center w-full h-full z-10">
+                    <div className="text-center">
+                      <div className={`font-bold transition-colors duration-300 ${isSelected ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>
+                        {data.name.toUpperCase()}
+                      </div>
+                      <div className="flex items-center justify-center gap-2 mt-1">
+                        <div className={`text-xs font-medium transition-colors duration-300 ${isSelected ? 'text-gray-600 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'}`}>
+                          {sessionCount} {sessionCount === 1 ? 'session' : 'sessions'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {isSelected && (
+                    <div
+                      className="absolute bottom-0 left-0 w-full h-0.5 opacity-80"
                       style={{
-                        background: `linear-gradient(135deg, ${data.color}15, transparent)`
+                        background: `linear-gradient(90deg, transparent, #c2a058, transparent)`,
+                        animation: "scan 2s ease-in-out infinite"
                       }}
                     />
-                    
-                    {/* Clean content */}
-                    <div className="relative flex items-center justify-center w-full h-full z-10">
-                      <div className="text-center">
-                        <div className={`font-bold transition-colors duration-300 ${
-                          isSelected 
-                            ? 'text-gray-900 dark:text-white' 
-                            : 'text-gray-700 dark:text-gray-300'
-                        }`}>
-                          {data.name.toUpperCase()}
+                  )}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  {/* Instructions Panel when no muscle selected */}
+  {!selectedMuscle && (
+    <Card className="bg-gold/5 dark:bg-gold/5 border border-gold/30 dark:border-gold/10">
+      <CardContent className="text-center !py-12">
+        <Target className="w-16 h-16 mx-auto text-green mb-4" />
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Select a Muscle Group</h3>
+        <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
+          Click on any muscle group in the body diagram above or use the buttons below to see targeted workout bundles.
+        </p>
+      </CardContent>
+    </Card>
+  )}
+
+  {/* Selected Muscle Workouts */}
+  {selectedMuscle && (
+    <Card ref={workoutDetailsRef} className="border border-gold/30 dark:border-gold/10">
+      <CardHeader className="pb-3 sm:pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <div
+                className="w-3 h-3 sm:w-4 sm:h-4 rounded-full"
+                style={{ backgroundColor: MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].color }}
+              />
+              {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].name} Workouts
+            </CardTitle>
+            <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm sm:text-base">
+              {getMotivation(selectedMuscle)}
+            </p>
+          </div>
+          <Badge className="text-sm sm:text-lg px-2 sm:px-3 py-1 self-start sm:self-auto bg-gold/10 text-gold border border-gold/30">
+            {workouts.length} workout bundles
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="space-y-6">
+            <div className="text-center py-4">
+              <div className="inline-flex items-center gap-2 text-green dark:text-green/80">
+                <div className="w-5 h-5 border-2 border-green border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-medium">Loading {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name} workouts...</span>
+              </div>
+            </div>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-200 dark:bg-gray-700 h-48 rounded-xl" />
+              </div>
+            ))}
+          </div>
+        ) : workouts && workouts.length > 0 ? (
+          <div className="space-y-3 w-full overflow-visible">
+            {/* Workout Summary Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+              <Card className="bg-gold/10 dark:bg-gold/5 border-gold/30 dark:border-gold/10">
+                <CardContent className="p-3 text-center">
+                  <div className="text-2xl font-bold text-gold">{workouts.length}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Available Workouts</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-green/10 dark:bg-green/5 border-green/30 dark:border-green/10">
+                <CardContent className="p-3 text-center">
+                  <div className="text-2xl font-bold text-green">
+                    {Math.round(workouts.reduce((acc, w) => acc + ((w.duration || 30) * (w.caloriesPerMinute || 5)), 0) / workouts.length)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Avg Calories</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gold/10 dark:bg-gold/5 border-gold/30 dark:border-gold/10">
+                <CardContent className="p-3 text-center">
+                  <div className="text-2xl font-bold text-gold">
+                    {Math.round(workouts.reduce((acc, w) => acc + (w.duration || 30), 0) / workouts.length)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Avg Duration (min)</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-green/10 dark:bg-green/5 border-green/30 dark:border-green/10">
+                <CardContent className="p-3 text-center">
+                  <div className="text-2xl font-bold text-green">
+                    {workouts.reduce((acc, w) => acc + ((w.exercises as string[] || []).length), 0)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Exercises</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Workout Cards */}
+            <div className="space-y-3 w-full max-w-none">
+              {workouts.map((workout: Workout, index: number) => (
+                <Card
+                  key={workout.id}
+                  className="overflow-hidden bg-white dark:bg-gray-800 border border-gold/20 dark:border-gold/10 hover:shadow-xl hover:border-gold/50 transition-all duration-300 animate-slide-up"
+                  style={{
+                    borderLeftWidth: '4px',
+                    borderLeftColor: MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].color,
+                    animationDelay: `${index * 150}ms`,
+                    animationFillMode: 'both'
+                  }}
+                >
+                  <CardContent className="p-3 lg:p-4">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-start gap-3 flex-1">
+                        <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-green text-white text-sm lg:text-base font-bold flex items-center justify-center shadow-md">
+                          {index + 1}
                         </div>
-                        
-                        <div className="flex items-center justify-center gap-2 mt-1">
-                          <div className={`text-xs font-medium transition-colors duration-300 ${
-                            isSelected 
-                              ? 'text-gray-600 dark:text-gray-300' 
-                              : 'text-gray-500 dark:text-gray-400'
-                          }`}>
-                            {sessionCount} {sessionCount === 1 ? 'session' : 'sessions'}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base lg:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">{workout.name}</h3>
+                          <div className="flex items-center gap-3 mb-2">
+                            <Badge variant={workout.difficulty === 'beginner' ? 'secondary' : workout.difficulty === 'intermediate' ? 'default' : 'destructive'} className="text-xs font-medium">
+                              {workout.difficulty}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <ProtectedButton
+                        onAuthenticatedClick={() => startWorkout(workout)}
+                        className="lg:hidden bg-green hover:bg-green/90 text-white px-4 py-2 text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
+                        <Play className="w-4 h-4" />
+                      </ProtectedButton>
+                    </div>
+
+                    {/* Stats Grid - Mobile */}
+                    <div className="grid grid-cols-4 gap-1 mb-3 lg:hidden bg-white dark:bg-gray-800 rounded-lg p-3 border border-gold/20 dark:border-gold/10">
+                      <div className="text-center">
+                        <Repeat className="w-4 h-4 mx-auto mb-1 text-gold" />
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Sets</div>
+                        <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.sets}</div>
+                      </div>
+                      <div className="text-center">
+                        <Target className="w-4 h-4 mx-auto mb-1 text-green" />
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Reps</div>
+                        <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.reps}</div>
+                      </div>
+                      <div className="text-center">
+                        <Clock className="w-4 h-4 mx-auto mb-1 text-gold" />
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Time</div>
+                        <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.duration}m</div>
+                      </div>
+                      <div className="text-center">
+                        <Flame className="w-4 h-4 mx-auto mb-1 text-green" />
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Burn</div>
+                        <div className="text-sm font-semibold text-gray-900 dark:text-white">{Math.round((workout.duration || 30) * (workout.caloriesPerMinute || 5))}</div>
+                      </div>
+                    </div>
+
+                    {/* Desktop Layout */}
+                    <div className="hidden lg:block">
+                      <div className="bg-gold/5 dark:bg-gray-700/30 rounded-lg p-4">
+                        <div className="grid lg:grid-cols-3 gap-6">
+                          <div className="lg:col-span-2 space-y-6">
+                            <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{workout.description}</p>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-3 rounded-lg border border-gold/20">
+                                <Repeat className="w-5 h-5 text-gold" />
+                                <div>
+                                  <div className="text-sm text-gray-600 dark:text-gray-400">Sets</div>
+                                  <div className="text-lg font-bold text-gray-900 dark:text-white">{workout.sets}</div>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-3 rounded-lg border border-green/20">
+                                <Target className="w-5 h-5 text-green" />
+                                <div>
+                                  <div className="text-sm text-gray-600 dark:text-gray-400">Reps</div>
+                                  <div className="text-lg font-bold text-gray-900 dark:text-white">{workout.reps}</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-base font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+                                <Dumbbell className="w-5 h-5 text-gold" />
+                                Equipment Required
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {(workout.equipment as string[] || []).map((item: string, eqIndex: number) => (
+                                  <Badge key={eqIndex} variant="outline" className="text-sm bg-white dark:bg-gray-800 border-gold/30 text-gold">
+                                    {item}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-base font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+                                <CheckCircle className="w-5 h-5 text-green" />
+                                Exercises ({(workout.exercises as string[] || []).length} total)
+                              </h4>
+                              <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                                {(workout.exercises as string[] || []).map((exercise: string, exIndex: number) => (
+                                  <div key={exIndex} className="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-3 py-2 px-3 bg-white dark:bg-gray-800 rounded-md border border-gold/10">
+                                    <div className="w-6 h-6 rounded-full bg-green/10 dark:bg-green/20 text-xs flex items-center justify-center font-bold text-green">
+                                      {exIndex + 1}
+                                    </div>
+                                    <span className="flex-1">{exercise}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action Section */}
+                          <div className="flex flex-col justify-center space-y-6">
+                            <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gold/20">
+                              <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Estimated Burn</div>
+                              <div className="text-4xl font-bold text-gray-900 dark:text-white mb-1">
+                                {Math.round((workout.duration || 30) * (workout.caloriesPerMinute || 5))}
+                              </div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400">calories</div>
+                              <div className="text-xs text-gray-500 mt-2">{workout.duration} minutes</div>
+                            </div>
+                            <ProtectedButton
+                              onAuthenticatedClick={() => startWorkout(workout)}
+                              className="w-full bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white py-4 text-lg font-semibold rounded-xl shadow-md hover:shadow-lg transition-all">
+                              <Play className="w-5 h-5 mr-3" />
+                              Start Workout
+                              <ArrowRight className="w-5 h-5 ml-3" />
+                            </ProtectedButton>
+                            <div className="text-center">
+                              <Badge variant="outline" className="text-sm border-gold/50 text-gold">
+                                {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name} Focus
+                              </Badge>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Scanning line effect for selected muscle */}
-                    {isSelected && (
-                      <div 
-                        className="absolute bottom-0 left-0 w-full h-0.5 opacity-80"
-                        style={{
-                          background: `linear-gradient(90deg, transparent, ${data.color}, transparent)`,
-                          animation: "scan 2s ease-in-out infinite"
-                        }}
-                      />
-                    )}
-                  </Button>
-                );
-              })}
-              </div>
-            </div>
-            
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Instructions Panel when no muscle selected */}
-      {!selectedMuscle && (
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
-          <CardContent className="text-center py-12">
-            <Target className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              Select a Muscle Group
+                    {/* Mobile Collapsible */}
+                    <div className="lg:hidden">
+                      <Collapsible open={expandedCards.has(workout.id)} onOpenChange={() => toggleCardExpansion(workout.id)}>
+                        <CollapsibleTrigger className="flex items-center justify-center w-full py-3 hover:bg-gold/5 dark:hover:bg-gold/5 rounded-lg px-3 -mx-3 transition-colors border border-gold/20 dark:border-gold/10">
+                          <span className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <Info className="w-4 h-4 text-gold" />
+                            View Details
+                            {expandedCards.has(workout.id) ? (
+                              <ChevronUp className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                            )}
+                          </span>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="mt-4 space-y-4">
+                          <div className="bg-gold/5 dark:bg-gold/5 rounded-lg p-4 space-y-4">
+                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{workout.description}</p>
+                            <div>
+                              <h4 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-2">
+                                <Dumbbell className="w-4 h-4 text-gold" />
+                                Equipment
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {(workout.equipment as string[] || []).map((item: string, eqIndex: number) => (
+                                  <Badge key={eqIndex} variant="outline" className="text-xs bg-white dark:bg-gray-800 border-gold/30 text-gold">
+                                    {item}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+                                <CheckCircle className="w-4 h-4 text-green" />
+                                Exercises ({(workout.exercises as string[] || []).length} total)
+                              </h4>
+                              <div className="space-y-2 max-h-40 overflow-y-auto">
+                                {(workout.exercises as string[] || []).map((exercise: string, exIndex: number) => (
+                                  <div key={exIndex} className="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-3 py-2 px-3 bg-white dark:bg-gray-800 rounded-md border border-gold/10">
+                                    <div className="w-6 h-6 rounded-full bg-green/10 dark:bg-green/20 text-xs flex items-center justify-center font-bold text-green">
+                                      {exIndex + 1}
+                                    </div>
+                                    <span className="flex-1">{exercise}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <ProtectedButton
+                              onAuthenticatedClick={() => startWorkout(workout)}
+                              className="w-full bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white py-3 text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
+                              <Play className="w-4 h-4 mr-2" />
+                              Start Workout
+                              <ArrowRight className="w-4 h-4 ml-2" />
+                            </ProtectedButton>
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="text-center !py-12">
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gold/10 dark:bg-gold/5 border border-gold/20 flex items-center justify-center">
+              <Dumbbell className="w-12 h-12 text-gold" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              No workouts available for {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
-              Click on any muscle group in the body diagram above or use the buttons below to see targeted workout bundles.
+              We're working on adding more targeted workout bundles for this muscle group. Check back soon!
             </p>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Selected Muscle Workouts */}
-      {selectedMuscle && (
-        <Card ref={workoutDetailsRef}>
-          <CardHeader className="pb-3 sm:pb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-              <div>
-                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                  <div
-                    className="w-3 h-3 sm:w-4 sm:h-4 rounded-full"
-                    style={{ backgroundColor: MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].color }}
-                  />
-                  {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].name} Workouts
-                </CardTitle>
-                <p className="text-gray-600 dark:text-gray-300 mt-1 text-sm sm:text-base">
-                  {getMotivation(selectedMuscle)}
-                </p>
-              </div>
-              <Badge variant="secondary" className="text-sm sm:text-lg px-2 sm:px-3 py-1 self-start sm:self-auto">
-                {workouts.length} workout bundles
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {isLoading ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <div className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400">
-                    <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-                    <span className="text-sm font-medium">Loading {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name} workouts...</span>
-                  </div>
-                </div>
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="animate-pulse">
-                    <div className="bg-gray-200 dark:bg-gray-700 h-48 rounded-xl" />
-                  </div>
-                ))}
-              </div>
-            ) : workouts && workouts.length > 0 ? (
-              <div className="space-y-3 w-full overflow-visible">
-                {/* Workout Summary Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                  <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-                    <CardContent className="p-3 text-center">
-                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                        {workouts.length}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Available Workouts</div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
-                    <CardContent className="p-3 text-center">
-                      <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        {Math.round(workouts.reduce((acc, w) => acc + ((w.duration || 30) * (w.caloriesPerMinute || 5)), 0) / workouts.length)}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Avg Calories</div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800">
-                    <CardContent className="p-3 text-center">
-                      <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                        {Math.round(workouts.reduce((acc, w) => acc + (w.duration || 30), 0) / workouts.length)}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Avg Duration (min)</div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800">
-                    <CardContent className="p-3 text-center">
-                      <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                        {workouts.reduce((acc, w) => acc + ((w.exercises as string[] || []).length), 0)}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Exercises</div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Workout Cards - Clean Design */}
-                <div className="space-y-3 w-full max-w-none">
-                  {workouts.map((workout: Workout, index: number) => (
-                    <Card 
-                      key={workout.id} 
-                      className="overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 animate-slide-up" 
-                      style={{ 
-                        borderLeftWidth: '4px', 
-                        borderLeftColor: MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].color,
-                        animationDelay: `${index * 150}ms`,
-                        animationFillMode: 'both'
-                      }}>
-                      <CardContent className="p-3 lg:p-4">
-                        {/* Clean Header */}
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-start gap-3 flex-1">
-                            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm lg:text-base font-bold flex items-center justify-center shadow-md">
-                              {index + 1}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="text-base lg:text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">{workout.name}</h3>
-                              <div className="flex items-center gap-3 mb-2">
-                                <Badge variant={workout.difficulty === 'beginner' ? 'secondary' : workout.difficulty === 'intermediate' ? 'default' : 'destructive'} className="text-xs font-medium">
-                                  {workout.difficulty}
-                                </Badge>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          {/* Clean Action Button */}
-                          <ProtectedButton
-                            onAuthenticatedClick={() => startWorkout(workout)}
-                            className="lg:hidden bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
-                            <Play className="w-4 h-4" />
-                          </ProtectedButton>
-                        </div>
-
-                        {/* Clean Stats Grid - Mobile */}
-                        <div className="grid grid-cols-4 gap-1 mb-3 lg:hidden bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-100 dark:border-gray-700">
-                          <div className="text-center">
-                            <Repeat className="w-4 h-4 mx-auto mb-1 text-blue-500" />
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Sets</div>
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.sets}</div>
-                          </div>
-                          <div className="text-center">
-                            <Target className="w-4 h-4 mx-auto mb-1 text-green-500" />
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Reps</div>
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.reps}</div>
-                          </div>
-                          <div className="text-center">
-                            <Clock className="w-4 h-4 mx-auto mb-1 text-purple-500" />
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Time</div>
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white">{workout.duration}m</div>
-                          </div>
-                          <div className="text-center">
-                            <Flame className="w-4 h-4 mx-auto mb-1 text-red-500" />
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Burn</div>
-                            <div className="text-sm font-semibold text-gray-900 dark:text-white">{Math.round((workout.duration || 30) * (workout.caloriesPerMinute || 5))}</div>
-                          </div>
-                        </div>
-
-                        {/* Clean Desktop Layout */}
-                        <div className="hidden lg:block">
-                          <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
-                            <div className="grid lg:grid-cols-3 gap-6">
-                              {/* Workout Info */}
-                              <div className="lg:col-span-2 space-y-6">
-                                <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{workout.description}</p>
-
-                                {/* Key Metrics */}
-                                <div className="grid grid-cols-2 gap-4">
-                                  <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-3 rounded-lg">
-                                    <Repeat className="w-5 h-5 text-blue-500" />
-                                    <div>
-                                      <div className="text-sm text-gray-600 dark:text-gray-400">Sets</div>
-                                      <div className="text-lg font-bold text-gray-900 dark:text-white">{workout.sets}</div>
-                                    </div>
-                                  </div>
-                                  <div className="flex items-center gap-3 bg-white dark:bg-gray-800 p-3 rounded-lg">
-                                    <Target className="w-5 h-5 text-green-500" />
-                                    <div>
-                                      <div className="text-sm text-gray-600 dark:text-gray-400">Reps</div>
-                                      <div className="text-lg font-bold text-gray-900 dark:text-white">{workout.reps}</div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                {/* Equipment */}
-                                <div>
-                                  <h4 className="text-base font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
-                                    <Dumbbell className="w-5 h-5 text-blue-500" />
-                                    Equipment Required
-                                  </h4>
-                                  <div className="flex flex-wrap gap-2">
-                                    {(workout.equipment as string[] || []).map((item: string, eqIndex: number) => (
-                                      <Badge key={eqIndex} variant="outline" className="text-sm bg-white dark:bg-gray-800">
-                                        {item}
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                {/* Exercise List */}
-                                <div>
-                                  <h4 className="text-base font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
-                                    <CheckCircle className="w-5 h-5 text-green-500" />
-                                    Exercises ({(workout.exercises as string[] || []).length} total)
-                                  </h4>
-                                  <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
-                                    {(workout.exercises as string[] || []).map((exercise: string, exIndex: number) => (
-                                      <div key={exIndex} className="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-3 py-2 px-3 bg-white dark:bg-gray-800 rounded-md">
-                                        <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs flex items-center justify-center font-bold text-blue-600 dark:text-blue-400">
-                                          {exIndex + 1}
-                                        </div>
-                                        <span className="flex-1">{exercise}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Action Section */}
-                              <div className="flex flex-col justify-center space-y-6">
-                                <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-                                  <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Estimated Burn</div>
-                                  <div className="text-4xl font-bold text-gray-900 dark:text-white mb-1">
-                                    {Math.round((workout.duration || 30) * (workout.caloriesPerMinute || 5))}
-                                  </div>
-                                  <div className="text-sm text-gray-600 dark:text-gray-400">calories</div>
-                                  <div className="text-xs text-gray-500 mt-2">{workout.duration} minutes</div>
-                                </div>
-                                
-                                <ProtectedButton
-                                  onAuthenticatedClick={() => startWorkout(workout)}
-                                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 text-lg font-semibold rounded-xl shadow-md hover:shadow-lg transition-all">
-                                  <Play className="w-5 h-5 mr-3" />
-                                  Start Workout
-                                  <ArrowRight className="w-5 h-5 ml-3" />
-                                </ProtectedButton>
-                                
-                                <div className="text-center">
-                                  <Badge variant="outline" className="text-sm" style={{ borderColor: MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS].color }}>
-                                    {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name} Focus
-                                  </Badge>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Clean Mobile Collapsible Details */}
-                        <div className="lg:hidden">
-                          <Collapsible open={expandedCards.has(workout.id)} onOpenChange={() => toggleCardExpansion(workout.id)}>
-                            <CollapsibleTrigger className="flex items-center justify-center w-full py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg px-3 -mx-3 transition-colors border border-gray-200 dark:border-gray-600">
-                              <span className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                <Info className="w-4 h-4 text-blue-500" />
-                                View Details
-                                {expandedCards.has(workout.id) ? (
-                                  <ChevronUp className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                                ) : (
-                                  <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                                )}
-                              </span>
-                            </CollapsibleTrigger>
-                            
-                            <CollapsibleContent className="mt-4 space-y-4">
-                              <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4 space-y-4">
-                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{workout.description}</p>
-                                
-                                {/* Equipment */}
-                                <div>
-                                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-2">
-                                    <Dumbbell className="w-4 h-4 text-blue-500" />
-                                    Equipment
-                                  </h4>
-                                  <div className="flex flex-wrap gap-2">
-                                    {(workout.equipment as string[] || []).map((item: string, eqIndex: number) => (
-                                      <Badge key={eqIndex} variant="outline" className="text-xs bg-white dark:bg-gray-800">
-                                        {item}
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                {/* Exercise List */}
-                                <div>
-                                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
-                                    <CheckCircle className="w-4 h-4 text-green-500" />
-                                    Exercises ({(workout.exercises as string[] || []).length} total)
-                                  </h4>
-                                  <div className="space-y-2 max-h-40 overflow-y-auto">
-                                    {(workout.exercises as string[] || []).map((exercise: string, exIndex: number) => (
-                                      <div key={exIndex} className="text-sm text-gray-700 dark:text-gray-300 flex items-center gap-3 py-2 px-3 bg-white dark:bg-gray-800 rounded-md">
-                                        <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs flex items-center justify-center font-bold text-blue-600 dark:text-blue-400">
-                                          {exIndex + 1}
-                                        </div>
-                                        <span className="flex-1">{exercise}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                {/* Full-width Start Button for Mobile */}
-                                <ProtectedButton
-                                  onAuthenticatedClick={() => startWorkout(workout)}
-                                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-3 text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all">
-                                  <Play className="w-4 h-4 mr-2" />
-                                  Start Workout
-                                  <ArrowRight className="w-4 h-4 ml-2" />
-                                </ProtectedButton>
-                              </div>
-                            </CollapsibleContent>
-                          </Collapsible>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
-                  <Dumbbell className="w-12 h-12 text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  No workouts available for {MUSCLE_GROUPS[selectedMuscle as keyof typeof MUSCLE_GROUPS]?.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
-                  We're working on adding more targeted workout bundles for this muscle group. Check back soon!
-                </p>
-                <Button className="mt-4" onClick={() => setSelectedMuscle(null)}>
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Choose Different Muscle
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-    </div>
+            <Button className="mt-4 bg-green hover:bg-green/90 text-white" onClick={() => setSelectedMuscle(null)}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Choose Different Muscle
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )}
+</div>
   );
 }

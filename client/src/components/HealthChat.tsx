@@ -293,23 +293,22 @@ export default function HealthChat() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700" data-testid="health-chat">
+    <div className="w-full h-full flex flex-col rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-gold dark:border-gray-700 rounded-2xl sm:rounded-3xl" data-testid="health-chat">
       {/* Chat Header - Luxury Design */}
-      <div className="bg-gradient-to-r from-white via-emerald-50/30 to-teal-50/30 dark:from-gray-900 dark:via-emerald-900/10 dark:to-teal-900/10 px-4 sm:px-5 py-3 sm:py-4 border-b border-emerald-100 dark:border-gray-700">
+      <div className="dark:from-gray-900 dark:via-emerald-900/10 dark:to-teal-900/10 px-4 sm:px-5 py-3 sm:py-4 border-b border-gold bg-white rounded-2xl sm:rounded-3xl dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] rounded-full flex items-center justify-center shadow-lg shadow-gold/30">
                 <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="absolute bottom-0 right-0 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+              <h2 className="text-base sm:text-lg font-bold text-gold">
                 Remy
               </h2>
               <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                 <p className="text-xs text-green-600 dark:text-green-400 font-medium">
                   AI Health Expert • Online
                 </p>
@@ -338,7 +337,7 @@ export default function HealthChat() {
                 {/* Avatar */}
                 <div className="flex-shrink-0">
                   {message.role === "assistant" ? (
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] flex items-center justify-center shadow-lg">
                       <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                   ) : (
@@ -352,7 +351,7 @@ export default function HealthChat() {
                 <div className="flex-1 max-w-[88%] sm:max-w-[85%]">
                   <div className={`rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 ${
                       message.role === "assistant" 
-                        ? "bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-800 dark:to-slate-700 text-gray-900 dark:text-gray-100 border border-emerald-200 dark:border-slate-600" 
+                        ? "bg-gold bg-gold/20 dark:from-slate-800 dark:to-slate-700 text-gray-900 dark:text-gray-100 border border-gold dark:border-slate-600" 
                         : "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg"
                     }`}>
                     <div className="text-sm sm:text-base lg:text-lg leading-relaxed whitespace-pre-wrap">
@@ -505,7 +504,7 @@ export default function HealthChat() {
         </ScrollArea>
 
         {/* Chat Input Area - Premium Design */}
-        <div className="bg-gradient-to-r from-white via-emerald-50/20 to-teal-50/20 dark:from-gray-900 dark:via-emerald-900/5 dark:to-teal-900/5 border-t border-emerald-100 dark:border-gray-700 px-3 sm:px-4 py-3 sm:py-4">
+        <div className="bg-white dark:from-gray-900 dark:via-emerald-900/5 dark:to-teal-900/5 border-t border-gold dark:border-gray-700 px-3 sm:px-4 py-3 sm:py-4">
           <form onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -521,7 +520,7 @@ export default function HealthChat() {
                 onKeyDown={handleKeyPress}
                 placeholder="Ask about any health concern..."
                 disabled={isLoading}
-                className="w-full text-sm sm:text-base rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:border-emerald-400 px-4 sm:px-5 py-2.5 sm:py-3 min-h-[48px] shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all duration-200"
+                className="w-full text-sm sm:text-base rounded-full bg-white dark:bg-gray-800 border border-gold dark:border-gray-700 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:border-emerald-400 px-4 sm:px-5 py-2.5 sm:py-3 min-h-[48px] shadow-sm placeholder:text-black dark:placeholder:text-gray-500 transition-all duration-200"
                 data-testid="input-health-question"
               />
             </div>
@@ -529,7 +528,7 @@ export default function HealthChat() {
               type="submit"
               disabled={isLoading || !inputMessage.trim()}
               size="icon"
-              className="rounded-full w-12 h-12 min-w-[48px] min-h-[48px] bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:scale-105 active:scale-95"
+              className="rounded-full w-12 h-12 min-w-[48px] min-h-[48px] bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] hover:to-teal-700 text-white disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 transition-all duration-200 hover:scale-105 active:scale-95"
               data-testid="button-send-message"
             >
               {isLoading ? (

@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { SEOHead } from "@/components/SEOHead";
+import { slideRightVariants, slideUpVariants } from "@/animation/framerMotionVariants";
+import { SplitText } from "@/utils/SplitText";
 
 type HeightUnit = "cm" | "ftin";
 type WeightUnit = "kg" | "lb";
@@ -49,7 +51,7 @@ const educationalCards = [
     ],
     limitation: "BMI doesn't distinguish between muscle and fat, so very muscular people may show as \"overweight\" even when healthy.",
     gradient: "from-blue-500 to-indigo-500",
-    bgGlow: "bg-blue-500/10 dark:bg-blue-500/5"
+    bgGlow: "bg-gold/10 dark:bg-blue-500/5"
   },
   {
     icon: Ruler,
@@ -63,7 +65,7 @@ const educationalCards = [
     ],
     limitation: "The golden rule: keep your waist circumference to less than half your height for optimal health.",
     gradient: "from-purple-500 to-pink-500",
-    bgGlow: "bg-purple-500/10 dark:bg-purple-500/5"
+    bgGlow: "bg-gold/10 dark:bg-purple-500/5"
   },
   {
     icon: Heart,
@@ -78,25 +80,14 @@ const educationalCards = [
     ],
     limitation: "This score is a wellness estimate, not a medical diagnosis. Use it as motivation for healthy lifestyle changes.",
     gradient: "from-teal-500 to-emerald-500",
-    bgGlow: "bg-teal-500/10 dark:bg-teal-500/5"
+    bgGlow: "bg-gold/10 dark:bg-teal-500/5"
   }
 ];
-
-function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  
-  return (
-    <motion.div 
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 origin-left z-50"
-      style={{ scaleX: scrollYProgress }}
-    />
-  );
-}
 
 function FadeInSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
+
   return (
     <motion.div
       ref={ref}
@@ -115,21 +106,21 @@ export default function ToolsHealthCalculators() {
   const [weightUnit, setWeightUnit] = useState<WeightUnit>("kg");
   const [waistUnit, setWaistUnit] = useState<WaistUnit>("cm");
   const [activityLevel, setActivityLevel] = useState<ActivityLevel>("moderate");
-  
+
   const [heightCm, setHeightCm] = useState("");
   const [feet, setFeet] = useState("");
   const [inches, setInches] = useState("");
   const [weight, setWeight] = useState("");
   const [waist, setWaist] = useState("");
   const [age, setAge] = useState("");
-  
+
   const [results, setResults] = useState<CalculatorResults | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showEducation, setShowEducation] = useState(true);
 
   const validateInputs = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     if (heightUnit === "cm") {
       if (!heightCm || parseFloat(heightCm) <= 0) {
         newErrors.height = "Please enter a valid height";
@@ -142,22 +133,22 @@ export default function ToolsHealthCalculators() {
         newErrors.inches = "Inches must be 0-11";
       }
     }
-    
+
     if (!weight || parseFloat(weight) <= 0) {
       newErrors.weight = "Please enter a valid weight";
     }
-    
+
     if (!waist || parseFloat(waist) <= 0) {
       newErrors.waist = "Please enter a valid waist circumference";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const calculateResults = () => {
     if (!validateInputs()) return;
-    
+
     let height_cm: number;
     if (heightUnit === "cm") {
       height_cm = parseFloat(heightCm);
@@ -166,24 +157,24 @@ export default function ToolsHealthCalculators() {
       height_cm = totalInches * 2.54;
     }
     const height_m = height_cm / 100;
-    
+
     let weight_kg: number;
     if (weightUnit === "kg") {
       weight_kg = parseFloat(weight);
     } else {
       weight_kg = parseFloat(weight) * 0.45359237;
     }
-    
+
     let waist_cm: number;
     if (waistUnit === "cm") {
       waist_cm = parseFloat(waist);
     } else {
       waist_cm = parseFloat(waist) * 2.54;
     }
-    
+
     const bmi = weight_kg / (height_m * height_m);
     const whtr = waist_cm / height_cm;
-    
+
     let bmiCategory: string;
     let bmiColor: string;
     if (bmi < 18.5) {
@@ -199,7 +190,7 @@ export default function ToolsHealthCalculators() {
       bmiCategory = "Obese";
       bmiColor = "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
     }
-    
+
     let whtrCategory: string;
     let whtrColor: string;
     if (whtr < 0.50) {
@@ -212,35 +203,35 @@ export default function ToolsHealthCalculators() {
       whtrCategory = "High risk";
       whtrColor = "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
     }
-    
+
     let score = 100;
-    
+
     if (bmi < 18.5) score -= 8;
     else if (bmi <= 24.9) score -= 0;
     else if (bmi <= 29.9) score -= 10;
     else if (bmi <= 34.9) score -= 18;
     else if (bmi <= 39.9) score -= 25;
     else score -= 32;
-    
+
     if (whtr < 0.50) score -= 0;
     else if (whtr < 0.60) score -= 15;
     else score -= 25;
-    
+
     switch (activityLevel) {
       case "sedentary": score -= 12; break;
       case "light": score -= 6; break;
       case "moderate": score += 0; break;
       case "high": score += 4; break;
     }
-    
+
     if (age) {
       const ageNum = parseInt(age);
       if (ageNum >= 40 && ageNum < 60) score -= 4;
       else if (ageNum >= 60) score -= 8;
     }
-    
+
     score = Math.max(0, Math.min(100, score));
-    
+
     let metabolicCategory: string;
     let metabolicColor: string;
     if (score >= 80) {
@@ -256,7 +247,7 @@ export default function ToolsHealthCalculators() {
       metabolicCategory = "High risk";
       metabolicColor = "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
     }
-    
+
     setResults({
       bmi: Math.round(bmi * 10) / 10,
       bmiCategory,
@@ -320,8 +311,8 @@ export default function ToolsHealthCalculators() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -333,38 +324,33 @@ export default function ToolsHealthCalculators() {
 
   return (
     <>
-      <ScrollProgress />
       <SEOHead
         title="Health Calculators - BMI, Waist Ratio & Metabolic Score | PlantRx"
         description="Calculate your BMI, Waist-to-Height Ratio, and Metabolic Health Score with our free wellness calculators. Get personalized natural health tips."
         canonical="/tools/health-calculators"
       />
-      
+
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-24 pb-20 scroll-smooth">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center mb-12 lg:mb-16"
-          >
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              className="inline-flex items-center gap-2.5 sm:gap-3 bg-gradient-to-r from-teal-100 to-emerald-100 dark:from-teal-900/40 dark:to-emerald-900/40 text-teal-700 dark:text-teal-300 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-base sm:text-sm font-semibold mb-6 sm:mb-8 shadow-sm"
-            >
-              <Calculator className="w-5 h-5 sm:w-5 sm:h-5" />
-              Wellness Tools
+          <FadeInSection className="text-center mb-6 sm:mb-10 lg:mb-12">
+            <motion.div
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-emerald-950/40 border border-green dark:border-emerald-800/40 rounded-full px-4 py-2 mb-5">
+                <Calculator className="w-5 h-5 sm:w-5 sm:h-5  text-green" />
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300"> Wellness Tools</span>
+              </div>
             </motion.div>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-5 tracking-tight leading-tight">
-              Health Calculators
+            <h1 className="text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+              <SplitText text=" Health Calculators" />
             </h1>
-            <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
-              Understand your body better with our science-backed wellness calculators. 
-              <span className="block mt-2 sm:mt-3 text-sm sm:text-base text-gray-500 dark:text-gray-500">General wellness estimates. Not medical advice.</span>
-            </p>
-          </motion.div>
+
+            <motion.div
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+              <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Understand your body better with our science-backed wellness calculators. General wellness estimates. Not medical advice.
+              </p>
+            </motion.div>
+          </FadeInSection>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -374,7 +360,7 @@ export default function ToolsHealthCalculators() {
           >
             <button
               onClick={() => setShowEducation(!showEducation)}
-              className="flex items-center gap-2 sm:gap-3 mx-auto text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-medium transition-colors group bg-teal-50 dark:bg-teal-900/30 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl hover:bg-teal-100 dark:hover:bg-teal-900/50 text-base sm:text-lg"
+              className="flex items-center gap-2 sm:gap-3 mx-auto !bg-gold/50 text-black dark:text-teal-400 hover:text-white dark:hover:text-white font-medium transition-colors group bg-teal-50 dark:bg-teal-900/30 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl hover:bg-teal-100 dark:hover:bg-teal-900/50 text-base sm:text-lg"
               data-testid="toggle-education-button"
             >
               <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -391,71 +377,67 @@ export default function ToolsHealthCalculators() {
 
           <AnimatePresence>
             {showEducation && (
-              <motion.div
-                variants={containerVariants}
+
+              <motion.div variants={containerVariants as any}
                 initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-                className="mb-14"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-                  {educationalCards.map((card, index) => (
-                    <motion.div
-                      key={card.title}
-                      variants={itemVariants}
-                      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    >
-                      <Card className={`h-full bg-white dark:bg-gray-900/80 shadow-xl border-0 overflow-hidden backdrop-blur-sm ${card.bgGlow}`}>
-                        <div className={`h-1.5 bg-gradient-to-r ${card.gradient}`} />
-                        <CardContent className="p-6 lg:p-8">
-                          <div className="flex items-center gap-3 mb-5">
-                            <div className={`p-3 rounded-xl bg-gradient-to-br ${card.gradient} text-white shadow-lg`}>
-                              <card.icon className="w-6 h-6" />
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 mb-10 sm:mb-14">
+                {educationalCards.map((card, index) => (
+                  <motion.div
+                    key={card.title}
+                    variants={slideUpVariants as any}
+                  >
+                    <Card className={`h-full bg-white dark:bg-gray-900/80 shadow-xl border border-gold/30 dark:border-gold/10 overflow-hidden backdrop-blur-sm ${card.bgGlow}`}>
+                      <div className={`h-1.5 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)]`} />
+                      <CardContent className="p-6 lg:p-8">
+                        <div className="flex items-center gap-3 mb-5">
+                          <div className="p-3 rounded-xl bg-green text-white shadow-lg">
+                            <card.icon className="w-6 h-6" />
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{card.title}</h3>
+                        </div>
+
+                        <div className="bg-gold/10 dark:bg-gold/5 rounded-lg px-4 py-3 mb-5 font-mono text-sm text-gray-700 dark:text-gray-300 border border-gold/20 dark:border-gold/10">
+                          {card.formula}
+                        </div>
+
+                        <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                          {card.description}
+                        </p>
+
+                        <div className="space-y-2 mb-6">
+                          <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-500 font-semibold mb-3">Categories</p>
+                          {card.categories.map((cat) => (
+                            <div key={cat.label} className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600 dark:text-gray-400">{cat.range}</span>
+                              <span className={`font-medium ${cat.color}`}>{cat.label}</span>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{card.title}</h3>
+                          ))}
+                        </div>
+
+                        <div className="bg-gold/10 dark:bg-gold/5 rounded-lg p-4 border border-gold/30 dark:border-gold/10">
+                          <div className="flex items-start gap-2">
+                            <Info className="w-4 h-4 text-gold dark:text-gold mt-0.5 flex-shrink-0" />
+                            <p className="text-sm text-black dark:text-green/80 leading-relaxed">
+                              {card.limitation}
+                            </p>
                           </div>
-                          
-                          <div className="bg-gray-100 dark:bg-gray-800/50 rounded-lg px-4 py-3 mb-5 font-mono text-sm text-gray-700 dark:text-gray-300">
-                            {card.formula}
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                            {card.description}
-                          </p>
-                          
-                          <div className="space-y-2 mb-6">
-                            <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-500 font-semibold mb-3">Categories</p>
-                            {card.categories.map((cat) => (
-                              <div key={cat.label} className="flex items-center justify-between text-sm">
-                                <span className="text-gray-600 dark:text-gray-400">{cat.range}</span>
-                                <span className={`font-medium ${cat.color}`}>{cat.label}</span>
-                              </div>
-                            ))}
-                          </div>
-                          
-                          <div className="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 border border-amber-200/50 dark:border-amber-800/30">
-                            <div className="flex items-start gap-2">
-                              <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                              <p className="text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
-                                {card.limitation}
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
               </motion.div>
+
             )}
           </AnimatePresence>
 
-          <FadeInSection>
-            <Card className="bg-white dark:bg-gray-900/80 shadow-2xl border-0 mb-10 overflow-hidden backdrop-blur-sm">
-              <div className="h-1.5 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-500" />
+          <motion.div  variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+            <Card className="bg-white dark:bg-gray-900/80 shadow-2xl border border-gold/30 dark:border-gold/10 mb-10 overflow-hidden backdrop-blur-sm">
+              <div className="h-1.5 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)]" />
               <CardHeader className="border-b border-gray-100 dark:border-gray-800 p-5 sm:p-6 lg:p-8">
                 <CardTitle className="flex items-center gap-3 text-lg sm:text-xl lg:text-2xl text-gray-900 dark:text-white">
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg">
+                  <div className="p-2 sm:p-2.5 rounded-xl bg-green text-white shadow-lg">
                     <Activity className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   Enter Your Measurements
@@ -483,7 +465,7 @@ export default function ToolsHealthCalculators() {
                           placeholder="e.g., 175"
                           value={heightCm}
                           onChange={(e) => setHeightCm(e.target.value)}
-                          className={`h-14 sm:h-12 text-lg sm:text-base ${errors.height ? "border-red-500" : ""}`}
+                          className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.height ? "border-red-500" : ""}`}
                           data-testid="height-cm-input"
                         />
                         {errors.height && <p className="text-red-500 text-sm mt-2">{errors.height}</p>}
@@ -496,7 +478,7 @@ export default function ToolsHealthCalculators() {
                             placeholder="Feet"
                             value={feet}
                             onChange={(e) => setFeet(e.target.value)}
-                            className={`h-14 sm:h-12 text-lg sm:text-base ${errors.feet ? "border-red-500" : ""}`}
+                            className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.feet ? "border-red-500" : ""}`}
                             data-testid="height-feet-input"
                           />
                           {errors.feet && <p className="text-red-500 text-sm mt-2">{errors.feet}</p>}
@@ -507,7 +489,7 @@ export default function ToolsHealthCalculators() {
                             placeholder="Inches"
                             value={inches}
                             onChange={(e) => setInches(e.target.value)}
-                            className={`h-14 sm:h-12 text-lg sm:text-base ${errors.inches ? "border-red-500" : ""}`}
+                            className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.inches ? "border-red-500" : ""}`}
                             data-testid="height-inches-input"
                           />
                           {errors.inches && <p className="text-red-500 text-sm mt-2">{errors.inches}</p>}
@@ -534,7 +516,7 @@ export default function ToolsHealthCalculators() {
                       placeholder={weightUnit === "kg" ? "e.g., 70" : "e.g., 154"}
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
-                      className={`h-14 sm:h-12 text-lg sm:text-base ${errors.weight ? "border-red-500" : ""}`}
+                      className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.weight ? "border-red-500" : ""}`}
                       data-testid="weight-input"
                     />
                     {errors.weight && <p className="text-red-500 text-sm mt-2">{errors.weight}</p>}
@@ -558,7 +540,7 @@ export default function ToolsHealthCalculators() {
                       placeholder={waistUnit === "cm" ? "e.g., 85" : "e.g., 33"}
                       value={waist}
                       onChange={(e) => setWaist(e.target.value)}
-                      className={`h-14 sm:h-12 text-lg sm:text-base ${errors.waist ? "border-red-500" : ""}`}
+                      className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.waist ? "border-red-500" : ""}`}
                       data-testid="waist-input"
                     />
                     {errors.waist && <p className="text-red-500 text-sm mt-2">{errors.waist}</p>}
@@ -571,7 +553,7 @@ export default function ToolsHealthCalculators() {
                       placeholder="e.g., 35"
                       value={age}
                       onChange={(e) => setAge(e.target.value)}
-                      className="h-14 sm:h-12 text-lg sm:text-base"
+                      className="h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20"
                       data-testid="age-input"
                     />
                   </div>
@@ -595,7 +577,7 @@ export default function ToolsHealthCalculators() {
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6">
                   <Button
                     onClick={calculateResults}
-                    className="flex-1 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-semibold py-4 sm:py-4 h-14 sm:h-auto text-base sm:text-lg shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 transition-all duration-300"
+                    className="flex-1 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white font-semibold py-4 sm:py-4 h-14 sm:h-auto text-base sm:text-lg shadow-lg shadow-green/25 hover:shadow-xl hover:shadow-green/30 transition-all duration-300"
                     data-testid="calculate-button"
                   >
                     <Calculator className="w-5 h-5 mr-2" />
@@ -604,7 +586,7 @@ export default function ToolsHealthCalculators() {
                   <Button
                     onClick={resetForm}
                     variant="outline"
-                    className="px-8 h-14 sm:h-auto py-4 text-base"
+                    className="px-8 h-14 sm:h-auto py-4 text-base border-gold/50 hover:border-gold"
                     data-testid="reset-button"
                   >
                     <RotateCcw className="w-5 h-5 mr-2" />
@@ -613,7 +595,7 @@ export default function ToolsHealthCalculators() {
                 </div>
               </CardContent>
             </Card>
-          </FadeInSection>
+          </motion.div>
 
           <AnimatePresence>
             {results && (
@@ -625,12 +607,12 @@ export default function ToolsHealthCalculators() {
                 className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
               >
                 <motion.div variants={itemVariants}>
-                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border-0 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-2" />
+                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border border-gold/30 dark:border-gold/10 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
+                    <div className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] h-2" />
                     <CardContent className="p-5 sm:p-6 lg:p-8">
                       <div className="flex items-start justify-between mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
-                          <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-lg">
+                          <div className="p-2.5 sm:p-3 rounded-xl bg-green text-white shadow-lg">
                             <Scale className="w-5 h-5 sm:w-6 sm:h-6" />
                           </div>
                           <div>
@@ -647,17 +629,17 @@ export default function ToolsHealthCalculators() {
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      
+
                       <div className="text-center mb-5 sm:mb-6">
                         <div className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3" data-testid="bmi-result">
                           {results.bmi}
                         </div>
                         <Badge className={`${results.bmiColor} px-4 sm:px-4 py-1.5 sm:py-1.5 text-sm font-semibold`}>{results.bmiCategory}</Badge>
                       </div>
-                      
-                      <div className="flex items-start gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-3 sm:p-4">
-                        <Zap className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-emerald-700 dark:text-emerald-300 leading-relaxed">
+
+                      <div className="flex items-start gap-3 bg-gold/10 dark:bg-gold/5 rounded-xl p-3 sm:p-4 border border-gold/20 dark:border-gold/10">
+                        <Zap className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
+                        <p className="text-sm text-green dark:text-green/80 leading-relaxed">
                           <strong className="font-semibold">PlantRx Tip:</strong> {getBmiTip(results.bmiCategory)}
                         </p>
                       </div>
@@ -666,12 +648,12 @@ export default function ToolsHealthCalculators() {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border-0 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2" />
+                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border border-gold/30 dark:border-gold/10 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
+                    <div className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] h-2" />
                     <CardContent className="p-5 sm:p-6 lg:p-8">
                       <div className="flex items-start justify-between mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
-                          <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
+                          <div className="p-2.5 sm:p-3 rounded-xl bg-green text-white shadow-lg">
                             <Ruler className="w-5 h-5 sm:w-6 sm:h-6" />
                           </div>
                           <div>
@@ -688,17 +670,17 @@ export default function ToolsHealthCalculators() {
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      
+
                       <div className="text-center mb-5 sm:mb-6">
                         <div className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3" data-testid="whtr-result">
                           {results.whtr}
                         </div>
                         <Badge className={`${results.whtrColor} px-4 sm:px-4 py-1.5 sm:py-1.5 text-sm font-semibold`}>{results.whtrCategory}</Badge>
                       </div>
-                      
-                      <div className="flex items-start gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-3 sm:p-4">
-                        <Zap className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-emerald-700 dark:text-emerald-300 leading-relaxed">
+
+                      <div className="flex items-start gap-3 bg-gold/10 dark:bg-gold/5 rounded-xl p-3 sm:p-4 border border-gold/20 dark:border-gold/10">
+                        <Zap className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
+                        <p className="text-sm text-green dark:text-green/80 leading-relaxed">
                           <strong className="font-semibold">PlantRx Tip:</strong> {getWhtrTip(results.whtrCategory)}
                         </p>
                       </div>
@@ -707,12 +689,12 @@ export default function ToolsHealthCalculators() {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border-0 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
-                    <div className="bg-gradient-to-r from-teal-500 to-emerald-500 h-2" />
+                  <Card className="h-full bg-white dark:bg-gray-900/80 shadow-xl border border-gold/30 dark:border-gold/10 overflow-hidden backdrop-blur-sm hover:shadow-2xl transition-shadow duration-300">
+                    <div className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] h-2" />
                     <CardContent className="p-5 sm:p-6 lg:p-8">
                       <div className="flex items-start justify-between mb-5 sm:mb-6">
                         <div className="flex items-center gap-3">
-                          <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg">
+                          <div className="p-2.5 sm:p-3 rounded-xl bg-green text-white shadow-lg">
                             <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
                           </div>
                           <div>
@@ -729,7 +711,7 @@ export default function ToolsHealthCalculators() {
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      
+
                       <div className="text-center mb-5 sm:mb-6">
                         <div className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-1" data-testid="metabolic-result">
                           {results.metabolicScore}
@@ -737,10 +719,10 @@ export default function ToolsHealthCalculators() {
                         <div className="text-xl sm:text-2xl text-gray-400 dark:text-gray-500 mb-2 sm:mb-3">/ 100</div>
                         <Badge className={`${results.metabolicColor} px-4 sm:px-4 py-1.5 sm:py-1.5 text-sm font-semibold`}>{results.metabolicCategory}</Badge>
                       </div>
-                      
-                      <div className="flex items-start gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-3 sm:p-4">
-                        <Zap className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-emerald-700 dark:text-emerald-300 leading-relaxed">
+
+                      <div className="flex items-start gap-3 bg-gold/10 dark:bg-gold/5 rounded-xl p-3 sm:p-4 border border-gold/20 dark:border-gold/10">
+                        <Zap className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
+                        <p className="text-sm text-green dark:text-green/80 leading-relaxed">
                           <strong className="font-semibold">PlantRx Tip:</strong> {getMetabolicTip(results.metabolicScore)}
                         </p>
                       </div>
@@ -751,18 +733,18 @@ export default function ToolsHealthCalculators() {
             )}
           </AnimatePresence>
 
-          <FadeInSection className="mt-10 sm:mt-12 lg:mt-16">
-            <div className="flex items-start gap-3 sm:gap-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 border border-amber-200/50 dark:border-amber-800/30">
-              <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+          <motion.div  variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="mt-10 sm:mt-12 lg:mt-16">
+            <div className="flex items-start gap-3 sm:gap-4 bg-gold/20 dark:bg-gold/5 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 border border-gold/30 dark:border-gold/10">
+              <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-gold dark:text-gold flex-shrink-0 mt-0.5" />
               <div className="space-y-1.5 sm:space-y-2">
-                <p className="font-semibold text-amber-800 dark:text-amber-300 text-base sm:text-lg">Important Disclaimer</p>
-                <p className="text-sm sm:text-base text-amber-700 dark:text-amber-400 leading-relaxed">
-                  These calculators provide general wellness estimates only and are not intended as medical advice, diagnosis, or treatment. 
+                <p className="font-semibold text-black dark:text-green/80 text-base sm:text-lg">Important Disclaimer</p>
+                <p className="text-sm sm:text-base text-black dark:text-green/60 leading-relaxed">
+                  These calculators provide general wellness estimates only and are not intended as medical advice, diagnosis, or treatment.
                   Individual health needs vary significantly. Please consult with a qualified healthcare provider for personalized guidance about your health.
                 </p>
               </div>
             </div>
-          </FadeInSection>
+          </motion.div>
         </div>
       </div>
     </>
