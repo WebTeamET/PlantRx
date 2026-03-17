@@ -582,17 +582,17 @@ export default function Home() {
                   variants={slideRightVariants as any}
                 >
                   {link.icon === 'store' && (
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green group-hover:text-green transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gold group-hover:text-green transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                   )}
                   {link.icon === 'book' && (
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gold group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   )}
                   {link.icon === 'info' && (
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gold group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   )}
@@ -962,11 +962,11 @@ export default function Home() {
                   {/* Trust indicators */}
                   <div className="flex items-center gap-4 mt-6 text-sm text-gray-500 dark:text-gray-500 justify-center md:justify-start">
                     <span className="flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                      <CheckCircle className="w-4 h-4 text-green" />
                       Earn Commissions
                     </span>
                     <span className="flex items-center gap-1">
-                      <Leaf className="w-4 h-4 text-emerald-500" />
+                      <Leaf className="w-4 h-4 text-green" />
                       Free to Join
                     </span>
                   </div>
@@ -1040,7 +1040,7 @@ export default function Home() {
                   className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-400 transition-all mb-4"
                 >
                   <div className="flex items-center">
-                    <HelpCircle className="w-5 h-5 mr-2 text-blue-600" />
+                    <HelpCircle className="w-5 h-5 mr-2 text-green" />
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       Frequently Asked Questions
                     </span>

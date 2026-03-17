@@ -105,8 +105,11 @@ export default function Fitness() {
           <div className="absolute inset-0 overflow-hidden pointer-events-none" />
 
           <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div>
-              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20">
+            <motion.div variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}>
+              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green dark:border-emerald-600/30 shadow-lg shadow-green/20">
                 <div>💪</div>
                 Interactive Training
               </Badge>
@@ -348,7 +351,7 @@ export default function Fitness() {
         </section>
 
         {/* Fitness Articles Section */}
-        <section className="py-12 sm:py-16 lg:py-20 bg-transparent dark:from-gray-800 dark:to-gray-900">
+        <section className="py-12 sm:py-16 lg:py-20 bg-white dark:from-gray-800 dark:to-gray-900">
           <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <FadeInSection>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">

@@ -66,15 +66,15 @@ const howItWorks = [
   { step: 3, icon: BookOpen, title: "Get Your Recipe", description: "Receive detailed instructions with ingredients, benefits, and dosage." }
 ];
 
-function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 origin-left z-50"
-      style={{ scaleX: scrollYProgress, willChange: "transform" }}
-    />
-  );
-}
+// function ScrollProgress() {
+//   const { scrollYProgress } = useScroll();
+//   return (
+//     <motion.div
+//       className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 origin-left z-50"
+//       style={{ scaleX: scrollYProgress, willChange: "transform" }}
+//     />
+//   );
+// }
 
 function FadeInSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef(null);
@@ -246,7 +246,7 @@ export default function ToolsRemedyBuilder() {
         <meta name="description" content="Design your own natural remedy blends using PlantRx's interactive Remedy Builder tool powered by expert AI." />
       </Helmet>
 
-      <ScrollProgress />
+      {/* <ScrollProgress /> */}
 
       <div className="overflow-x-hidden touch-pan-y relative">
         {/* Hero Section */}

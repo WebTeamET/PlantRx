@@ -750,7 +750,7 @@ export default function InteractiveMuscleMap() {
 <div className="w-full space-y-4 overflow-x-auto">
   {/* Interactive Body Map */}
   <Card className="bg-gold/5 dark:from-gray-900 dark:to-gray-800 border border-gold/20">
-    <CardContent className="p-4">
+    <CardContent className="!p-4">
       <style>{`
         .body-container {
           background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -904,13 +904,9 @@ export default function InteractiveMuscleMap() {
                       ? 'border-gold bg-gold/10 shadow-lg shadow-gold/25'
                       : 'border-gold/30 dark:border-gray-600 hover:border-gold dark:hover:border-gold/50'
                     }
-                    hover:scale-105 hover:shadow-xl transform-gpu
-                    bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm
+                    bg-white/90 dark:bg-gray-800/90
                   `}
                   style={{
-                    boxShadow: isSelected
-                      ? `0 0 20px rgba(194,160,88,0.2), inset 0 1px 0 rgba(255,255,255,0.1)`
-                      : "0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.1)",
                     borderColor: isSelected ? '#c2a058' : undefined
                   }}
                 >

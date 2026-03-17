@@ -12,7 +12,7 @@ import { FeedbackModal } from "@/components/FeedbackModal";
 
 function CollapsibleSection({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  
+
   return (
     <div className="border-b border-gray-200 dark:border-gray-800 md:border-0 ">
       <button
@@ -83,11 +83,11 @@ export default function Footer() {
     <>
       <footer className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 relative z-[9999] product-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Mobile Newsletter Section - Shown first on mobile */}
-          <div className="md:hidden py-8 border-b border-gray-200 dark:border-gray-800">
+          <div className="md:hidden py-8 border-b border-gold/20 dark:border-gold/10">
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-green rounded-full mb-3 shadow-lg">
                 <Mail className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Join The Herb Club</h3>
@@ -101,13 +101,13 @@ export default function Footer() {
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 h-12"
+                className="flex-1 bg-gold/5 dark:bg-gray-900 border-gold/30 dark:border-gold/10 focus:border-gold focus:ring-gold/20 h-12"
                 data-testid="input-newsletter-email-mobile"
               />
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={subscribeToNewsletter.isPending}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-medium h-12 px-4 touch-manipulation"
+                className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white font-medium h-12 px-4 touch-manipulation hover:shadow-lg transition-all duration-300"
                 data-testid="button-newsletter-subscribe-mobile"
               >
                 {subscribeToNewsletter.isPending ? (
@@ -120,26 +120,26 @@ export default function Footer() {
           </div>
 
           {/* Mobile Social Links - Horizontal row */}
-          <div className="md:hidden py-6 border-b border-gray-200 dark:border-gray-800">
+          <div className="md:hidden py-6 border-b border-gold/20 dark:border-gold/10">
             <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-center mb-4">Follow Us</h4>
             <div className="flex items-center justify-center gap-4">
-              <a href="https://www.instagram.com/plantrxapp/" onClick={(e) => { e.preventDefault(); window.open('https://www.instagram.com/plantrxapp/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="Instagram">
-                <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://www.instagram.com/plantrxapp/" onClick={(e) => { e.preventDefault(); window.open('https://www.instagram.com/plantrxapp/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="Instagram">
+                <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61578851222577" onClick={(e) => { e.preventDefault(); window.open('https://www.facebook.com/profile.php?id=61578851222577', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="Facebook">
-                <SiFacebook className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://www.facebook.com/profile.php?id=61578851222577" onClick={(e) => { e.preventDefault(); window.open('https://www.facebook.com/profile.php?id=61578851222577', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="Facebook">
+                <SiFacebook className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://uk.pinterest.com/PlantRxApp/" onClick={(e) => { e.preventDefault(); window.open('https://uk.pinterest.com/PlantRxApp/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="Pinterest">
-                <SiPinterest className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://uk.pinterest.com/PlantRxApp/" onClick={(e) => { e.preventDefault(); window.open('https://uk.pinterest.com/PlantRxApp/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="Pinterest">
+                <SiPinterest className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://www.tiktok.com/@plantrx" onClick={(e) => { e.preventDefault(); window.open('https://www.tiktok.com/@plantrx', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="TikTok">
-                <SiTiktok className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://www.tiktok.com/@plantrx" onClick={(e) => { e.preventDefault(); window.open('https://www.tiktok.com/@plantrx', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="TikTok">
+                <SiTiktok className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://x.com/PlantRxApp" onClick={(e) => { e.preventDefault(); window.open('https://x.com/PlantRxApp', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="X (Twitter)">
-                <SiX className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://x.com/PlantRxApp" onClick={(e) => { e.preventDefault(); window.open('https://x.com/PlantRxApp', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="X (Twitter)">
+                <SiX className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
-              <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer" aria-label="LinkedIn">
-                <SiLinkerd className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="LinkedIn">
+                <SiLinkerd className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>
@@ -148,33 +148,33 @@ export default function Footer() {
           <div className="md:hidden">
             <CollapsibleSection title="Explore">
               <ul className="space-y-3 pl-1">
-                <li><Link href="/" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Home</Link></li>
-                <li><Link href="/remedies" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Remedies</Link></li>
-                <li><Link href="/articles" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Articles</Link></li>
-                <li><Link href="/store" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Store</Link></li>
-                <li><Link href="/smart-tools" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Tools</Link></li>
-                <li><Link href="/pricing" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Pricing</Link></li>
+                <li><Link href="/" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Home</Link></li>
+                <li><Link href="/remedies" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Remedies</Link></li>
+                <li><Link href="/articles" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Articles</Link></li>
+                <li><Link href="/store" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Store</Link></li>
+                <li><Link href="/smart-tools" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Tools</Link></li>
+                <li><Link href="/pricing" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Pricing</Link></li>
               </ul>
             </CollapsibleSection>
 
             <CollapsibleSection title="Company">
               <ul className="space-y-3 pl-1">
-                <li><Link href="/about/plantrx" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">About PlantRx</Link></li>
-                <li><Link href="/experts" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Expert Network</Link></li>
-                <li><a href="https://af.uppromote.com/0yx2kn-wu/register" onClick={(e) => { e.preventDefault(); window.open('https://af.uppromote.com/0yx2kn-wu/register', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1 cursor-pointer">Affiliate Program</a></li>
-                <li><Link href="/contact" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Contact Us</Link></li>
+                <li><Link href="/about/plantrx" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">About PlantRx</Link></li>
+                <li><Link href="/experts" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Expert Network</Link></li>
+                <li><a href="https://af.uppromote.com/0yx2kn-wu/register" onClick={(e) => { e.preventDefault(); window.open('https://af.uppromote.com/0yx2kn-wu/register', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1 cursor-pointer">Affiliate Program</a></li>
+                <li><Link href="/contact" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Contact Us</Link></li>
               </ul>
             </CollapsibleSection>
 
             <CollapsibleSection title="Legal">
               <ul className="space-y-3 pl-1">
-                <li><Link href="/privacy-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Terms of Service</Link></li>
-                <li><Link href="/refunds" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Refund Policy</Link></li>
-                <li><Link href="/disclaimer" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Medical Disclaimer</Link></li>
-                <li><Link href="/cookie-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Cookie Policy</Link></li>
-                <li><Link href="/dmca-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">DMCA Policy</Link></li>
-                <li><Link href="/liability" className="text-sm text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors block py-1">Liability Waiver</Link></li>
+                <li><Link href="/privacy-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Terms of Service</Link></li>
+                <li><Link href="/refunds" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Refund Policy</Link></li>
+                <li><Link href="/disclaimer" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Medical Disclaimer</Link></li>
+                <li><Link href="/cookie-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Cookie Policy</Link></li>
+                <li><Link href="/dmca-policy" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">DMCA Policy</Link></li>
+                <li><Link href="/liability" className="text-sm text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green transition-colors block py-1">Liability Waiver</Link></li>
               </ul>
             </CollapsibleSection>
           </div>
@@ -189,8 +189,8 @@ export default function Footer() {
               <span className="text-2xl font-bold text-gray-900 dark:text-white">PlantRx</span>
             </div> */}
             <Link href="/" className="flex items-center mb-10">
-            <img src="/logo-green.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
-          </Link>
+              <img src="/logo-green.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
+            </Link>
 
             {/* Main Grid: 5 columns */}
             <div className="grid grid-cols-5 gap-8 mb-10">
@@ -279,7 +279,7 @@ export default function Footer() {
                 <p className="text-sm font-medium text-gold mb-4">
                   Get 15% off any purchase as a thank you!
                 </p>
-                <a 
+                <a
                   href="https://tally.so/r/xXjYaG"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -295,12 +295,9 @@ export default function Footer() {
 
           {/* Mobile Logo + Copyright */}
           <div className="md:hidden py-6 text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
-                <Leaf className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-lg font-bold text-gray-900 dark:text-white">PlantRx</span>
-            </div>
+            <Link href="/" className="flex items-center justify-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group ml-1 sm:ml-2 sm:-ml-4">
+              <img src="/logo-green.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
+            </Link>
             <p className="text-xs text-gray-500 dark:text-gray-500 mb-3 px-4">
               *These statements have not been evaluated by the FDA. Not intended to diagnose, treat, cure, or prevent any disease.
             </p>
@@ -321,10 +318,10 @@ export default function Footer() {
 
         </div>
       </footer>
-      
-      <FeedbackModal 
-        isOpen={feedbackOpen} 
-        onClose={() => setFeedbackOpen(false)} 
+
+      <FeedbackModal
+        isOpen={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
       />
     </>
   );

@@ -317,8 +317,8 @@ export default function Header() {
                       href={item.href}
                       data-testid={`nav-link-${item.href.replace(/\//g, '')}`}
                       className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 font-body ${location === item.href || (item.subItems && location.startsWith(item.href))
-                          ? "text-gold dark:text-gold font-semibold"
-                          : "text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold"
+                        ? "text-gold dark:text-gold font-semibold"
+                        : "text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold"
                         }`}
                       onMouseEnter={() => {
                         if (item.href === '/remedies') {
@@ -344,19 +344,20 @@ export default function Header() {
                   )}
 
                   {/* Dropdown Menu */}
+                  {/* Dropdown Menu */}
                   {item.subItems && (
                     <div className="absolute left-0 mt-2 w-56 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                       {/* Animated glow background */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 rounded-3xl blur-md opacity-30 animate-pulse pointer-events-none" />
-                      <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-300 rounded-2xl opacity-20 animate-[pulse_2s_ease-in-out_infinite] pointer-events-none" />
+                      <div className="absolute -inset-1 bg-[linear-gradient(to_right,#385127,#c2a058,#385127)] rounded-3xl blur-md opacity-30 animate-pulse pointer-events-none" />
+                      <div className="absolute -inset-0.5 bg-[linear-gradient(to_right,#385127,#c2a058,#385127)] rounded-2xl opacity-20 animate-[pulse_2s_ease-in-out_infinite] pointer-events-none" />
 
                       {/* Main dropdown container */}
-                      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl py-2 border border-yellow-200/50 dark:border-yellow-700/30 overflow-hidden">
+                      <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl py-2 border border-gold/30 dark:border-gold/10 overflow-hidden">
                         {/* Dropdown header accent */}
-                        <div className="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 rounded-full pointer-events-none" />
+                        <div className="absolute top-0 left-4 right-4 h-0.5 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] rounded-full pointer-events-none" />
 
                         {/* Subtle shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-yellow-50/50 via-transparent to-amber-50/30 dark:from-yellow-900/10 dark:via-transparent dark:to-amber-900/10 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-gold/5 dark:from-gold/5 dark:via-transparent dark:to-gold/5 pointer-events-none" />
 
                         {item.subItems.map((subItem, subIdx) => {
                           const IconComponent = subItem.icon;
@@ -364,7 +365,7 @@ export default function Header() {
                             <Link
                               key={subIdx}
                               href={subItem.href}
-                              className="relative z-10 group/item flex items-center px-4 py-2.5 mx-2 rounded-xl text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50 dark:hover:from-yellow-900/30 dark:hover:to-amber-900/30 transition-all duration-200 whitespace-nowrap"
+                              className="relative z-10 group/item flex items-center px-4 py-2.5 mx-2 rounded-xl text-sm text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gold/10 hover:to-gold/5 dark:hover:from-gold/10 dark:hover:to-gold/5 transition-all duration-200 whitespace-nowrap"
                               onClick={() => {
                                 if (subItem.isPremium) {
                                   handlePremiumClick({} as React.MouseEvent, subItem.href, true);
@@ -372,20 +373,20 @@ export default function Header() {
                               }}
                             >
                               <div className={`relative w-8 h-8 rounded-lg flex items-center justify-center mr-3 transition-all duration-200 ${subItem.isPremium
-                                  ? 'bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/40 dark:to-amber-900/40 group-hover/item:from-yellow-200 group-hover/item:to-amber-200 dark:group-hover/item:from-yellow-800/50 dark:group-hover/item:to-amber-800/50'
-                                  : 'bg-gray-100 dark:bg-gray-800 group-hover/item:bg-white dark:group-hover/item:bg-gray-700'
+                                ? 'bg-gold/20 dark:bg-gold/10 group-hover/item:bg-gold/30 dark:group-hover/item:bg-gold/20'
+                                : 'bg-gray-100 dark:bg-gray-800 group-hover/item:bg-gold/10 dark:group-hover/item:bg-gold/10'
                                 }`}>
                                 {IconComponent && <IconComponent className={`w-4 h-4 ${subItem.color || 'text-gray-500'}`} />}
                                 {subItem.isPremium && (
-                                  <span className="absolute -top-1 -right-1 text-[10px] w-4 h-4 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-sm">
+                                  <span className="absolute -top-1 -right-1 text-[10px] w-4 h-4 bg-[linear-gradient(to_right,#385127,#c2a058)] rounded-full flex items-center justify-center shadow-sm">
                                     ✨
                                   </span>
                                 )}
                               </div>
-                              <span className="flex-1 font-medium group-hover/item:text-yellow-700 dark:group-hover/item:text-yellow-400 transition-colors">
+                              <span className="flex-1 font-medium group-hover/item:text-green dark:group-hover/item:text-gold transition-colors">
                                 {subItem.label}
                               </span>
-                              <ChevronRight className="w-4 h-4 text-gray-400 opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200" />
+                              <ChevronRight className="w-4 h-4 text-gray-400 opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200 group-hover/item:text-gold" />
                             </Link>
                           );
                         })}
@@ -434,13 +435,13 @@ export default function Header() {
                       key={size.id}
                       onClick={() => setTextSize(size.id)}
                       className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 ${textSize === size.id
-                          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                          : 'text-gray-700 dark:text-gray-300'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                        : 'text-gray-700 dark:text-gray-300'
                         }`}
                     >
                       <span className={`font-medium ${size.id === 'small' ? 'text-sm' :
-                          size.id === 'medium' ? 'text-base' :
-                            size.id === 'large' ? 'text-lg' : 'text-xl'
+                        size.id === 'medium' ? 'text-base' :
+                          size.id === 'large' ? 'text-lg' : 'text-xl'
                         }`}>{size.label}</span>
                       {textSize === size.id && (
                         <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -467,8 +468,8 @@ export default function Header() {
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
                       className={`flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 ${language === lang.code
-                          ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
-                          : 'text-gray-700 dark:text-gray-300'
+                        ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+                        : 'text-gray-700 dark:text-gray-300'
                         }`}
                     >
                       <span className="text-lg">{lang.flag}</span>
@@ -598,11 +599,12 @@ export default function Header() {
                           style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'backwards' }}
                         >
                           {item.href && !hasSubItems ? (
+                            // ✅ REPLACE 1: Simple nav link (no subitems)
                             <Link
                               href={item.href}
                               className={`group block w-full px-4 py-3 min-h-[48px] rounded-xl text-left text-base font-medium transition-all duration-300 ease-out active:scale-[0.98] ${location === item.href
-                                  ? "bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/20 text-yellow-700 dark:text-yellow-300 border-l-4 border-yellow-500 shadow-sm"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-yellow-600 dark:hover:text-yellow-400 hover:pl-5 hover:shadow-sm"
+                                ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/10 dark:to-gold/5 text-green dark:text-gold border-l-4 border-gold shadow-sm"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gold/5 hover:to-gold/10 dark:hover:from-gold/5 dark:hover:to-gold/10 hover:text-green dark:hover:text-gold hover:pl-5 hover:shadow-sm"
                                 }`}
                               onClick={() => setIsOpen(false)}
                             >
@@ -613,29 +615,35 @@ export default function Header() {
                             </Link>
                           ) : hasSubItems ? (
                             <>
+                              {/* ✅ REPLACE 2: Expandable button with subitems */}
                               <button
                                 onClick={() => setExpandedMobMenus(prev => ({ ...prev, [idx]: !isExpanded }))}
                                 className={`group block w-full px-4 py-3 min-h-[48px] rounded-xl text-left text-base font-medium transition-all duration-300 ease-out flex items-center justify-between active:scale-[0.98] ${item.href && (location === item.href || location.startsWith(item.href + '/'))
-                                    ? "bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/20 text-yellow-700 dark:text-yellow-300 shadow-sm"
-                                    : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-yellow-600 dark:hover:text-yellow-400 hover:shadow-sm"
+                                  ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/10 dark:to-gold/5 text-green dark:text-gold shadow-sm"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gold/5 hover:to-gold/10 dark:hover:from-gold/5 dark:hover:to-gold/10 hover:text-green dark:hover:text-gold hover:shadow-sm"
                                   }`}
                               >
                                 <span>{item.label}</span>
-                                <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${isExpanded ? 'bg-yellow-100 dark:bg-yellow-900/40 rotate-180' : 'bg-gray-100 dark:bg-gray-800 group-hover:bg-yellow-50 dark:group-hover:bg-yellow-900/20'}`}>
-                                  <ChevronDown className={`w-4 h-4 transition-colors duration-300 ${isExpanded ? 'text-yellow-600 dark:text-yellow-400' : 'text-gray-400 group-hover:text-yellow-500'}`} />
+                                {/* ✅ REPLACE 3: ChevronDown circle */}
+                                <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${isExpanded
+                                    ? 'bg-gold/20 dark:bg-gold/10 rotate-180'
+                                    : 'bg-gray-100 dark:bg-gray-800 group-hover:bg-gold/10 dark:group-hover:bg-gold/10'
+                                  }`}>
+                                  <ChevronDown className={`w-4 h-4 transition-colors duration-300 ${isExpanded ? 'text-gold dark:text-gold' : 'text-gray-400 group-hover:text-gold'
+                                    }`} />
                                 </div>
                               </button>
 
                               {/* Animated Sub-menu */}
                               <div className={`overflow-hidden transition-all duration-400 ease-out ${isExpanded ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
-                                <div className="bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-800/30 rounded-xl space-y-1 p-2 border border-gray-200/50 dark:border-gray-700/50 shadow-inner">
+                                <div className="bg-gradient-to-br from-gold/5 to-gold/10 dark:from-gray-800/50 dark:to-gray-800/30 rounded-xl space-y-1 p-2 border border-gold/20 dark:border-gold/10 shadow-inner">
                                   {item.subItems.map((subItem, subIdx) => {
                                     const IconComponent = subItem.icon;
                                     return (
                                       <Link
                                         key={subIdx}
                                         href={subItem.href}
-                                        className="group/sub flex items-center px-4 py-3 min-h-[44px] text-sm text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700/50 hover:text-yellow-600 dark:hover:text-yellow-400 transition-all duration-300 rounded-lg active:scale-[0.98]"
+                                        className="group/sub flex items-center px-4 py-3 min-h-[44px] text-sm text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700/50 hover:text-green dark:hover:text-gold transition-all duration-300 rounded-lg active:scale-[0.98]"
                                         onClick={() => {
                                           setIsOpen(false);
                                           if (subItem.isPremium) {
@@ -645,18 +653,18 @@ export default function Header() {
                                         style={{ animationDelay: `${(subIdx + 1) * 30}ms` }}
                                       >
                                         <div className={`relative w-7 h-7 rounded-lg flex items-center justify-center mr-3 transition-all duration-300 group-hover/sub:scale-110 group-hover/sub:rotate-3 ${subItem.isPremium
-                                            ? 'bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/40 dark:to-amber-900/40 group-hover/sub:shadow-md group-hover/sub:shadow-yellow-200/50'
-                                            : 'bg-gray-100 dark:bg-gray-700 group-hover/sub:bg-yellow-50 dark:group-hover/sub:bg-yellow-900/30'
+                                          ? 'bg-gold/20 dark:bg-gold/10 group-hover/sub:shadow-md group-hover/sub:shadow-gold/20'
+                                          : 'bg-gray-100 dark:bg-gray-700 group-hover/sub:bg-gold/10 dark:group-hover/sub:bg-gold/10'
                                           }`}>
                                           {IconComponent && <IconComponent className={`w-4 h-4 transition-transform duration-300 group-hover/sub:scale-110 ${subItem.color || 'text-gray-500'}`} />}
                                           {subItem.isPremium && (
-                                            <span className="absolute -top-1 -right-1 text-[10px] w-4 h-4 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-sm animate-pulse">
+                                            <span className="absolute -top-1 -right-1 text-[10px] w-4 h-4 bg-[linear-gradient(to_right,#385127,#c2a058)] rounded-full flex items-center justify-center shadow-sm animate-pulse">
                                               ✨
                                             </span>
                                           )}
                                         </div>
                                         <span className="flex-1">{subItem.label}</span>
-                                        <ChevronRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all duration-300 text-yellow-500" />
+                                        <ChevronRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all duration-300 text-gold" />
                                       </Link>
                                     );
                                   })}
