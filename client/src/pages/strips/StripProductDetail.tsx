@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
 import StripBanner from "@/components/strips/StripBanner";
 import StripHowToUse from "@/components/strips/StripHowToUse";
+import StripProductBanner from "@/components/strips/StripProductBanner";
 import StripsBenefits from "@/components/strips/StripsBenefits";
 import StripsIngredients from "@/components/strips/StripsIngredients";
 import StripStory from "@/components/strips/StripsStory";
@@ -158,7 +159,8 @@ export default function StripProductDetail() {
       </motion.div>
 
       <div className="relative z-10 luxury-gradient-bg min-h-screen">
-        <SvgLayout />
+        <StripProductBanner />
+        {/* <SvgLayout />
         
         <StripBanner product={product}>
            <Button
@@ -166,15 +168,15 @@ export default function StripProductDetail() {
             variant="ghost"
             className="mb-4 lg:mb-6 text-black hover:text-green dark:text-gray-300 dark:hover:text-white product-section"
           >
-            {/* <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Strips */}
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Strips
           </Button>
         </StripBanner>
 
         <StripStory product={product} />
         <StripsBenefits product={product} />
         <StripsIngredients />
-        <StripHowToUse />
+        <StripHowToUse /> */}
 
         {/* Observer Target for Hide CTA */}
         <div ref={footerRef} className="h-20" />

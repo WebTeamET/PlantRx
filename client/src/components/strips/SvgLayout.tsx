@@ -3,7 +3,7 @@ import React from "react";
 const SvgLayout = () => {
     return (
         <div className="">
-            <div className="fixed inset-0 bg-transparent opacity-50 max-lg:hidden">
+            {/* <div className="fixed inset-0 bg-transparent opacity-50 max-lg:hidden">
                 <div className="banner-anim absolute top-0 w-auto h-full pointer-events-none">
                     <svg width="1920" height="1280" viewBox="0 0 1920 1280" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_26_10" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1280">
@@ -77,7 +77,7 @@ const SvgLayout = () => {
 
 
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
