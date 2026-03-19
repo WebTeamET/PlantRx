@@ -2,7 +2,7 @@
 import { getMetafieldImage } from "@/lib/shopify";
 import { ShopifyProduct } from "@/lib/shopify";
 import { motion, useAnimationControls } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactNode } from "react";
 
 // ─── Shared animation variants (from variants file) ──────────────────────────
@@ -51,6 +51,15 @@ const MARQUEE_ITEMS = [
   "Clear Mind", "Sharp Focus", "Steady Energy",
 ];
 
+const MARQUEE_STRING = `${MARQUEE_ITEMS.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(20);
+const MARQUEE_TEXT_STYLE = {
+  fontFamily: "'FONTSPRING DEMO - Recoleta Alt Medium', 'Recoletta', serif",
+  fontStyle: "normal" as const,
+  fontWeight: 500,
+  fontSize: "76.0615px",
+  lineHeight: "103px",
+};
+
 // ─── CSS keyframes injected once ─────────────────────────────────────────────
 
 const KEYFRAMES = `
@@ -86,6 +95,13 @@ interface StripBannerProps {
 export default function StripBanner({ product, children }: StripBannerProps) {
   const activeTitle = product?.title || "Mushroom Focus Strips";
   const mainImage   = product?.images?.[0]?.url || "/strip-2.png";
+  const [marqueeOffset, setMarqueeOffset] = useState(0);
+  const scrollStateRef = useRef({
+    lastY: 0,
+    ticking: false,
+    pendingDelta: 0,
+    offset: 0,
+  });
 
   const heroBannerImage = (() => {
     if (!product) return undefined;
@@ -106,12 +122,46 @@ export default function StripBanner({ product, children }: StripBannerProps) {
     setFloatActive(true);
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const state = scrollStateRef.current;
+    state.lastY = window.scrollY;
+
+    const renderScrollStep = () => {
+      state.ticking = false;
+      const delta = state.pendingDelta;
+      state.pendingDelta = 0;
+      if (!delta) return;
+
+      // Move marquee only from user scroll direction and distance.
+      const nextOffset = (((state.offset - delta * 0.05) % 100) + 100) % 100;
+      state.offset = nextOffset;
+      setMarqueeOffset(nextOffset);
+    };
+
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - state.lastY;
+      state.lastY = currentY;
+      state.pendingDelta += delta;
+
+      if (!state.ticking) {
+        state.ticking = true;
+        window.requestAnimationFrame(renderScrollStep);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
 
   return (
     <>
       <style>{KEYFRAMES}</style>
 
-      <section className="hero-product-banner product-section relative overflow-hidden min-h-svh flex flex-col bg-[#F7EFE6] font-sans">
+      <section className="hero-product-banner product-section relative overflow-hidden min-h-svh flex flex-col bg-[#F7EFE6] dark:bg-[#F7EFE6] font-sans">
 
         {/* ── Animated decorative dots ── */}
         {DOTS.map((d, i) => (
@@ -257,7 +307,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
         </div>
 
         {/* ── Marquee strip ── */}
-        <div className="relative w-full overflow-hidden mt-auto z-[3]">
+        <div className="relative w-full overflow-hidden mt-auto bg-gradient-to-t from-[#FFFFFF] to-[#F7EFE6]">
 
           {/* Background SVG arc */}
           <svg
@@ -268,47 +318,33 @@ export default function StripBanner({ product, children }: StripBannerProps) {
             className="overflow-visible block text-[#4a2218]"
             aria-hidden="true"
           >
+            <defs>
+              <path
+                id="heroArcPath"
+                d="M-71 371.6C126.3 260 593.5 65.8 934.5 80.8c313 13.8 497 136 572 200"
+              />
+            </defs>
             <path
               stroke="currentColor"
               strokeWidth="160"
               d="M-71 371.6C126.3 260 593.5 65.8 934.5 80.8c313 13.8 497 136 572 200"
             />
+
+            {/* Curved marquee text (matches reference behavior) */}
+            <text
+              fill="#FFFFFF"
+              letterSpacing="0.04em"
+              style={MARQUEE_TEXT_STYLE}
+              textAnchor="start"
+            >
+              <textPath href="#heroArcPath" startOffset={`${marqueeOffset}%`}>
+                {MARQUEE_STRING}
+              </textPath>
+            </text>
           </svg>
 
-          {/* Scrolling text — double-track for seamless infinite loop */}
-          <div className="absolute inset-0 flex items-center overflow-hidden">
-            <div
-              className="flex whitespace-nowrap"
-              style={{ animation: "marqueeScroll 18s linear infinite" }}
-            >
-              {[0, 1].map((copy) => (
-                <span key={copy} className="inline-flex items-center">
-                  {MARQUEE_ITEMS.map((item, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center gap-x-4 text-[clamp(0.9rem,2vw,1.4rem)] font-extrabold tracking-[0.15em] uppercase text-[#F7EFE6] pr-8"
-                    >
-                      {item}
-                      <span
-                        aria-hidden="true"
-                        className="inline-block w-1.5 h-1.5 rounded-full bg-[#F7EFE6] shrink-0 ml-2"
-                      />
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div>
-          </div>
-
           {/* Edge fade */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(to right, #F7EFE6 0%, transparent 6%, transparent 94%, #F7EFE6 100%)",
-            }}
-          />
+          
         </div>
 
         {children}

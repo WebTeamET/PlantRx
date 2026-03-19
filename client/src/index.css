@@ -257,6 +257,10 @@ body {
     @apply bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-400 dark:from-yellow-400 dark:via-yellow-300 dark:to-yellow-200 bg-clip-text text-transparent;
   }
 
+  .luxury-content-gradient {
+    @apply bg-gradient-to-t from-white via-black to-white;
+  }
+
   .luxury-border {
     @apply border border-gray-200 dark:border-slate-700;
   }

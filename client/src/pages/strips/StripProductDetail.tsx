@@ -4,6 +4,8 @@ import { SEOHead } from "@/components/SEOHead";
 import StripBanner from "@/components/strips/StripBanner";
 import StripHowToUse from "@/components/strips/StripHowToUse";
 import StripProductBanner from "@/components/strips/StripProductBanner";
+import StripContent from "@/components/strips/StripContent";
+import StripTopics from "@/components/strips/StripTopics";
 import StripsBenefits from "@/components/strips/StripsBenefits";
 import StripsIngredients from "@/components/strips/StripsIngredients";
 import StripStory from "@/components/strips/StripsStory";
@@ -158,7 +160,7 @@ export default function StripProductDetail() {
         </div>
       </motion.div>
 
-      <div className="relative z-10 luxury-gradient-bg min-h-screen">
+      <div className="relative z-10 min-h-screen">
         <StripProductBanner />
         {/* <SvgLayout />
         
@@ -179,6 +181,8 @@ export default function StripProductDetail() {
         <StripHowToUse /> */}
 
         {/* Observer Target for Hide CTA */}
+        <StripContent />
+        <StripTopics/>
         <div ref={footerRef} className="h-20" />
       </div>
     </>

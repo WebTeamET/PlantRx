@@ -204,7 +204,7 @@ function Router() {
   }, []);
 
   return (
-    <div className="min-h-screen luxury-gradient-bg">
+    <div className="min-h-screen">
       <Suspense fallback={null}>
         <Header />
       </Suspense>
