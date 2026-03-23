@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import {
   motion,
   useScroll,
@@ -12,6 +12,13 @@ interface Slide {
   description: string
   image: string
 }
+
+const titleShadow = `
+  0 5px 0 #fff,  0 -5px 0 #fff,
+  5px 0 0 #fff, -5px 0 0 #fff,
+  3px 3px 0 #fff, -3px 3px 0 #fff,
+  3px -3px 0 #fff,-3px -3px 0 #fff
+`;
 
 const slides: Slide[] = [
   {
@@ -35,6 +42,14 @@ const slides: Slide[] = [
     image: "/attached_assets/remedy_images/Natural%20Olive%20Oil%20Hair%20Mask.jpg"
   }
 ]
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value))
+
+function getPageY(el: HTMLElement) {
+  const rect = el.getBoundingClientRect()
+  return rect.top + window.scrollY
+}
 
 function SlideCard({
   index,
@@ -65,22 +80,25 @@ function SlideCard({
         zIndex: totalSlides - index, 
       }}
     >
-      <div className="card-inner w-full bg-green rounded-lg relative">
+      <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative">
         {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
-        <div className="relative z-10 p-7 text-center *:text-white">
-            <h3 className="mb-3">
-              {slide.title}
-            </h3>
-            <p className="xl:text-xl max-w-md mx-auto">
-              {slide.description}
-            </p>
+        <div className="relative z-10 pb-3 p-7 text-center *:text-black">
+          <h2
+            className="mb-3"
+            style={{ textShadow: titleShadow }}
+          >
+            {slide.title}
+          </h2>
+          <p className="xl:text-xl max-w-md mx-auto">
+            {slide.description}
+          </p>
           </div>
-          <div className="h-[400px] p-4">
+          <div className="h-[400px] pt-3 p-7">
             <div className="w-full h-full rounded-lg overflow-hidden">
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700"
                 loading="lazy"
               />
             </div>
@@ -103,10 +121,10 @@ function StripHowToUse() {
   return (
     <section
       ref={containerRef}
-      className="how-to-wrapper relative"
+      className="how-to-wrapper relative py-24 lg:py-28"
       style={{ height: `${slides.length * 100}vh` }}
     >
-      <div className="how-to-sticky sticky top-[50px] flex h-screen items-center justify-center overflow-hidden perspective-[1000px]">
+      <div className="how-to-sticky sticky top-[50px] flex h-screen items-center justify-center overflow-hidden perspective-[1000px] bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white ">
         <div className="how-to-stage relative w-full 2xl:max-w-[800px] max-w-[700px] aspect-[3/4]">
           {slides.map((slide, index) => (
             <SlideCard
@@ -124,3 +142,63 @@ function StripHowToUse() {
 }
 
 export default StripHowToUse
+
+export function StickyStripImg() {
+  const [visible, setVisible] = useState(false)
+  const [inHowTo, setInHowTo] = useState(false)
+  const [howToWidth, setHowToWidth] = useState<number | null>(null)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const howToEl = document.querySelector<HTMLElement>(".how-to-wrapper")
+    if (!howToEl) return
+
+    const update = () => {
+      const viewportH = window.innerHeight
+      const scrollY = window.scrollY
+
+      const howToTop = getPageY(howToEl)
+      const howToBottom = howToTop + howToEl.getBoundingClientRect().height
+
+      const stickyStart = howToTop - 50
+      const stickyEnd = howToBottom - viewportH + 0
+
+      const active = scrollY >= stickyStart && scrollY <= stickyEnd
+      setVisible(active)
+      setInHowTo(active)
+      setHowToWidth(howToEl.getBoundingClientRect().width)
+      setReady(true)
+    }
+
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [])
+
+  if (!ready) return null
+
+  const width = howToWidth ? clamp(howToWidth * 0.35, 180, 340) : inHowTo ? 260 : 220
+
+  return (
+    <motion.div
+      className="pointer-events-none fixed z-[80] inset-x-0 flex justify-center"
+      style={{ bottom: inHowTo ? "10px" : "30px" }}
+      initial={{ scale: 0 }}
+      animate={{ scale: visible ? 1 : 0, opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      aria-hidden={!visible}
+    >
+      <img
+        src="/strip-2.png"
+        alt="Mushroom focus strips"
+        className="drop-shadow-2xl"
+        style={{ width }}
+        loading="lazy"
+      />
+    </motion.div>
+  )
+}

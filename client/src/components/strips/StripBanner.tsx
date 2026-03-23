@@ -48,7 +48,6 @@ export default function StripBanner({ product, children }: StripBannerProps) {
   
   const shortDescription = activeDesc.replace(/\n+/g, ' ').trim().slice(0, 180) + (activeDesc.length > 180 ? '...' : '');
   
-  const mainImage = product?.images?.[0]?.url || "/mushroom-strip_label_box.png";
 
   // Fix: Ensure getMetafieldImage is imported, and handle cases where it might not exist.
 // / Adjust import path as needed
@@ -117,9 +116,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                     <div className="relative ">
                       <div className="img-bg w-[300px] h-[300px] max-[575px]:w-[270px] xl:w-[450px] xl:h-[450px]">
                         <img
-                          // src={mainImage}
                           src="/mushroom-strip_label_box.png"
-                          // alt="Hero Banner"
                           width={450}
                           height={450}
                           className="drop-shadow-2xl h-full w-full object-contain"

@@ -51,9 +51,9 @@ module.exports = {
 
       fontFamily: {
         body: ["Plus Jakarta Sans", 'sans-serif'],
-        heading: ['Recoletta', 'serif'],
+        heading: ['Ltt Recoleta', 'serif'],
         playfair: ["Plus Jakarta Sans", 'sans-serif'],
-        recoletta: ['Recoletta', 'serif'],
+        recoletta: ['Ltt Recoleta', 'serif'],
         plusJakarta: ["Plus Jakarta Sans", 'sans-serif']
       },
 

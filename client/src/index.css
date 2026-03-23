@@ -4,12 +4,110 @@
 /* Global Smooth Scrolling - Outside layers for proper cascade priority */
 
 @font-face {
-  font-family: "Recoletta";
-  src: url("/fonts/LttRecoleta-SemiBold.woff"); 
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Bold.eot');
+    src: url('/fonts/LttRecoleta-Bold.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Bold.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Bold.woff') format('woff'),
+        url('/fonts/LttRecoleta-Bold.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Bold.svg#LttRecoleta-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
 }
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-ExtraLight.eot');
+    src: url('/fonts/LttRecoleta-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-ExtraLight.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-ExtraLight.woff') format('woff'),
+        url('/fonts/LttRecoleta-ExtraLight.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-ExtraLight.svg#LttRecoleta-ExtraLight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Light.eot');
+    src: url('/fonts/LttRecoleta-Light.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Light.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Light.woff') format('woff'),
+        url('/fonts/LttRecoleta-Light.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Light.svg#LttRecoleta-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Medium.eot');
+    src: url('/fonts/LttRecoleta-Medium.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Medium.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Medium.woff') format('woff'),
+        url('/fonts/LttRecoleta-Medium.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Medium.svg#LttRecoleta-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Regular.eot');
+    src: url('/fonts/LttRecoleta-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Regular.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Regular.woff') format('woff'),
+        url('/fonts/LttRecoleta-Regular.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Regular.svg#LttRecoleta-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Thin.eot');
+    src: url('/fonts/LttRecoleta-Thin.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Thin.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Thin.woff') format('woff'),
+        url('/fonts/LttRecoleta-Thin.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Thin.svg#LttRecoleta-Thin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-SemiBold.eot');
+    src: url('/fonts/LttRecoleta-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-SemiBold.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-SemiBold.woff') format('woff'),
+        url('/fonts/LttRecoleta-SemiBold.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-SemiBold.svg#LttRecoleta-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ltt Recoleta';
+    src: url('/fonts/LttRecoleta-Black.eot');
+    src: url('/fonts/LttRecoleta-Black.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/LttRecoleta-Black.woff2') format('woff2'),
+        url('/fonts/LttRecoleta-Black.woff') format('woff'),
+        url('/fonts/LttRecoleta-Black.ttf') format('truetype'),
+        url('/fonts/LttRecoleta-Black.svg#LttRecoleta-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -103,7 +201,7 @@ body {
     --dark-cream: #F7EFE6;
 
   --font-body: ["Plus Jakarta Sans", 'sans-serif'];
-  --font-heading: ['Recoletta', 'serif'];
+  --font-heading: 'Ltt Recoleta';
   --font-playfair: "Playfair Display", serif;
 
   /* font-size */
@@ -166,7 +264,6 @@ body {
     --modal-glass-bg: rgba(255, 255, 255, 0.08);
     --modal-glass-border: rgba(255, 255, 255, 0.05);
     --modal-shadow: rgba(0, 0, 0, 0.6);
-
   }
 
 
@@ -194,6 +291,11 @@ body {
   body[data-scroll-locked] {
     overflow: hidden !important;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold;
+  }
+
 
   /* Typography Classes - Responsive Fonts */
   .luxury-heading {
@@ -1298,7 +1400,7 @@ iframe[src*="tawk.to"] {
   .product-section h4,
   .product-section h5,
   .product-section h6 {
-    @apply font-recoletta;
+    @apply font-heading;
   }
   .product-section p ,
   .product-section button ,

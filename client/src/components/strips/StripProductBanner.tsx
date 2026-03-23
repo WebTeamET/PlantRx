@@ -1,5 +1,4 @@
 "use client";
-import { getMetafieldImage } from "@/lib/shopify";
 import { ShopifyProduct } from "@/lib/shopify";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -49,11 +48,14 @@ const MARQUEE_ITEMS = [
   "Clear Mind", "Sharp Focus", "Steady Energy",
   "Clear Mind", "Sharp Focus", "Steady Energy",
   "Clear Mind", "Sharp Focus", "Steady Energy",
+  "Clear Mind", "Sharp Focus", "Steady Energy",
+  "Clear Mind", "Sharp Focus", "Steady Energy",
+  "Clear Mind", "Sharp Focus", "Steady Energy",
+  "Clear Mind", "Sharp Focus", "Steady Energy",
 ];
 
 const MARQUEE_STRING = `${MARQUEE_ITEMS.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(20);
 const MARQUEE_TEXT_STYLE = {
-  fontFamily: "'FONTSPRING DEMO - Recoleta Alt Medium', 'Recoletta', serif",
   fontStyle: "normal" as const,
   fontWeight: 500,
   fontSize: "76.0615px",
@@ -95,22 +97,14 @@ interface StripBannerProps {
 export default function StripBanner({ product, children }: StripBannerProps) {
   const activeTitle = product?.title || "Mushroom Focus Strips";
   const mainImage   = product?.images?.[0]?.url || "/strip-2.png";
-  const [marqueeOffset, setMarqueeOffset] = useState(0);
+  // Keep curved marquee between 50–100% to avoid disappearing text.
+  const [marqueeOffset, setMarqueeOffset] = useState(100);
   const scrollStateRef = useRef({
     lastY: 0,
     ticking: false,
     pendingDelta: 0,
     offset: 0,
   });
-
-  const heroBannerImage = (() => {
-    if (!product) return undefined;
-    const metafieldImage =
-      typeof getMetafieldImage === "function"
-        ? getMetafieldImage(product, "custom", "hero_banner")
-        : undefined;
-    return metafieldImage || (product as any).heroBanner?.reference?.image?.url;
-  })();
 
   // Sequence: SVG done → mushroom pop-in → keyframe float
   const mushroomControls = useAnimationControls();
@@ -134,10 +128,12 @@ export default function StripBanner({ product, children }: StripBannerProps) {
       state.pendingDelta = 0;
       if (!delta) return;
 
-      // Move marquee only from user scroll direction and distance.
-      const nextOffset = (((state.offset - delta * 0.05) % 100) + 100) % 100;
-      state.offset = nextOffset;
-      setMarqueeOffset(nextOffset);
+      // Move marquee with scroll; wrap within 50–100% range so text keeps moving and never vanishes.
+      const rawOffset = state.offset - delta * 0.05;
+      const span = 50; // 50..100 range width
+      const wrappedOffset = ((rawOffset - 50) % span + span) % span + 50;
+      state.offset = wrappedOffset;
+      setMarqueeOffset(wrappedOffset);
     };
 
     const onScroll = () => {
@@ -179,7 +175,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
         <div className="px-[136px]">
           <div className="banner-inner pt-[100px]">
-            <div className="title-wrapper relative">
+            <div className="title-wrapper relative text-center">
 
               {/* ── SVG asterisk — each petal animates in one by one ── */}
               <motion.div
@@ -248,7 +244,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
               {/* ── Title: fade-up on load ── */}
               <motion.h2
-                className="text-[150px] leading-[100%] text-black relative z-[99]"
+                className="text-[clamp(42px,_7vw,_120px)] leading-[100%] text-black relative z-[99]"
                 style={{
                   textShadow: `
                     0 12px 0 #fff,  0 -12px 0 #fff,
@@ -315,7 +311,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
             fill="none"
             viewBox="0 0 1440 442"
             width="100%"
-            className="overflow-visible block text-[#4a2218]"
+            className="overflow-visible block text-[#643A3D] font-heading"
             aria-hidden="true"
           >
             <defs>
@@ -335,7 +331,8 @@ export default function StripBanner({ product, children }: StripBannerProps) {
               fill="#FFFFFF"
               letterSpacing="0.04em"
               style={MARQUEE_TEXT_STYLE}
-              textAnchor="start"
+              textAnchor="middle"
+              dominantBaseline="middle"
             >
               <textPath href="#heroArcPath" startOffset={`${marqueeOffset}%`}>
                 {MARQUEE_STRING}

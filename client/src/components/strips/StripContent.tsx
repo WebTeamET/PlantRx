@@ -51,7 +51,8 @@ export default function StripContent({ product, children }: StripContentProps) {
             <div className="px-[218px] py-[100px]">
                 <div className="title title-anim-typewriter">
                     <motion.h2
-                        className="text-[clamp(48px,_4.5vw,_100px)] leading-[1] text-[#643A3D] font-normal text-center mb-5">
+                        className="text-[clamp(48px,_4.5vw,_100px)] leading-[1] text-black font-semibold text-center mb-5"                        
+                    >
                         {sentence.split("").map((letter, i) => (
                             <motion.span
                                 key={`${letter}-${i}`}

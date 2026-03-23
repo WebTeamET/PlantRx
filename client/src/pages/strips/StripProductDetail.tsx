@@ -7,9 +7,15 @@ import StripProductBanner from "@/components/strips/StripProductBanner";
 import StripContent from "@/components/strips/StripContent";
 import StripTopics from "@/components/strips/StripTopics";
 import StripsBenefits from "@/components/strips/StripsBenefits";
-import StripsIngredients from "@/components/strips/StripsIngredients";
+import StripIngredients from "@/components/strips/StripIngredients";
+import StripBenefits from "@/components/strips/StripBenefits";
+import StripAvoid from "@/components/strips/StripAvoid";
+import StripAccordion from "@/components/strips/StripAccordion";
+import StripFeatures from "@/components/strips/StripFeatures";
+import StripZigzag from "@/components/strips/StripZigzag";
 import StripStory from "@/components/strips/StripsStory";
 import SvgLayout from "@/components/strips/SvgLayout";
+import { StickyStripImg } from "@/components/strips/StripHowToUse";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { shopifyService, type ShopifyProduct } from "@/lib/shopify";
@@ -161,6 +167,7 @@ export default function StripProductDetail() {
       </motion.div>
 
       <div className="relative z-10 min-h-screen">
+        <StickyStripImg />
         <StripProductBanner />
         {/* <SvgLayout />
         
@@ -182,7 +189,14 @@ export default function StripProductDetail() {
 
         {/* Observer Target for Hide CTA */}
         <StripContent />
-        <StripTopics/>
+        <StripTopics />
+        <StripIngredients />
+        <StripBenefits />
+        <StripHowToUse />
+        <StripAvoid />
+        <StripAccordion />
+        <StripFeatures />
+        <StripZigzag />
         <div ref={footerRef} className="h-20" />
       </div>
     </>
