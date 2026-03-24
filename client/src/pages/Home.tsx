@@ -841,12 +841,12 @@ export default function Home() {
             <motion.p 
             variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
             className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
-              Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green-600 dark:text-green-400 hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green-600 dark:text-green-400 hover:underline">ginger for digestion</a>
+              Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green dark:text-emerald-400 hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green dark:text-emerald-400 hover:underline">ginger for digestion</a>
             </motion.p>
           </div>
 
           {isLoadingFeatured ? (
-            <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-lg h-48 animate-pulse"></div>
               ))}
@@ -857,11 +857,11 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-60px" }}
-            className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(featuredRemedies as any[]).slice(0, 3).map((remedy: any, index: number) => (
                 <motion.div
                   variants={slideUpVariants as any}
-                  className="hover-lift h-full"
+                  className="h-full"
                 >
                   <RemedyCard remedy={remedy} />
                 </motion.div>
@@ -1037,7 +1037,7 @@ export default function Home() {
               <CollapsibleTrigger asChild>
                 <Button
                   variant="outline"
-                  className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-400 transition-all mb-4"
+                  className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-green dark:hover:border-gold transition-all mb-4"
                 >
                   <div className="flex items-center">
                     <HelpCircle className="w-5 h-5 mr-2 text-green" />

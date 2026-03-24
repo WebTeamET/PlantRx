@@ -173,8 +173,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                  <Cookie className="w-5 h-5 text-green-600 dark:text-green-400" />
+                <div className="w-10 h-10 bg-green dark:bg-emerald-400 rounded-full flex items-center justify-center">
+                  <Cookie className="w-5 h-5 text-gold dark:text-amber-400" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -203,10 +203,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   By clicking "Accept All", you consent to our use of cookies. You can customize your preferences 
                   or decline non-essential cookies.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <div className="flex flex-col items-start justify-start sm:flex-row gap-2 sm:gap-3">
                   <Button
                     onClick={handleAcceptAll}
-                    className="bg-green-600 hover:bg-green-700 text-white min-h-[44px]"
+                    className="bg-green hover:bg-emerald-400 text-white min-h-[44px]"
                     data-testid="button-accept-all-cookies"
                   >
                     <Check className="w-4 h-4 mr-2" />
@@ -215,7 +215,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <Button
                     onClick={handleAcceptNecessary}
                     variant="outline"
-                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white min-h-[44px]"
+                    className="border-gray-300 dark:border-green text-gray-900 dark:text-green min-h-[44px]"
                     data-testid="button-necessary-only-cookies"
                   >
                     Necessary Only
@@ -223,7 +223,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <Button
                     onClick={() => setShowDetails(true)}
                     variant="ghost"
-                    className="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 min-h-[44px]"
+                    className="text-green hover:text-emerald-400 dark:text-emerald-400 dark:hover:text-green min-h-[44px]"
                     data-testid="button-customize-cookies"
                   >
                     Customize Preferences
@@ -231,11 +231,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </div>
                 <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
                   Read our{' '}
-                  <a href="/privacy" className="text-green-600 hover:underline dark:text-green-400">
+                  <a href="/privacy" className="text-green hover:underline dark:text-emerald-400">
                     Privacy Policy
                   </a>
                   {' '}and{' '}
-                  <a href="/cookie-policy" className="text-green-600 hover:underline dark:text-green-400">
+                  <a href="/cookie-policy" className="text-green hover:underline dark:text-emerald-400">
                     Cookie Policy
                   </a>
                 </div>

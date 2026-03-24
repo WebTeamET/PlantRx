@@ -233,7 +233,7 @@ export function ArticleCategoryPage({ category, relatedCategories = [] }: Articl
             <Link href="/articles">
               <Button
                 size="lg"
-                className="bg-white text-gray-900 hover:bg-gray-100 font-semibold"
+                className="bg-white text-gray-900 hover:bg-gray-900 hover:text-white dark:bg-gray-900 dark:text-white dark:hover:bg-white dark:hover:text-gray-900 font-semibold"
                 data-testid="browse-all-articles-button"
               >
                 <BookOpen className="w-5 h-5 mr-2" />

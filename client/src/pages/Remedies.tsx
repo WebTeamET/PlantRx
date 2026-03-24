@@ -652,15 +652,20 @@ export default function Remedies() {
                 <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 tracking-wide">
                   Natural Remedies Collection
                 </span>
+                
               </div>
             </div>
           </motion.div>
 
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-5 tracking-tight leading-tight px-2 mt-5">
-            <span className="text-black dark:from-white dark:via-gray-100 dark:to-white text-transparent">
-              <SplitText className="text-black" text={t('remedies.title', '166+ Expert-Verified')} />
+            <span className="text-black dark:from-white dark:via-gray-100 dark:to-white">
+              <SplitText className="" text={t('remedies.title', '166+ Expert-Verified')} />
             </span>
             <br className="sm:hidden" />
+            <span className="bg-gradient-to-r from-green via-green/80 to-green/50 dark:from-gold dark:via-gold/80 dark:to-gold/50 bg-clip-text text-transparent">
+              {/* Natural Remedies */}
+              <SplitText className="" text={t('remedies.title', '166+ Expert-Verified')} />
+            </span>
           </h1>
 
           <div className="flex items-center justify-center gap-3 mb-4 sm:mb-5">
@@ -735,7 +740,7 @@ export default function Remedies() {
                     <div className="absolute -inset-1 bg-gradient-to-r from-green via-green-400 to-green/50 rounded-2xl opacity-0 group-focus-within:opacity-20 blur-lg transition-opacity duration-500"></div>
                     <div className="relative flex items-center">
                       <div className="absolute left-3 sm:left-4 z-10">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green to-green-500 rounded-xl flex items-center justify-center shadow-md shadow-emerald-500/20 group-focus-within:scale-105 transition-transform duration-300">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green to-green-500 rounded-xl flex items-center justify-center group-focus-within:scale-105 transition-transform duration-300">
                           <Search className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                         </div>
                       </div>
@@ -1144,7 +1149,7 @@ export default function Remedies() {
                       <BookOpen className="w-5 h-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                      <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-black">
                         Understanding Plant-Based Natural Remedies
                       </h2>
                       <p className="text-sm text-gray-600 dark:text-gray-400">Comprehensive guide to clinical herbal medicine</p>

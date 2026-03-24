@@ -276,6 +276,10 @@ export default function Header() {
         { href: "/about/me", label: "The Creator", isPremium: false, icon: User, color: "text-blue-500" },
       ],
     },
+    {
+      href: "/Pricing",
+      label: t('nav.pricing', 'Pricing'),
+    },
   ];
 
   // Handle premium feature clicks
@@ -777,7 +781,7 @@ export default function Header() {
                           {t('ui.sign_in', 'Sign In')}
                         </Button>
                         <Button
-                          className="w-full h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                          className="w-full h-12 btn-green font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
                           onClick={() => {
                             setIsOpen(false);
                             setLocation('/signup');

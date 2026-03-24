@@ -3,6 +3,11 @@
 
 /* Global Smooth Scrolling - Outside layers for proper cascade priority */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @font-face {
     font-family: 'Ltt Recoleta';
     src: url('/fonts/LttRecoleta-Bold.eot');
@@ -124,9 +129,6 @@ body {
   padding: 0;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */

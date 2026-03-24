@@ -35,6 +35,7 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const { toast } = useToast();
+  const currentYear = new Date().getFullYear();
 
   const subscribeToNewsletter = useMutation({
     mutationFn: async (emailData: { email: string; source: string }) => {
@@ -81,7 +82,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 relative z-[9999] product-section">
+      <footer className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 relative z-[9] product-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Mobile Newsletter Section - Shown first on mobile */}
@@ -198,12 +199,12 @@ export default function Footer() {
               <div>
                 <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Platform</h4>
                 <ul className="space-y-3">
-                  <li><Link href="/about/plantrx" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">About PlantRx</Link></li>
-                  <li><Link href="/remedies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Our Remedies</Link></li>
-                  <li><Link href="/experts" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Expert Network</Link></li>
-                  <li><a href="https://af.uppromote.com/0yx2kn-wu/register" onClick={(e) => { e.preventDefault(); window.open('https://af.uppromote.com/0yx2kn-wu/register', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer">Affiliate Program</a></li>
-                  <li><Link href="/privacy-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
-                  <li><Link href="/terms" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Terms of Service</Link></li>
+                  <li><Link href="/about/plantrx" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">About PlantRx</Link></li>
+                  <li><Link href="/remedies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Our Remedies</Link></li>
+                  <li><Link href="/experts" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Expert Network</Link></li>
+                  <li><a href="https://af.uppromote.com/0yx2kn-wu/register" onClick={(e) => { e.preventDefault(); window.open('https://af.uppromote.com/0yx2kn-wu/register', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors cursor-pointer">Affiliate Program</a></li>
+                  <li><Link href="/privacy-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Terms of Service</Link></li>
                 </ul>
               </div>
 
@@ -211,12 +212,12 @@ export default function Footer() {
               <div>
                 <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Support</h4>
                 <ul className="space-y-3">
-                  <li><Link href="/contact" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Contact Us</Link></li>
-                  <li><Link href="/refunds" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Refund Policy</Link></li>
-                  <li><Link href="/disclaimer" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Medical Disclaimer</Link></li>
-                  <li><Link href="/liability" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Liability Waiver</Link></li>
-                  <li><Link href="/cookie-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Cookie Policy</Link></li>
-                  <li><Link href="/dmca-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">DMCA Policy</Link></li>
+                  <li><Link href="/contact" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Contact Us</Link></li>
+                  <li><Link href="/refunds" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Refund Policy</Link></li>
+                  <li><Link href="/disclaimer" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Medical Disclaimer</Link></li>
+                  <li><Link href="/liability" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Liability Waiver</Link></li>
+                  <li><Link href="/cookie-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Cookie Policy</Link></li>
+                  <li><Link href="/dmca-policy" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">DMCA Policy</Link></li>
                 </ul>
               </div>
 
@@ -224,12 +225,12 @@ export default function Footer() {
               <div>
                 <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Explore</h4>
                 <ul className="space-y-3">
-                  <li><Link href="/" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Home</Link></li>
-                  <li><Link href="/remedies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Remedies</Link></li>
-                  <li><Link href="/articles" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Articles</Link></li>
-                  <li><Link href="/store" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Store</Link></li>
-                  <li><Link href="/smart-tools" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Tools</Link></li>
-                  <li><Link href="/pricing" className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Pricing</Link></li>
+                  <li><Link href="/" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Home</Link></li>
+                  <li><Link href="/remedies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Remedies</Link></li>
+                  <li><Link href="/articles" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Articles</Link></li>
+                  <li><Link href="/store" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Store</Link></li>
+                  <li><Link href="/smart-tools" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Tools</Link></li>
+                  <li><Link href="/pricing" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors">Pricing</Link></li>
                 </ul>
               </div>
 
@@ -238,32 +239,32 @@ export default function Footer() {
                 <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Connect</h4>
                 <ul className="space-y-3">
                   <li>
-                    <a href="https://www.instagram.com/plantrxapp/" onClick={(e) => { e.preventDefault(); window.open('https://www.instagram.com/plantrxapp/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://www.instagram.com/plantrxapp/" onClick={(e) => { e.preventDefault(); window.open('https://www.instagram.com/plantrxapp/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <Instagram className="w-4 h-4" /> Instagram
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.facebook.com/profile.php?id=61578851222577" onClick={(e) => { e.preventDefault(); window.open('https://www.facebook.com/profile.php?id=61578851222577', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://www.facebook.com/profile.php?id=61578851222577" onClick={(e) => { e.preventDefault(); window.open('https://www.facebook.com/profile.php?id=61578851222577', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <SiFacebook className="w-4 h-4" /> Facebook
                     </a>
                   </li>
                   <li>
-                    <a href="https://uk.pinterest.com/PlantRxApp/" onClick={(e) => { e.preventDefault(); window.open('https://uk.pinterest.com/PlantRxApp/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://uk.pinterest.com/PlantRxApp/" onClick={(e) => { e.preventDefault(); window.open('https://uk.pinterest.com/PlantRxApp/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <SiPinterest className="w-4 h-4" /> Pinterest
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.tiktok.com/@plantrx" onClick={(e) => { e.preventDefault(); window.open('https://www.tiktok.com/@plantrx', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://www.tiktok.com/@plantrx" onClick={(e) => { e.preventDefault(); window.open('https://www.tiktok.com/@plantrx', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <SiTiktok className="w-4 h-4" /> TikTok
                     </a>
                   </li>
                   <li>
-                    <a href="https://x.com/PlantRxApp" onClick={(e) => { e.preventDefault(); window.open('https://x.com/PlantRxApp', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://x.com/PlantRxApp" onClick={(e) => { e.preventDefault(); window.open('https://x.com/PlantRxApp', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <SiX className="w-4 h-4" /> X (Twitter)
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
+                    <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
                       <SiLinkerd className="w-4 h-4" /> LinkedIn
                     </a>
                   </li>
@@ -302,7 +303,7 @@ export default function Footer() {
               *These statements have not been evaluated by the FDA. Not intended to diagnose, treat, cure, or prevent any disease.
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              &copy; 2025 PlantRx Ltd. All rights reserved.
+              &copy; {currentYear} PlantRx Ltd. All rights reserved.
             </p>
           </div>
 
@@ -312,7 +313,7 @@ export default function Footer() {
               *These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
             </p>
             <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-              &copy; 2025, PlantRx Ltd. All rights reserved.
+              &copy; {currentYear}, PlantRx Ltd. All rights reserved.
             </p>
           </div>
 
