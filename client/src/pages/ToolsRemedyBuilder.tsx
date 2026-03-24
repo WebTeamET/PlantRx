@@ -261,8 +261,8 @@ export default function ToolsRemedyBuilder() {
 
           <div className="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 text-center">
             <motion.div>
-              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20">
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-blue-400" />
+              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-green dark:text-green backdrop-blur-md rounded-full border border-green/50 dark:border-green/50 shadow-lg shadow-green/20">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-green" />
                 FEATURED EXPERT TOOL
               </Badge>
             </motion.div>
@@ -284,7 +284,7 @@ export default function ToolsRemedyBuilder() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-7xl text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
+              <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black dark:text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
                 <SplitText text={t('home.symptom.title', 'Smart Remedy Builder')} />
               </h1>
             </motion.div>
@@ -295,7 +295,7 @@ export default function ToolsRemedyBuilder() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2 sm:px-0">
+              <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-700 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2 sm:px-0">
                 {t('home.generator.subtitle', 'Expert herbal knowledge creates personalized natural remedies tailored specifically to your unique health needs')}
               </p>
             </motion.div>
@@ -305,7 +305,7 @@ export default function ToolsRemedyBuilder() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
-              className="inline-flex items-center gap-2 sm:gap-3 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-5 py-3 sm:px-10 sm:py-4 lg:px-12 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+              className="inline-flex items-center gap-2 sm:gap-3 btn-green px-5 py-3 sm:px-10 sm:py-4 lg:px-12 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
               onClick={scrollToBuilder}
               data-testid="button-create-remedy"
             >
@@ -332,7 +332,7 @@ export default function ToolsRemedyBuilder() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">
+                <span className="text-green dark:text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">
                   Simple Process
                 </span>
               </motion.div>
@@ -345,7 +345,7 @@ export default function ToolsRemedyBuilder() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <p className="text-sm sm:text-xl text-gray-600 dark:text-gold max-w-2xl mx-auto px-2 sm:px-0">
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-white max-w-2xl mx-auto px-2 sm:px-0">
                   Create your personalized herbal remedy in three easy steps
                 </p>
               </motion.div>
@@ -362,7 +362,7 @@ export default function ToolsRemedyBuilder() {
                 <FadeInSection key={item.step} delay={index * 0.15} className="h-full">
                   <motion.div
                     variants={slideUpVariants as any}
-                    className="h-full text-center p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+                    className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
                   >
                     <div className="relative flex-shrink-0 inline-block mb-3 sm:mb-5 mx-auto">
                       <motion.div
@@ -372,7 +372,7 @@ export default function ToolsRemedyBuilder() {
                       >
                         <item.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                       </motion.div>
-                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full bg-green dark:bg-gray-900 border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-base lg:text-lg font-bold text-white dark:text-purple-400 shadow-lg">
+                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-green border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-lg font-bold text-white shadow-lg">
                         {item.step}
                       </div>
                     </div>
@@ -380,7 +380,7 @@ export default function ToolsRemedyBuilder() {
                       <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 sm:mb-3">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gold leading-relaxed flex-1 flex-grow">
+                      <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-white/80 leading-relaxed flex-1 flex-grow">
                         {item.description}
                       </p>
                     </div>
@@ -413,12 +413,12 @@ export default function ToolsRemedyBuilder() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/70 dark:from-yellow-900/30 dark:to-amber-900/30 backdrop-blur-md border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20 mb-4 sm:mb-6">
-                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-blue-400" />
-                  <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 uppercase tracking-wider">AI-Powered Formula</span>
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/70 backdrop-blur-md border border-green/50 dark:border-green/50 shadow-lg shadow-green/20 mb-4 sm:mb-6">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-green" />
+                  <span className="text-xs sm:text-sm font-semibold text-green dark:text-text-green uppercase tracking-wider">AI-Powered Formula</span>
                 </div>
               </motion.div>
-              <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+              <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-gray-900 mb-2 sm:mb-4">
                 <SplitText text="Create Your Custom Remedy" />
               </h2>
               <motion.div
@@ -427,7 +427,7 @@ export default function ToolsRemedyBuilder() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <p className="text-sm sm:text-xl text-gray-600 dark:text-gold max-w-2xl mx-auto px-2 sm:px-0">
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-700 max-w-2xl mx-auto px-2 sm:px-0">
                   Tell us your health concerns and preferences, and our expert AI will craft a personalized herbal solution just for you
                 </p>
               </motion.div>
@@ -558,7 +558,7 @@ export default function ToolsRemedyBuilder() {
                       <Button
                         onClick={handleRemedyGeneration}
                         disabled={isGenerating}
-                        className="w-full bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white py-3 sm:py-5 lg:py-7 min-h-[48px] sm:min-h-[60px] text-sm sm:text-lg lg:text-xl font-bold rounded-xl sm:rounded-2xl hover:shadow-[0_10px_40px_-10px_rgba(56,81,39,0.5)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                        className="w-full btn-green text-white py-3 sm:py-5 lg:py-7 min-h-[48px] sm:min-h-[60px] text-sm sm:text-lg lg:text-xl font-bold rounded-xl sm:rounded-2xl hover:shadow-[0_10px_40px_-10px_rgba(56,81,39,0.5)] transition-all duration-300 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                         data-testid="button-generate-remedy"
                       >
                         {isGenerating ? (
@@ -567,19 +567,19 @@ export default function ToolsRemedyBuilder() {
                             <span>{t('home.generator.loading', 'Crafting Your Expert Remedy...')}</span>
                           </div>
                         ) : (
-                          <div className="flex items-center justify-center gap-3">
+                          <div className="flex items-center justify-center gap-3 !text-white">
                             <Wand2 className="w-5 h-5 sm:w-6 sm:h-6" />
                             <span>{t('home.generator.button', 'Create My Expert Remedy')}</span>
                             <ArrowDown className="w-5 h-5 rotate-[-90deg]" />
                           </div>
                         )}
                       </Button>
-                      <p className="text-center text-xs text-gold dark:text-gray-500 mt-3">Powered by Expert AI • Results in seconds</p>
+                      <p className="text-center text-xs text-gold dark:text-white/60 mt-3">Powered by Expert AI • Results in seconds</p>
                     </div>
                   </div>
 
                   {generatedRemedy && (
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-4 sm:mt-12 overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl bg-gold/10 dark:from-yellow-900/10 dark:via-gray-900 dark:to-yellow-900/10 border border-gold dark:border-gold/30">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-4 sm:mt-12 overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl bg-gold/10 border border-gold dark:border-gold/30">
                       <div className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] p-3 sm:p-6">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2 sm:space-x-3">
@@ -764,9 +764,9 @@ export default function ToolsRemedyBuilder() {
                     </motion.div>
                   )}
 
-                  <Alert className="border-green/30 dark:border-green/20 bg-green/10 dark:bg-green/10">
-                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-green" />
-                    <AlertDescription className="text-green dark:text-green/80 text-xs sm:text-sm leading-tight sm:leading-normal">
+                  <Alert className="border-green/30 dark:border-gold/40 bg-green/10 dark:bg-gold/10">
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-gold" />
+                    <AlertDescription className="text-green dark:text-gold/80 text-xs sm:text-sm leading-tight sm:leading-normal">
                       <strong>{t('home.remedy.important', 'Important:')}</strong> {t('home.remedy.disclaimer', 'This expert-crafted remedy is for educational purposes only and should not replace professional medical advice.')}
                     </AlertDescription>
                   </Alert>

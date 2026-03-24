@@ -241,7 +241,7 @@ function FeedbackForm() {
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
           placeholder="What do you like? What could be improved? Any feature requests?"
-          className="w-full h-32 resize-none rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          className="w-full h-32 resize-none rounded-xl text-black placeholder:text-black/40 dark:text-white dark:placeholder:text-white/40 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
           data-testid="feedback-textarea"
         />
       </div>
@@ -253,7 +253,7 @@ function FeedbackForm() {
           disabled={isSubmitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-3 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-3 btn-green px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
           data-testid="submit-feedback-btn"
         >
           {isSubmitting ? (
@@ -365,19 +365,19 @@ export default function ToolsBlueprintDesigner() {
               </div>
             </motion.div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black dark:text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
               <SplitText text="Wellness Blueprint Designer" />
             </h1>
 
             <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-              <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
+              <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-600 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
                 Transform your health journey with personalized plans created in minutes
               </p>
             </motion.div>
 
             <motion.div
               variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-              className="inline-flex items-center gap-2 sm:gap-4 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+              className="inline-flex items-center gap-2 sm:gap-4 btn-green px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
             >
               <Sparkles className="w-5 h-5 sm:w-7 sm:h-7" />
               <span>Start Creating Now</span>
@@ -398,14 +398,14 @@ export default function ToolsBlueprintDesigner() {
             <FadeInSection className="text-center mb-8 sm:mb-16">
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
+                <span className="text-green dark:text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
               </motion.div>
               <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
                 <SplitText text="How It Works" />
               </h2>
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-white max-w-2xl mx-auto">
                   Create your personalized blueprint in three simple steps
                 </p>
               </motion.div>
@@ -426,7 +426,7 @@ export default function ToolsBlueprintDesigner() {
                 <FadeInSection key={item.step} delay={index * 0.2} className="h-full">
                   <motion.div
                     variants={slideUpVariants as any}
-                    className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+                    className="h-full text-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
                   >
                     <div className="relative inline-block mb-3 sm:mb-6">
                       <motion.div
@@ -436,12 +436,12 @@ export default function ToolsBlueprintDesigner() {
                       >
                         <item.icon className="w-6 h-6 sm:w-10 sm:h-10 text-white" />
                       </motion.div>
-                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-green dark:bg-gray-900 border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-lg font-bold text-white dark:text-purple-400 shadow-lg">
+                      <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-green border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-lg font-bold text-white shadow-lg">
                         {item.step}
                       </div>
                     </div>
                     <h3 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-3">{item.title}</h3>
-                    <p className="text-xs sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">{item.description}</p>
+                    <p className="text-xs sm:text-base text-gray-600 dark:text-white/80 leading-relaxed flex-grow">{item.description}</p>
                   </motion.div>
                 </FadeInSection>
               ))}
@@ -456,14 +456,14 @@ export default function ToolsBlueprintDesigner() {
             <FadeInSection className="text-center mb-8 sm:mb-16">
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Categories</span>
+                <span className="text-green dark:text-green font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Categories</span>
               </motion.div>
-              <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+              <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-gray-900 mb-2 sm:mb-4">
                 <SplitText text="Choose Your Blueprint" />
               </h2>
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-600 max-w-2xl mx-auto">
                   Four specialized categories designed to transform your wellness journey
                 </p>
               </motion.div>
@@ -482,7 +482,7 @@ export default function ToolsBlueprintDesigner() {
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="cursor-pointer h-full"
                   >
-                    <Card className="h-full bg-white dark:bg-gray-800 border-none dark:border-gray-700 dark:hover:border-purple-500 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
+                    <Card className="h-full bg-white dark:bg-gray-800 border-none dark:border-gray-700 dark:hover:border-gray-700 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group">
                       <div className={`h-1 sm:h-2 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto]`} />
                       <CardContent className="p-3 sm:p-8 pt-3 sm:pt-6 text-center flex flex-col items-center h-full">
                         <motion.div
@@ -493,7 +493,7 @@ export default function ToolsBlueprintDesigner() {
                         <h3 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-3">{type.title}</h3>
                         <p className="text-[10px] sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed flex-grow line-clamp-2 sm:line-clamp-none">{type.description}</p>
                         <div className="mt-3 sm:mt-6 pt-2 sm:pt-4 border-t border-gray-100 dark:border-gray-700 w-full">
-                          <span className="text-xs sm:text-sm font-semibold text-green dark:text-purple-400 flex items-center justify-center gap-1 sm:gap-2 group-hover:gap-4 transition-all">
+                          <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold flex items-center justify-center gap-1 sm:gap-2 group-hover:gap-4 transition-all">
                             Get Started
                             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                           </span>
@@ -546,7 +546,7 @@ export default function ToolsBlueprintDesigner() {
 
 
             <motion.div
-              className="inline-flex items-center gap-2 sm:gap-4 bg-white text-green px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer hover:bg-gray-50"
+              className="btn-white inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
             >
               <FileText className="w-5 h-5 sm:w-7 sm:h-7" />
               <span>Create My Blueprint Now</span>
@@ -646,7 +646,7 @@ export default function ToolsBlueprintDesigner() {
             <FadeInSection className="text-center mb-8 sm:mb-16">
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Benefits</span>
+                <span className="text-green dark:text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Benefits</span>
               </motion.div>
               <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
                 <SplitText text="Why Choose Our Blueprints?" />

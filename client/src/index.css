@@ -654,7 +654,7 @@ body {
     @apply text-white;
   }
 
-  .dark p, .dark span, .dark div {
+  .dark p, .dark div {
     @apply text-gray-300;
   }
 
@@ -1482,7 +1482,7 @@ iframe[src*="tawk.to"] {
   }
 
   .btn-green {
-    @apply bg-green text-white;
+    @apply bg-green !text-white;
     background-image: linear-gradient(to right, #385127 0%, #c2a058 51%, #385127 100%);
     background-size: 200% auto;
     transition: 0.5s;
@@ -1491,6 +1491,10 @@ iframe[src*="tawk.to"] {
   .btn-green:hover {
     background-position: right center;
     @apply text-white;
+  }
+
+  .btn-white {
+    @apply bg-white text-green dark:bg-white dark:text-green hover:bg-black hover:text-white dark:hover:bg-black dark:hover:text-white duration-300 delay-150 ease-in-out;
   }
 
   .custom-transition {

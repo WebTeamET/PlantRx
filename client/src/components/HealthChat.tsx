@@ -45,7 +45,7 @@ interface Message {
   aiSource?: string;
 }
 
-export default function HealthChat() {
+export default function   HealthChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant", 
@@ -295,7 +295,7 @@ export default function HealthChat() {
   return (
     <div className="w-full h-full flex flex-col rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-gold dark:border-gray-700 rounded-2xl sm:rounded-3xl" data-testid="health-chat">
       {/* Chat Header - Luxury Design */}
-      <div className="dark:from-gray-900 dark:via-emerald-900/10 dark:to-teal-900/10 px-4 sm:px-5 py-3 sm:py-4 border-b border-gold bg-white rounded-2xl sm:rounded-3xl dark:border-gray-700">
+      <div className="dark:from-gray-900 dark:via-emerald-900/10 dark:to-teal-900/10 px-4 sm:px-5 py-3 sm:py-4 border-b border-gold bg-white rounded-2xl dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative">
@@ -305,11 +305,11 @@ export default function HealthChat() {
               <div className="absolute bottom-0 right-0 w-3 h-3 sm:w-3.5 sm:h-3.5 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-gold">
+              <h2 className="text-base sm:text-lg font-bold text-gold dark:text-gold">
                 Remy
               </h2>
               <div className="flex items-center gap-1.5">
-                <p className="text-xs text-green-600 dark:text-green-400 font-medium">
+                <p className="text-xs text-green dark:text-green font-medium">
                   AI Health Expert • Online
                 </p>
               </div>
@@ -320,7 +320,7 @@ export default function HealthChat() {
             variant="ghost"
             size="sm"
             onClick={startNewConsultation}
-            className="text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 min-h-[44px] min-w-[44px] p-2 rounded-xl transition-all duration-200"
+            className="text-green dark:text-gold hover:text-green dark:hover:text-gold hover:bg-green/20 dark:hover:bg-gold/20 min-h-[44px] min-w-[44px] p-2 rounded-xl transition-all duration-200"
             data-testid="new-consultation-btn"
           >
             <MessageSquarePlus className="w-5 h-5" />
@@ -520,7 +520,7 @@ export default function HealthChat() {
                 onKeyDown={handleKeyPress}
                 placeholder="Ask about any health concern..."
                 disabled={isLoading}
-                className="w-full text-sm sm:text-base rounded-full bg-white dark:bg-gray-800 border border-gold dark:border-gray-700 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:border-emerald-400 px-4 sm:px-5 py-2.5 sm:py-3 min-h-[48px] shadow-sm placeholder:text-black dark:placeholder:text-gray-500 transition-all duration-200"
+                className="w-full text-sm sm:text-base dark:text-black rounded-full bg-white dark:bg-white border border-gold dark:border-green focus-visible:ring-2 focus-visible:ring-green focus-visible:border-green px-4 sm:px-5 py-2.5 sm:py-3 min-h-[48px] shadow-sm placeholder:text-black dark:placeholder:text-green transition-all duration-200"
                 data-testid="input-health-question"
               />
             </div>

@@ -134,8 +134,8 @@ export default function ToolsSymptomFinder() {
 
             <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <motion.div>
-                <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20">
-                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-blue-400" />
+                <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-green dark:text-green backdrop-blur-md rounded-full border border-green/50 dark:border-green/50 shadow-lg shadow-green/20">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-green" />
                   AI-Powered Health Analysis
                 </Badge>
               </motion.div>
@@ -146,19 +146,19 @@ export default function ToolsSymptomFinder() {
                 </div>
               </motion.div>
 
-              <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
+              <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl text-black dark:text-black mb-3 sm:mb-6 lg:mb-8 leading-tight">
                 <SplitText text="AI Symptom Finder" />
               </h1>
 
               <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
+                <p className="text-sm sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-700 max-w-3xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
                   Advanced symptom analysis to help you find the perfect natural solutions for your health concerns
                 </p>
               </motion.div>
 
               <motion.div
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-                className="inline-flex items-center gap-2 sm:gap-4 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
+                className="inline-flex items-center gap-2 sm:gap-4 btn-green px-6 py-3 sm:px-10 sm:py-5 lg:px-14 lg:py-6 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg lg:text-xl shadow-2xl cursor-pointer"
               >
                 <Zap className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                 <span>Start Analysis</span>
@@ -181,14 +181,14 @@ export default function ToolsSymptomFinder() {
               <FadeInSection className="text-center mb-8 sm:mb-16">
                 <motion.div
                   variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                  <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
+                  <span className="text-green dark:text-gold font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">Simple Process</span>
                 </motion.div>
                 <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
                   <SplitText text="How It Works" />
                 </h2>
                 <motion.div
                   variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                  <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                  <p className="text-sm sm:text-xl text-gray-600 dark:text-white max-w-2xl mx-auto">
                     Get personalized remedy recommendations in three easy steps
                   </p>
                 </motion.div>
@@ -205,7 +205,7 @@ export default function ToolsSymptomFinder() {
                   <FadeInSection key={item.step} delay={index * 0.15} className="h-full">
                     <motion.div
                       variants={slideUpVariants as any}
-                      className="h-full text-center p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold dark:border-gray-700 shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+                      className="h-full text-center p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-gold/20 dark:from-gray-800 dark:to-gray-900 border border-gold shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
                     >
                       <div className="relative inline-block mb-3 sm:mb-5 mx-auto">
                         <motion.div
@@ -215,7 +215,7 @@ export default function ToolsSymptomFinder() {
                         >
                           <item.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                         </motion.div>
-                        <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full bg-green dark:bg-gray-900 border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-base lg:text-lg font-bold text-white dark:text-purple-400 shadow-lg">
+                        <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-green border-2 sm:border-4 border-green flex items-center justify-center text-xs sm:text-lg font-bold text-white shadow-lg">
                           {item.step}
                         </div>
                       </div>
@@ -249,14 +249,14 @@ export default function ToolsSymptomFinder() {
                 <FadeInSection className="text-center mb-8 sm:mb-16">
                   <motion.div
                     variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                    <span className="text-green dark:text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">AI Expert Available 24/7</span>
+                    <span className="text-green dark:text-green font-semibold text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-4 block">AI Expert Available 24/7</span>
                   </motion.div>
-                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 dark:text-gray-900 mb-2 sm:mb-4">
                     <SplitText text="How It Works" />
                   </h2>
                   <motion.div
                     variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                    <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-sm sm:text-xl text-gray-600 dark:text-gray-600 max-w-2xl mx-auto">
                       Your personal AI health expert. Describe your symptoms and receive personalized natural remedy recommendations instantly.
                     </p>
                   </motion.div>
@@ -265,7 +265,7 @@ export default function ToolsSymptomFinder() {
 
               <FadeInSection delay={0.2}>
                 <motion.div
-                  className="w-full h-[580px] sm:h-[700px] lg:h-[850px] xl:h-[900px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl sm:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-white/60 dark:border-gray-700/60"
+                  className="w-full bg-gray-50 dark:bg-gray-950 h-[580px] sm:h-[700px] lg:h-[850px] xl:h-[900px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl sm:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] dark:border-gray-700/60"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -322,9 +322,9 @@ export default function ToolsSymptomFinder() {
               <FadeInSection className="text-center mb-6 sm:mb-10 lg:mb-12">
                 <motion.div
                   variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                  <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-emerald-950/40 border border-green dark:border-emerald-800/40 rounded-full px-4 py-2 mb-5">
-                    <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-emerald-400" />
-                    <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300">Quick Start</span>
+                  <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-gold/20 border border-green dark:border-gold/40 rounded-full px-4 py-2 mb-5">
+                    <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-green dark:text-gold" />
+                    <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold">Quick Start</span>
                   </div>
                 </motion.div>
                 <h2 className="text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
@@ -368,7 +368,7 @@ export default function ToolsSymptomFinder() {
                         </div>
 
                         {/* Text */}
-                        <h3 className="font-bold text-gray-900 dark:text-white text-xs sm:text-sm lg:text-lg mb-0.5 sm:mb-1 group-hover:text-gold dark:group-hover:text-emerald-400 transition-colors text-center">
+                        <h3 className="font-bold text-gray-900 dark:text-white text-xs sm:text-sm lg:text-lg mb-0.5 sm:mb-1 group-hover:text-gold dark:group-hover:text-gold transition-colors text-center">
                           {item.title}
                         </h3>
                         <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs lg:text-sm text-center">
@@ -377,8 +377,8 @@ export default function ToolsSymptomFinder() {
 
                         {/* Hover indicator - hidden on mobile */}
                         <div className="mt-2 sm:mt-3 hidden sm:flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <span className="text-xs text-gold dark:text-emerald-400 font-medium">View Remedies</span>
-                          <ExternalLink className="w-3 h-3 text-gold dark:text-emerald-400" />
+                          <span className="text-xs text-gold dark:text-gold font-medium">View Remedies</span>
+                          <ExternalLink className="w-3 h-3 text-gold dark:text-gold" />
                         </div>
 
                         {/* Corner decoration */}

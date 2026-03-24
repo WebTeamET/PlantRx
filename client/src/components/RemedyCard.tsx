@@ -228,7 +228,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
     <div 
       onClick={handleRemedyClick}
       onMouseEnter={handleMouseEnter}
-      className="block w-full max-w-[165px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] h-[220px] sm:h-[340px] md:h-[400px] lg:h-[440px] mx-auto group cursor-pointer"
+      className="block w-full h-[220px] sm:h-[340px] md:h-[400px] lg:h-[440px] mx-auto group cursor-pointer"
     >
       <div className="relative w-full h-full overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out cursor-pointer bg-white dark:bg-gray-800 transform group-hover:scale-[1.02] hover:z-10 border border-gray-200 dark:border-gray-700 hover-lift">
         {/* Front Panel - Image and Title */}
