@@ -1746,3 +1746,59 @@ iframe[src*="tawk.to"] {
 .inner-text-white > * {
   @apply text-white;
 }
+/* ===== GENERAL LAYOUT UTILITIES ===== */
+.new-container {
+  @apply 2xl:px-[120px] xl:px-[55px] px-5 max-w-full mx-auto;
+}
+.general-padding {
+  @apply py-24 max-lg:py-14 max-md:py-8;
+}
+
+.title-green h1,
+.title-green h2,
+.title-green h3,
+.title-green h4,
+.title-green h5,
+.title-green h6 {
+  @apply text-green;
+}
+
+.title-white h1,
+.title-white h2,
+.title-white h3,
+.title-white h4,
+.title-white h5,
+.title-white h6 {
+  @apply text-white;
+}
+
+.title-black h1,
+.title-black h2,
+.title-black h3,
+.title-black h4,
+.title-black h5,
+.title-black h6 {
+  @apply text-black;
+}
+
+.content-green p {
+  @apply text-green;
+}
+
+.content-white p {
+  @apply text-white;
+}
+
+.content-black p {
+  @apply text-black;
+}
+
+/* Text stroke utility */
+.title-stroke h1,
+.title-stroke h2,
+.title-stroke h3,
+.title-stroke h4,
+.title-stroke h5,
+.title-stroke h6 {
+  paint-order: stroke fill;
+}
