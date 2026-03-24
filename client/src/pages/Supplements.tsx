@@ -1,11 +1,12 @@
-import AddToCart from "@/components/SticktATC";
-import SupplementBanner from "@/components/supplements/SupplementBanner";
-import SupplementBenefits from "@/components/supplements/SupplementBenefits";
-import SupplementDetails from "@/components/supplements/SupplementDetails";
-
 import { useEffect } from "react";
 import Lenis from "lenis";
-import SupplementFaqs from "@/components/supplements/SupplementFaqs";
+import SupplementHeroBanner from "@/components/supplement/SupplementHeroBanner";
+import SupplementWhyUse from "@/components/supplement/SupplementWhyUse";
+import SupplementMarquee from "@/components/supplement/SupplementMarquee";
+import SupplementHowWorks from "@/components/supplement/SupplementHowWorks";
+import SupplementIngredients from "@/components/supplement/SupplementIngredients";
+import SupplementHowToUse from "@/components/supplement/SupplementHowToUse";
+import SupplementFaq from "@/components/supplement/SupplementFaq";
 
 export default function Supplements() {
   useEffect(() => {
@@ -31,10 +32,13 @@ export default function Supplements() {
   return (
     <main className="relative min-h-screen">
       <div className="relative z-10">
-        <SupplementBanner />
-        <SupplementDetails />
-        <SupplementBenefits />
-        <SupplementFaqs />
+        <SupplementHeroBanner />
+        <SupplementWhyUse />
+        {/* <SupplementMarquee /> */}
+        <SupplementHowWorks />
+        <SupplementIngredients />
+        <SupplementHowToUse />
+        <SupplementFaq />
       </div>
     </main>
   );
