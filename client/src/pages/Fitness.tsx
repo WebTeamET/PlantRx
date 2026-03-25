@@ -109,7 +109,7 @@ export default function Fitness() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}>
-              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green dark:border-emerald-600/30 shadow-lg shadow-green/20">
+              <Badge className="m-5 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 !text-green bg-white/70 backdrop-blur-md rounded-full border border-green shadow-lg shadow-green/20">
                 <div>💪</div>
                 Interactive Training
               </Badge>
@@ -132,7 +132,7 @@ export default function Fitness() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl text-black mb-4 sm:mb-6 leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl text-black dark:text-black mb-4 sm:mb-6 leading-tight">
                 <SplitText text="Fitness & Training" />
               </h1>
             </motion.div>
@@ -143,7 +143,7 @@ export default function Fitness() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
                 Click on the body to target specific muscle groups, or choose a category below
               </p>
             </motion.div>
@@ -153,7 +153,7 @@ export default function Fitness() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
-              className="inline-flex items-center gap-3 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-8 py-4 sm:px-12 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl shadow-2xl cursor-pointer"
+              className="inline-flex items-center gap-3 btn-green px-8 py-4 sm:px-12 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl shadow-2xl cursor-pointer"
               onClick={scrollToMap}
               data-testid="button-start-training"
             >
@@ -179,7 +179,7 @@ export default function Fitness() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <span className="text-green dark:text-purple-400 font-semibold text-sm uppercase tracking-wider mb-4 block">
+                <span className="text-green dark:text-gold font-semibold text-sm uppercase tracking-wider mb-4 block">
                   Quick Access
                 </span>
               </motion.div>
@@ -241,11 +241,11 @@ export default function Fitness() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                <span className="text-green dark:text-purple-400 font-semibold text-sm uppercase tracking-wider mb-4 block">
+                <span className="text-green dark:text-green font-semibold text-sm uppercase tracking-wider mb-4 block">
                   Why Train With Us
                 </span>
               </motion.div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-900 mb-4">
                 <SplitText text="Built for Results" />
               </h2>
             </FadeInSection>
@@ -260,13 +260,13 @@ export default function Fitness() {
               {benefits.map((benefit, index) => (
                 <FadeInSection key={benefit.title} delay={index * 0.1}>
                   <motion.div variants={slideUpVariants as any}>
-                    <Card className="h-full bg-white dark:bg-gray-900/80 border border-gold/30 dark:border-gray-700 hover:border-gold dark:hover:border-gold/50 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-200 ease-out group active:scale-98">
+                    <Card className="h-full bg-white dark:bg-green/50 border border-gold/30 dark:border-gold/30 hover:border-gold dark:hover:border-gold/50 rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-200 ease-out group active:scale-98">
                       <CardContent className="!p-4 sm:!p-6 text-center">
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-green flex items-center justify-center mb-3 sm:mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-200">
                           <benefit.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                         </div>
                         <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2">{benefit.title}</h3>
-                        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{benefit.description}</p>
+                        <p className="text-sm sm:text-base text-gray-600 dark:text-white">{benefit.description}</p>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -294,17 +294,17 @@ export default function Fitness() {
               <motion.div variants={slideUpVariants as any}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }} className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20 mb-4 sm:mb-6">
-                <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green dark:text-blue-400" />
-                <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 uppercase tracking-wider">Premium Feature</span>
+                viewport={{ once: true, amount: 0.2 }} className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/70 dark:bg-green/20 backdrop-blur-md border border-green/50 dark:border-green/50 shadow-lg shadow-green/20 mb-4 sm:mb-6">
+                <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green dark:text-green" />
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-green uppercase tracking-wider">Premium Feature</span>
               </motion.div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-3 sm:mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 dark:text-gray-900 mb-3 sm:mb-4">
                 <SplitText text="Interactive Muscle Map"></SplitText>
               </h2>
               <motion.p variants={slideUpVariants as any}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }} className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
+                viewport={{ once: true, amount: 0.2 }} className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-600 max-w-2xl mx-auto px-2">
                 Click on any muscle group to discover expert-designed workouts tailored to your training goals
               </motion.p>
             </FadeInSection>
@@ -351,7 +351,7 @@ export default function Fitness() {
         </section>
 
         {/* Fitness Articles Section */}
-        <section className="py-12 sm:py-16 lg:py-20 bg-white dark:from-gray-800 dark:to-gray-900">
+        <section className="py-12 sm:py-16 lg:py-20 bg-white">
           <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <FadeInSection>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
@@ -360,16 +360,16 @@ export default function Fitness() {
                     <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-900">
                       Fitness Articles
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
+                    <p className="text-gray-600 dark:text-gray-600 text-xs sm:text-sm">
                       Expert guides for training, recovery & performance
                     </p>
                   </div>
                 </div>
                 <Link href="/articles/fitness">
-                  <button className="flex items-center gap-2 text-green dark:text-green/80 hover:text-green/70 dark:hover:text-green/60 font-medium transition-colors hover:gap-3 duration-200 text-sm sm:text-base">
+                  <button className="flex items-center gap-2 text-green dark:text-green hover:text-green/70 font-medium transition-colors hover:gap-3 duration-200 text-sm sm:text-base">
                     View All
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -391,7 +391,7 @@ export default function Fitness() {
                   <FadeInSection key={article.id} delay={index * 0.08}>
                     <Link href={`/blog/${article.slug}`}>
                       <Card
-                        className="h-full cursor-pointer transition-all duration-200 ease-out border border-gold/30 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-md sm:shadow-lg hover:shadow-xl sm:hover:shadow-2xl hover:border-gold dark:hover:border-gold/50 hover:-translate-y-1 sm:hover:-translate-y-2 rounded-xl group active:scale-98"
+                        className="h-full cursor-pointer transition-all duration-200 ease-out border border-gold/30 dark:border-gold/30 bg-white dark:bg-white shadow-md sm:shadow-lg hover:shadow-xl sm:hover:shadow-2xl hover:border-gold dark:hover:border-gold/50 hover:-translate-y-1 sm:hover:-translate-y-2 rounded-xl group active:scale-98"
                         data-testid={`fitness-article-${article.id}`}
                       >
                         <CardContent className="p-4 sm:p-5">
@@ -427,10 +427,10 @@ export default function Fitness() {
               </div>
             ) : (
               <FadeInSection>
-                <Card className="bg-gold/5 dark:bg-gray-800/50 border-dashed border-gold/30 rounded-xl">
+                <Card className="bg-gold/5 dark:bg-gold/5 border-dashed border-gold/30 rounded-xl">
                   <CardContent className="!py-12 text-center">
                     <BookOpen className="w-12 h-12 mx-auto text-gold mb-4" />
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="text-gray-600 dark:text-gray-600">
                       No fitness articles available yet. Check back soon!
                     </p>
                   </CardContent>

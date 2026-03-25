@@ -335,9 +335,9 @@ export default function ToolsHealthCalculators() {
           <FadeInSection className="text-center mb-6 sm:mb-10 lg:mb-12">
             <motion.div
               variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-              <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-emerald-950/40 border border-green dark:border-emerald-800/40 rounded-full px-4 py-2 mb-5">
-                <Calculator className="w-5 h-5 sm:w-5 sm:h-5  text-green" />
-                <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300"> Wellness Tools</span>
+              <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-gold/20 border border-green dark:border-gold/40 rounded-full px-4 py-2 mb-5">
+                <Calculator className="w-5 h-5 sm:w-5 sm:h-5  text-green dark:text-gold" />
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold"> Wellness Tools</span>
               </div>
             </motion.div>
             <h1 className="text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
@@ -360,7 +360,7 @@ export default function ToolsHealthCalculators() {
           >
             <button
               onClick={() => setShowEducation(!showEducation)}
-              className="flex items-center gap-2 sm:gap-3 mx-auto !bg-gold/50 text-black dark:text-teal-400 hover:text-white dark:hover:text-white font-medium transition-colors group bg-teal-50 dark:bg-teal-900/30 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl hover:bg-teal-100 dark:hover:bg-teal-900/50 text-base sm:text-lg"
+              className="flex items-center gap-2 sm:gap-3 mx-auto btn-green font-medium transition-colors group px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl text-base sm:text-lg"
               data-testid="toggle-education-button"
             >
               <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -418,7 +418,7 @@ export default function ToolsHealthCalculators() {
                         <div className="bg-gold/10 dark:bg-gold/5 rounded-lg p-4 border border-gold/30 dark:border-gold/10">
                           <div className="flex items-start gap-2">
                             <Info className="w-4 h-4 text-gold dark:text-gold mt-0.5 flex-shrink-0" />
-                            <p className="text-sm text-black dark:text-green/80 leading-relaxed">
+                            <p className="text-sm text-gold dark:text-gold/80 leading-relaxed">
                               {card.limitation}
                             </p>
                           </div>
@@ -577,7 +577,7 @@ export default function ToolsHealthCalculators() {
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 sm:pt-6">
                   <Button
                     onClick={calculateResults}
-                    className="flex-1 bg-gold bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white font-semibold py-4 sm:py-4 h-14 sm:h-auto text-base sm:text-lg shadow-lg shadow-green/25 hover:shadow-xl hover:shadow-green/30 transition-all duration-300"
+                    className="flex-1 btn-green text-white font-semibold py-4 sm:py-4 h-14 sm:h-auto text-base sm:text-lg shadow-lg shadow-green/25 hover:shadow-xl hover:shadow-green/30 transition-all duration-300"
                     data-testid="calculate-button"
                   >
                     <Calculator className="w-5 h-5 mr-2" />
@@ -735,10 +735,10 @@ export default function ToolsHealthCalculators() {
 
           <motion.div  variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="mt-10 sm:mt-12 lg:mt-16">
             <div className="flex items-start gap-3 sm:gap-4 bg-gold/20 dark:bg-gold/5 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 border border-gold/30 dark:border-gold/10">
-              <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-gold dark:text-gold flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green dark:text-gold flex-shrink-0 mt-0.5" />
               <div className="space-y-1.5 sm:space-y-2">
-                <p className="font-semibold text-black dark:text-green/80 text-base sm:text-lg">Important Disclaimer</p>
-                <p className="text-sm sm:text-base text-black dark:text-green/60 leading-relaxed">
+                <p className="font-semibold text-green dark:text-gold text-base sm:text-lg">Important Disclaimer</p>
+                <p className="text-sm sm:text-base text-green dark:text-gold leading-relaxed">
                   These calculators provide general wellness estimates only and are not intended as medical advice, diagnosis, or treatment.
                   Individual health needs vary significantly. Please consult with a qualified healthcare provider for personalized guidance about your health.
                 </p>
