@@ -158,7 +158,7 @@ export default function SupplementHeroBanner() {
         aria-hidden="true"
       >
         <img
-          src="/moringa-sup-hero-wave.svg"
+          src="/supplement-wave-pattern.svg"
           width={1920}
           height={124}
           alt="Decorative green wave"

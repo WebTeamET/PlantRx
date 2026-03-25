@@ -180,7 +180,7 @@ export default function SupplementIngredients() {
       </div>
       <div className="relative -mt-0.5 w-full pointer-events-none z-20 rotate-180">
         <img
-          src="/moringa-sup-hero-wave.svg"
+          src="/supplement-wave-pattern.svg"
           width={1920}
           height={152}
           alt=""
