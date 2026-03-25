@@ -103,7 +103,7 @@ function ExpertsContent() {
       />
       <Header />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Header */}
         <motion.div
           variants={slideUpVariants as any}
@@ -113,14 +113,14 @@ function ExpertsContent() {
           className="text-center mb-16"
         >
           <div className="relative inline-block mb- sm:mb-6">
-            <h1 className="text-4xl sm:text-6xl font-black text-black mb-4">
+            <h1 className="text-4xl sm:text-6xl font-black text-black dark:text-black mb-4">
               <SplitText text="Expert Network"></SplitText>
             </h1>
           </div>
           <motion.p variants={slideUpVariants as any}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }} className="text-xl text-gray-700 dark:text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            viewport={{ once: true, amount: 0.2 }} className="text-xl text-gray-700 dark:text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Discover verified health professionals, explore our business directory, and join our expert community
           </motion.p>
         </motion.div>
@@ -246,7 +246,7 @@ function ExpertsContent() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8 text-left">
                           {["Expert consultations", "Custom remedy creation", "Professional networking", "Verified credentials"].map((item) => (
                             <div key={item} className="flex items-center space-x-3">
-                              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green flex-shrink-0" />
+                              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-gold flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{item}</span>
                             </div>
                           ))}
@@ -265,10 +265,10 @@ function ExpertsContent() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                className="relative group max-w-2xl mx-auto px-4 sm:px-0"
+                className="relative group max-w-2xl mx-auto"
               >
                 <div className="absolute -inset-1 bg-[linear-gradient(to_right,#385127,#c2a058,#385127)] rounded-2xl sm:rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
-                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold/30 dark:border-gold/10 rounded-2xl sm:rounded-3xl shadow-2xl">
+                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold dark:border-gold/10 rounded-2xl sm:rounded-3xl shadow-2xl">
                   <CardContent className="!p-6 sm:!p-8">
                     <div className="text-center mb-4 sm:mb-6">
                       <Mail className="w-10 h-10 sm:w-12 sm:h-12 bg-green rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 p-2 sm:p-3 text-white" />
@@ -284,12 +284,12 @@ function ExpertsContent() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="flex-1 py-3 px-4 text-gray-900 dark:text-white bg-white/90 dark:bg-black/90 border-gold/30 dark:border-gold/10 rounded-xl focus:border-gold focus:ring-gold/20"
+                        className="flex-1 py-3 px-4 text-gray-900 dark:text-white bg-white/90 dark:bg-black/90 border-gold/30 dark:border-gold/30 rounded-xl focus:border-gold focus:ring-gold/20"
                       />
                       <Button
                         type="submit"
                         disabled={isSubmitted}
-                        className="bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-gold/25 transition-all duration-300 disabled:opacity-50"
+                        className="btn-green px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-gold/25 transition-all duration-300 disabled:opacity-50"
                       >
                         {isSubmitted ? "Added!" : "Notify Me"}
                       </Button>
@@ -320,12 +320,12 @@ function ExpertsContent() {
                 className="relative group max-w-2xl mx-auto"
               >
                 <div className="absolute -inset-2 bg-[linear-gradient(to_right,#385127,#c2a058,#385127)] rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
-                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold/30 dark:border-gold/10 rounded-3xl shadow-2xl">
+                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold dark:border-gold/10 rounded-2xl sm:rounded-3xl shadow-2xl">
                   <CardContent className="p-12">
-                    <div className="w-20 h-20 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl">
+                    <div className="w-20 h-20 bg-green rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl">
                       <MapPin className="w-10 h-10 text-white" />
                     </div>
-                    <h2 className="text-4xl font-black bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-clip-text text-transparent mb-4">
+                    <h2 className="text-4xl font-black text-black mb-4">
                       Interactive Business Map
                     </h2>
                     <p className="text-xl text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
@@ -334,7 +334,7 @@ function ExpertsContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
                       {["Location-based search", "Business verification", "Expert recommendations", "Real-time availability"].map((item) => (
                         <div key={item} className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green flex-shrink-0" />
+                          <CheckCircle className="w-5 h-5 text-green dark:text-gold flex-shrink-0" />
                           <span className="text-gray-700 dark:text-gray-300">{item}</span>
                         </div>
                       ))}
@@ -359,12 +359,12 @@ function ExpertsContent() {
                 className="relative group max-w-2xl mx-auto"
               >
                 <div className="absolute -inset-2 bg-[linear-gradient(to_right,#385127,#c2a058,#385127)] rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
-                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold/30 dark:border-gold/10 rounded-3xl shadow-2xl">
+                <Card className="relative bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-gold dark:border-gold/10 rounded-2xl sm:rounded-3xl shadow-2xl">
                   <CardContent className="p-12">
                     <div className="w-20 h-20 bg-green rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-2xl">
                       <UserPlus className="w-10 h-10 text-white" />
                     </div>
-                    <h2 className="text-4xl font-black bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-clip-text text-transparent mb-4">
+                    <h2 className="text-4xl font-black text-black mb-4">
                       Expert Applications
                     </h2>
                     <p className="text-xl text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
@@ -373,7 +373,7 @@ function ExpertsContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
                       {["Credential verification", "Professional networking", "Revenue opportunities", "Global reach"].map((item) => (
                         <div key={item} className="flex items-center space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green flex-shrink-0" />
+                          <CheckCircle className="w-5 h-5 text-green dark:text-gold flex-shrink-0" />
                           <span className="text-gray-700 dark:text-gray-300">{item}</span>
                         </div>
                       ))}

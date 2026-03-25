@@ -228,9 +228,9 @@ export default function AboutMe() {
               className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6"
               aria-label="Breadcrumb"
             >
-              <Link href="/" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">Home</Link>
+              <Link href="/" className="hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors text-black/80 dark:text-white">Home</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link href="/about" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">About</Link>
+              <Link href="/about" className="hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors text-black/80 dark:text-white">About</Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-black dark:text-white font-medium">About Me</span>
             </nav>
@@ -308,7 +308,7 @@ export default function AboutMe() {
             <div className="absolute inset-2 bg-gradient-to-br from-green to-green rounded-full animate-pulse opacity-30 blur-sm" style={{ animationDelay: "0.5s" }} />
 
             {/* Main avatar with photo */}
-            <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl shadow-green/30 dark:shadow-blue-500/20 ring-4 ring-white/50 dark:ring-gray-800">
+            <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl shadow-green/30 dark:shadow-gold/20 ring-4 ring-white/50 dark:ring-gray-800">
               <img
                 src={founderPhoto}
                 alt="Zayan Beg - Founder of PlantRx"
@@ -375,7 +375,7 @@ export default function AboutMe() {
             <a
               href="https://www.linkedin.com/in/mirza-zayan-beg-6b3b82285"
               onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/mirza-zayan-beg-6b3b82285', '_blank', 'noopener,noreferrer'); }}
-              className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 bg-green hover:bg-gold text-white rounded-xl font-medium text-sm sm:text-base transition-all shadow-lg hover:shadow-xl hover:shadow-blue-500/25 hover:-translate-y-0.5 group cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 sm:px-6 py-3 bg-green hover:bg-gold text-white rounded-xl font-medium text-sm sm:text-base transition-all shadow-lg hover:shadow-xl hover:shadow-gold/25 hover:-translate-y-0.5 group cursor-pointer"
             >
               <SiLinkerd className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Connect on LinkedIn
@@ -635,12 +635,12 @@ export default function AboutMe() {
           viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 mt-10">
           <Link href="/about/plantrx">
             <motion.div variants={slideUpVariants as any}>
-              <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+              <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                 <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                    <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-blue-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                    <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">About PlantRx</h3>
+                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">About PlantRx</h3>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Learn about our platform</p>
                 </CardContent>
               </Card>
@@ -648,12 +648,12 @@ export default function AboutMe() {
           </Link>
           <Link href="/about/mission">
             <motion.div variants={slideUpVariants as any}>
-              <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+              <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                 <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-rose-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                    <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">Our Mission</h3>
+                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">Our Mission</h3>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Discover our purpose</p>
                 </CardContent>
               </Card>

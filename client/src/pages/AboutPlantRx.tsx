@@ -112,9 +112,9 @@ export default function AboutPlantRx() {
               className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6"
               aria-label="Breadcrumb"
             >
-              <Link href="/" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">Home</Link>
+              <Link href="/" className="hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors text-black/80 dark:text-white">Home</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link href="/about" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">About</Link>
+              <Link href="/about" className="hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors text-black/80 dark:text-white">About</Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-black dark:text-white font-medium">About PlantRx</span>
             </nav>
@@ -323,12 +323,12 @@ export default function AboutPlantRx() {
           viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
           <Link href="/about/me">
             <motion.div variants={slideUpVariants as any}>
-              <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+              <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                 <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-blue-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">The Creator</h3>
+                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">The Creator</h3>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Who built this and why</p>
                 </CardContent>
               </Card>
@@ -336,12 +336,12 @@ export default function AboutPlantRx() {
           </Link>
           <Link href="/about/mission">
             <motion.div variants={slideUpVariants as any}>
-            <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+            <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                 <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-rose-400" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">Our Mission</h3>
+                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">Our Mission</h3>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">What we're trying to accomplish</p>
                 </CardContent>
               </Card>

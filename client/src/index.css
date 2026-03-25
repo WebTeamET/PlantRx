@@ -129,6 +129,17 @@ body {
   padding: 0;
 }
 
+/* Keep hash navigation from hiding behind the sticky header */
+section[id^="section-"] {
+  scroll-margin-top: 6.5rem; /* ~104px header */
+}
+
+@media (max-width: 640px) {
+  section[id^="section-"] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */

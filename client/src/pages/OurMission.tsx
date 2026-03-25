@@ -107,13 +107,13 @@ export default function OurMission() {
             viewport={{ once: true, amount: 0.4 }}>
             <FadeInSection>
               <nav
-                className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6"
+                className="flex items-center space-x-2 text-sm mb-6"
                 aria-label="Breadcrumb"
               >
-                <Link href="/" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">Home</Link>
-                <ChevronRight className="w-4 h-4" />
-                <Link href="/about" className="hover:text-green-600 dark:hover:text-green-400 min-h-[44px] flex items-center transition-colors text-black/80">About</Link>
-                <ChevronRight className="w-4 h-4" />
+                <Link href="/" className="text-black/80 dark:text-white hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors">Home</Link>
+                <ChevronRight className="w-4 h-4 text-black/80 dark:text-white" />
+                <Link href="/about" className="text-black/80 dark:text-white hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors">About</Link>
+                <ChevronRight className="w-4 h-4 text-black/80 dark:text-white" />
                 <span className="text-black dark:text-white font-medium">Our Mission</span>
               </nav>
             </FadeInSection>
@@ -173,7 +173,7 @@ export default function OurMission() {
             viewport={{ once: true, amount: 0.4 }}
             className="relative z-10 mb-10 sm:mb-12"
           >
-            <Card className="bg-gold/20 dark:from-rose-900/20 dark:to-pink-900/20 border-gold dark:border-rose-800 overflow-hidden shadow-lg">
+            <Card className="bg-gold/20 dark:from-rose-900/20 dark:to-pink-900/20 border-gold dark:border-gold overflow-hidden shadow-lg">
               <CardContent className="p-4 sm:p-8 lg:p-12 text-center">
                 <p className="text-sm sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-8 max-w-3xl mx-auto">
                   The world is overwhelmed by conflicting health advice, long medical explanations, and misinformation. People want natural solutions — but the internet makes it hard to trust anything.
@@ -279,7 +279,7 @@ export default function OurMission() {
                     <motion.div
                       key={index}
                       variants={itemVariants}
-                      className="flex items-start gap-3 sm:gap-4 p-3 sm:p-5 bg-transparent dark:bg-green-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-green-800/50 active:bg-green-100 dark:active:bg-green-900/30 transition-colors min-h-[48px] sm:min-h-[64px]"
+                      className="flex items-start gap-3 sm:gap-4 p-3 sm:p-5 bg-transparent dark:bg-green/20 rounded-lg sm:rounded-xl border border-gold dark:border-green-800/50 active:bg-green-100 dark:active:bg-green-900/30 transition-colors min-h-[48px] sm:min-h-[64px]"
                     >
                       <span className="text-lg sm:text-2xl flex-shrink-0">{problem.icon}</span>
                       <span className="text-xs sm:text-lg text-gray-700 dark:text-gray-300 font-medium">{problem.text}</span>
@@ -287,7 +287,7 @@ export default function OurMission() {
                   ))}
                 </motion.div>
 
-                <div className="p-3 sm:p-6  dark:from-amber-900/30 dark:to-orange-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-amber-700">
+                <div className="p-3 sm:p-6  rounded-lg sm:rounded-xl border border-gold dark:border-gold">
                   <p className="text-sm sm:text-lg text-gray-700 dark:text-gray-300 font-medium text-center leading-relaxed">
                     PlantRx cuts through the noise by focusing on{" "}
                     <span className="text-gold dark:text-amber-400 font-bold">clarity</span>,{" "}
@@ -320,7 +320,7 @@ export default function OurMission() {
                 {/* Section Header - Stacked on mobile */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4 sm:mb-8">
                   <div className="w-10 h-10 sm:w-16 sm:h-16 bg-green dark:bg-green-900/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Users className="w-5 h-5 sm:w-8 sm:h-8 text-white dark:text-blue-400" />
+                    <Users className="w-5 h-5 sm:w-8 sm:h-8 text-white dark:text-white" />
                   </div>
                   <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">How We Serve the Community</h2>
                 </div>
@@ -348,7 +348,7 @@ export default function OurMission() {
                   ))}
                 </motion.div>
 
-                <div className="p-3 sm:p-5 bg-transparent dark:bg-amber-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-amber-800 flex items-start gap-2 sm:gap-3">
+                <div className="p-3 sm:p-5 bg-transparent dark:bg-amber-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-gold flex items-start gap-2 sm:gap-3">
                   <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-gold dark:text-amber-400 flex-shrink-0 mt-0.5" />
                   <p className="text-xs sm:text-base text-black dark:text-amber-300 leading-relaxed">
                     We do this without claiming to diagnose or treat any condition and always encourage professional medical support when needed.
@@ -379,7 +379,7 @@ export default function OurMission() {
                 {/* Section Header - Stacked on mobile */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4 sm:mb-8">
                   <div className="w-10 h-10 sm:w-16 sm:h-16 bg-green dark:bg-green-900/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Shield className="w-5 h-5 sm:w-8 sm:h-8 text-white dark:text-purple-400" />
+                    <Shield className="w-5 h-5 sm:w-8 sm:h-8 text-white dark:text-white" />
                   </div>
                   <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Our Promise</h2>
                 </div>
@@ -426,12 +426,12 @@ export default function OurMission() {
             viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
             <Link href="/about/me">
               <motion.div variants={slideUpVariants as any}>
-                <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+                <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                   <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                      <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-blue-400" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                      <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">The Creator</h3>
+                    <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">The Creator</h3>
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Meet the founder</p>
                   </CardContent>
                 </Card>
@@ -439,12 +439,12 @@ export default function OurMission() {
             </Link>
             <Link href="/about/plantrx">
               <motion.div variants={slideUpVariants as any}>
-                <Card className="bg-gold/20 dark:from-blue-900/20 dark:to-indigo-900/20 border-gold dark:border-blue-800 hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
+                <Card className="bg-gold/20 order-gold dark:border-gold hover:shadow-xl active:scale-98 transition-all cursor-pointer group overflow-hidden h-full">
                   <CardContent className="!px-3 !py-5 sm:p-6 flex flex-col items-center justify-center text-center relative">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-blue-900/50 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                      <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white dark:text-rose-400" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
+                      <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-blue-400 transition-colors mb-0.5 sm:mb-1">About PlantRx</h3>
+                    <h3 className="font-semibold text-sm sm:text-base text-gray-900 dark:text-white dark:group-hover:text-white transition-colors mb-0.5 sm:mb-1">About PlantRx</h3>
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Learn about our platform</p>
                   </CardContent>
                 </Card>

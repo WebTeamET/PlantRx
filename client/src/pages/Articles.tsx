@@ -211,7 +211,7 @@ export default function Articles() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             {/* Icon */}
-            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl sm:rounded-2xl mb-4 sm:mb-5 lg:mb-6 bg-green dark:bg-emerald-400 rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] rotate-3 shadow-lg">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 sm:rounded-2xl mb-4 sm:mb-5 lg:mb-6 bg-green dark:bg-gold rounded-2xl inline-flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] rotate-3 shadow-lg">
               <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
             </div>
 
@@ -241,7 +241,7 @@ export default function Articles() {
                     placeholder="Search articles, topics, or remedies..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 h-11 sm:h-12 lg:h-14 text-sm sm:text-base rounded-lg sm:rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+                    className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 h-11 sm:h-12 lg:h-14 text-sm sm:text-base rounded-lg sm:rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
                     data-testid="articles-search-input"
                   />
                   {searchQuery && (
@@ -346,9 +346,9 @@ export default function Articles() {
 
                 {/* Decorative divider */}
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
-                  <div className="w-2 h-2 bg-gold dark:bg-emerald-500 rounded-full animate-pulse"></div>
-                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
+                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+                  <div className="w-2 h-2 bg-gold rounded-full animate-pulse"></div>
+                  <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
                 </div>
 
                 <motion.p variants={slideUpVariants as any}
@@ -427,7 +427,7 @@ export default function Articles() {
             {/* Bottom decoration */}
             <ScrollReveal variant="fadeUp" delay={0.4}>
               <div className="flex items-center justify-center gap-3 mt-10 sm:mt-14">
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-700"></div>
+                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
                 <div className="flex items-center gap-1.5">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
@@ -445,7 +445,7 @@ export default function Articles() {
                     className="w-1.5 h-1.5 bg-gold rounded-full"
                   />
                 </div>
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-700"></div>
+                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></div>
               </div>
             </ScrollReveal>
           </div>
