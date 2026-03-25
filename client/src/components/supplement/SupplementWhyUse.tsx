@@ -81,8 +81,8 @@ export default function SupplementWhyUse() {
             className="title title-stroke"
           >
             <h2
-              className="font-heading font-semibold capitalize! text-[clamp(32px,6.25vw,120px)] leading-[clamp(34px,7.3vw,140px)]"
-            style={{ WebkitTextStroke: "clamp(2px, 1vw, 14px) #FFFFFF", color: "#000" }}
+              className="font-heading font-semibold capitalize! leading-[clamp(34px,6.3vw,140px)] text-[clamp(32px,5vw,120px)]"
+            style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#000" }}
             >
               <SplitText text="Why" />
               <br />

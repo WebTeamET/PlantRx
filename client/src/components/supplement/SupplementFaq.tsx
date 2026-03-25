@@ -36,18 +36,35 @@ export default function SupplementFaq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative overflow-hidden to-white py-24 lg:py-25 new-container">
+    <section className="relative overflow-hidden to-white py-10 md:py-16 xl:py-20 2xl:py-[150px] new-container">
       <div className="relative max-w-7xl mx-auto">
         <div
-          className="rounded-[25px] bg-white px-5 py-10 sm:px-10 xl:py-[100px] border-[2px] border-dashed border-[#6E4B4C]"
-        >  
+          className="rounded-[25px] bg-white px-5 py-10 sm:px-10 xl:py-[100px] relative"
+        >
+          <svg
+            className="pointer-events-none absolute inset-0 w-full h-full"
+            preserveAspectRatio="none"
+          >
+            <rect
+              x="1"
+              y="1"
+              width="calc(100% - 2px)"
+              height="calc(100% - 2px)"
+              rx="25"
+              ry="25"
+              fill="none"
+              stroke="#385127"
+              strokeWidth="2"
+              strokeDasharray="21 21"
+            />
+          </svg>
           <h2
-            className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] mb-7 xl:mb-[50px]"
+            className="text-center text-[clamp(32px,5vw,80px)] leading-[clamp(34px,6.3vw,109px)] text-[#000] mb-7 xl:mb-[50px]"
           >
             Your Questions, Answered
           </h2>
 
-          <div className="space-y-4 max-w-[880px] mx-auto">
+          <div className="space-y-5 max-w-[880px] mx-auto">
             {QA_ITEMS.map((item, idx) => {
               const isOpen = openIndex === idx;
 
@@ -63,22 +80,29 @@ export default function SupplementFaq() {
                   <motion.div
                     layout
                     transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                    className={`rounded-[16px] sm:rounded-[18px] px-5 sm:px-6 py-4 sm:py-5 ${
-                      isOpen ? "bg-gold text-white" : "bg-[#FFF8EB] text-[#2B1E1E]"
-                    }`}
+                    className={`rounded-[10px] md:rounded-[20px] p-5 xl:p-[30px] ${isOpen ? "bg-gold text-white" : "bg-[#FFF8EB] text-[#2B1E1E]"
+                      }`}
                   >
-                    <div className="flex items-center gap-1">
-                      <div className="text-[17px] font-semibold opacity-80">{idx + 1}.</div>
-                      <div className="flex-1 space-y-2">
-                        <div className="text-[17px] sm:text-[18px] font-semibold">{item.question}</div>
-                        
+                    <div className="flex items-start gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold">
+                      <div>{idx + 1}.</div>
+                      <div className="flex-1">
+                        <div>{item.question}</div>
                       </div>
                       <motion.span
                         className="text-[20px] font-bold leading-none"
                         animate={{ rotate: isOpen ? 0 : 0 }}
                         transition={{ type: "spring", stiffness: 120, damping: 20 }}
                       >
-                        {isOpen ? "-" : "+"}
+                        {isOpen ?
+                          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 max-md:size-3">
+                            <path d="M13.125 6.09375H1.875C1.35732 6.09375 0.9375 6.51357 0.9375 7.03125V7.96875C0.9375 8.48643 1.35732 8.90625 1.875 8.90625H13.125C13.6427 8.90625 14.0625 8.48643 14.0625 7.96875V7.03125C14.0625 6.51357 13.6427 6.09375 13.125 6.09375Z" fill="currentColor" />
+                          </svg>
+                          :
+                          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 max-md:size-3">
+                            <path d="M13.125 6.09375H8.90625V1.875C8.90625 1.35732 8.48643 0.9375 7.96875 0.9375H7.03125C6.51357 0.9375 6.09375 1.35732 6.09375 1.875V6.09375H1.875C1.35732 6.09375 0.9375 6.51357 0.9375 7.03125V7.96875C0.9375 8.48643 1.35732 8.90625 1.875 8.90625H6.09375V13.125C6.09375 13.6427 6.51357 14.0625 7.03125 14.0625H7.96875C8.48643 14.0625 8.90625 13.6427 8.90625 13.125V8.90625H13.125C13.6427 8.90625 14.0625 8.48643 14.0625 7.96875V7.03125C14.0625 6.51357 13.6427 6.09375 13.125 6.09375Z" fill="currentColor" />
+                          </svg>
+
+                        }
                       </motion.span>
                     </div>
                     <motion.div
@@ -94,9 +118,8 @@ export default function SupplementFaq() {
                       aria-hidden={!isOpen}
                     >
                       <p
-                        className={`text-[14px] sm:text-[15px] leading-[1.55] ${
-                          isOpen ? "text-white/90" : "text-[#2B1E1E]"
-                        }`}
+                        className={`text-base leading-[27px] max-md:text-sm font-medium ${isOpen ? "text-white" : "text-black"
+                          }`}
                       >
                         {item.answer}
                       </p>

@@ -125,8 +125,8 @@ export default function SupplementHeroBanner() {
       >
         <div className="title title-green title-stroke">
           <motion.h1
-            className="font-heading font-semibold capitalize leading-none text-[clamp(32px,6.25vw,120px)]"
-            style={{ WebkitTextStroke: "clamp(2px, 1vw, 14px) #FFFFFF", color: "#385127" }}
+            className="font-heading font-semibold capitalize leading-[clamp(34px,6.3vw,133px)] text-[clamp(32px,5vw,120px)]"
+            style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127" }}
             variants={titleVars}
             initial="initial"
             animate="animate"

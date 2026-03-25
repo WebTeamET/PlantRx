@@ -437,7 +437,7 @@ export default function Terms() {
               <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                 To access certain features of PlantRx, you must create an account using Firebase Authentication (Google sign-in or email/password).
               </p>
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-6 sm:mb-8">Your Responsibilities:</h3>
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">Your Responsibilities:</h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
                 {[
                   "Provide accurate registration information",
@@ -462,7 +462,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">14. Subscription Tiers</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                 PlantRx offers the following subscription tiers:
               </p>
               <div className="grid gap-6 sm:gap-8 mb-4 sm:mb-6">
@@ -470,7 +470,7 @@ export default function Terms() {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
                       <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-green dark:text-amber-200">🥉 Bronze</h4>
-                      <p className="text-base sm:text-lg lg:text-xl text-black dark:text-gray-400 mt-3">Basic access to remedy database, limited AI chat, community features</p>
+                      <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">Basic access to remedy database, limited AI chat, community features</p>
                     </div>
                     <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green dark:text-amber-300">Free</span>
                   </div>
@@ -479,7 +479,7 @@ export default function Terms() {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
                       <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-black dark:text-gray-200">🥈 Silver</h4>
-                      <p className="text-base sm:text-lg lg:text-xl text-black dark:text-gray-400 mt-3">Unlimited AI chat, personalized recommendations, advanced features</p>
+                      <p className="text-sm sm:text-base text-gray-700  text-black dark:text-gray-400 mt-3">Unlimited AI chat, personalized recommendations, advanced features</p>
                     </div>
                     <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-gray-200">£6.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
                   </div>
@@ -488,14 +488,14 @@ export default function Terms() {
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
                       <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-white dark:text-gold">🥇 Gold</h4>
-                      <p className="text-base sm:text-lg lg:text-xl text-white dark:text-gray-400 mt-3">All Silver features + exclusive content, priority support, premium benefits</p>
+                      <p className="text-sm sm:text-base text-gray-700 text-white dark:text-gray-300 mt-3">All Silver features + exclusive content, priority support, premium benefits</p>
                     </div>
                     <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white dark:text-gold">£12.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-900 dark:text-white mb-6 sm:mb-8">Subscription Terms:</h3>
-              <ul className="space-y-4 sm:space-y-5 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">Subscription Terms:</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                 {[
                   "Subscriptions are billed monthly via Stripe",
                   "Auto-renew unless cancelled before the next billing date",
@@ -503,8 +503,8 @@ export default function Terms() {
                   "Prices may change with 30 days' notice",
                   "Promotional trials (e.g., 24-hour Gold trial) are one-time offers"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="text-gold mt-1 text-xl">•</span>
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-gold">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -519,7 +519,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">15. Store & Product Purchases</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                 PlantRx operates an online store through Shopify integration, offering wellness and health-related products.
               </p>
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
@@ -721,7 +721,7 @@ export default function Terms() {
               </div>
               <div className="bg-green/10 dark:bg-green/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20">
                 <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                  These Terms shall be governed by and construed in accordance with the <strong className="text-green dark:text-green">laws of England and Wales</strong>, without regard to conflict of law principles. Any disputes shall be subject to the exclusive jurisdiction of the <strong className="text-green dark:text-green">courts of London, United Kingdom</strong>.
+                  These Terms shall be governed by and construed in accordance with the <strong className="text-green dark:text-gold">laws of England and Wales</strong>, without regard to conflict of law principles. Any disputes shall be subject to the exclusive jurisdiction of the <strong className="text-green dark:text-gold">courts of London, United Kingdom</strong>.
                 </p>
               </div>
             </section>
@@ -819,24 +819,24 @@ export default function Terms() {
               </div>
 
               {/* Contact Card */}
-              <div className="bg-green/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <h3 className="font-bold text-base sm:text-lg !text-white">21. Contact Us</h3>
-                </div>
-                <p className="text-white/90 text-xs sm:text-sm mb-3 sm:mb-4">
-                  Questions about your data or privacy rights?
-                </p>
-                <div className="space-y-1.5 sm:space-y-2 [&_p]:text-xs [&_p]:sm:text-xl">
-                  <p><strong>Email:</strong> support@plantrxapp.com</p>
-                  <p><strong>Address:</strong> PlantRx Ltd, London, UK</p>
-                  <p><strong>Response:</strong> Within 24-48 hours</p>
-                </div>
-                <a href="mailto:support@plantrxapp.com"
-                  className="mt-3 sm:mt-4 block w-full bg-white text-green rounded-lg py-2 sm:py-3 px-4 text-center font-semibold hover:bg-gold/10 transition-colors min-h-[44px] flex items-center justify-center text-sm sm:text-base">
-                  Contact Us
-                </a>
-              </div>
+              <div className="bg-green/50 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+                              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                                <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                                <h3 className="font-bold text-base sm:text-lg !text-white">21. Contact Us</h3>
+                              </div>
+                              <p className="text-white/90 dark:text-white/90 text-xs sm:text-sm mb-3 sm:mb-4">
+                                Questions about your data or privacy rights?
+                              </p>
+                              <div className="space-y-1.5 sm:space-y-2 [&_p]:text-xs [&_p]:sm:text-base ">
+                                <p className="text-white dark:!text-white/90"><strong>Email:</strong> support@plantrxapp.com</p>
+                                <p className="text-white dark:!text-white/90"><strong>Address:</strong> PlantRx Ltd, London, UK</p>
+                                <p className="text-white dark:!text-white/90"><strong>Response:</strong> Within 24-48 hours</p>
+                              </div>
+                              <a href="mailto:support@plantrxapp.com"
+                                className="mt-3 btn-white sm:mt-4 w-full rounded-lg py-2 sm:py-3 px-4 text-center font-semibold transition-colors min-h-[44px] flex items-center justify-center text-sm sm:text-base">
+                                Contact Us
+                              </a>
+                            </div>
 
               {/* Related Policies */}
               <div className="bg-gold/5 dark:bg-gray-800 rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gold/20 dark:border-gold/10">

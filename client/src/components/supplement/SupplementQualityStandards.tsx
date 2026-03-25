@@ -7,16 +7,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 const badges = [
-  { icon: "/quality-icon-gluten.png",     label: "GLUTEN FREE",     offsetY: 44 },
-  { icon: "/quality-icon-veg.png",       label: "VEGETARIAN",      offsetY: 4  }, 
-  { icon: "/quality-icon-lactose.png",     label: "LACTOSE FREE",    offsetY: 78 },
-  { icon: "/quality-icon-allergen.png",    label: "ALLERGEN FREE",   offsetY: 0  },
-  { icon: "/quality-icon-hormone.png",     label: "HORMONE FREE",    offsetY: 78 },
-  { icon: "/quality-icon-natural-sup.png",          label: "100% NATURAL",    offsetY: 4  },
-  { icon: "/quality-icon-antibiotic.png",  label: "ANTIBIOTIC FREE", offsetY: 63 },
-  { icon: "/quality-icon-corn.png",        label: "CORN FREE",       offsetY: 4  },
-  { icon: "/quality-icon-vegan-sup.png",            label: "VEGAN",           offsetY: 73 },
-]; 
+  { icon: "/quality-icon-gluten.png", label: "GLUTEN FREE", offsetY: 44 },
+  { icon: "/quality-icon-veg.png", label: "VEGETARIAN", offsetY: 0 },
+  { icon: "/quality-icon-lactose.png", label: "LACTOSE FREE", offsetY: 78 },
+  { icon: "/quality-icon-allergen.png", label: "ALLERGEN FREE", offsetY: 0 },
+  { icon: "/quality-icon-hormone.png", label: "HORMONE FREE", offsetY: 78 },
+  { icon: "/quality-icon-natural-sup.png", label: "100% NATURAL", offsetY: 0 },
+  { icon: "/quality-icon-antibiotic.png", label: "ANTIBIOTIC FREE", offsetY: 63 },
+  { icon: "/quality-icon-corn.png", label: "CORN FREE", offsetY: 0 },
+  { icon: "/quality-icon-vegan-sup.png", label: "VEGAN", offsetY: 73 },
+];
 
 export default function SupplementQualityStandards() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -31,17 +31,7 @@ export default function SupplementQualityStandards() {
   };
 
   return (
-    <section className="quality-standards-section relative overflow-hidden">
-      <div className="w-full pointer-events-none">
-        <img
-          src="/supplement-wave-pattern.svg"
-          width={2000} 
-          height={152}
-          alt=""
-          aria-hidden="true"
-          className="w-full block"
-        />
-      </div>
+    <section className="quality-standards-section relative overflow-hidden -mt-0.5">
       <div className="bg-green">
         <div
           ref={sectionRef}
@@ -53,18 +43,17 @@ export default function SupplementQualityStandards() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <h2
-              className="font-heading font-medium capitalize text-[clamp(36px,6.25vw,120px)] leading-[1.11] max-lg:text-center"
-              style={{ WebkitTextStroke: "clamp(2px,0.73vw,14px) #FFFFFF" }}
+              className="capitalize leading-[clamp(34px,6.3vw,133px)] text-[clamp(32px,5vw,120px)] max-xl:text-center"
+              style={{ WebkitTextStroke: "clamp(2px,0.73vw,10px) #FFFFFF" }}
             >
               Quality &amp; Standards
             </h2>
           </motion.div>
-
-          <div className="hidden lg:flex items-start justify-between pb-24 xl:pb-28 2xl:pb-32">
+          <div className="hidden xl:flex items-start justify-between pb-24 xl:pb-28 2xl:pb-[82px] xl:gap-5 gap-3 ">
             {badges.map((badge, i) => (
               <motion.div
                 key={i}
-                className="flex flex-col items-center gap-5"
+                className="flex flex-col items-center gap-5 shrink"
                 initial={{ opacity: 0, y: badge.offsetY + 30 }}
                 animate={isInView ? { opacity: 1, y: badge.offsetY } : {}}
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
@@ -74,24 +63,27 @@ export default function SupplementQualityStandards() {
                   width={100}
                   height={100}
                   alt={badge.label}
-                  className="block w-16 xl:w-20 2xl:w-[100px] flex-none"
+                  className="block w-16 min-[1800px]:!w-[100px] min-h-16 min-[1800px]:!min-h-[100px] flex-none"
                 />
                 <div className="content content-white">
-                  <p className="text-xs xl:text-sm 2xl:text-xl font-normal text-center whitespace-nowrap">
+                  <p className="text-sm 2xl:text-xl 2xl:leading-[100%] font-normal text-center whitespace-nowrap">
                     {badge.label}
                   </p>
-                </div>
+                </div> 
               </motion.div>
             ))}
           </div>
 
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             <Swiper
               spaceBetween={24}
               slidesPerView={2}
               breakpoints={{
                 768: {
                   slidesPerView: 3,
+                },
+                1024: {
+                  slidesPerView: 5,
                 },
               }}
               onSwiper={(swiper) => {

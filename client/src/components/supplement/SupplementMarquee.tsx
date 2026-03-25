@@ -12,7 +12,7 @@ const marqueeItems = [
 export default function SupplementMarquee() {
   return (
     <section className="relative overflow-hidden w-full -my-[clamp(10px,2.2vw,42px)]">
-      <div className="rotate-[2.61deg] bg-[#C2A058] border-[3px] border-solid border-black w-[110%] -ml-[5%] py-[clamp(20px,5.19vw,100px)]">
+      <div className="rotate-[2.61deg] bg-[#C2A058] w-[110%] -ml-[5%] py-[clamp(20px,5.19vw,100px)]">
         <Marquee
           speed={70}
           gradient={false}
