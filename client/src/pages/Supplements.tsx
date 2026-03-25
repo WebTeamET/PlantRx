@@ -6,7 +6,9 @@ import SupplementMarquee from "@/components/supplement/SupplementMarquee";
 import SupplementHowWorks from "@/components/supplement/SupplementHowWorks";
 import SupplementIngredients from "@/components/supplement/SupplementIngredients";
 import SupplementHowToUse from "@/components/supplement/SupplementHowToUse";
+import SupplementQualityStandards from "@/components/supplement/SupplementQualityStandards";
 import SupplementFaq from "@/components/supplement/SupplementFaq";
+import SupplementWhoAvoid from "@/components/supplement/SupplementWhoAvoid";
 
 export default function Supplements() {
   useEffect(() => {
@@ -38,6 +40,8 @@ export default function Supplements() {
         <SupplementHowWorks />
         <SupplementIngredients />
         <SupplementHowToUse />
+        <SupplementQualityStandards />
+        <SupplementWhoAvoid />
         <SupplementFaq />
       </div>
     </main>
