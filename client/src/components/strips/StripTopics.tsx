@@ -43,22 +43,22 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
       title: "Brain Fog",
       img1: "/brain1.svg",
       img2: "/brain2.svg",
-      img1Position: { top: "clamp(24px, 5vw, 72px)", left: "clamp(20px, 4vw, 70px)", width: "221px", height: "182px" },
-      img2Position: { top: "clamp(16px, 4vw, 60px)", right: "clamp(24px, 4vw, 70px)", width: "230px", height: "175px" },
+      img1Position: { top: "clamp(12px, 2vw, 72px)", left: "clamp(20px, 4vw, 70px)", width: "clamp(90px, 15.35vw, 221px)", height: "clamp(70px, 12.64vw, 182px)" },
+      img2Position: { top: "clamp(6px, 2vw, 60px)", right: "clamp(24px, 4vw, 70px)", width: "clamp(110px, 15.97vw, 230px)", height: "clamp(70px, 12.15vw, 175px)" },
     },
     {
       title: "Difficulty concentrating",
       img1: "/brain3.svg",
       img2: "/brain4.svg",
-      img1Position: { top: "clamp(8px, 3vw, 42px)", left: "clamp(12px, 3vw, 50px)", width: "208px", height: "208px" },
-      img2Position: { top: "clamp(32px, 4vw, 60px)", right: "clamp(12px, 3vw, 50px)", width: "210px", height: "205px" },
+      img1Position: { top: "clamp(0px, 3vw, 42px)", left: "clamp(12px, 3vw, 50px)", width: "clamp(60px, 14.44vw, 208px)", height: "clamp(60px, 14.44vw, 208px)" },
+      img2Position: { top: "clamp(8px, 4vw, 60px)", right: "clamp(12px, 3vw, 50px)", width: "clamp(60px, 14.58vw, 210px)", height: "clamp(60px, 14.24vw, 205px)" },
     },
     {
       title: "Mental fatigue",
       img1: "/brain5.svg",
       img2: "/brain6.svg",
-      img1Position: { top: "clamp(24px, 4vw, 60px)", left: "clamp(36px, 5vw, 90px)", width: "154px", height: "208px" },
-      img2Position: { top: "clamp(5px, 0.5vw, 8px)", right: "clamp(20px, 4vw, 70px)", width: "170px", height: "220px" },
+      img1Position: { top: "clamp(0px, 2vw, 60px)", left: "clamp(36px, 5vw, 90px)", width: "clamp(60px, 10.69vw, 154px)", height: "clamp(90px, 14.44vw, 208px)" },
+      img2Position: { top: "clamp(0px, 0.5vw, 8px)", right: "clamp(20px, 4vw, 70px)", width: "clamp(70px, 11.81vw, 170px)", height: "clamp(70px, 15.28vw, 220px)" },
     },
   ];
 
@@ -78,7 +78,7 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
               onMouseEnter={() => setHoverIndex(index)}
               onMouseLeave={() => setHoverIndex(null)}
               onClick={() => setActiveIndex(index)}
-              className="relative text-center font-heading capitalize text-[80px] p-[70px] cursor-default"
+              className="relative text-center font-heading capitalize text-[clamp(22px,_5vw,_80px)] py-[25px] px-[50px] lg:p-[70px] cursor-default"
               initial={false}
               animate={{
                 backgroundColor: isFocused ? "#643A3D" : "#F5E2D8",

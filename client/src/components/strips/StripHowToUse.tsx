@@ -51,6 +51,67 @@ function getPageY(el: HTMLElement) {
   return rect.top + window.scrollY
 }
 
+function MobileHowToSlider() {
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % slides.length)
+    }, 3200)
+
+    return () => window.clearTimeout(id)
+  }, [current])
+
+  return (
+    <section className="lg:hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-14">
+      <div className="max-w-5xl mx-auto px-5">
+
+        <div className="overflow-hidden rounded-2xl shadow-lg bg-[#F0DDCE]">
+          <div
+            className="flex transition-transform duration-500 ease-[0.22,1,0.36,1]"
+            style={{ transform: `translateX(-${current * 100}%)` }}
+          >
+            {slides.map((slide) => (
+              <div key={slide.title} className="w-full flex-shrink-0">
+                <div className="p-6 text-center *:text-black">
+                  <h3 className="text-2xl font-semibold mb-3" style={{ textShadow: titleShadow }}>
+                    {slide.title}
+                  </h3>
+                  <p className="text-base leading-relaxed">{slide.description}</p>
+                </div>
+                <div className="px-6 pb-6">
+                  <div className="h-72 rounded-xl overflow-hidden">
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-2 mt-5">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setCurrent(idx)}
+              className={`h-2.5 !min-w-fit !min-h-fit rounded-full transition-all duration-300 ${
+                current === idx ? "w-6 bg-black" : "w-2.5 bg-black/30"
+              }`}
+              aria-label={`Go to step ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function SlideCard({
   index,
   scrollIndex,
@@ -63,7 +124,7 @@ function SlideCard({
   slide: Slide
 }) {
   const range = [index - 1, index, index + 1]
-  const outputRange = [90, 0, -90]
+  const outputRange = [100, 0, -100]
 
   const rotateRaw = useTransform(scrollIndex, range, outputRange)
   const rotate = useSpring(rotateRaw, {
@@ -74,17 +135,17 @@ function SlideCard({
 
   return (
     <motion.div
-      className="flex-shrink-0 flex items-center justify-center absolute left-0 top-0 h-full w-full origin-[center_104.166667vw]"
+      className="flex-shrink-0 flex justify-center absolute left-0 top-0 h-full w-full origin-[center_100vw]"
       style={{
         rotate: rotate,
         zIndex: totalSlides - index, 
       }}
     >
-      <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative">
+      <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative h-fit">
         {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
         <div className="relative z-10 pb-3 p-7 text-center *:text-black">
           <h2
-            className="mb-3"
+            className="mb-3 text-[clamp(28px,_5.5vw,_90px)] leading-[1.1]"
             style={{ textShadow: titleShadow }}
           >
             {slide.title}
@@ -119,25 +180,31 @@ function StripHowToUse() {
   const scrollIndex = useTransform(scrollYProgress, [0, 1], [0, slides.length - 1])
 
   return (
-    <section
-      ref={containerRef}
-      className="how-to-wrapper relative py-24 lg:py-28"
-      style={{ height: `${slides.length * 100}vh` }}
-    >
-      <div className="how-to-sticky sticky top-[50px] flex h-screen items-center justify-center overflow-hidden perspective-[1000px] bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white ">
-        <div className="how-to-stage relative w-full 2xl:max-w-[800px] max-w-[700px] aspect-[3/4]">
-          {slides.map((slide, index) => (
-            <SlideCard
-              key={index}
-              index={index}
-              slide={slide}
-              scrollIndex={scrollIndex}
-              totalSlides={slides.length}
-            />
-          ))}
+    <>
+      {/* Desktop / large screens: keep sticky scroll animation */}
+      <section
+        ref={containerRef}
+        className="how-to-wrapper relative py-24 lg:py-28 hidden lg:block"
+        style={{ height: `${slides.length * 150}vh` }}
+      >
+        <div className="how-to-sticky sticky top-[50px] block h-screen justify-center overflow-hidden perspective-[1000px] bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white ">
+          <div className="how-to-stage relative w-full xl:max-w-[800px] max-w-[560px] mx-auto lg:aspect-[4/3]">
+            {slides.map((slide, index) => (
+              <SlideCard
+                key={index}
+                index={index}
+                slide={slide}
+                scrollIndex={scrollIndex}
+                totalSlides={slides.length}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Mobile / tablet: horizontal autoplay slider */}
+      <MobileHowToSlider />
+    </>
   )
 }
 
@@ -186,9 +253,9 @@ export function StickyStripImg() {
   return (
     <motion.div
       className="pointer-events-none fixed z-[80] inset-x-0 flex justify-center"
-      style={{ bottom: inHowTo ? "10px" : "30px" }}
-      initial={{ scale: 0 }}
-      animate={{ scale: visible ? 1 : 0, opacity: visible ? 1 : 0 }}
+      style={{ bottom: inHowTo ? "0" : "30px" }}
+      initial={{ scale: 1 }}
+      animate={{ scale: visible ? 1 : 1, opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       aria-hidden={!visible}
     >
@@ -199,6 +266,7 @@ export function StickyStripImg() {
         style={{ width }}
         loading="lazy"
       />
+      <div className="absolute size-full bg-gradient-to-t to-transparent via-[#F7EFE6] from-[#F7EFE6]"></div>
     </motion.div>
   )
 }

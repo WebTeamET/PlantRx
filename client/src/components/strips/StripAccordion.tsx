@@ -28,10 +28,10 @@ export default function StripAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white py-24 lg:py-28">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white py-[50px] lg:py-28">
       <div className="relative max-w-5xl mx-auto px-6 lg:px-10">
         <div
-          className="rounded-[25px] bg-white px-5 py-10 sm:px-10 sm:py-12 border-[2px] border-dashed border-[#6E4B4C]"
+          className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-[#6E4B4C]"
         >
           <h2
             className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] mb-10"
@@ -39,7 +39,7 @@ export default function StripAccordion() {
             Your Questions, Answered
           </h2>
 
-          <div className="space-y-4 px-6 lg:px-[100px]">
+          <div className="space-y-4 lg:px-[100px]">
             {QA_ITEMS.map((item, idx) => {
               const isOpen = openIndex === idx;
 

@@ -33,10 +33,10 @@ export default function StripIngredients({ product, children }: StripIngredients
             <section
                 className="block w-full relative bg-gradient-to-t from-[#F7EFE6] to-transparent"
             >
-                <div className="px-[110px] py-[180px]">
+                <div className="container py-[50px] lg:pt-[180px] lg:pb-[30px]">
                     <div className="flex flex-wrap items-start justify-center gap-[50px] w-full">
                         <div className="w-full lg:max-w-[600px]">
-                            <div className="title mb-[40px]">
+                            <div className="title mb-[20px] lg:mb-[40px]">
                                 <h2
                                     className="text-[clamp(48px,_4.5vw,_120px)] leading-[1] text-black font-semibold capitalize lg:max-w-[500px]"
                                     style={{
@@ -56,7 +56,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 </h2>
                             </div>
                             <div className="content">
-                                <p className="text-[20px] font-normal text-black leading-[40px] capitalize">
+                                <p className="lg:text-[20px] font-normal text-black leading-[1.5] lg:leading-[40px] capitalize">
                                     Stay sharp and centered with Mushroom Focus Strips, a convenient and flavorful way to support your mental clarity and overall wellness. These smooth, chocolate-flavored oral strips dissolve on your tongue, delivering a curated blend of functional mushroom extracts traditionally valued for their role in promoting normal cognitive function and daily vitality.
                                 </p>
                             </div>      
@@ -68,11 +68,11 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 </div>
                                 <img src="/key-ingredients.png" alt="key-ingredients" width={982} height={652} className="w-full h-auto object-cover" />
                             </div>
-                            <div className="flex justify-center mt-[48px] w-full">
+                            <div className="flex justify-center mt-[20px] lg:mt-[48px] w-full">
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(true)}
-                                    className="uppercase font-heading font-semibold text-[#6B3A3A] text-[22px] md:text-[30px] leading-none underline decoration-[#6B3A3A] underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
+                                    className="uppercase font-heading font-semibold text-[#6B3A3A] text-[clamp(18px,2.08vw,30px)] leading-none underline decoration-[#6B3A3A] underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
                                 >
                                     Full Ingredient List
                                 </button>
@@ -106,7 +106,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.75, y: 0 }}
                             transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
-                            className="relative p-[50px] z-10 w-full max-w-5xl bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px] overflow-hidden"
+                            className="relative px-[25px] py-[50px] lg:p-[50px] z-10 w-full max-w-5xl bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px] overflow-hidden"
                             role="dialog"
                             aria-modal="true"
                             aria-label="Full ingredient list"
@@ -115,7 +115,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="block transition hover:rotate-180 duration-300"
+                                    className="block transition hover:rotate-180 duration-300 min-w-fit min-h-fit"
                                     aria-label="Close"
                                 >
                                     <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

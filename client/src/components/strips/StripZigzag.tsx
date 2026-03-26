@@ -37,9 +37,9 @@ export default function StripZigzag({
   children,
 }: StripZigzagProps) {
   return (
-    <section className="relative overflow-hidden w-full bg-gradient-to-t from-white via-[#F7EFE6] to-white py-16 md:py-24">
-      <div className="relative mx-auto px-6 lg:px-[120px] grid md:grid-cols-3 gap-12">
-        <div className={reverse ? "order-2 md:order-1" : "lg:col-span-2 order-1 lg:mb-[30vh]"}>
+    <section className="relative overflow-hidden w-full bg-gradient-to-t from-white via-[#F7EFE6] to-white py-[50px] md:py-24">
+      <div className="mx-auto grid lg:grid-cols-3 gap-12 container">
+        <div className={reverse ? "order-2 md:order-1" : "lg:col-span-2 lg:mb-[15vh]"}>
           {eyebrow && (
             <p className="text-sm uppercase tracking-[0.2em] text-[#7a5a5c] mb-4">{eyebrow}</p>
           )}
@@ -60,20 +60,19 @@ export default function StripZigzag({
           {children}
         </div>
 
-        <div className={reverse ? "order-1 md:order-2" : "lg:absolute lg:right-0 lg:bottom-0 lg:translate-x-[4.5vw]"}>
+        <div className={reverse ? "order-1 md:order-2" : "lg:absolute lg:right-0 lg:bottom-[50px] xl:translate-x-[4.5dvw] lg:max-w-[27.084dvw]"}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotate: -11.69, y: 20 }}
             animate={{ opacity: 1, scale: 1, rotate: -11.69, y: 0 }}
             transition={{ type: "spring", stiffness: 180, damping: 20 }}
-            className="w-full flex justify-center md:justify-end"
+            className="w-full flex justify-center lg:justify-end"
           >
-            <div className="relative max-w-[420px] md:max-w-[520px]">
+            <div className="relative w-full max-lg:max-w-[420px]">
               <img
                 src={imageSrc}
                 alt={imageAlt}
                 className="w-full h-auto"
               />
-              <span className="absolute inset-0 rounded-[32px] border border-white/40 pointer-events-none" aria-hidden="true" />
             </div>
           </motion.div>
         </div>

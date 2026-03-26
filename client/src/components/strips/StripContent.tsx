@@ -37,21 +37,21 @@ export default function StripContent({ product, children }: StripContentProps) {
     <>
         <motion.section
             ref={sectionRef}
-            className="block w-full relative bg-gradient-to-t from-transparent via-[#F7EFE6] via-25% to-transparent -mt-[70px]"
+            className="block w-full relative bg-gradient-to-t from-transparent via-[#F7EFE6] via-25% to-transparent lg:-mt-[70px]"
             variants={sentenceVariants}
             initial="hidden"
             animate={sectionInView ? "visible" : "hidden"}
         >
-            <div className="absolute -top-[70px] right-0 w-[174px] h-[387px]">
-                <img src="/mushroom-group.png" alt="mushroom-group" className="w-full h-full object-cover" />
+            <div className="absolute -top-[30px] lg:-top-[70px] right-0 w-[12vw] h-auto">
+                <img src="/mushroom-group.png" alt="mushroom-group" />
             </div>
-            <div className="absolute bottom-0 left-0 w-[91px] h-[188px]">
-                <img src="/mushroom-group-2.png" alt="mushroom-group" className="w-full h-full object-cover" />
+            <div className="absolute bottom-0 left-0 w-[6vw] h-auto">
+                <img src="/mushroom-group-2.png" alt="mushroom-group" />
             </div>
-            <div className="px-[218px] py-[100px]">
+            <div className="container py-[50px] lg:pt-0 lg:pb-[100px]">
                 <div className="title title-anim-typewriter">
                     <motion.h2
-                        className="text-[clamp(48px,_4.5vw,_100px)] leading-[1] text-black font-semibold text-center mb-5"                        
+                        className="text-[clamp(28px,_4.5vw,_100px)] leading-[1] text-black font-semibold text-center mb-5"                        
                     >
                         {sentence.split("").map((letter, i) => (
                             <motion.span
@@ -64,7 +64,7 @@ export default function StripContent({ product, children }: StripContentProps) {
                     </motion.h2>
                 </div>
                 <div className="content text-center">
-                    <p className=" text-[#818181] leading-[50px] max-w-[80%] mx-auto capitalize">
+                    <p className=" text-[#818181] lg:leading-[50px] lg:max-w-[80%] mx-auto capitalize">
                         are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.      
                     </p>
                 </div>

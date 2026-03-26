@@ -59,6 +59,7 @@ const SHAPE_MASK_DATA_URI = encodeURIComponent(`
 export default function StripBenefits() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const { scrollYProgress: runnerProgress } = useScroll({
     target: cardsRef,
     offset: ["start 20%", "end end"], // begin at first card, finish at last card
@@ -77,13 +78,20 @@ export default function StripBenefits() {
   const [floatActive, setFloatActive] = useState(true);
 
   useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     mushroomControls.start("popIn");
   }, [mushroomControls]);
 
   return (
     <section
       ref={sectionRef}
-      className="strip-benefits-section relative overflow-hidden bg-gradient-to-b from-[#F7EFE6] via-white to-white py-[120px] font-sans"
+      className="strip-benefits-section relative overflow-hidden bg-gradient-to-b from-[#F7EFE6] via-white to-white py-[50px] lg:py-[120px] font-sans"
     >
       <style>{`
         @keyframes floatSway {
@@ -96,19 +104,19 @@ export default function StripBenefits() {
 
       {/* Runner image that follows the provided SVG path */}
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center max-md:mb-5 mb-[120px]">
           <h2
             className="text-[clamp(42px,_7vw,_120px)] leading-[1.05] text-black font-semibold"
             style={{
               textShadow: `
-                0 12px 0 #fff,  0 -12px 0 #fff,
-                12px 0 0 #fff,  -12px 0 0 #fff,
-                8px 8px 0 #fff, -8px 8px 0 #fff,
-                8px -8px 0 #fff,-8px -8px 0 #fff,
-                10px 4px 0 #fff,-10px 4px 0 #fff,
-                10px -4px 0 #fff,-10px -4px 0 #fff,
-                4px 10px 0 #fff,-4px 10px 0 #fff,
-                4px -10px 0 #fff,-4px -10px 0 #fff
+                0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
+                0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
+                0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
+                0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
+                0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
+                0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
+                0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
+                0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
               `,  
             }}
           >
@@ -118,13 +126,13 @@ export default function StripBenefits() {
 
         <div
           ref={cardsRef}
-          className="space-y-20 lg:space-y-24 relative"
-          style={{ minHeight: "1400px" }}
+          className="space-y-10 lg:space-y-24 relative"
+          style={isDesktop ? { minHeight: "1400px" } : undefined}
         >
           <motion.img
             src="/strip-2.png"
             alt="Mushroom focus strips path runner"
-            className="stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px] drop-shadow-2xl"
+            className="max-lg:hidden stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px] drop-shadow-2xl"
             style={{
               offsetPath: `path('${PATH_DEF}')`,
               WebkitOffsetPath: `path('${PATH_DEF}')`,
@@ -138,14 +146,20 @@ export default function StripBenefits() {
           {BENEFITS.map((item, idx) => (
             <div
               key={item.title}
-              className={`img-block relative flex flex-col md:flex-row ${
-                item.align === "left" ? "md:items-end md:justify-start" : "md:items-start md:justify-end"
+              className={`img-block relative flex flex-col lg:flex-row ${
+                item.align === "left" ? "lg:items-end lg:justify-start" : "lg:items-start lg:justify-end"
               } gap-8`}
             >
               <motion.div
-                className="relative w-full md:w-[72%] lg:w-[68%]"
+                className="relative w-full lg:w-[68%]"
                 initial={{ opacity: 0, y: 40, rotate: item.align === "left" ? -1.5 : 1.5 }}
-                whileInView={{ opacity: 1, y: 0, rotate: item.align === "left" ? -7.01 : 11.14 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  rotate: item.align === "left"
+                    ? (isDesktop ? -7.01 : -1.5)
+                    : (isDesktop ? 11.14 : 1.5),
+                }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 * idx }}
                 viewport={{ once: true, amount: 0.4 }}
               >
@@ -162,11 +176,11 @@ export default function StripBenefits() {
                     },
                   }}
                   style={floatActive ? { animation: "mushroomFloat 5s ease-in-out infinite" } : undefined}
-                  className={`absolute w-[270px] h-[240px] z-[1] ${item.align === "left" ? "-top-[9%] -right-[8%]" : "top-[0%] -right-[5%]"}`}>
+                  className={`absolute max-w-[clamp(100px,18.75vw,270px)] max-h-[clamp(80px,16.67vw,240px)] z-[1] ${item.align === "left" ? "lg:-top-[5%] -right-[8%]" : "top-[0%] right-0 lg:-right-[5%]"}`}>
                   <img src="/mashroom-banner-small.png" width={270} height={240} alt="mushroom" />
                 </motion.div>
                 <div
-                  className={`absolute w-[270px] h-[240px] z-[1] ${item.align === "left" ? "-bottom-[20px] left-[9px]" : "-bottom-[20px] left-[9px]"}`}>
+                  className={`absolute max-w-[clamp(40px,6.25vw,90px)] max-h-[clamp(80px,13.06vw,188px)] z-[1] ${item.align === "left" ? "bottom-[30px] lg:bottom-[24px] left-[5px]" : "bottom-[24px] left-[5px]"}`}>
                   <img src="/mushroom-group-2.png" width={90} height={187} alt="mushroom" />
                 </div>
                 <div
@@ -181,40 +195,43 @@ export default function StripBenefits() {
                     WebkitMaskPosition: "center",
                     maskPosition: "center",
                     aspectRatio: "1.05 / 1",
-                    minHeight: "360px",
-                    maxHeight: "676px",
+                    // minHeight: "360px",
+                    maxHeight: "576px",
                   }}
                   className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden">
                   <motion.h3
-                    className="relative text-center font-semibold text-black text-[clamp(28px,_5.5vw,_99px)] leading-tight"
+                    className="relative text-center font-semibold text-black text-[clamp(28px,_5.5vw,_90px)] leading-tight"
                     style={{
                       textShadow: `
-                        0 5px 0 #fff,  0 -5px 0 #fff,
-                        5px 0 0 #fff,  -5px 0 0 #fff,
-                        3px 3px 0 #fff, -3px 3px 0 #fff,
-                        3px -3px 0 #fff,-3px -3px 0 #fff,
-                        4px 1px 0 #fff,-4px 1px 0 #fff,
-                        4px -1px 0 #fff,-4px -1px 0 #fff,
-                        1px 4px 0 #fff,-1px 4px 0 #fff,
-                        1px -4px 0 #fff,-1px -4px 0 #fff
+                        0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
+                        0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
+                        0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
+                        0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
+                        0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
+                        0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
+                        0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
+                        0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
                       `, 
                     }}
                   >
                     {item.title}
                     {item.align === "left" ? (
                       <>
-                        <img src="/title-cream-pattern.svg" className="absolute left-1/2 -translate-x-1/2 -translate-y-[30px] -z-[1]" width={598} height={141} alt="mushroom pattern 1" />
+                        <img src="/title-cream-pattern.svg" className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1]" width={598} height={141} alt="mushroom pattern 1" />
                       </>
                     ) : (
                       <>
-                        <img src="/title-coco-pattern.svg" className="absolute left-1/2 -translate-x-1/2 -translate-y-[35px] -z-[1]" width={598} height={141} alt="mushroom pattern 2" />
+                        <img src="/title-coco-pattern.svg" className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[35px] -z-[1]" width={598} height={141} alt="mushroom pattern 2" />
                       </>
                     )}
                   </motion.h3>
                 </div>
               </motion.div>
-
-              
+              <motion.img
+                src="/strip-2.png"
+                alt="Mushroom focus strips path runner"
+                className="lg:hidden stripImg pointer-events-none absolute max-sm:-bottom-[50px] max-md:-bottom-[20px] bottom-0 left-1/2 -translate-x-1/2 max-sm:w-[130px] w-[180px] mx-auto drop-shadow-lg"
+              />              
             </div>
           ))}
         </div>

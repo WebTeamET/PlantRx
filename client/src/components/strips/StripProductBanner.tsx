@@ -35,10 +35,11 @@ interface DotConfig {
 }
 
 const DOTS: DotConfig[] = [
-  { top: "8%",  left: "5%",  cls: "w-[23px] h-[22px]", delay: "0s",    dur: "3.4s" },
-  { top: "20%", left: "82%", cls: "w-[23px] h-[22px]", delay: "0.7s",  dur: "4.1s" },
-  { top: "48%", left: "6%",  cls: "w-[23px] h-[22px]", delay: "1.2s",  dur: "3.8s" },
-  { top: "15%", left: "46%", cls: "w-[23px] h-[22px]", delay: "0.4s",  dur: "5.0s" },
+  { top: "3%",  left: "36%",  cls: "w-[14px] h-[14px]", delay: "0s",    dur: "3.4s" },
+  { top: "8%", left: "79%", cls: "w-[14px] h-[14px]", delay: "0.7s",  dur: "4.1s" },
+  { top: "35%", left: "16%",  cls: "w-[14px] h-[14px]", delay: "1.2s",  dur: "3.8s" },
+  { top: "40%", left: "70%", cls: "w-[14px] h-[14px]", delay: "0.4s", dur: "5.0s" },
+  { top: "58%", left: "26%",  cls: "w-[14px] h-[14px]", delay: "1.2s",  dur: "3.8s" },
 ];
 
 // ─── Marquee items ────────────────────────────────────────────────────────────
@@ -54,12 +55,12 @@ const MARQUEE_ITEMS = [
   "Clear Mind", "Sharp Focus", "Steady Energy",
 ];
 
-const MARQUEE_STRING = `${MARQUEE_ITEMS.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(20);
+const MARQUEE_STRING = `${MARQUEE_ITEMS.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(60);
 const MARQUEE_TEXT_STYLE = {
   fontStyle: "normal" as const,
   fontWeight: 500,
   fontSize: "76.0615px",
-  lineHeight: "103px",
+  lineHeight: "90px",
 };
 
 // ─── CSS keyframes injected once ─────────────────────────────────────────────
@@ -81,7 +82,7 @@ const KEYFRAMES = `
 
   @keyframes marqueeScroll {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(-50 %, 0, 0); }
   }
 `;
 
@@ -98,12 +99,12 @@ export default function StripBanner({ product, children }: StripBannerProps) {
   const activeTitle = product?.title || "Mushroom Focus Strips";
   const mainImage   = product?.images?.[0]?.url || "/strip-2.png";
   // Keep curved marquee between 50–100% to avoid disappearing text.
-  const [marqueeOffset, setMarqueeOffset] = useState(100);
+  const [marqueeOffset, setMarqueeOffset] = useState(50);
   const scrollStateRef = useRef({
     lastY: 0,
     ticking: false,
     pendingDelta: 0,
-    offset: 0,
+    offset: 50,
   });
 
   // Sequence: SVG done → mushroom pop-in → keyframe float
@@ -128,10 +129,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
       state.pendingDelta = 0;
       if (!delta) return;
 
-      // Move marquee with scroll; wrap within 50–100% range so text keeps moving and never vanishes.
-      const rawOffset = state.offset - delta * 0.05;
-      const span = 50; // 50..100 range width
-      const wrappedOffset = ((rawOffset - 50) % span + span) % span + 50;
+      // Move marquee with scroll; wrap within 0–100% range so text keeps moving and never vanishes.
+      const rawOffset = state.offset - delta * 0.1;
+      const span = 100; // 0..100 range width
+      const wrappedOffset = ((rawOffset % span) + span) % span;
       state.offset = wrappedOffset;
       setMarqueeOffset(wrappedOffset);
     };
@@ -157,7 +158,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
     <>
       <style>{KEYFRAMES}</style>
 
-      <section className="hero-product-banner product-section relative overflow-hidden min-h-svh flex flex-col bg-[#F7EFE6] dark:bg-[#F7EFE6] font-sans">
+      <section className="hero-product-banner product-section relative overflow-hidden lg:min-h-svh flex flex-col bg-[#F7EFE6] dark:bg-[#F7EFE6] font-sans">
 
         {/* ── Animated decorative dots ── */}
         {DOTS.map((d, i) => (
@@ -173,13 +174,13 @@ export default function StripBanner({ product, children }: StripBannerProps) {
           />
         ))}
 
-        <div className="px-[136px]">
-          <div className="banner-inner pt-[100px]">
-            <div className="title-wrapper relative text-center">
+        <div className="max-w-[80rem] mx-auto">
+          <div className="banner-inner relative pt-[50px] md:pt-[160px]">
+            <div className="title-wrapper relative text-center w-fit mx-auto">
 
               {/* ── SVG asterisk — each petal animates in one by one ── */}
               <motion.div
-                className="absolute left-[-55px] top-[-50px]"
+                className="absolute left-[-4dvw] top-[-4dvw]"
                 variants={{
                   hidden: {},
                   visible: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
@@ -188,7 +189,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 animate="visible"
                 onAnimationComplete={handleSvgComplete}
               >
-                <svg width="125" height="107" viewBox="0 0 125 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-[8.339dvw] h-auto" width="125" height="107" viewBox="0 0 125 107" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Petal 1 — bottom-left */}
                   <motion.path
                     d="M26.935 104.155C31.9285 107.339 38.5449 105.933 41.7907 100.97C41.9988 100.64 42.2068 100.309 42.3733 99.9779C42.4565 99.854 42.4981 99.6886 42.5813 99.5231L43.2471 97.5382L53.2341 66.2758C53.6919 64.7871 51.9026 63.6705 50.7791 64.7044L26.2692 86.7039L24.7296 88.1098C24.7296 88.1098 24.5214 88.358 24.3966 88.482C24.1469 88.7715 23.9388 89.061 23.7308 89.3918C20.5266 94.3541 21.9414 100.929 26.935 104.155Z"
@@ -244,17 +245,17 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
               {/* ── Title: fade-up on load ── */}
               <motion.h2
-                className="text-[clamp(42px,_7vw,_120px)] leading-[100%] text-black relative z-[99]"
+                className="text-[clamp(28px,_7vw,_120px)] leading-[100%] text-black relative z-[99]"
                 style={{
                   textShadow: `
-                    0 12px 0 #fff,  0 -12px 0 #fff,
-                    12px 0 0 #fff,  -12px 0 0 #fff,
-                    8px 8px 0 #fff, -8px 8px 0 #fff,
-                    8px -8px 0 #fff,-8px -8px 0 #fff,
-                    10px 4px 0 #fff,-10px 4px 0 #fff,
-                    10px -4px 0 #fff,-10px -4px 0 #fff,
-                    4px 10px 0 #fff,-4px 10px 0 #fff,
-                    4px -10px 0 #fff,-4px -10px 0 #fff
+                    0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
+                    0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
+                    0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
+                    0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
+                    0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
+                    0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
+                    0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
+                    0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
                   `,
                 }}
                 initial={{ opacity: 0, y: 50 }}
@@ -263,10 +264,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
               >
                 {activeTitle}
               </motion.h2>
-
+              
               {/* ── Small mushroom image — pops in after SVG, then floats ── */}
               <motion.div
-                className="absolute right-0 bottom-[-240px] max-w-[270px] z-[0]"
+                className="max-lg:hidden lg:absolute lg:right-0 lg:bottom-[-240px] max-w-[270px] z-[0]"
                 animate={mushroomControls}
                 initial="hidden"
                 variants={{
@@ -283,10 +284,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 <img src="/masroom-baner-small.png" alt="" />
               </motion.div>
             </div>
-
+            
             {/* ── Product box image — slides in on load ── */}
             <motion.div
-              className="pdp-banner-img max-w-[664px] !rotate-[-6deg] mx-auto mt-[-60px] relative z-[99]" 
+              className="pdp-banner-img max-w-[664px] !rotate-[-6deg] mx-auto lg:mt-[-40px] relative z-[99]" 
               variants={slideUpVariants}
               initial="hidden"
               animate="visible"
@@ -299,11 +300,12 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 animate="visible"
               />
             </motion.div>
+            
           </div>
         </div>
 
         {/* ── Marquee strip ── */}
-        <div className="relative w-full overflow-hidden mt-auto bg-gradient-to-t from-[#FFFFFF] to-[#F7EFE6]">
+        <div className="relative w-full overflow-hidden lg:mt-auto bg-gradient-to-t from-[#FFFFFF] to-[#F7EFE6]">
 
           {/* Background SVG arc */}
           <svg
@@ -322,7 +324,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
             </defs>
             <path
               stroke="currentColor"
-              strokeWidth="160"
+              strokeWidth="140"
               d="M-71 371.6C126.3 260 593.5 65.8 934.5 80.8c313 13.8 497 136 572 200"
             />
 
@@ -333,8 +335,16 @@ export default function StripBanner({ product, children }: StripBannerProps) {
               style={MARQUEE_TEXT_STYLE}
               textAnchor="middle"
               dominantBaseline="middle"
+              alignmentBaseline="middle"
+              dy="6"
             >
-              <textPath href="#heroArcPath" startOffset={`${marqueeOffset}%`}>
+              <textPath
+                href="#heroArcPath"
+                startOffset={`${marqueeOffset}%`}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                alignmentBaseline="middle"                
+              >
                 {MARQUEE_STRING}
               </textPath>
             </text>

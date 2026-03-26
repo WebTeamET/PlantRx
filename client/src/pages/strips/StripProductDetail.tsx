@@ -197,7 +197,7 @@ export default function StripProductDetail() {
         <StripAccordion />
         <StripFeatures />
         <StripZigzag />
-        <div ref={footerRef} className="h-20" />
+        <div ref={footerRef} className="h-0" />
       </div>
     </>
   );

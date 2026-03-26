@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type AvoidItem = {
   title: string;
+  formattedTitle?: ReactNode;
   icon: JSX.Element;
   delay: number;
 };
@@ -36,6 +37,13 @@ const ICONS = {
 const ITEMS: AvoidItem[] = [
   {
     title: "Pregnant or breastfeeding individuals",
+    formattedTitle: (
+      <>
+        Pregnant or
+        <br />
+        breastfeeding individuals
+      </>
+    ),
     icon: ICONS.pregnant,
     delay: 0,
   },
@@ -46,11 +54,25 @@ const ITEMS: AvoidItem[] = [
   },
   {
     title: "Anyone allergic to mushrooms",
+    formattedTitle: (
+      <>
+        Anyone allergic to
+        <br />
+        mushrooms
+      </>
+    ),
     icon: ICONS.allergy,
     delay: 0.1,
   },
   {
     title: "Those with medical conditions (consult a professional)",
+    formattedTitle: (
+      <>
+        Those with medical
+        <br />
+        conditions (consult a professional)
+      </>
+    ),
     icon: ICONS.medical,
     delay: 0.15,
   },
@@ -58,6 +80,15 @@ const ITEMS: AvoidItem[] = [
 
 export default function StripAvoid() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const oddParallax = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), {
     stiffness: 120,
@@ -74,10 +105,10 @@ export default function StripAvoid() {
   return (
     <section
       ref={sectionRef}
-      className="avoid-wrapper relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-24 lg:py-28"
+      className="avoid-wrapper relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-[50px] lg:py-28"
     >
 
-      <div className="relative max-w-6xl mx-auto px-6 lg:px-12 space-y-12">
+      <div className="relative container mx-auto space-y-12">
         <div className="max-w-2xl">
           <h2
             className="text-[clamp(42px,_5vw,_76px)] leading-[1.05] text-[#000] font-semibold"
@@ -92,8 +123,8 @@ export default function StripAvoid() {
           {ITEMS.map((item, idx) => (
             <motion.div
               key={item.title}
-              className="relative flex flex-col justify-between gap-[80px] rounded-[18px] border border-[#C2B3B0] bg-[#643A3D] text-white px-6 py-7"
-              style={{ y: idx % 2 === 0 ? evenParallax : oddParallax }}
+              className="relative lg:h-[375px] flex flex-col justify-between gap-[80px] rounded-[10px] border border-[#C2B3B0] bg-[#643A3D] text-white px-6 py-7"
+              style={isDesktop ? { y: idx % 2 === 0 ? evenParallax : oddParallax } : undefined}
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}
@@ -101,7 +132,7 @@ export default function StripAvoid() {
               whileHover={{ scale: 1.02 }}
             >
               <div className="h-[82px] flex items-center justify-start">{item.icon}</div>
-              <p className="text-[16px] leading-[1.5] pr-2">{item.title}</p>
+              <p className="text-[16px] leading-[1.5] pr-2">{item.formattedTitle ?? item.title}</p>
             </motion.div>
           ))}
         </div>
