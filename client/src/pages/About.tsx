@@ -5,8 +5,11 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { SEOHead } from "@/components/SEOHead";
 import { BackButton } from "@/components/BackButton";
 import { Link } from "wouter";
-import { Leaf, Award, Users, Globe, BookOpen, Microscope, CheckCircle, ChevronDown } from "lucide-react";
+import { Leaf, Award, Users, Globe, BookOpen, Microscope, ChevronRight,ArrowLeft, CheckCircle, ChevronDown } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { motion, useInView, useSpring, useTransform } from "framer-motion";
+import { slideRightVariants, slideUpVariants } from "@/animation/framerMotionVariants";
+import { FadeInSection } from "@/components/ScrollReveal";
 
 export default function About() {
   // Enhanced analytics tracking for about page
@@ -33,6 +36,38 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 via-teal-600/10 to-cyan-600/10 dark:from-emerald-400/5 dark:via-teal-400/5 dark:to-cyan-400/5"></div>
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
           <div className="text-center">
+             {/* Breadcrumb - Mobile optimized with wrapping */}
+                    <motion.div variants={slideUpVariants as any}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.4 }}>
+                      <FadeInSection>
+                        <nav
+                          className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6"
+                          aria-label="Breadcrumb"
+                        >
+                          <Link href="/" className="hover:text-green/100 dark:hover:text-gold min-h-[44px] flex items-center transition-colors text-black/80 dark:text-white">Home</Link>
+                          <ChevronRight className="w-4 h-4" />
+                          <span className="text-black dark:text-white font-medium">About</span>
+                        </nav>
+                      </FadeInSection>
+                    </motion.div>
+            
+                    {/* Back Button - Touch friendly */}
+                    <motion.div variants={slideUpVariants as any}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.4 }}>
+                      <FadeInSection delay={0.05}>
+                        <Link href="/">
+                          <Button variant="outline" className="ctm-button btn-green hover:text-white">
+                            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                            Back to Home
+                          </Button>
+                        </Link>
+                      </FadeInSection>
+                    </motion.div>
+
             {/* Glowing Logo */}
             <ScrollReveal variant="scale" delay={0.1}>
               <div className="mb-6 sm:mb-8 md:mb-12 flex justify-center">

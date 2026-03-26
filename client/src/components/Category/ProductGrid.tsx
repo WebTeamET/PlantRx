@@ -66,7 +66,7 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
         variants={containerVariants as any}
         initial="hidden"
         whileInView="visible"
-        viewport={{ amount: 0.2, once: true }}
+        viewport={{ margin: "-80px", once: true }}
         className="collection-product-grid md:pb-[100px] pb-16 relative product-section overflow-hidden">
             <div className="container">
                 <motion.h2

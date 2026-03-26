@@ -689,12 +689,17 @@ export default function Remedies() {
           viewport={{ once: true, amount: 0 }}
         >
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8">
-            <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
+ {/* <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green/10 via-transparent to-transparent dark:from-emerald-900/20"></div>
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green/5 to-transparent dark:from-emerald-800/20 rounded-bl-full"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-teal-800/20 rounded-tr-full"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-teal-800/20 rounded-tr-full"></div> */}
 
-            <div className="relative border border-green dark:border-gold/40 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-gold/30 dark:to-gold/20"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green/10 via-transparent to-transparent dark:from-gold/20"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green/5 to-transparent dark:from-gold/20 rounded-bl-full"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-gold/20 rounded-tr-full"></div>
+
+            <div className="relative border border-green dark:border-gold/20 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
 
               <motion.div
                 variants={slideUpVariants as any}
@@ -748,7 +753,7 @@ export default function Remedies() {
                         placeholder={t('remedies.search.placeholder', 'Search remedies, ingredients, or health concerns...')}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-14 sm:pl-16 pr-12 py-3 sm:py-4 min-h-[48px] sm:min-h-[56px] text-sm sm:text-base border-2 border-gray-200 dark:border-gray-700 rounded-xl sm:rounded-2xl focus:border-green dark:focus:border-emerald-400 focus:ring-4 focus:ring-green bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                        className="pl-14 sm:pl-16 pr-12 py-3 sm:py-4 min-h-[48px] sm:min-h-[56px] text-sm sm:text-base border-2 outline-0 focus:outline-0 border-gray-200 dark:border-gray-700 rounded-xl sm:rounded-2xl focus:border-green dark:focus:border-gold focus:ring-4 focus:ring-green bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         data-testid="search-input"
                       />
                       {searchQuery && (
@@ -797,8 +802,8 @@ export default function Remedies() {
                       variant="outline"
                       onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
                       className={`text-xs sm:text-sm rounded-xl border-2 min-h-[40px] sm:min-h-[44px] px-4 sm:px-5 font-medium transition-all duration-300 ${showAdvancedFilters
-                        ? 'border-green bg-green/10 dark:bg-emerald-900/30 text-green dark:text-emerald-300 shadow-md shadow-green/10'
-                        : 'border-gray-200 dark:border-gray-600 hover:border-green dark:hover:border-emerald-500 hover:bg-green/5 dark:hover:bg-emerald-900/20'
+                        ? 'border-green dark:border-gold/40 bg-green/10 dark:bg-gold/20 text-green dark:text-gold shadow-md shadow-green/10 dark:shadow-gold/10'
+                        : 'border-gray-200 dark:border-gray-600 hover:border-green dark:hover:border-gold/40 hover:bg-green/5 dark:hover:bg-gold/20'
                         }`}
                       data-testid="advanced-filters-toggle"
                     >

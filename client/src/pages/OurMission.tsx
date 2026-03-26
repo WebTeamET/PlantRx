@@ -399,7 +399,7 @@ export default function OurMission() {
                     <motion.div
                       key={index}
                       variants={itemVariants}
-                      className="flex items-start gap-3 sm:gap-4 p-3 sm:p-5 bg-transparent dark:bg-green-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-green-800/50 active:bg-green-100 dark:active:bg-green-900/30 transition-colors min-h-[48px] sm:min-h-[64px]"
+                      className="flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-transparent dark:bg-green-900/20 rounded-lg sm:rounded-xl border border-gold dark:border-green-800/50 active:bg-green-100 dark:active:bg-green-900/30 transition-colors min-h-[48px] sm:min-h-[64px]"
                     >
                       <div className={`w-9 h-9 sm:w-12 sm:h-12 bg-gold/50 rounded-lg flex items-center justify-center text-white shadow-md flex-shrink-0`}>
                         <span className="text-base sm:text-xl">{promise.icon}</span>

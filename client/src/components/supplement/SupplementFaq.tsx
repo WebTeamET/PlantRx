@@ -65,7 +65,7 @@ export default function SupplementFaq() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           style={{ willChange: "transform, opacity" }}
-            className="text-center text-[clamp(32px,5vw,80px)] leading-[clamp(34px,6.3vw,109px)] text-[#000] mb-7 xl:mb-[50px]"
+            className="text-center text-[clamp(32px,5vw,80px)] leading-[clamp(34px,6.3vw,109px)] text-black dark:text-black mb-7 xl:mb-[50px]"
           >
             Your Questions, Answered
           </motion.h2>
@@ -91,14 +91,14 @@ export default function SupplementFaq() {
                   <motion.div
                     layout
                     transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                    className={`rounded-[10px] md:rounded-[20px] p-5 xl:p-[30px] ${isOpen ? "bg-gold text-white" : "bg-[#FFF8EB] text-[#2B1E1E]"
+                    className={`rounded-[10px] md:rounded-[20px] p-5 xl:p-[30px] ${isOpen ? "bg-gold text-white dark:text-white" : "bg-[#FFF8EB] text-[#212121] dark:text-[#212121]"
                       }`}
                   >
-                    <div className="flex items-center justify-between gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold">
+                    <div className={`flex items-center justify-between gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold ${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>
                       <div className="flex items-start gap-1">
-                        <div>{idx + 1}.</div>
+                        <div className={`${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>{idx + 1}.</div>
                         <div className="flex-1">
-                          <div>{item.question}</div>
+                          <div className={`${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>{item.question}</div>
                         </div>
                       </div>
                       <motion.span
@@ -131,7 +131,7 @@ export default function SupplementFaq() {
                       aria-hidden={!isOpen}
                     >
                       <p
-                        className={`text-base leading-[27px] max-md:text-sm font-medium ${isOpen ? "text-white" : "text-black"
+                        className={`text-base leading-[27px] max-md:text-sm font-medium ${isOpen ? "text-white dark:text-white" : "text-black dark:text-black"
                           }`}
                       >
                         {item.answer}

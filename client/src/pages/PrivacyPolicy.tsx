@@ -764,7 +764,7 @@ export default function PrivacyPolicy() {
                     "CalOPPA", "Do Not Track", "COPPA",
                     "Fair Information", "CAN-SPAM Act", "Agreeing to Terms", "Changes"
                   ].map((item, i) => (
-                    <a key={i} href={`#section-${i + 1}`}
+                    <a key={i} href={`/privacy-policy#section-${i + 1}`}
                       className="block text-xs text-gray-600 dark:text-gray-400 hover:text-green dark:hover:text-green/80 transition-colors py-1.5">
                       {i + 1}. {item}
                     </a>

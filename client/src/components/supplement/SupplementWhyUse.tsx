@@ -95,7 +95,6 @@ export default function SupplementWhyUse() {
               <SplitText text="People Use" />
             </h2>
           </div>
-
           <div className="content content-white lg:ml-auto lg:max-w-[397px]">
             <motion.p
              variants={slideUpVariants as any}
@@ -109,7 +108,7 @@ export default function SupplementWhyUse() {
             </motion.p>
           </div>
         </div>
-        <div ref={cardsRef} className="flex items-start max-lg:grid max-lg:grid-cols-2 max-sm:grid-cols-1 gap-x-5 max-md:gap-[30px]">
+        <div ref={cardsRef} className="grid grid-cols-5 items-start max-lg:grid max-lg:grid-cols-2 max-sm:grid-cols-1 gap-x-5 lg:gap-y-10 max-md:gap-[30px]">
           {cards.map((card, i) => (
             <WhyUseCard
               key={i}
