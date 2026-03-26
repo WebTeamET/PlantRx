@@ -3,18 +3,18 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const productMeta = [
-  { icon: "/icon-quantity.svg", label: "Quantity: 60 Capsules" },
-  { icon: "/icon-manufacturer.svg", label: "Manufacturer Country: USA" },
-  { icon: "/icon-weight.svg", label: "Gross Weight: 0.25 lb (113 g)" },
+  { icon: "/quantity_icon.svg", label: "Quantity: 60 Capsules" },
+  { icon: "/manufactured_icon.svg", label: "Manufacturer Country: USA" },
+  { icon: "/weight_icon.svg", label: "Gross Weight: 0.25 lb (113 g)" },
 ];
 
 const avoidCards = [
   {
-    icon: "/icon-pregnant.svg",
+    icon: "/pregnant_icon.svg", 
     label: "Pregnant or nursing individuals",
   },
   {
-    icon: "/icon-child.svg",
+    icon: "/child_icon.svg",
     label: "Children under 18 years of age",
   },
 ];

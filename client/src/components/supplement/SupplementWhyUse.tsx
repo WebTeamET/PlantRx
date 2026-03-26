@@ -67,7 +67,7 @@ function WhyUseCard({ card, index }: { card: (typeof cards)[0]; index: number })
 export default function SupplementWhyUse() {
   return (
     <section
-      className="relative w-full overflow-hidden bg-green -mt-0.5"
+      className="relative w-full overflow-hidden bg-green"
       style={{
         backgroundImage: "url('/why-use-bg.png')",
         backgroundSize: "cover",

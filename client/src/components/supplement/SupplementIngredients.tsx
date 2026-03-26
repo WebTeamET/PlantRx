@@ -36,7 +36,7 @@ export default function SupplementIngredients() {
 
           <div className="relative z-[2] flex items-center justify-center w-full max-xl:flex-col max-lg:gap-12 ingredient-details-section after:absolute after:top-1/2 after:-translate-y-1/2 after:aspect-square after:max-w-[39.9%] after:w-full after:bg-contain after:bg-[url(/supplement-bottle-green-bg.svg)] after:bg-center after:bg-no-repeat after:z-[1] after:left-1/2 after:-translate-x-1/2 max-xl:after:hidden">
             <div className=" flex-col gap-10 xl:gap-20 items-start
-            hidden xl:flex relative z-[2] max-w-[31.7%]">
+            hidden xl:flex relative z-[2] max-w-[31.9%]">
               {leftLabels.map((label, i) => (
                 <div
                   key={i}
@@ -73,7 +73,7 @@ export default function SupplementIngredients() {
             </div>
 
             <div className="flex-col gap-10 xl:gap-20 items-end
-            hidden xl:flex relative z-[2] max-w-[31.7%]">
+            hidden xl:flex relative z-[2] max-w-[31.9%]">
               {rightLabels.map((label, i) => (
                 <div
                   key={i}

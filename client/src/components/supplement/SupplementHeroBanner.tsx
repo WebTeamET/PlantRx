@@ -154,7 +154,7 @@ export default function SupplementHeroBanner() {
 
 
       <div
-        className="absolute bottom-0 left-0 w-full pointer-events-none z-20"
+        className="absolute bottom-0 left-0 w-full pointer-events-none z-20 -mb-1"
         aria-hidden="true"
       >
         <img

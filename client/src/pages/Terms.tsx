@@ -523,19 +523,19 @@ export default function Terms() {
                 PlantRx operates an online store through Shopify integration, offering wellness and health-related products.
               </p>
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-                <div className="bg-green/10 dark:bg-green/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-green dark:text-green mb-4 sm:mb-6">Purchase Terms</h3>
-                  <ul className="space-y-3 sm:space-y-4 text-gray-600 dark:text-gray-400 text-base sm:text-lg lg:text-xl">
+                <div className="bg-green/10 dark:bg-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
+                  <h4 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Purchase Terms</h4>
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["Prices displayed in GBP (£)", "Secure payment via Stripe", "Fulfilled via dropshipping partners", "Shipping varies by location", "You provide accurate shipping info"].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3"><span className="text-green text-xl">•</span> {item}</li>
+                      <li key={i} className="flex items-start gap-2"><span className="text-green dark:text-white  ">•</span> {item}</li>
                     ))}
                   </ul>
                 </div>
                 <div className="bg-gold/10 dark:bg-gold/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold/20">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gold dark:text-gold mb-4 sm:mb-6">Product Disclaimer</h3>
-                  <ul className="space-y-3 sm:space-y-4 text-gray-600 dark:text-gray-400 text-base sm:text-lg lg:text-xl">
+                  <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Product Disclaimer</h3>
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["For general wellness purposes only", "Not intended to treat or prevent disease", "Consult healthcare provider before use", "Check ingredients for allergens", "Not responsible for adverse reactions"].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3"><span className="text-gold text-xl">•</span> {item}</li>
+                      <li key={i} className="flex items-start gap-2"><span className="text-gold dark:text-white ">•</span> {item}</li>
                     ))}
                   </ul>
                 </div>
@@ -551,24 +551,24 @@ export default function Terms() {
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">16. Refund & Return Policy</h2>
               </div>
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-                <div className="bg-green/10 dark:bg-green/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-green dark:text-green mb-4 sm:mb-6">Subscription Refunds</h3>
-                  <ul className="space-y-3 sm:space-y-4 text-gray-600 dark:text-gray-400 text-base sm:text-lg lg:text-xl">
-                    <li className="flex items-start gap-3"><span className="text-green text-xl">•</span> Cancel anytime; no partial refunds for unused time</li>
-                    <li className="flex items-start gap-3"><span className="text-green text-xl">•</span> Technical issues may qualify for prorated refund</li>
+                <div className="bg-green/10 dark:bg-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
+                  <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Subscription Refunds</h3>
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
+                    <li className="flex items-start gap-3"><span className="text-green dark:text-white">•</span> Cancel anytime; no partial refunds for unused time</li>
+                    <li className="flex items-start gap-3"><span className="text-green dark:text-white">•</span> Technical issues may qualify for prorated refund</li>
                   </ul>
                 </div>
                 <div className="bg-gold/10 dark:bg-gold/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold/20">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gold dark:text-gold mb-4 sm:mb-6">Product Refunds</h3>
-                  <ul className="space-y-3 sm:space-y-4 text-gray-600 dark:text-gray-400 text-base sm:text-lg lg:text-xl">
+                  <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Product Refunds</h3>
+                  <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["Damaged products: return within 14 days", "Contact support@plantrxapp.com with details", "Refunds processed within 14 days", "Opened consumables cannot be returned"].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3"><span className="text-gold text-xl">•</span> {item}</li>
+                      <li key={i} className="flex items-start gap-2"><span className="text-gold dark:text-white">•</span> {item}</li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mt-8 sm:mt-10">
-                For full details, see our <a href="/refunds" className="text-green hover:text-green/80 dark:text-green font-medium underline">Refund Policy</a> page.
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
+                For full details, see our <a href="/refunds" className="text-green hover:text-green/80 dark:text-gold font-medium underline">Refund Policy</a> page.
               </p>
             </section>
 
@@ -580,7 +580,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">17. Prohibited Uses</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
                 You agree NOT to use PlantRx to:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">

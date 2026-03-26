@@ -37,7 +37,7 @@ export default function Supplements() {
       <div className="relative z-10">
         <SupplementHeroBanner />
         <SupplementWhyUse />
-        {/* <SupplementMarquee /> */}
+        <SupplementMarquee />
         <SupplementHowWorks />
         <SupplementIngredients />
         <SupplementHowToUse />
