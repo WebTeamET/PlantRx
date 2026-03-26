@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 
 const badges = [
   { icon: "/quality-icon-gluten.png", label: "GLUTEN FREE", offsetY: 44 },
@@ -20,7 +21,7 @@ const badges = [
 
 export default function SupplementQualityStandards() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-60px" });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [canSlidePrev, setCanSlidePrev] = useState(false);
   const [canSlideNext, setCanSlideNext] = useState(true);
@@ -38,12 +39,14 @@ export default function SupplementQualityStandards() {
           className="flex flex-col gap-10 md:gap-20 xl:gap-[150px] new-container py-10 lg:py-16 xl:py-20 2xl:py-[132px]">
           <motion.div
             className="title title-black title-stroke"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            style={{ willChange: "transform, opacity" }}
           >
             <h2
-              className="capitalize leading-[clamp(34px,6.3vw,133px)] text-[clamp(32px,5vw,120px)] max-xl:text-center"
+              className="capitalize supplement-pdp-heading max-xl:text-center"
               style={{ WebkitTextStroke: "clamp(2px,0.73vw,10px) #FFFFFF" }}
             >
               Quality &amp; Standards
@@ -69,7 +72,7 @@ export default function SupplementQualityStandards() {
                   <p className="text-sm 2xl:text-xl 2xl:leading-[100%] font-normal text-center whitespace-nowrap">
                     {badge.label}
                   </p>
-                </div> 
+                </div>
               </motion.div>
             ))}
           </div>

@@ -34,7 +34,7 @@ export function FAQ({ items, title = "Frequently Asked Questions", className = "
     <Card className={`w-full ${className}`} data-testid="faq-section">
       <CardHeader className="pb-3 sm:pb-6">
         <CardTitle className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 dark:text-white flex items-center">
-          <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-blue-600" />
+          <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-green dark:text-gold" />
           {title}
         </CardTitle>
       </CardHeader>

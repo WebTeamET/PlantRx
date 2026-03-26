@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Leaf, Instagram, ChevronDown, ChevronUp, Mail, Send } from "lucide-react";
 import { SiTiktok, SiFacebook, SiX, SiLinkerd, SiPinterest } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 import { useState } from "react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useMutation } from "@tanstack/react-query";
@@ -123,7 +124,7 @@ export default function Footer() {
           {/* Mobile Social Links - Horizontal row */}
           <div className="md:hidden py-6 border-b border-gold/20 dark:border-gold/10">
             <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-center mb-4">Follow Us</h4>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 flex-wrap">
               <a href="https://www.instagram.com/plantrxapp/" onClick={(e) => { e.preventDefault(); window.open('https://www.instagram.com/plantrxapp/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="Instagram">
                 <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
@@ -140,7 +141,8 @@ export default function Footer() {
                 <SiX className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
               <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="w-10 h-10 bg-gold/10 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-green hover:text-white dark:hover:bg-green transition-colors cursor-pointer group border border-gold/20" aria-label="LinkedIn">
-                <SiLinkerd className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
+                {/* <SiLinkerd className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" /> */}
+                <FaLinkedin className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>
@@ -265,7 +267,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a href="https://www.linkedin.com/in/zayan-beg-91002a378/" onClick={(e) => { e.preventDefault(); window.open('https://www.linkedin.com/in/zayan-beg-91002a378/', '_blank', 'noopener,noreferrer'); }} className="text-sm text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-amber-400 transition-colors flex items-center gap-2 cursor-pointer">
-                      <SiLinkerd className="w-4 h-4" /> LinkedIn
+                      <FaLinkedin className="w-4 h-4" /> LinkedIn
                     </a>
                   </li>
                 </ul>

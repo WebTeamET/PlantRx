@@ -391,12 +391,12 @@ export default function Home() {
               }}
             >
               <div className={`w-6 h-6 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-sm ${item.icon === 'leaf'
-                  ? 'bg-green/15 dark:bg-emerald-400/15'
+                  ? 'bg-green/15 dark:bg-gold/20'
                   : item.icon === 'sparkle'
                     ? 'bg-gold/35 dark:bg-amber-400/15'
                     : 'bg-rose-500/10 dark:bg-rose-400/10'
                 }`}>
-                {item.icon === 'leaf' && <Leaf className="w-3 h-3 sm:w-5 sm:h-5 text-green dark:text-emerald-400" />}
+                {item.icon === 'leaf' && <Leaf className="w-3 h-3 sm:w-5 sm:h-5 text-green dark:text-gold" />}
                 {item.icon === 'sparkle' && <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 text-gold dark:text-amber-400" />}
                 {item.icon === 'heart' && <Heart className="w-3 h-3 sm:w-5 sm:h-5 text-rose-500 dark:text-rose-400" />}
               </div>
@@ -454,15 +454,15 @@ export default function Home() {
             className="mb-6 sm:mb-8"
           >
             <motion.div
-              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20"
+              className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gold/20 backdrop-blur-md rounded-full border border-green/50 dark:border-gold/40 shadow-lg shadow-green/20 dark:shadow-gold/20"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
               <span className="flex h-2.5 w-2.5 sm:h-3 sm:w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-full w-full bg-green"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green dark:bg-gold opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-full w-full bg-green dark:bg-gold"></span>
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 tracking-wide">131+ Verified Natural Remedies</span>
+              <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold tracking-wide">131+ Verified Natural Remedies</span>
               <Sparkles className="w-4 h-4 text-gold" />
             </motion.div>
           </motion.div>
@@ -481,7 +481,7 @@ export default function Home() {
               </span>
               <span className="relative">
                 <span
-                  className="text-green dark:text-emerald-400"
+                  className="text-green dark:text-gold"
                 >
                    <SplitText text="Plant" />
                 </span>
@@ -491,7 +491,7 @@ export default function Home() {
                   <SplitText text="R" /> 
                 </span>
                 <span
-                  className="text-green dark:text-emerald-400 font-black"
+                  className="text-green dark:text-gold font-black"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   <SplitText text="x" />
@@ -537,12 +537,12 @@ export default function Home() {
               <Button
                 onClick={() => navigateTo('/smart-tools')}
                 variant="outline"
-                className="group px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold border-2 border-green dark:border-emerald-600 text-green dark:text-emerald-300 hover:bg-green dark:hover:bg-emerald-900/30 hover:text-white rounded-2xl backdrop-blur-sm"
+                className="group px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold border-2 border-green dark:border-gold text-green dark:text-gold hover:bg-green dark:hover:bg-gold/30 hover:text-white rounded-2xl backdrop-blur-sm"
                 data-testid="hero-symptom-finder"
               >
                 <span className="flex items-center gap-2">
                   <Search className="w-5 h-5" />
-                  Symptom Finder
+                  Symptom Finder11
                   <Sparkles className="w-4 h-4 text-gold group-hover:rotate-12 transition-transform" />
                 </span>
               </Button>
@@ -576,7 +576,7 @@ export default function Home() {
                   onClick={link.external ? (e) => { e.preventDefault(); window.open(link.href, '_blank', 'noopener,noreferrer'); } : (e) => { e.preventDefault(); navigateTo(link.href); }}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 text-black dark:text-gray-300 hover:bg-green/10 dark:hover:bg-emerald-900/30 hover:border-green dark:hover:border-emerald-700 hover:text-green dark:hover:text-emerald-300 transition-all duration-300 cursor-pointer font-medium text-sm sm:text-base shadow-sm hover:shadow-md"
+                  className="group relative inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 text-black dark:text-gray-300 hover:bg-green/10 dark:hover:bg-gold/20 hover:border-green dark:hover:border-gold/40 hover:text-green dark:hover:text-gold transition-all duration-300 cursor-pointer font-medium text-sm sm:text-base shadow-sm hover:shadow-md"
                   whileHover={{ y: -3, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   variants={slideRightVariants as any}
@@ -650,9 +650,9 @@ export default function Home() {
             className="text-center mb-6 sm:mb-14 lg:mb-18"
           >
             {/* Mobile: Simple text only | Desktop: Badge with icon */}
-            <div className="hidden sm:inline-flex items-center gap-2 bg-green/10 dark:bg-emerald-950/40 border border-green dark:border-emerald-800/40 rounded-full px-4 py-2 mb-5">
-              <BookOpen className="w-4 h-4 text-green dark:text-emerald-400" />
-              <span className="text-sm font-semibold text-green dark:text-emerald-300 tracking-wide uppercase">
+            <div className="hidden sm:inline-flex items-center gap-2 bg-green/10 dark:bg-gold/20 border border-green dark:border-gold/40 rounded-full px-4 py-2 mb-5">
+              <BookOpen className="w-4 h-4 text-green dark:text-gold" />
+              <span className="text-sm font-semibold text-green dark:text-gold tracking-wide uppercase">
                 {t('home.articles.badge', 'Expert Insights')}
               </span>
             </div>
@@ -714,7 +714,7 @@ export default function Home() {
           <div
             className="text-center mb-6 sm:mb-12 lg:mb-16"
           >
-            <Badge className="bg-green/10 dark:bg-emerald-900/40 text-green dark:text-emerald-200 border-green dark:border-green mb-2 sm:mb-4 text-[10px] sm:text-xs px-2.5 sm:px-4 py-1 sm:py-2 font-semibold tracking-wide">
+            <Badge className="bg-green/10 dark:bg-gold/20 text-green dark:text-gold border-green dark:border-gold mb-2 sm:mb-4 text-[10px] sm:text-xs px-2.5 sm:px-4 py-1 sm:py-2 font-semibold tracking-wide">
               OUR METHODOLOGY
             </Badge>
             <h2
@@ -738,13 +738,14 @@ export default function Home() {
             variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
+                {/* rounded-lg bg-card text-card-foreground shadow-sm luxury-glass hover:shadow-lg transition-all duration-300 border border-gold/20 dark:border-gold/10 h-full */}
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 01</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-gold tracking-widest bg-transparent dark:bg-gold/10 border border-green dark:border-gold/30  px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 01</span>
                   </div>
                   <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Deep Theoretical & Historical Analysis
@@ -761,13 +762,13 @@ export default function Home() {
             variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <Search className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 02</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-gold tracking-widest bg-transparent dark:bg-gold/10 border border-green dark:border-gold/30  px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 02</span>
                   </div>
                   <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Scientific Research & Evidence Review
@@ -784,13 +785,13 @@ export default function Home() {
             variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
+                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
                   <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 03</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-gold tracking-widest bg-transparent dark:bg-gold/10 border border-green dark:border-gold/30  px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 03</span>
                   </div>
                   <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Expert Evaluation & Safety Screening
@@ -807,13 +808,13 @@ export default function Home() {
             variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/50 to-green/50 dark:from-emerald-400/20 dark:to-green-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-emerald-900/50 h-full">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-emerald-400 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
+                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <Leaf className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
-                  <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-emerald-400 tracking-widest bg-transparent border border-green dark:bg-emerald-900/30 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 04</span>
+                 <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                    <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-gold tracking-widest bg-transparent dark:bg-gold/10 border border-green dark:border-gold/30  px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 04</span>
                   </div>
                   <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
                     Real-World Testing & Final Selection
@@ -841,7 +842,7 @@ export default function Home() {
             <motion.p 
             variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
             className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
-              Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green dark:text-emerald-400 hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green dark:text-emerald-400 hover:underline">ginger for digestion</a>
+              Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green dark:text-gold hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green dark:text-gold hover:underline">ginger for digestion</a>
             </motion.p>
           </div>
 
@@ -932,7 +933,7 @@ export default function Home() {
                 className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
                   {/* Badge */}
                   <div className="inline-flex items-center gap-2 mb-4 justify-center md:justify-start">
-                    <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-green dark:bg-emerald-900/40 text-white dark:text-emerald-400 rounded-full">
+                    <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-green dark:bg-gold/20 text-white dark:text-gold rounded-full">
                       Affiliate Program
                     </span>
                   </div>
@@ -986,10 +987,10 @@ export default function Home() {
             <CollapsibleTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-[80px] sm:min-h-[96px] rounded-2xl border-[3px] border-green dark:border-emerald-700 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md"
+                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-[80px] sm:min-h-[96px] rounded-2xl border-[3px] border-green dark:border-gold/40 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md"
               >
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-emerald-400  rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green/20">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green/20">
                     <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div className="text-left flex-1 min-w-0 space-y-0.5 sm:space-y-1">

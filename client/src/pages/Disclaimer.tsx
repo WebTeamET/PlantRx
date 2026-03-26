@@ -62,7 +62,7 @@ export default function Disclaimer() {
               <p className="text-xl text-white dark:text-gray-300 max-w-2xl mx-auto">
                 Important information about the nature of our content and your health decisions.
               </p>
-              <p className="text-sm text-white dark:text-gray-400 mt-6">
+              <p className="text-sm text-white dark:text-gray-300 mt-6">
                 Last updated: December 2025
               </p>
             </motion.div>

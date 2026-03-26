@@ -118,7 +118,7 @@ Sent via PlantRx Contact Form
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-green/20 text-green dark:text-green px-4 py-2 rounded-full text-sm font-medium mb-4 border border-green/30">
+            <div className="inline-flex items-center gap-2 bg-green/10 dark:bg-gold/20 text-green dark:text-gold px-4 py-2 rounded-full text-sm font-medium mb-4 border border-green/30 dark:border-gold/40">
               <Leaf className="w-4 h-4" />
               We're Here to Help
             </div>

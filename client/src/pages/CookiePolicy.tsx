@@ -346,7 +346,7 @@ export default function CookiePolicy() {
 
                   <a
                     href="mailto:support@plantrxapp.com"
-                    className="bg-white text-green px-8 py-3 rounded-xl font-semibold hover:bg-gold/10 transition-colors"
+                    className="bg-white text-green px-8 py-3 rounded-xl font-semibold hover:bg-gold/20 hover:text-white transition-colors"
                   >
                     Contact Support
                   </a>

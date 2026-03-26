@@ -637,19 +637,19 @@ export default function Remedies() {
             <div className="flex justify-center mb-4">
               <div className="relative">
                 <div className="absolute inset-0 shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] dark:bg-emerald-500/20 rounded-full blur-xl scale-150"></div>
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-green dark:bg-emerald-400 rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] rotate-3 shadow-lg">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-green dark:bg-gold rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(194, 160, 88,0.1)] rotate-3 shadow-lg">
                   <span className="text-2xl sm:text-3xl invert-[1] filter brightness-0">🌿</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-full border border-green/50 dark:border-emerald-600/30 shadow-lg shadow-green/20">
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gold/20 backdrop-blur-md rounded-full border border-green/50 dark:border-gold/40 shadow-lg shadow-green/20 dark:shadow-gold/20">
                 <span className="flex h-2.5 w-2.5 sm:h-3 sm:w-3 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-full w-full bg-green"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green dark:bg-gold opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-full w-full bg-green dark:bg-gold"></span>
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-green dark:text-emerald-300 tracking-wide">
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold tracking-wide">
                   Natural Remedies Collection
                 </span>
                 
@@ -669,9 +669,9 @@ export default function Remedies() {
           </h1>
 
           <div className="flex items-center justify-center gap-3 mb-4 sm:mb-5">
-            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
-            <div className="w-2 h-2 bg-gold dark:bg-emerald-500 rounded-full"></div>
-            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-emerald-600"></div>
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-gold"></div>
+            <div className="w-2 h-2 bg-gold dark:bg-gold rounded-full"></div>
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-gold"></div>
           </div>
 
           <p
@@ -694,7 +694,7 @@ export default function Remedies() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green/5 to-transparent dark:from-emerald-800/20 rounded-bl-full"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-teal-800/20 rounded-tr-full"></div>
 
-            <div className="relative border border-green dark:border-emerald-800/30 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
+            <div className="relative border border-green dark:border-gold/40 rounded-2xl sm:rounded-3xl backdrop-blur-sm p-4 sm:p-5 md:p-7">
 
               <motion.div
                 variants={slideUpVariants as any}
@@ -716,8 +716,8 @@ export default function Remedies() {
                       <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-black dark:text-white">
                         Find Your Perfect Natural Remedy
                       </h3>
-                      <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold dark:bg-emerald-900/50 text-white dark:text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
-                        <span className="w-1.5 h-1.5 bg-green rounded-full animate-pulse"></span>
+                      <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold dark:bg-gold/20 text-white dark:text-gold text-[10px] font-bold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 bg-green dark:bg-gold rounded-full animate-pulse"></span>
                         Smart
                       </span>
                     </div>
@@ -923,7 +923,7 @@ export default function Remedies() {
                               transition-all duration-500 ease-out active:scale-95
                               ${isSelected
                                 ? "btn-green text-white shadow-lg shadow-[#385127]/25"
-                                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gold dark:border-gray-700 hover:border-gold dark:hover:border-emerald-500 hover:text-gold dark:hover:text-emerald-400 hover:shadow-md hover:shadow-gold/10"
+                                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gold dark:border-gray-700 hover:border-gold dark:hover:border-gold/40 hover:text-gold dark:hover:text-gold hover:shadow-md hover:shadow-gold/10"
                               }
                             `}
                             data-testid={`filter-${category.value}`}

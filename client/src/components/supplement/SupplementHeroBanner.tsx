@@ -1,33 +1,8 @@
 "use client";
+import { itemScaleUpVariants, slideUpVariants } from "@/animation/framerMotionVariants";
 import { motion } from "framer-motion";
 
 export default function SupplementHeroBanner() {
-  const titleVars = {
-    initial: {
-      opacity: 0,
-      filter: "blur(10px)",
-      transform: "translate3d(0, 20px, 0)",
-    },
-    animate: {
-      opacity: 1,
-      filter: "blur(0px)",
-      transform: "translate3d(0, 0, 0)",
-      transition: { duration: 0.9, ease: [0.33, 1, 0.68, 1] },
-    },
-  };
-
-  const imageVars = {
-    initial: {
-      opacity: 0,
-      transform: "translate3d(0, 50px, 0)",
-    },
-    animate: {
-      opacity: 1,
-      transform: "translate3d(0, 0, 0)",
-      transition: { duration: 1.2, delay: 0.35, ease: [0.33, 1, 0.68, 1] },
-    },
-  };
-
   const leafVars = {
     initial: { opacity: 0, scale: 0.93 },
     animate: {
@@ -119,27 +94,30 @@ export default function SupplementHeroBanner() {
         alt="Decorative star element"
         aria-hidden="true"
       />
-      <div className="flex flex-col items-center pt-10 md:pt-20 xl:pt-[155px] 2xl:pb-[61px] h-full justify-between gap-5">
+      <div className="flex flex-col items-center pt-10 md:pt-20 xl:pt-[155px] 2xl:pb-[61px] h-full justify-between gap-5 new-container">
       <div
-        className="whitespace-nowrap text-center"
+        className="text-center"
       >
         <div className="title title-green title-stroke">
           <motion.h1
-            className="font-heading font-semibold capitalize leading-[clamp(34px,6.3vw,133px)] text-[clamp(32px,5vw,120px)]"
-            style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127" }}
-            variants={titleVars}
-            initial="initial"
-            animate="animate"
+            className="font-heading font-semibold capitalize supplement-pdp-heading"
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127", willChange: "transform, opacity" }}
           >
-            Moringa Pure Capsules
+          Moringa Pure Capsules
           </motion.h1>
         </div>
       </div>
       <motion.div
         className="z-10"
-        variants={imageVars}
-        initial="initial"
-        animate="animate"
+        variants={itemScaleUpVariants as any}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        style={{ willChange: "transform, opacity" }}
       >
         <img
           src="/moringa-sup-hero-hands.png"

@@ -62,7 +62,7 @@ export default function Liability() {
               <p className="text-sm sm:text-base lg:text-lg text-white max-w-2xl mx-auto">
                 Understanding your responsibilities and our limitations when using PlantRx.
               </p>
-              <p className="text-sm text-white dark:text-gray-400 mt-6">
+              <p className="text-sm text-white dark:text-gray-300 mt-6">
                 Last updated: November 2025
               </p>
             </motion.div>

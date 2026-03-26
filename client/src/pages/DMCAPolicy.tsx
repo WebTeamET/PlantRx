@@ -59,7 +59,7 @@ export default function DMCAPolicy() {
               <p className="text-xl text-white dark:text-gray-300 max-w-2xl mx-auto">
                 Our commitment to respecting intellectual property rights and handling copyright claims under the Digital Millennium Copyright Act.
               </p>
-              <p className="text-sm text-white dark:text-gray-400 mt-6">
+              <p className="text-sm text-white dark:text-gray-300 mt-6">
                 Last updated: November 2025
               </p>
             </motion.div>
@@ -165,7 +165,7 @@ export default function DMCAPolicy() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-semibold text-gray-900 dark:text-white w-20">Email:</span>
-                      <a href="mailto:legal@plantrxapp.com" className="text-green dark:text-green hover:underline">legal@plantrxapp.com</a>
+                      <a href="mailto:legal@plantrxapp.com" className="text-green dark:text-gold hover:underline">legal@plantrxapp.com</a>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-semibold text-gray-900 dark:text-white w-20">Subject:</span>
@@ -188,7 +188,7 @@ export default function DMCAPolicy() {
               <Card className="bg-white dark:bg-gray-900 border border-gold/20 dark:border-gold/10 shadow-lg overflow-hidden h-full">
                 <div className="flex items-center gap-4 p-6 border-b border-gold/10 dark:border-gold/5">
                   <div className="w-12 h-12 bg-green/10 dark:bg-green/20 rounded-xl flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-green dark:text-green" />
+                    <Clock className="w-6 h-6 text-green dark:text-gold" />
                   </div>
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">Our Response Process</h2>
                 </div>
@@ -205,7 +205,7 @@ export default function DMCAPolicy() {
                       "Forward counter-notifications to the original complainant"
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 bg-green/10 dark:bg-gray-800 rounded-lg border border-green/20 dark:border-green/10">
-                        <CheckCircle className="w-5 h-5 text-green dark:text-green flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-green dark:text-gold flex-shrink-0" />
                         <span className="text-gray-900 dark:text-white text-sm">{item}</span>
                       </div>
                     ))}
@@ -343,7 +343,7 @@ export default function DMCAPolicy() {
               <Card className="bg-white dark:bg-gray-900 border border-gold/20 dark:border-gold/10 shadow-lg overflow-hidden h-full">
                 <div className="flex items-center gap-4 p-6 border-b border-gold/10 dark:border-gold/5">
                   <div className="w-12 h-12 bg-green/10 dark:bg-green/20 rounded-xl flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-green dark:text-green" />
+                    <Shield className="w-6 h-6 text-green dark:text-gold" />
                   </div>
                   <h2 className="text-xl font-bold text-gray-900 dark:text-white">Safe Harbor Provisions</h2>
                 </div>
@@ -359,7 +359,7 @@ export default function DMCAPolicy() {
                       "Do not receive financial benefit directly from infringement"
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 bg-green/10 dark:bg-gray-800 rounded-lg border border-green/20 dark:border-green/10">
-                        <CheckCircle className="w-5 h-5 text-green dark:text-green flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-green dark:text-gold flex-shrink-0" />
                         <span className="text-gray-900 dark:text-white text-sm">{item}</span>
                       </div>
                     ))}

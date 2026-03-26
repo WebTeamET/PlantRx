@@ -1813,3 +1813,15 @@ iframe[src*="tawk.to"] {
 .title-stroke h6 {
   paint-order: stroke fill;
 }
+.supplement-marquee-section .rfm-marquee-container {
+  rotate: 2.61deg;
+  overflow: hidden;
+}
+@media only screen and (max-width: 640px) {
+  .supplement-marquee-section .rfm-marquee-container {
+    rotate: 4.61deg;
+  }
+}
+.supplement-pdp-heading {
+  @apply text-[32px] leading-[34px] md:text-[40px] md:leading-[48px] lg:text-[48px] lg:leading-[56px] xl:text-[70px] xl:leading-[90px] 2xl:text-[96px] 2xl:leading-[120px] font-heading;
+} 

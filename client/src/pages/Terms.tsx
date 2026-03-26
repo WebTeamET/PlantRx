@@ -103,8 +103,8 @@ export default function Terms() {
             {/* Section 1: About PlantRx */}
             <section id="section-1" className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gold/20 dark:border-gold/10">
               <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-green/10 dark:bg-gold/20 flex items-center justify-center flex-shrink-0">
-                  <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-gold/80" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-green/10 dark:bg-gold flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-white" />
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">1. About PlantRx</h2>
               </div>
@@ -112,13 +112,13 @@ export default function Terms() {
                 PlantRx ("the Service", "we", "our", "us") is a natural health and wellness platform operated by PlantRx Ltd, a company registered in England and Wales with its registered office in London, United Kingdom.
               </p>
               <div className="grid md:grid-cols-2 gap-2 sm:gap-3 lg:gap-4 mt-8 sm:mt-10">
-                <div className="bg-green/10 dark:bg-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
+                <div className="bg-green/10 dark:bg-white/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
                   <h4 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Our Purpose</h4>
                   <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                     Educational content about natural remedies, plant-based wellness, traditional herbal medicine, 130+ verified remedies, AI-powered assistance (Remy), and an integrated wellness store.
                   </p>
                 </div>
-                <div className="bg-gold/20 dark:bg-gold/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold/20">
+                <div className="bg-gold/20 dark:bg-gold/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gold/20">
                   <h4 className="font-bold text-gold mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">What We Are NOT</h4>
                   <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                     NOT a medical service. Does NOT provide medical advice, diagnosis, or treatment. Does NOT replace professional healthcare.
@@ -213,7 +213,7 @@ export default function Terms() {
               </p>
               <div className="bg-gold/10 dark:bg-gold/5 rounded-lg sm:rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-gold/20">
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">You Must NOT:</h3>
-                <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
                   {[
                     "Republish material from plantrxapp.com",
                     "Sell, rent or sub-license material from plantrxapp.com",
@@ -222,8 +222,8 @@ export default function Terms() {
                     "Use our branding for commercial purposes",
                     "Copy, modify, distribute, sell, or lease any part without permission"
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-5 sm:p-6 border border-gold/10">
-                      <Ban className="w-6 h-6 sm:w-7 sm:h-7 text-red-500 flex-shrink-0 mt-0.5" />
+                    <div key={i} className="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 border border-gold/10">
+                      <Ban className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
                       <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{item}</span>
                     </div>
                   ))}
@@ -351,7 +351,7 @@ export default function Terms() {
                   <li>• By use of the uniform resource locator being linked to</li>
                   <li>• By use of any other description of our Website that makes sense within the context</li>
                 </ul>
-                <p className="mt-6 text-sm sm:text-base text-gray-600 dark:text-gray-400 italic">
+                <p className="mt-4 text-sm sm:text-base text-gray-600 dark:text-gray-400 italic">
                   No use of PlantRx's logo or other artwork will be allowed for linking absent a trademark license agreement.
                 </p>
               </div>
@@ -466,31 +466,31 @@ export default function Terms() {
                 PlantRx offers the following subscription tiers:
               </p>
               <div className="grid gap-6 sm:gap-8 mb-4 sm:mb-6">
-                <div className="bg-gold/20 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold dark:border-amber-700">
+                <div className="bg-gold/20 dark:bg-gold/5 rounded-lg p-3 sm:p-4 border border-gold/15 dark:border-gold/20">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
-                      <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-green dark:text-amber-200">🥉 Bronze</h4>
-                      <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">Basic access to remedy database, limited AI chat, community features</p>
+                      <h4 className="font-semibold text-sm sm:text-base lg:text-lg text-green dark:text-text-white">🥉 Bronze</h4>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-3">Basic access to remedy database, limited AI chat, community features</p>
                     </div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green dark:text-amber-300">Free</span>
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-green dark:text-amber-300">Free</span>
                   </div>
                 </div>
-                <div className="bg-green/20 dark:from-gray-700/50 dark:to-slate-700/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green dark:border-gray-600">
+                <div className="bg-green/20 dark:from-gray-700/50 dark:to-slate-700/50 rounded-lg p-4 sm:p-6 border border-green dark:border-gray-600">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
-                      <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-black dark:text-gray-200">🥈 Silver</h4>
-                      <p className="text-sm sm:text-base text-gray-700  text-black dark:text-gray-400 mt-3">Unlimited AI chat, personalized recommendations, advanced features</p>
+                      <h4 className="font-semibold text-sm sm:text-base lg:text-lg text-black dark:text-gray-200">🥈 Silver</h4>
+                      <p className="text-xs sm:text-sm text-black dark:text-gray-400 mt-3">Unlimited AI chat, personalized recommendations, advanced features</p>
                     </div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-gray-200">£6.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-black dark:text-gray-200">£6.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
                   </div>
                 </div>
-                <div className="bg-gold/70 dark:from-yellow-900/30 dark:to-amber-900/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border-2 border-gold dark:border-gold/60">
+                <div className="bg-gold/70 dark:bg-gold/10 rounded-lg p-4 sm:p-6 border-2 border-gold dark:border-gold/60">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <div>
-                      <h4 className="font-bold text-xl sm:text-2xl lg:text-3xl text-white dark:text-gold">🥇 Gold</h4>
-                      <p className="text-sm sm:text-base text-gray-700 text-white dark:text-gray-300 mt-3">All Silver features + exclusive content, priority support, premium benefits</p>
+                      <h4 className="font-semibold text-sm sm:text-base lg:text-lg text-white dark:text-gold">🥇 Gold</h4>
+                      <p className="text-xs sm:text-sm text-gray-700 text-white dark:text-gray-400 mt-3">All Silver features + exclusive content, priority support, premium benefits</p>
                     </div>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white dark:text-gold">£12.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-white dark:text-gold">£12.99<span className="text-base sm:text-lg font-normal">/mo</span></span>
                   </div>
                 </div>
               </div>
@@ -523,7 +523,7 @@ export default function Terms() {
                 PlantRx operates an online store through Shopify integration, offering wellness and health-related products.
               </p>
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-                <div className="bg-green/10 dark:bg-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
+                <div className="bg-green/10 dark:bg-white/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
                   <h4 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Purchase Terms</h4>
                   <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["Prices displayed in GBP (£)", "Secure payment via Stripe", "Fulfilled via dropshipping partners", "Shipping varies by location", "You provide accurate shipping info"].map((item, i) => (
@@ -531,7 +531,7 @@ export default function Terms() {
                     ))}
                   </ul>
                 </div>
-                <div className="bg-gold/10 dark:bg-gold/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold/20">
+                <div className="bg-gold/10 dark:bg-gold/5 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gold/20">
                   <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Product Disclaimer</h3>
                   <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["For general wellness purposes only", "Not intended to treat or prevent disease", "Consult healthcare provider before use", "Check ingredients for allergens", "Not responsible for adverse reactions"].map((item, i) => (
@@ -551,14 +551,14 @@ export default function Terms() {
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">16. Refund & Return Policy</h2>
               </div>
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-                <div className="bg-green/10 dark:bg-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
+                <div className="bg-green/10 dark:bg-white/20 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-green/20 dark:border-white/20">
                   <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Subscription Refunds</h3>
                   <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-3"><span className="text-green dark:text-white">•</span> Cancel anytime; no partial refunds for unused time</li>
                     <li className="flex items-start gap-3"><span className="text-green dark:text-white">•</span> Technical issues may qualify for prorated refund</li>
                   </ul>
                 </div>
-                <div className="bg-gold/10 dark:bg-gold/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-gold/20">
+                <div className="bg-gold/10 dark:bg-gold/5 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gold/20">
                   <h3 className="font-bold text-green dark:text-white mb-3 sm:mb-4 text-lg sm:text-xl lg:text-2xl">Product Refunds</h3>
                   <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                     {["Damaged products: return within 14 days", "Contact support@plantrxapp.com with details", "Refunds processed within 14 days", "Opened consumables cannot be returned"].map((item, i) => (
@@ -567,7 +567,7 @@ export default function Terms() {
                   </ul>
                 </div>
               </div>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mt-4 sm:mt-6 italic">
                 For full details, see our <a href="/refunds" className="text-green hover:text-green/80 dark:text-gold font-medium underline">Refund Policy</a> page.
               </p>
             </section>
@@ -583,7 +583,7 @@ export default function Terms() {
               <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
                 You agree NOT to use PlantRx to:
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
                 {[
                   "Provide medical advice or pose as a medical professional",
                   "Upload unlawful, harmful, or defamatory content",
@@ -596,9 +596,10 @@ export default function Terms() {
                   "Violate applicable laws",
                   "Promote harmful health practices"
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4 bg-gold/20 dark:bg-red-900/20 rounded-xl p-5 sm:p-6 lg:p-8">
-                    <Ban className="w-6 h-6 sm:w-7 sm:h-7 text-green flex-shrink-0 mt-0.5" />
-                    <span className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">{item}</span>
+                  <div key={i} className="flex items-start gap-2 sm:gap-3 bg-gold/10 dark:bg-gold/5 rounded-lg sm:rounded-xl p-4 sm:p-6 border border-gold/20">
+                    <Ban className="w-4 h-4 sm:w-5 sm:h-5 text-green dark:text-gold flex-shrink-0 mt-0.5" />
+                    
+                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{item}</span>
                   </div>
                 ))}
               </div>
@@ -612,10 +613,10 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">18. AI-Generated Content (Remy)</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                 PlantRx features "Remy," an AI-powered assistant that provides information about natural remedies and wellness.
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid sm:grid-cols-2 gap-2 sm:gap-3">
                 {[
                   { icon: "🤖", text: "Remy's responses are AI-generated and may not always be accurate" },
                   { icon: "📚", text: "AI content is for educational purposes only — NOT medical advice" },
@@ -623,9 +624,9 @@ export default function Terms() {
                   { icon: "⚖️", text: "We are not liable for decisions based on AI content" },
                   { icon: "👁️", text: "AI responses may be monitored to improve the Service" }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4 sm:gap-5 bg-gold/10 dark:bg-gold/5 rounded-xl p-5 sm:p-6 lg:p-8 border border-gold/20">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl">{item.icon}</span>
-                    <span className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">{item.text}</span>
+                  <div key={i} className="flex items-start gap-4 sm:gap-5 bg-gold/10 dark:bg-gold/5 rounded-xl p-4 sm:p-5 border border-gold/20">
+                    <span className="text-base sm:text-lg lg:text-xl">{item.icon}</span>
+                    <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -639,29 +640,29 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">19. Disclaimer</h2>
               </div>
-              <div className="bg-gold/5 dark:bg-gold/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 border border-gold/20">
-                <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+              <div className="bg-gold/5 dark:bg-gold/5 rounded-lg sm:rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-gold/20">
+                <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                   To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
                 </p>
-                <ul className="space-y-4 sm:space-y-5 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
+                <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                   {[
                     "Limit or exclude our or your liability for death or personal injury",
                     "Limit or exclude our or your liability for fraud or fraudulent misrepresentation",
                     "Limit any of our or your liabilities in any way that is not permitted under applicable law",
                     "Exclude any of our or your liabilities that may not be excluded under applicable law"
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-4">
-                      <span className="text-gold text-xl">•</span>
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-gold">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 sm:mb-6">
                 The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty.
               </p>
-              <div className="bg-gold/10 dark:bg-gold/5 border-l-4 border-gold p-4 sm:p-6 rounded-r-xl mt-8 sm:mt-10">
-                <p className="text-gold dark:text-gold text-base sm:text-lg lg:text-xl">
+              <div className="bg-gold/20 dark:bg-gold/10 rounded-lg sm:rounded-xl p-3 sm:p-4 mt-4 sm:mt-6 border border-gold/20 dark:border-gold/20">
+                <p className="text-black/80 dark:text-gold text-sm sm:text-base">
                   <strong>Free Services Notice:</strong> As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.
                 </p>
               </div>
@@ -675,13 +676,13 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">20. Limitation of Liability</h2>
               </div>
-              <div className="bg-gold/10 dark:bg-gold/5 border-l-4 border-gold p-4 sm:p-6 rounded-r-xl mb-4 sm:mb-6">
-                <p className="text-lg sm:text-xl lg:text-2xl text-gold dark:text-gold font-semibold">
+              <div className="bg-green/5 dark:bg-gold/5 border-l-4 border-green dark:border-gold p-4 sm:p-6 rounded-r-lg mb-4 lg:mb-6">
+                <p className="text-black/80 dark:text-gold text-sm sm:text-base">
                   To the fullest extent permitted by law, PlantRx Ltd disclaims all liability for any loss, damage, or injury arising from the use of our Service.
                 </p>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-6 sm:mb-8">PlantRx Ltd shall not be liable for:</p>
-              <ul className="space-y-4 sm:space-y-5 text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">PlantRx Ltd shall not be liable for:</p>
+              <ul className="space-y-2 ttext-xs sm:text-sm lg:text-base text-gray-700 dark:text-gray-300">
                 {[
                   "Any adverse health effects from using natural remedies or our information",
                   "Any indirect, incidental, special, consequential, or punitive damages",
@@ -690,8 +691,8 @@ export default function Terms() {
                   "Actions or inactions of third-party service providers",
                   "Service interruptions, errors, or security breaches"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="text-gold mt-1 text-xl">•</span>
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-gold">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -706,7 +707,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">21. Indemnification</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 You agree to indemnify, defend, and hold harmless PlantRx Ltd, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from your use of the Service, your violation of these Terms, or your violation of any rights of a third party.
               </p>
             </section>
@@ -719,8 +720,8 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">22. Governing Law & Jurisdiction</h2>
               </div>
-              <div className="bg-green/10 dark:bg-green/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-green/20">
-                <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <div className="bg-green/10 dark:bg-green/5 rounded-lg p-4 border border-green/20">
+                <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                   These Terms shall be governed by and construed in accordance with the <strong className="text-green dark:text-gold">laws of England and Wales</strong>, without regard to conflict of law principles. Any disputes shall be subject to the exclusive jurisdiction of the <strong className="text-green dark:text-gold">courts of London, United Kingdom</strong>.
                 </p>
               </div>
@@ -734,7 +735,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">23. Severability</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
               </p>
             </section>
@@ -747,7 +748,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">24. Entire Agreement</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 These Terms, together with our Privacy Policy, Cookie Policy, and any other legal notices published on the Service, constitute the entire agreement between you and PlantRx Ltd concerning the Service.
               </p>
             </section>
@@ -760,7 +761,7 @@ export default function Terms() {
                 </div>
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">25. Changes to Terms</h2>
               </div>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 We reserve the right to modify these Terms at any time. Material changes will be notified via email or prominent notice on our website. Continued use of the Service after changes constitutes acceptance of the updated Terms.
               </p>
             </section>

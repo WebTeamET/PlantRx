@@ -1,4 +1,5 @@
 "use client";
+import { slideUpVariants, slideUpVariantsFast } from "@/animation/framerMotionVariants";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -10,7 +11,7 @@ const productMeta = [
 
 const avoidCards = [
   {
-    icon: "/pregnant_icon.svg", 
+    icon: "/pregnant_icon.svg",
     label: "Pregnant or nursing individuals",
   },
   {
@@ -36,12 +37,14 @@ export default function SupplementWhoAvoid() {
           <div ref={sectionRef} className="max-w-[1185px] mx-auto">
             <motion.div
               className="title title-black title-stroke flex justify-center mb-5 xl:mb-[30px]"
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+              variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              style={{ willChange: "transform, opacity" }}
             >
               <h2
-                className="leading-[clamp(34px,6.3vw,133px)] text-[clamp(32px,5vw,120px)] text-center"
+                className="supplement-pdp-heading text-center"
                 style={{ WebkitTextStroke: "clamp(2px,0.73vw,12px) #FFFFFF" }}
               >
                 Who Should Avoid It
@@ -50,9 +53,11 @@ export default function SupplementWhoAvoid() {
 
             <motion.div
               className="content content-white flex justify-center mb-7 xl:mb-[60px]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+              variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              style={{ willChange: "transform, opacity" }}
             >
               <p className="text-center 2xl:text-3xl 2xl:leading-[50px] capitalize font-normal max-w-[1110px] mx-auto">
                 Do not exceed the recommended daily intake. Food supplements should
@@ -62,18 +67,22 @@ export default function SupplementWhoAvoid() {
 
             <motion.div
               className="flex items-center justify-center gap-5 mb-10 xl:mb-[90px] 2xl:py-[30px] md:py-5 py-3 border-y border-white 2xl:mx-2.5"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.25 }}
+              variants={slideUpVariantsFast as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              style={{ willChange: "transform, opacity" }}
             >
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
                 {productMeta.map((item, i) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-2"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.3 + i * 0.08, ease: "easeOut" }}
+                    variants={slideUpVariantsFast as any}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    style={{ willChange: "transform, opacity" }}
                   >
                     <img
                       src={item.icon}
@@ -97,9 +106,11 @@ export default function SupplementWhoAvoid() {
                 <motion.div
                   key={i}
                   className="flex items-center max-2xl:gap-1 bg-[#c2a058] border-2 md:border-4 border-black rounded-[10px] md:p-4 p-3 w-full md:w-auto"
-                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                  animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.35 + i * 0.15, ease: [0.33, 1, 0.68, 1] }}
+                  variants={slideUpVariantsFast as any}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <img
                     src={card.icon}
@@ -119,9 +130,11 @@ export default function SupplementWhoAvoid() {
           </div>
           <motion.div
             className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 max-md:flex-col max-md:items-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+            variants={slideUpVariantsFast as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            style={{ willChange: "transform, opacity" }}
           >
             {safetyNotes.map((note, i) => (
               <div key={i} className="flex items-center gap-1">

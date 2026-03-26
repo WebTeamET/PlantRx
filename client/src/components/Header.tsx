@@ -312,7 +312,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center justify-center">
+          <div className="hidden xl:flex items-center justify-center">
             <div className={`flex items-center ${language === 'ar' || language === 'he' ? 'space-x-reverse xl:space-x-5 space-x-2' : 'xl:space-x-5 space-x-2'}`}>
               {navigationItems.map((item, idx) => (
                 <div key={idx} className="relative group">
@@ -571,7 +571,7 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="lg:hidden min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 !ml-0"
+                  className="xl:hidden min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 !ml-0"
                 >
                   <Menu className="w-5 h-5" />
                 </Button>

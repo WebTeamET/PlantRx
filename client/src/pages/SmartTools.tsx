@@ -174,14 +174,14 @@ export default function SmartTools() {
               <CollapsibleTrigger asChild>
                 <Button
                   variant="outline"
-                  className="gap-1.5 sm:gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 sm:[&_svg]:size-5 [&_svg]:shrink-0 bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:h-10 sm:px-4 sm:py-2 sm:text-base !h-auto w-full flex items-center justify-between rounded-2xl border-2 border-green/50 dark:border-emerald-800 hover:border-green dark:hover:border-emerald-600 !bg-white dark:bg-gray-900 transition-all group"
+                  className="gap-1.5 sm:gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 sm:[&_svg]:size-5 [&_svg]:shrink-0 bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:h-10 sm:px-4 sm:py-2 sm:text-base !h-auto w-full flex items-center justify-between rounded-2xl border-2 border-green/50 dark:border-green hover:border-green dark:hover:border-green !bg-white dark:bg-gray-900 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 bg-green rounded-xl flex items-center justify-center flex-shrink-0">
                       <Sparkles className="w-5 h-5 text-white" />
                     </div>
                     <div className="text-left">
-                      <h2 className="text-sm sm:text-base lg:text-lg font-bold text-black dark:text-white">
+                      <h2 className="text-sm sm:text-base lg:text-lg font-bold text-black dark:text-green">
                         AI-Powered Natural Health Analysis
                       </h2>
                       <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hidden sm:block">Smart Tools for Personalized Wellness</p>

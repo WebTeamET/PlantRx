@@ -24,7 +24,7 @@ export default function Supplements() {
       rafId = requestAnimationFrame(raf);
     };
 
-    rafId = requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf); 
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -37,8 +37,9 @@ export default function Supplements() {
       <div className="relative z-10">
         <SupplementHeroBanner />
         <SupplementWhyUse />
-        <SupplementMarquee />
+        <SupplementMarquee marginTop={90} />
         <SupplementHowWorks />
+        <SupplementMarquee marginBottom={90} />
         <SupplementIngredients />
         <SupplementHowToUse />
         <SupplementQualityStandards />

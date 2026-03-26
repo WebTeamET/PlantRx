@@ -62,7 +62,21 @@ export const slideDownVariants: Variants = {
 
 export const slideUpVariants: Variants = {
   hidden: {
-    transform: "translate3d(0,300px, 0)",
+    transform: "translate3d(0,150px, 0)",
+    opacity: 0,
+  },
+  visible: {
+    transform: "translate3d(0, 0, 0)",
+    opacity: 1,
+    transition: {
+      duration: 1.2,
+      ease: [0.22, 1, 0.36, 1]
+    },
+  },
+};
+export const slideUpVariantsFast: Variants = {
+  hidden: {
+    transform: "translate3d(0,100px, 0)",
     opacity: 0,
   },
   visible: {
@@ -77,6 +91,20 @@ export const slideUpVariants: Variants = {
 export const slideRightVariantsFast: Variants = {
   hidden: {
     transform: 'translate3d(-100px, 0, 0)',
+    opacity: 0,
+  },
+  visible: {
+    transform: 'translate3d(0, 0, 0)',
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.30, 1],
+    },
+  },
+};
+export const slideLeftVariantsFast: Variants = {
+  hidden: {
+    transform: 'translate3d(100px, 0, 0)',
     opacity: 0,
   },
   visible: {

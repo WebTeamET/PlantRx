@@ -1,5 +1,6 @@
 "use client";
 
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -58,11 +59,16 @@ export default function SupplementFaq() {
               strokeDasharray="21 21"
             />
           </svg>
-          <h2
+          <motion.h2 
+          variants={slideUpVariants as any}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
             className="text-center text-[clamp(32px,5vw,80px)] leading-[clamp(34px,6.3vw,109px)] text-[#000] mb-7 xl:mb-[50px]"
           >
             Your Questions, Answered
-          </h2>
+          </motion.h2>
 
           <div className="space-y-5 max-w-[880px] mx-auto">
             {QA_ITEMS.map((item, idx) => {
@@ -76,6 +82,11 @@ export default function SupplementFaq() {
                   className="w-full text-left"
                   aria-expanded={isOpen}
                   aria-controls={`qa-panel-${idx}`}
+                  variants={slideUpVariants as any}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <motion.div
                     layout
@@ -83,10 +94,12 @@ export default function SupplementFaq() {
                     className={`rounded-[10px] md:rounded-[20px] p-5 xl:p-[30px] ${isOpen ? "bg-gold text-white" : "bg-[#FFF8EB] text-[#2B1E1E]"
                       }`}
                   >
-                    <div className="flex items-start gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold">
-                      <div>{idx + 1}.</div>
-                      <div className="flex-1">
-                        <div>{item.question}</div>
+                    <div className="flex items-center justify-between gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold">
+                      <div className="flex items-start gap-1">
+                        <div>{idx + 1}.</div>
+                        <div className="flex-1">
+                          <div>{item.question}</div>
+                        </div>
                       </div>
                       <motion.span
                         className="text-[20px] font-bold leading-none"

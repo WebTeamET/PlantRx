@@ -426,14 +426,14 @@ export default function ToolsSymptomFinder() {
                   <CollapsibleTrigger asChild>
                     <Button
                       variant="outline"
-                      className="gap-1.5 sm:gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 sm:[&_svg]:size-5 [&_svg]:shrink-0 bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:h-10 sm:px-4 sm:py-2 sm:text-base !h-auto w-full flex items-center justify-between rounded-2xl border-2 border-green/50 dark:border-emerald-800 hover:border-green dark:hover:border-emerald-600 !bg-white dark:bg-gray-900 transition-all group p-3 sm:p-4 lg:p-6 min-h-[64px] sm:min-h-[80px] lg:min-h-[96px]"
+                      className="gap-1.5 sm:gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 sm:[&_svg]:size-5 [&_svg]:shrink-0 bg-background hover:bg-accent hover:text-accent-foreground text-sm sm:h-10 sm:px-4 sm:py-2 sm:text-base !h-auto w-full flex items-center justify-between rounded-2xl border-2 border-green/50 dark:border-emerald-800 hover:border-green dark:hover:border-green !bg-white dark:bg-gray-900 transition-all group p-3 sm:p-4 lg:p-6 min-h-[64px] sm:min-h-[80px] lg:min-h-[96px]"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green rounded-xl flex items-center justify-center flex-shrink-0">
                           <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                         </div>
                         <div className="text-left flex-1 min-w-0">
-                          <h2 className="text-sm sm:text-base lg:text-xl font-bold text-black dark:text-white leading-tight">
+                          <h2 className="text-sm sm:text-base lg:text-xl font-bold text-black dark:text-green leading-tight">
                             AI-Powered Health Analysis
                           </h2>
                           <p className="text-[10px] sm:text-xs lg:text-sm text-gray-600 dark:text-gray-400 hidden sm:block">
