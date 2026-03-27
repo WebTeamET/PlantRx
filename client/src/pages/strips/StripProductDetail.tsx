@@ -146,7 +146,7 @@ export default function StripProductDetail() {
           </div>
           <div className="add-to-cart-btn shrink-0">
             <button
-              className={`button relative overflow-hidden bg-green border-0 max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-4 max-md:py-2 max-md:min-w-full max-md:min-h-[34px] ${
+              className={`button relative overflow-hidden ctm-button btn-green max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-4 max-md:py-2 max-md:min-w-full max-md:min-h-[34px] ${
                 addingToCart ? "loading" : ""
               }`}
               onClick={handleAddToCart}

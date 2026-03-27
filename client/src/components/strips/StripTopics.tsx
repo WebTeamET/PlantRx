@@ -17,8 +17,10 @@ type Topic = {
   title: string;
   img1: string;
   img2: string;
-  img1Position?: CSSProperties;
-  img2Position?: CSSProperties;
+  img1Position?: CSSProperties & Record<string, string>;
+  img2Position?: CSSProperties & Record<string, string>;
+  img1Rotate?: string;
+  img2Rotate?: string;
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -27,15 +29,11 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
   const baseImg1Style: CSSProperties = {
     top: "clamp(20px, 4vw, 60px)",
     left: "clamp(20px, 3vw, 60px)",
-    width: "221px",
-    height: "182px",
   };
 
   const baseImg2Style: CSSProperties = {
     top: "clamp(20px, 4vw, 60px)",
     right: "clamp(20px, 3vw, 60px)",
-    width: "230px",
-    height: "175px",
   };
 
   const topics: Topic[] = [
@@ -43,22 +41,24 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
       title: "Brain Fog",
       img1: "/brain1.svg",
       img2: "/brain2.svg",
-      img1Position: { top: "clamp(12px, 2vw, 72px)", left: "clamp(20px, 4vw, 70px)", width: "clamp(90px, 15.35vw, 221px)", height: "clamp(70px, 12.64vw, 182px)" },
-      img2Position: { top: "clamp(6px, 2vw, 60px)", right: "clamp(24px, 4vw, 70px)", width: "clamp(110px, 15.97vw, 230px)", height: "clamp(70px, 12.15vw, 175px)" },
+      img1Position: { top: "clamp(5px, 1.98vw, 38px)", left: "clamp(60px, 12vw, 230px)", "--w": "221px", "--h": "182px" },
+      img2Position: { top: "clamp(5px, 2.19vw, 42px)", right: "clamp(60px, 10.83vw, 208px)", "--w": "230px", "--h": "175px" },
+      img1Rotate: "7.6deg",
+      img2Rotate: "-20deg",
     },
     {
       title: "Difficulty concentrating",
       img1: "/brain3.svg",
       img2: "/brain4.svg",
-      img1Position: { top: "clamp(0px, 3vw, 42px)", left: "clamp(12px, 3vw, 50px)", width: "clamp(60px, 14.44vw, 208px)", height: "clamp(60px, 14.44vw, 208px)" },
-      img2Position: { top: "clamp(8px, 4vw, 60px)", right: "clamp(12px, 3vw, 50px)", width: "clamp(60px, 14.58vw, 210px)", height: "clamp(60px, 14.24vw, 205px)" },
+      img1Position: { top: "clamp(0px, 3vw, 42px)", left: "clamp(12px, 3vw, 50px)", "--w": "208px", "--h": "208px" },
+      img2Position: { top: "clamp(8px, 4vw, 60px)", right: "clamp(12px, 3vw, 50px)", "--w": "210px", "--h": "205px" },
     },
     {
       title: "Mental fatigue",
       img1: "/brain5.svg",
       img2: "/brain6.svg",
-      img1Position: { top: "clamp(0px, 2vw, 60px)", left: "clamp(36px, 5vw, 90px)", width: "clamp(60px, 10.69vw, 154px)", height: "clamp(90px, 14.44vw, 208px)" },
-      img2Position: { top: "clamp(0px, 0.5vw, 8px)", right: "clamp(20px, 4vw, 70px)", width: "clamp(70px, 11.81vw, 170px)", height: "clamp(70px, 15.28vw, 220px)" },
+      img1Position: { top: "clamp(0px, 2vw, 60px)", left: "clamp(36px, 5vw, 90px)", "--w": "154px", "--h": "208px" },
+      img2Position: { top: "clamp(0px, 0.5vw, 8px)", right: "clamp(20px, 4vw, 70px)", "--w": "170px", "--h": "220px" },
     },
   ];
 
@@ -89,23 +89,27 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
               transition={{ type: "spring", stiffness: 120, damping: 18, mass: 1 }}
             >
               <motion.div
-                className="absolute z-1"
-                style={{ ...baseImg1Style, ...topic.img1Position }}
+                className="absolute z-1 w-[50px] md:w-[100px] lg:w-[145px] xl:w-[185px] 2xl:w-[var(--w)] h-[50px] md:h-[100px] lg:h-[145px] xl:h-[185px] 2xl:h-[var(--h)]"
+                style={{ ...baseImg1Style, ...topic.img1Position } as CSSProperties}
                 animate={{ opacity: isFocused ? 1 : 0, scale: isFocused ? 1 : 0.2 }}
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                <img src={topic.img1} alt="mushroom-group" className="w-full h-full object-contain" />
+                <div className="w-full h-full" style={topic.img1Rotate ? { transform: `rotate(${topic.img1Rotate})` } : undefined}>
+                  <img src={topic.img1} alt="mushroom-group" className="w-full h-full object-contain" />
+                </div>
               </motion.div>
 
               <motion.div
-                className="absolute z-1"
-                style={{ ...baseImg2Style, ...topic.img2Position }}
+                className="absolute z-1 w-[50px] md:w-[100px] lg:w-[145px] xl:w-[185px] 2xl:w-[var(--w)] h-[50px] md:h-[100px] lg:h-[145px] xl:h-[185px] 2xl:h-[var(--h)]"
+                style={{ ...baseImg2Style, ...topic.img2Position } as CSSProperties}
                 animate={{ opacity: isFocused ? 1 : 0, scale: isFocused ? 1 : 0.2 }}
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                <img src={topic.img2} alt="brain" className="w-full h-full object-contain" />
+                <div className="w-full h-full" style={topic.img2Rotate ? { transform: `rotate(${topic.img2Rotate})` } : undefined}>
+                  <img src={topic.img2} alt="brain" className="w-full h-full object-contain" />
+                </div>
               </motion.div>
 
               <span>{topic.title}</span>

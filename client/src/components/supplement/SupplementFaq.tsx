@@ -94,7 +94,7 @@ export default function SupplementFaq() {
                     className={`rounded-[10px] md:rounded-[20px] p-5 xl:p-[30px] ${isOpen ? "bg-gold text-white dark:text-white" : "bg-[#FFF8EB] text-[#212121] dark:text-[#212121]"
                       }`}
                   >
-                    <div className={`flex items-center justify-between gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-semibold ${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>
+                    <div className={`flex items-center justify-between gap-1 2xl:text-[25px] 2xl:leading-7 max-md:text-base max-md:leading-5 font-medium ${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>
                       <div className="flex items-start gap-1">
                         <div className={`${isOpen ? "text-white dark:text-white" : " text-[#212121] dark:text-[#212121]"}`}>{idx + 1}.</div>
                         <div className="flex-1">

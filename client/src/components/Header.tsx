@@ -492,6 +492,7 @@ export default function Header() {
 
             {/* Shopping Cart - Desktop */}
             <Button
+              type="button"
               variant="ghost"
               size="sm"
               className="w-10 h-10 relative hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 !m-0"

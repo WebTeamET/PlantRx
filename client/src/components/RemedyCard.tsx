@@ -166,7 +166,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             
             {/* Title Section */}
             <div className="p-2 h-[80px] flex flex-col justify-center bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700">
-              <h3 className="text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-tight mb-1 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
+              <h3 className="text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-tight mb-1 group-hover:text-gold dark:group-hover:text-yellow-400 transition-colors">
                 {translatedContent.name}
               </h3>
               {translatedContent.benefits && translatedContent.benefits.length > 0 && (
@@ -181,7 +181,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
           <div className="absolute inset-0 p-2 translate-y-full transition-transform duration-500 ease-in-out group-hover:translate-y-0 bg-white dark:bg-gray-800 flex flex-col overflow-hidden">
             {/* Header - Compact */}
             <div className="mb-1 pb-1 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <h3 className="text-[11px] font-bold text-yellow-600 dark:text-yellow-400 line-clamp-1 flex-1">
+              <h3 className="text-[11px] font-bold text-gold dark:text-white line-clamp-1 flex-1">
                 {translatedContent.name}
               </h3>
               {remedy.averageRating && remedy.averageRating > 0 && (
@@ -214,7 +214,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             )}
             
             {/* Tap prompt */}
-            <p className="text-[8px] text-yellow-600 dark:text-yellow-400 font-medium mt-auto pt-1 text-center">
+            <p className="text-[8px] text-gold dark:text-white font-medium mt-auto pt-1 text-center">
               Tap to view details →
             </p>
           </div>
@@ -292,7 +292,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             {/* Moving Gradient Border */}
             <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/10 to-green-400/0 group-hover:animate-pulse"></div>
             
-            <h3 className="text-[11px] sm:text-sm lg:text-lg font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 text-center line-clamp-2 sm:line-clamp-3 leading-tight transition-all duration-500 relative z-10 group-hover:scale-105 group-hover:drop-shadow-lg">
+            <h3 className="text-[11px] sm:text-sm lg:text-lg font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-gold dark:group-hover:text-white text-center line-clamp-2 sm:line-clamp-3 leading-tight transition-all duration-500 relative z-10 group-hover:scale-105 group-hover:drop-shadow-lg">
               {translatedContent.name}
             </h3>
           </div>
@@ -302,7 +302,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
         <div className="absolute inset-0 p-2 sm:p-3 lg:p-4 translate-y-full transition-transform duration-500 ease-in-out group-hover:translate-y-0 bg-white dark:bg-gray-800 flex flex-col">
           {/* Header with remedy name and click indicator */}
           <div className="mb-1 sm:mb-2 pb-1 sm:pb-2 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-[10px] sm:text-xs lg:text-sm font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors duration-300 line-clamp-2">
+            <h3 className="text-[10px] sm:text-xs lg:text-sm font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-gold dark:group-hover:text-white transition-colors duration-300 line-clamp-2">
               {translatedContent.name}
             </h3>
             
@@ -323,7 +323,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
               </div>
             )}
             
-            <p className="text-[9px] sm:text-[10px] text-yellow-600 dark:text-yellow-400 font-medium mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="text-[9px] sm:text-[10px] text-gold dark:text-white font-medium mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {t('ui.click_details', 'Click to view details →')}
             </p>
           </div>
@@ -342,7 +342,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
                 <ul className="text-gray-600 dark:text-gray-400 space-y-1 sm:space-y-1.5">
                   {translatedContent.benefits.slice(0, 3).map((benefit, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full mr-1.5 sm:mr-2 mt-1 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gold rounded-full mr-1.5 sm:mr-2 mt-1 flex-shrink-0"></span>
                       <span className="text-[9px] sm:text-xs lg:text-sm leading-tight text-gray-700 dark:text-gray-300 line-clamp-2">{benefit}</span>
                     </li>
                   ))}
@@ -356,7 +356,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
                 <h4 className="text-xs lg:text-sm font-semibold luxury-subheading text-gray-800 dark:text-gray-200 mb-1.5">{t('ui.ingredients', 'Ingredients')}</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {(remedy.ingredients as string[]).slice(0, 4).map((ingredient, index) => (
-                    <span key={index} className="text-[10px] sm:text-xs px-2 py-1 bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 border border-yellow-200 dark:border-yellow-700/50 text-yellow-800 dark:text-yellow-200 rounded-full">
+                    <span key={index} className="text-[10px] sm:text-xs px-2 py-1 bg-gradient-to-r from-gold/50 to-gold dark:from-yellow-900/20 dark:to-yellow-800/20 border border-gold dark:border-gold text-green dark:text-gold rounded-full">
                       {String(ingredient).replace(' Extract', '').replace(' Oil', '')}
                     </span>
                   ))}

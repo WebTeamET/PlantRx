@@ -56,10 +56,10 @@ export default function DMCAPolicy() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <p className="text-xl text-white dark:text-gray-300 max-w-2xl mx-auto">
+              <p className="text-xl text-white dark:text-white max-w-2xl mx-auto">
                 Our commitment to respecting intellectual property rights and handling copyright claims under the Digital Millennium Copyright Act.
               </p>
-              <p className="text-sm text-white dark:text-gray-300 mt-6">
+              <p className="text-sm text-white dark:text-white mt-6">
                 Last updated: November 2025
               </p>
             </motion.div>

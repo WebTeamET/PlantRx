@@ -658,11 +658,10 @@ export default function Remedies() {
           </motion.div>
 
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-5 tracking-tight leading-tight px-2 mt-5">
-            <span className="text-black dark:from-white dark:via-gray-100 dark:to-white">
+            {/* <span className="text-black dark:from-white dark:via-gray-100 dark:to-white">
               <SplitText className="" text={t('remedies.title', '166+ Expert-Verified')} />
-            </span>
-            <br className="sm:hidden" />
-            <span className="bg-gradient-to-r from-green via-green/80 to-green/50 dark:from-gold dark:via-gold/80 dark:to-gold/50 bg-clip-text text-transparent">
+            </span> */}
+            <span className="text-green dark:text-white">
               {/* Natural Remedies */}
               <SplitText className="" text={t('remedies.title', '166+ Expert-Verified')} />
             </span>
@@ -984,15 +983,15 @@ export default function Remedies() {
                 {(searchQuery || selectedCategory !== "all" || difficultyFilter !== "all" || timeFilter !== "all" || formFilter !== "all" || sortBy !== "newest") && (
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 p-3 sm:p-4 bg-green-50 dark:bg-green-900/20 rounded-xl sm:rounded-2xl border border-green-200 dark:border-green-800">
                     <div className="flex flex-wrap items-center gap-2">
-                      <div className="w-2 h-2 bg-green rounded-full animate-pulse-stable"></div>
-                      <span className="text-sm font-medium text-green dark:text-emerald-300">Active filters:</span>
+                      <div className="w-2 h-2 bg-green dark:bg-white rounded-full animate-pulse-stable"></div>
+                      <span className="text-sm font-medium text-green dark:text-white">Active filters:</span>
                       {searchQuery && (
-                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-green/10 dark:bg-green-800 text-green dark:text-emerald-200 text-xs font-medium">
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-green/10 dark:bg-green-800 text-green dark:text-white text-xs font-medium">
                           Search: "{searchQuery.length > 15 ? searchQuery.substring(0, 15) + '...' : searchQuery}"
                         </div>
                       )}
                       {selectedCategory !== "all" && (
-                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-green/10 dark:bg-green-800 text-green dark:text-emerald-200 text-xs font-medium">
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-green/10 dark:bg-green-800 text-green dark:text-white text-xs font-medium">
                           {categories.find(c => c.value === selectedCategory)?.icon} {categories.find(c => c.value === selectedCategory)?.label}
                         </div>
                       )}
@@ -1074,7 +1073,7 @@ export default function Remedies() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-2xl sm:text-3xl font-bold text-green dark:text-emerald-400">
+                        <span className="text-2xl sm:text-3xl font-bold text-green dark:text-white">
                           {(remedies as any[]).length}
                         </span>
                         <span className="text-lg text-gray-600 dark:text-gray-400">of</span>
@@ -1082,8 +1081,8 @@ export default function Remedies() {
                         <span className="text-lg text-gray-600 dark:text-gray-400">remedies</span>
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                        {searchQuery && <>Searching for "<span className="text-green dark:text-emerald-400 font-medium">{searchQuery}</span>" </>}
-                        {selectedCategory !== "all" && (<>in <span className="text-green dark:text-emerald-400 font-medium">{categories.find(c => c.value === selectedCategory)?.label}</span></>)}
+                        {searchQuery && <>Searching for "<span className="text-green dark:text-white font-medium">{searchQuery}</span>" </>}
+                        {selectedCategory !== "all" && (<>in <span className="text-green dark:text-white font-medium">{categories.find(c => c.value === selectedCategory)?.label}</span></>)}
                         {!searchQuery && selectedCategory === "all" && "Explore our complete collection"}
                       </p>
                     </div>

@@ -175,8 +175,8 @@ export default function StripBenefits() {
                       transition: { duration: 0.65, ease: [0.34, 1.56, 0.64, 1] },
                     },
                   }}
-                  style={floatActive ? { animation: "mushroomFloat 5s ease-in-out infinite" } : undefined}
-                  className={`absolute max-w-[clamp(100px,18.75vw,270px)] max-h-[clamp(80px,16.67vw,240px)] z-[1] ${item.align === "left" ? "lg:-top-[5%] -right-[8%]" : "top-[0%] right-0 lg:-right-[5%]"}`}>
+                  // style={floatActive ? { animation: "mushroomFloat 5s ease-in-out infinite" } : undefined}
+                  className={`absolute max-w-[clamp(100px,18.75vw,270px)] max-h-[clamp(80px,16.67vw,240px)] z-[1] ${item.align === "left" ? "lg:-top-[12%] -right-[14%]" : "-top-[12%] right-0 lg:-right-[14%]"}`}>
                   <img src="/mashroom-banner-small.png" width={270} height={240} alt="mushroom" />
                 </motion.div>
                 <div
@@ -202,7 +202,7 @@ export default function StripBenefits() {
                   className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden title-stroke">
                   <motion.h3
                     className="relative text-center font-semibold text-black dark:text-black text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] "
-                    style={{ WebkitTextStroke: "clamp(2px, 3vw, 4px) #FFFFFF", color: "#000", willChange: "transform, opacity" }}
+                    style={{ WebkitTextStroke: "8px #FFFFFF", color: "#000", willChange: "transform, opacity" }}
                   >
                     {item.title}
                     {item.align === "left" ? (

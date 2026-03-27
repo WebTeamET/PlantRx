@@ -46,9 +46,8 @@ export default function StripZigzag({
           <h2
             className="text-[clamp(42px,_6vw,_76px)] leading-[1.3] font-semibold text-black dark:text-black mb-[30px] max-w-2xl"
             style={{ textShadow: titleShadow }}
-          >
-            {title}
-          </h2>
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
           {subtitle && (
             <p className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</p>
           )}

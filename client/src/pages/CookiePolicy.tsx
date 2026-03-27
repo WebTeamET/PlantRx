@@ -43,7 +43,7 @@ export default function CookiePolicy() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 bg-white dark:bg-gold/10 text-gold dark:text-gold px-4 py-2 rounded-full text-sm font-medium mb-6 border border-gold/30">
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-green/20 text-green dark:text-green px-4 py-2 rounded-full text-sm font-medium mb-6 border border-green">
                 <Cookie className="w-4 h-4" />
                 Privacy & Cookies
               </div>
@@ -59,10 +59,10 @@ export default function CookiePolicy() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <p className="text-xl text-white dark:text-gray-300 max-w-2xl mx-auto">
+              <p className="text-xl text-white dark:text-white max-w-2xl mx-auto">
                 Understanding how we use cookies to improve your experience on PlantRx.
               </p>
-              <p className="text-sm text-white dark:text-gray-400 mt-6">
+              <p className="text-sm text-white dark:text-white mt-6">
                 Last updated: November 2025
               </p>
             </motion.div>

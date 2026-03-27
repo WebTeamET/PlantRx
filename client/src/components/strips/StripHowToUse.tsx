@@ -24,22 +24,22 @@ const slides: Slide[] = [
   {
     title: "Open & Take",
     description: "Open the tin and gently take out one oral strip with clean, dry hands.",
-    image: "/attached_assets/remedy_images/Classic%20Turmeric%20Golden%20Milk%20Elixir.jpg"
+    image: "/strips-instruction-1.png"
   },
   {
     title: "Place Under Tongue",
     description: "Place the strip on or under your tongue for optimal absorption.",
-    image: "/attached_assets/remedy_images/Healing%20Aloe%20Burn%20Recovery%20Gel.jpg"
+    image: "/strips-instruction-2.png"
   },
   {
     title: "Let It Dissolve",
     description: "Allow the strip to fully dissolve—no chewing, no water needed.",
-    image: "/attached_assets/remedy_images/Calming%20Lavender%20Stress%20Relief%20Balm.jpg"
+    image: "/strips-instruction-3.png"
   },
   {
     title: "Enjoy the Benefits",
     description: "Experience fast absorption and convenient, anytime support. Take only one strip per day.",
-    image: "/attached_assets/remedy_images/Natural%20Olive%20Oil%20Hair%20Mask.jpg"
+    image: "/strips-instruction-4.png"
   }
 ]
 
@@ -53,6 +53,8 @@ function getPageY(el: HTMLElement) {
 
 function MobileHowToSlider() {
   const [current, setCurrent] = useState(0)
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
   useEffect(() => {
     const id = window.setTimeout(() => {
@@ -62,6 +64,26 @@ function MobileHowToSlider() {
     return () => window.clearTimeout(id)
   }, [current])
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setCurrent((prev) => Math.min(slides.length - 1, prev + 1))
+      } else {
+        setCurrent((prev) => Math.max(0, prev - 1))
+      }
+    }
+  }
+
   return (
     <section className="lg:hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-14">
       <div className="max-w-5xl mx-auto px-5">
@@ -70,14 +92,30 @@ function MobileHowToSlider() {
           <div
             className="flex transition-transform duration-500 ease-[0.22,1,0.36,1]"
             style={{ transform: `translateX(-${current * 100}%)` }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {slides.map((slide) => (
               <div key={slide.title} className="w-full flex-shrink-0">
-                <div className="p-6 text-center *:text-black">
-                  <h3 className="text-2xl font-semibold mb-3" style={{ textShadow: titleShadow }}>
+                <div className="p-6 text-center *:text-black dark:*:text-black title-stroke">
+                  <h3 className="text-2xl font-semibold mb-3 dark:!text-black"
+                  style={{
+                    textShadow: `
+                      0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
+                      0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
+                      0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
+                      0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
+                      0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
+                      0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
+                      0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
+                      0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
+                    `,
+                  }}
+                  >
                     {slide.title}
                   </h3>
-                  <p className="text-base leading-relaxed">{slide.description}</p>
+                  <p className="text-base leading-relaxed dark:text-black">{slide.description}</p>
                 </div>
                 <div className="px-6 pb-6">
                   <div className="h-72 rounded-xl overflow-hidden">

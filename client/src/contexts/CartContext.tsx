@@ -20,11 +20,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpenState] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Custom setCartOpen that scrolls to top when opening
   const setCartOpen = (open: boolean) => {
-    if (open) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
     setCartOpenState(open);
   };
 

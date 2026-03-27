@@ -268,7 +268,7 @@ function FeedbackForm() {
           ) : (
             <>
               <Send className="w-5 h-5" />
-              Submit Feedback
+              Submit Feedback 
             </>
           )}
         </motion.button>

@@ -42,7 +42,7 @@ export default function StripContent({ product, children }: StripContentProps) {
             initial="hidden"
             animate={sectionInView ? "visible" : "hidden"}
         >
-            <div className="absolute -top-[30px] lg:-top-[70px] right-0 w-[12vw] h-auto">
+            <div className="absolute -top-[30px] lg:-top-[140px] right-0 w-[12vw] h-auto">
                 <img src="/mushroom-group.png" alt="mushroom-group" />
             </div>
             <div className="absolute bottom-0 left-0 w-[6vw] h-auto">
