@@ -79,7 +79,7 @@ export default function StripFeatures() {
 
   return (
     //bg-gradient-to-b from-[#F7EFE6] from-[-3%] via-white via-50% to-[120%] to-[#F7EFE6]
-    <section className="feature-wrapper relative overflow-hidden py-[50px] lg:py-28"> 
+    <section className="feature-wrapper relative overflow-hidden py-[100px] lg:py-28"> 
       <div className="pointer-events-none absolute inset-0">
         <AnimatePresence mode="wait">
           <motion.img
@@ -87,7 +87,7 @@ export default function StripFeatures() {
             key={`feature-${active}-left`}
             src={activeFeature.leftImage}
             alt={activeFeature.leftAlt}
-            className="block absolute w-[120px] lg:w-[230px]"
+            className={`block absolute w-[100px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-0 max-lg:!bottom-auto" : "max-lg:!top-auto max-lg:!bottom-2.5"}`}
             style={{
               left: isOdd ? "30px" : "30px",
               top: isOdd ? "40px" : "auto",
@@ -109,7 +109,7 @@ export default function StripFeatures() {
             key={`feature-${active}-right`}
             src={activeFeature.rightImage}
             alt={activeFeature.rightAlt}
-            className="block absolute w-[120px] lg:w-[230px]"
+            className={`block absolute w-[100px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-auto max-lg:!bottom-0" : "max-lg:!top-2.5 max-lg:!bottom-auto"}`}
             style={{
               right: "30px",
               top: isOdd ? "auto" : "40px",

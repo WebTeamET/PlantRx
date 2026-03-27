@@ -41,20 +41,20 @@ export default function StripZigzag({
       <div className="mx-auto grid lg:grid-cols-3 gap-12 container">
         <div className={reverse ? "order-2 md:order-1" : "lg:col-span-2 lg:mb-[15vh]"}>
           {eyebrow && (
-            <p className="text-sm uppercase tracking-[0.2em] text-[#7a5a5c] mb-4">{eyebrow}</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-[#7a5a5c] dark:text-[#7a5a5c] mb-4">{eyebrow}</p>
           )}
           <h2
-            className="text-[clamp(42px,_6vw,_76px)] leading-[1.3] font-semibold text-black mb-[30px] max-w-2xl"
+            className="text-[clamp(42px,_6vw,_76px)] leading-[1.3] font-semibold text-black dark:text-black mb-[30px] max-w-2xl"
             style={{ textShadow: titleShadow }}
           >
             {title}
           </h2>
           {subtitle && (
-            <p className="text-lg text-black mb-4 max-w-2xl">{subtitle}</p>
+            <p className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</p>
           )}
-          <div className="space-y-5 text-black font-light max-w-4xl">
+          <div className="space-y-5 text-black dark:text-black font-light max-w-4xl">
             {paragraphs.map((p, idx) => (
-              <p className="text-base lg:text-lg lg:leading-9" key={idx}>{p}</p>
+              <p className="text-base lg:text-lg lg:leading-9 dark:text-black" key={idx}>{p}</p>
             ))}
           </div>
           {children}

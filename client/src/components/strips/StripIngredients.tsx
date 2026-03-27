@@ -38,7 +38,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                         <div className="w-full lg:max-w-[600px]">
                             <div className="title mb-[20px] lg:mb-[40px]">
                                 <h2
-                                    className="text-[clamp(48px,_4.5vw,_120px)] leading-[1] text-black font-semibold capitalize lg:max-w-[500px]"
+                                    className="text-[clamp(48px,_4.5vw,_120px)] leading-[1] text-black dark:text-black font-semibold capitalize lg:max-w-[500px]"
                                     style={{
                                     textShadow: `
                                         0 6px 0 #fff,  0 -6px 0 #fff,
@@ -56,7 +56,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 </h2>
                             </div>
                             <div className="content">
-                                <p className="lg:text-[20px] font-normal text-black leading-[1.5] lg:leading-[40px] capitalize">
+                                <p className="lg:text-[20px] font-normal text-black dark:text-black leading-[1.5] lg:leading-[40px] capitalize">
                                     Stay sharp and centered with Mushroom Focus Strips, a convenient and flavorful way to support your mental clarity and overall wellness. These smooth, chocolate-flavored oral strips dissolve on your tongue, delivering a curated blend of functional mushroom extracts traditionally valued for their role in promoting normal cognitive function and daily vitality.
                                 </p>
                             </div>      
@@ -72,7 +72,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(true)}
-                                    className="uppercase font-heading font-semibold text-[#6B3A3A] text-[clamp(18px,2.08vw,30px)] leading-none underline decoration-[#6B3A3A] underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
+                                    className="uppercase font-heading font-semibold text-[#6B3A3A] dark:text-[#6B3A3A] text-[clamp(18px,2.08vw,30px)] leading-none underline decoration-[#6B3A3A] underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
                                 >
                                     Full Ingredient List
                                 </button>

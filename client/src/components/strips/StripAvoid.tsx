@@ -111,7 +111,7 @@ export default function StripAvoid() {
       <div className="relative container mx-auto space-y-12">
         <div className="max-w-2xl">
           <h2
-            className="text-[clamp(42px,_5vw,_76px)] leading-[1.05] text-[#000] font-semibold"
+            className="text-[clamp(42px,_5vw,_76px)] leading-[1.05] text-[#000] dark:text-black font-semibold"
           >
             Who Should
             <br />
@@ -123,7 +123,7 @@ export default function StripAvoid() {
           {ITEMS.map((item, idx) => (
             <motion.div
               key={item.title}
-              className="relative lg:h-[375px] flex flex-col justify-between gap-[80px] rounded-[10px] border border-[#C2B3B0] bg-[#643A3D] text-white px-6 py-7"
+              className="relative lg:h-[375px] flex flex-col justify-between gap-[80px] rounded-[10px] border border-[#C2B3B0] bg-[#643A3D] text-white dark:text-white dark:*:text-white px-6 py-7"
               style={isDesktop ? { y: idx % 2 === 0 ? evenParallax : oddParallax } : undefined}
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}

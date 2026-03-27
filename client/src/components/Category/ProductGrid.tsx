@@ -71,9 +71,9 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
             <div className="container">
                 <motion.h2
                     variants={slideUpVariants as any}
-                    className='xl:mb-20 mb-10 text-center'
+                    className='xl:mb-20 mb-10 text-center dark:text-black'
                 >
-                    Discover <span className='text-gold'>Strips</span>
+                    Discover <span className='text-gold dark:text-gold'>Strips</span>
                 </motion.h2>
                 <div 
                 className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch">

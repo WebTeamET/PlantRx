@@ -89,7 +89,7 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
                         className="content-wrapper mx-auto xl:max-w-3xl max-w-xl ">
                         <motion.h1
                             variants={slideUpVariants as any}
-                            className='h1 mb-3'
+                            className='h1 mb-3 dark:text-black'
                             style={{
                                 willChange: 'transform, opacity',
                                 backfaceVisibility: 'hidden'
@@ -105,7 +105,7 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
                                 willChange: 'transform, opacity',
                                 backfaceVisibility: 'hidden'
                             }}
-                            className='h1 !font-recoletta text-gold'
+                            className='h1 !font-recoletta text-gold dark:text-gold'
                         >
                             {data.title}
                         </motion.p>

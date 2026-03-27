@@ -51,7 +51,7 @@ export default function StripContent({ product, children }: StripContentProps) {
             <div className="container py-[50px] lg:pt-0 lg:pb-[100px]">
                 <div className="title title-anim-typewriter">
                     <motion.h2
-                        className="text-[clamp(28px,_4.5vw,_100px)] leading-[1] text-black font-semibold text-center mb-5"                        
+                        className="text-[clamp(28px,_4.5vw,_100px)] leading-[1] text-black dark:text-black font-semibold text-center mb-5"                        
                     >
                         {sentence.split("").map((letter, i) => (
                             <motion.span
@@ -64,7 +64,7 @@ export default function StripContent({ product, children }: StripContentProps) {
                     </motion.h2>
                 </div>
                 <div className="content text-center">
-                    <p className=" text-[#818181] lg:leading-[50px] lg:max-w-[80%] mx-auto capitalize">
+                    <p className=" text-[#818181] dark:text-[#818181] lg:leading-[50px] lg:max-w-[80%] mx-auto capitalize">
                         are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.      
                     </p>
                 </div>

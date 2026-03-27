@@ -143,7 +143,7 @@ function SlideCard({
     >
       <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative h-fit">
         {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
-        <div className="relative z-10 pb-3 p-7 text-center *:text-black">
+        <div className="relative z-10 pb-3 p-7 text-center *:text-black dark:*:text-black">
           <h2
             className="mb-3 text-[clamp(28px,_5.5vw,_90px)] leading-[1.1]"
             style={{ textShadow: titleShadow }}

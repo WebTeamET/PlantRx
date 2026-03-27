@@ -106,7 +106,7 @@ export default function StripBenefits() {
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center max-md:mb-5 mb-[120px]">
           <h2
-            className="text-[clamp(42px,_7vw,_120px)] leading-[1.05] text-black font-semibold"
+            className="text-[clamp(42px,_7vw,_120px)] leading-[1.05] text-black dark:text-black font-semibold"
             style={{
               textShadow: `
                 0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
@@ -200,7 +200,7 @@ export default function StripBenefits() {
                   }}
                   className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden">
                   <motion.h3
-                    className="relative text-center font-semibold text-black text-[clamp(28px,_5.5vw,_90px)] leading-tight"
+                    className="relative text-center font-semibold text-black dark:text-black text-[clamp(28px,_5.5vw,_90px)] leading-tight"
                     style={{
                       textShadow: `
                         0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,

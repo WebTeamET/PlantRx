@@ -34,7 +34,7 @@ export default function StripAccordion() {
           className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-[#6E4B4C]"
         >
           <h2
-            className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] mb-10"
+            className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] dark:text-[#000] mb-10"
           >
             Your Questions, Answered
           </h2>
@@ -56,13 +56,17 @@ export default function StripAccordion() {
                     layout
                     transition={{ type: "spring", stiffness: 120, damping: 20 }}
                     className={`rounded-[16px] sm:rounded-[18px] px-5 sm:px-6 py-4 sm:py-5 ${
-                      isOpen ? "bg-[#643A3D] text-white" : "bg-[#EDEDED] text-[#2B1E1E]"
+                      isOpen ? "bg-[#643A3D] text-white dark:*:text-white" : "bg-[#EDEDED] text-[#2B1E1E] dark:*:text-[#2B1E1E]"
                     }`}
                   >
                     <div className="flex items-start gap-4 sm:gap-5">
-                      <div className="pt-[2px] text-[17px] font-semibold opacity-80">{idx + 1}.</div>
+                      <div className={`pt-[2px] text-[17px] font-semibold ${
+                          isOpen ? "text-white dark:text-white" : "text-[#2B1E1E] dark:text-[#2B1E1E]"
+                        }`}>{idx + 1}.</div>
                       <div className="flex-1 space-y-2">
-                        <div className="text-[17px] sm:text-[18px] font-semibold">{item.question}</div>
+                        <div className={`text-[17px] sm:text-[18px] font-semibold ${
+                          isOpen ? "text-white dark:text-white" : "text-[#2B1E1E] dark:text-[#2B1E1E]"
+                        }`}>{item.question}</div>
                         
                       </div>
                       <motion.span
@@ -87,7 +91,7 @@ export default function StripAccordion() {
                     >
                       <p
                         className={`text-[14px] sm:text-[15px] leading-[1.55] ${
-                          isOpen ? "text-white/90" : "text-[#2B1E1E]"
+                          isOpen ? "text-white dark:text-white" : "text-[#2B1E1E] dark:text-[#2B1E1E]"
                         }`}
                       >
                         {item.answer}

@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { FeedbackModal } from "@/components/FeedbackModal";
+import { useTheme } from "./ThemeProvider";
 
 function CollapsibleSection({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
@@ -33,6 +34,8 @@ function CollapsibleSection({ title, children, defaultOpen = false }: { title: s
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { theme } = useTheme();
+  const logoSrc = theme === "dark" ? "/logo-cream-darkmode.png" : "/logo-green.png";
   const [email, setEmail] = useState('');
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const { toast } = useToast();
@@ -192,7 +195,7 @@ export default function Footer() {
               <span className="text-2xl font-bold text-gray-900 dark:text-white">PlantRx</span>
             </div> */}
             <Link href="/" className="flex items-center mb-10">
-              <img src="/logo-green.png" alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
+              <img src={logoSrc} alt="logo" className="2xl:w-[150px] xl:w-[120px] w-[100px] h-auto"></img>
             </Link>
 
             {/* Main Grid: 5 columns */}
@@ -299,7 +302,7 @@ export default function Footer() {
           {/* Mobile Logo + Copyright */}
           <div className="md:hidden py-6 text-center">
             <Link href="/" className="flex items-center justify-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group ml-1 sm:ml-2 sm:-ml-4">
-              <img src="/logo-green.png" alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
+              <img src={logoSrc} alt="logo" className="2xl:w-[180px] xl:w-[150px] w-[100px] h-auto"></img>
             </Link>
             <p className="text-xs text-gray-500 dark:text-gray-500 mb-3 px-4">
               *These statements have not been evaluated by the FDA. Not intended to diagnose, treat, cure, or prevent any disease.

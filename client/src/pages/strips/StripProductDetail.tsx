@@ -131,13 +131,13 @@ export default function StripProductDetail() {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black">
+            <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black dark:*:text-black">
               <h4 className="md:text-xl text-base max-[370px]:text-sm font-recoletta">{product.title}</h4>
               <div className="price flex items-center gap-2">
-                <p className="text-base max-[370px]:text-sm font-semibold opacity-70">
+                <p className="text-base max-[370px]:text-sm font-semibold opacity-70 dark:text-black">
                   ${product.variants[0]?.price.amount}
                 </p>
-                <div className="flex items-center text-yellow-500 scale-75 origin-left">
+                <div className="flex items-center text-yellow-500 dark:text-yellow-500 scale-75 origin-left">
                   <Star className="w-4 h-4 fill-current" />
                   <span className="text-black ml-1 font-medium">4.9</span>
                 </div>
