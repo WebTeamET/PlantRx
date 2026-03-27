@@ -184,10 +184,10 @@ function StripHowToUse() {
       {/* Desktop / large screens: keep sticky scroll animation */}
       <section
         ref={containerRef}
-        className="how-to-wrapper relative py-24 lg:py-28 hidden lg:block"
+        className="how-to-wrapper relative ] hidden lg:block "
         style={{ height: `${slides.length * 150}vh` }}
       >
-        <div className="how-to-sticky sticky top-[50px] block h-screen justify-center overflow-hidden perspective-[1000px] bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white ">
+        <div className="how-to-sticky sticky top-[50px] py-24 lg:pb-28 lg:pt-[170px block h-screen justify-center overflow-hidden perspective-[1000px] bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_8.81%,#F7EFE6_51.44%,#F7EFE6_83.43%,rgba(247,239,230,0)_100%)]">
           <div className="how-to-stage relative w-full xl:max-w-[800px] max-w-[560px] mx-auto lg:aspect-[4/3]">
             {slides.map((slide, index) => (
               <SlideCard

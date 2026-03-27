@@ -8,9 +8,12 @@ import { stripsProductData } from './CategoryData';
 
 interface ProductGridProps {
     data?: Array<any>;
+    collectionName?: string;
+    title?: React.ReactNode;
 }
 
-function ProductGrid({ data: initialData }: ProductGridProps) {
+// function ProductGrid({ data: initialData }: ProductGridProps) {
+function ProductGrid({ data: initialData, collectionName, title }: ProductGridProps) {
     const [products, setProducts] = useState<any[]>(initialData || []);
     const [loading, setLoading] = useState(!initialData);
 
@@ -21,7 +24,37 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                     setLoading(true);
                     const fetchedProducts = await shopifyService.fetchProducts();
                     
-                    const mappedProducts = fetchedProducts.map((p: ShopifyProduct) => {
+                    // const mappedProducts = fetchedProducts.map((p: ShopifyProduct) => {
+                     let filteredProducts = fetchedProducts;
+                    if (collectionName) {
+                        const targetLower = collectionName.toLowerCase();
+                        filteredProducts = fetchedProducts.filter((p: ShopifyProduct) => {
+                            // Helper to check if a product is a Strip
+                            const isStrip = 
+                                p.productType?.toLowerCase().includes('strip') || 
+                                p.title.toLowerCase().includes('strip') || 
+                                p.tags?.some(t => t.toLowerCase().includes('strip'));
+
+                            // For "Strips" collection
+                            if (targetLower.includes('strip')) {
+                                return isStrip;
+                            }
+                            
+                            // For "Herbal Capsules" or "Supplements" collection
+                            if (targetLower.includes('capsule') || targetLower.includes('supplement')) {
+                                // If there are only 2 collections, everything that is NOT a strip goes here
+                                return !isStrip;
+                            }
+
+                            // Generic fallback
+                            if (p.productType && p.productType.toLowerCase().includes(targetLower)) return true;
+                            if (p.tags && p.tags.some(t => t.toLowerCase().includes(targetLower))) return true;
+                            
+                            return false;
+                        });
+                    }
+
+                    const mappedProducts = filteredProducts.map((p: ShopifyProduct) => {
                         const staticMatch = stripsProductData.products.find(
                             sp => sp.title.toLowerCase() === p.title.toLowerCase()
                         );
@@ -34,7 +67,8 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                             title: p.title,
                             variantId: p.variants[0]?.id || "",
                             price: p.variants[0]?.price.amount || "0.00",
-                            productLink: `/strips/${p.handle}`,
+                            // productLink: `/strips/${p.handle}`,
+                            productLink: (collectionName && collectionName.toLowerCase().includes('capsule')) ? `/supplement/${p.handle}` : `/strips/${p.handle}`,
                             productImage: p.images[0]?.url || '',
                             cardBgColor: '#F3F4F6', 
                             ingredients: finalIngredients
@@ -73,7 +107,8 @@ function ProductGrid({ data: initialData }: ProductGridProps) {
                     variants={slideUpVariants as any}
                     className='xl:mb-20 mb-10 text-center dark:text-black'
                 >
-                    Discover <span className='text-gold dark:text-gold'>Strips</span>
+                    {/* Discover <span className='text-gold dark:text-gold'>Strips</span> */}
+                    {title || <>Discover <span className='text-gold'>Strips</span></>}
                 </motion.h2>
                 <div 
                 className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch">

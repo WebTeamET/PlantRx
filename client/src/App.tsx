@@ -100,6 +100,7 @@ const AuthDiagnostic = lazy(() => import("@/pages/AuthDiagnostic"));
 const OrderDetails = lazy(() => import("@/pages/OrderDetails"));
 const Header = lazy(() => import("@/components/Header"));
 const StripCategory = lazy(() => import("@/pages/Strips"));
+const SupplementCategory = lazy(() => import("@/pages/SupplementCategory"));
 const MushroomFocusStrips = lazy(() => import("@/pages/strips/MushroomFocusStrips"));
 
 const StripProductDetail = lazy(() => import("@/pages/strips/StripProductDetail") );
@@ -230,7 +231,9 @@ function Router() {
               path="/strips"
               component={StripCategory}
             />
+            <Route path="/supplement" component={SupplementCategory} />
              <Route path="/strips/:handle" component={StripProductDetail} />
+             <Route path="/supplement/:handle" component={StripProductDetail} />
             <Route
               path="/essential-oils"
               component={EssentialOils}

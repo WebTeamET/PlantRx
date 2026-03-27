@@ -9,7 +9,11 @@ function StripCategoryListing() {
     <>
       <SvgLayout />
       <CollectionBanner data={stripsProductData.collection} />
-      <ProductGrid />
+      {/* <ProductGrid /> */}
+      <ProductGrid 
+        collectionName="Strips" 
+        title={<>Discover <span className='text-gold'>Strips</span></>}
+      />
     </>
   )
 }

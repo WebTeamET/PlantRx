@@ -48,10 +48,10 @@ export default function StripContent({ product, children }: StripContentProps) {
             <div className="absolute bottom-0 left-0 w-[6vw] h-auto">
                 <img src="/mushroom-group-2.png" alt="mushroom-group" />
             </div>
-            <div className="container py-[50px] lg:pt-0 lg:pb-[100px]">
+            <div className="new-container py-[50px] lg:pt-0 lg:pb-[100px]">
                 <div className="title title-anim-typewriter">
                     <motion.h2
-                        className="text-[clamp(28px,_4.5vw,_100px)] leading-[1] text-black dark:text-black font-semibold text-center mb-5"                        
+                        className="pdp-title-style text-black dark:text-black font-semibold text-center mb-5"                        
                     >
                         {sentence.split("").map((letter, i) => (
                             <motion.span
@@ -64,7 +64,7 @@ export default function StripContent({ product, children }: StripContentProps) {
                     </motion.h2>
                 </div>
                 <div className="content text-center">
-                    <p className=" text-[#818181] dark:text-[#818181] lg:leading-[50px] lg:max-w-[80%] mx-auto capitalize">
+                    <p className=" text-[#818181] dark:text-[#818181] text-xl leading-8 md:text-2xl md:leading-10 lg:text-4xl lg:leading-[80px] 2xl:text-[40px] 2xl:leading-[100px] 2xl:max-w-[1346px] md:max-w-[90%] mx-auto capitalize">
                         are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.      
                     </p>
                 </div>

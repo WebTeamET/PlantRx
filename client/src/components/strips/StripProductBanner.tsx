@@ -245,7 +245,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
               {/* ── Title: fade-up on load ── */}
               <motion.h2
-                className="text-[clamp(28px,_7vw,_120px)] leading-[100%] text-black dark:text-black relative z-[99]"
+                className="pdp-title-style text-black dark:text-black relative z-[99]"
                 style={{
                   textShadow: `
                     0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,

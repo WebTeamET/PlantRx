@@ -91,7 +91,7 @@ export default function StripBenefits() {
   return (
     <section
       ref={sectionRef}
-      className="strip-benefits-section relative overflow-hidden bg-gradient-to-b from-[#F7EFE6] via-white to-white py-[50px] lg:py-[120px] font-sans"
+      className="strip-benefits-section relative overflow-hidden py-[50px] lg:pt-[120px] lg:pb-[150px]"
     >
       <style>{`
         @keyframes floatSway {
@@ -106,7 +106,7 @@ export default function StripBenefits() {
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center max-md:mb-5 mb-[120px]">
           <h2
-            className="text-[clamp(42px,_7vw,_120px)] leading-[1.05] text-black dark:text-black font-semibold"
+            className="pdp-title-style text-black dark:text-black font-semibold"
             style={{
               textShadow: `
                 0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
@@ -130,9 +130,9 @@ export default function StripBenefits() {
           style={isDesktop ? { minHeight: "1400px" } : undefined}
         >
           <motion.img
-            src="/strip-2.png"
+            src="/strip-benefit-product-image.png"
             alt="Mushroom focus strips path runner"
-            className="max-lg:hidden stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px] drop-shadow-2xl"
+            className="max-lg:hidden stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px]"
             style={{
               offsetPath: `path('${PATH_DEF}')`,
               WebkitOffsetPath: `path('${PATH_DEF}')`,
@@ -184,6 +184,7 @@ export default function StripBenefits() {
                   <img src="/mushroom-group-2.png" width={90} height={187} alt="mushroom" />
                 </div>
                 <div
+                
                   style={{
                     backgroundColor: item.bg,
                     WebkitMaskImage: `url(\"data:image/svg+xml,${SHAPE_MASK_DATA_URI}\")`,
@@ -198,21 +199,10 @@ export default function StripBenefits() {
                     // minHeight: "360px",
                     maxHeight: "576px",
                   }}
-                  className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden">
+                  className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden title-stroke">
                   <motion.h3
-                    className="relative text-center font-semibold text-black dark:text-black text-[clamp(28px,_5.5vw,_90px)] leading-tight"
-                    style={{
-                      textShadow: `
-                        0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
-                        0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
-                        0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
-                        0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
-                        0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
-                        0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
-                        0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
-                        0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
-                      `, 
-                    }}
+                    className="relative text-center font-semibold text-black dark:text-black text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] "
+                    style={{ WebkitTextStroke: "clamp(2px, 3vw, 4px) #FFFFFF", color: "#000", willChange: "transform, opacity" }}
                   >
                     {item.title}
                     {item.align === "left" ? (

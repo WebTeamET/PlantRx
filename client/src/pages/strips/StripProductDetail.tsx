@@ -190,8 +190,10 @@ export default function StripProductDetail() {
         {/* Observer Target for Hide CTA */}
         <StripContent />
         <StripTopics />
+        <div className="bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_51.44%,rgba(247,239,230,0)_100%)]">
         <StripIngredients />
         <StripBenefits />
+        </div>
         <StripHowToUse />
         <StripAvoid />
         <StripAccordion />

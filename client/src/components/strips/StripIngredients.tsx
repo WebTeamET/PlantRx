@@ -31,14 +31,14 @@ export default function StripIngredients({ product, children }: StripIngredients
     return (
         <>
             <section
-                className="block w-full relative bg-gradient-to-t from-[#F7EFE6] to-transparent"
+                className="block w-full relative"
             >
                 <div className="container py-[50px] lg:pt-[180px] lg:pb-[30px]">
                     <div className="flex flex-wrap items-start justify-center gap-[50px] w-full">
                         <div className="w-full lg:max-w-[600px]">
                             <div className="title mb-[20px] lg:mb-[40px]">
                                 <h2
-                                    className="text-[clamp(48px,_4.5vw,_120px)] leading-[1] text-black dark:text-black font-semibold capitalize lg:max-w-[500px]"
+                                    className="pdp-title-style text-black dark:text-black font-semibold capitalize lg:max-w-[500px]"
                                     style={{
                                     textShadow: `
                                         0 6px 0 #fff,  0 -6px 0 #fff,
@@ -95,17 +95,28 @@ export default function StripIngredients({ product, children }: StripIngredients
                         <motion.div
                             className="absolute inset-0 bg-[#F7EFE6]/20 backdrop-blur-2xl"
                             initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            animate={{ opacity: 1, transition: { duration: 0.2, ease: "easeOut" } }}
+                            exit={{ opacity: 0, transition: { duration: 1, ease: "easeIn" } }}
                             onClick={() => setIsModalOpen(false)}
                             aria-hidden="true"
                         />
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.75, y: 0 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.75, y: 0 }}
-                            transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
+                            variants={{
+                                hidden: { opacity: 0, scale: 0.75 },
+                                visible: {
+                                    opacity: 1,
+                                    scale: 1,
+                                    transition: { duration: 0.5, ease: "easeOut", delay: 0.3 },
+                                },
+                                exit: {
+                                    opacity: 0,
+                                    scale: 0.75,
+                                    transition: { duration: 1, ease: "easeOut" },
+                                },
+                            }}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
                             className="relative px-[25px] py-[50px] lg:p-[50px] z-10 w-full max-w-5xl bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px] overflow-hidden"
                             role="dialog"
                             aria-modal="true"

@@ -83,7 +83,6 @@ export default function StripFeatures() {
       <div className="pointer-events-none absolute inset-0">
         <AnimatePresence mode="wait">
           <motion.img
-            // Key must change per active item; image src is reused so include index
             key={`feature-${active}-left`}
             src={activeFeature.leftImage}
             alt={activeFeature.leftAlt}
@@ -92,9 +91,8 @@ export default function StripFeatures() {
               left: isOdd ? "30px" : "30px",
               top: isOdd ? "40px" : "auto",
               bottom: isOdd ? "auto" : "40px",
-              // filter: "drop-shadow(0 22px 32px rgba(0,0,0,0.16))",
             }}
-            initial={{ opacity: 0, scale: 0, rotate: -4, y: isOdd ? -10 : 10 }}
+            initial={{ opacity: 0, scale: 0.5, rotate: isOdd ? -8 : -10, x: isOdd ? -4 : -10, y: isOdd ? 4 : 10 }}
             animate={{
               opacity: isMobile ? 0.95 : 1,
               scale: 1,
@@ -102,8 +100,8 @@ export default function StripFeatures() {
               x: isOdd ? -4 : -10,
               y: isOdd ? 4 : 10,
             }}
-            exit={{ opacity: 0, scale: 0.5, rotate: -2, y: isOdd ? -10 : 10 }}
-            transition={{ type: "spring", stiffness: 220, damping: 16, mass: 0.01 }}
+            exit={{ opacity: 0, scale: 0.5, rotate: isOdd ? -8 : -10, x: isOdd ? -4 : -10, y: isOdd ? 4 : 10 }}
+            transition={{ type: "spring", stiffness: 700, damping: 35, mass: 0.3 }}
           />
           <motion.img
             key={`feature-${active}-right`}
@@ -114,9 +112,8 @@ export default function StripFeatures() {
               right: "30px",
               top: isOdd ? "auto" : "40px",
               bottom: isOdd ? "40px" : "auto",
-              // filter: "drop-shadow(0 22px 32px rgba(0,0,0,0.16))",
             }}
-            initial={{ opacity: 0, scale: 0, rotate: 4, y: isOdd ? -10 : 10 }}
+            initial={{ opacity: 0, scale: 0.5, rotate: isOdd ? 10 : 12, x: isOdd ? 8 : 12, y: isOdd ? -6 : -10 }}
             animate={{
               opacity: isMobile ? 0.95 : 1,
               scale: 1,
@@ -124,8 +121,8 @@ export default function StripFeatures() {
               x: isOdd ? 8 : 12,
               y: isOdd ? -6 : -10,
             }}
-            exit={{ opacity: 0, scale: 0.5, rotate: 2, y: isOdd ? -10 : 10 }}
-            transition={{ type: "spring", stiffness: 220, damping: 16, mass: 0.01 }}
+            exit={{ opacity: 0, scale: 0.5, rotate: isOdd ? 10 : 12, x: isOdd ? 8 : 12, y: isOdd ? -6 : -10 }}
+            transition={{ type: "spring", stiffness: 700, damping: 35, mass: 0.3 }}
           />
         </AnimatePresence>
       </div>
@@ -154,7 +151,7 @@ export default function StripFeatures() {
                   animate={{
                     color: isActive ? "#63383D" : "#000",
                   }}
-                  transition={{ type: "spring", stiffness: 220, damping: 16, mass: 0.8 }}
+                  transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
                   {item.title}
                 </motion.p>

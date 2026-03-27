@@ -255,6 +255,7 @@ export default function Header() {
       isPremium: false,
       subItems: [
         { href: "/strips", label: "Strips", isPremium: false, icon: Grip, color: "text-green-500" },
+        { href: "/supplement", label: "Supplement", isPremium: false, icon: Grip, color: "text-green-500" },
         // { href: "/store/saved", label: "Saved", isPremium: false, icon: Bookmark, color: "text-rose-500" },
         // { href: "/store/saved", label: "Saved", isPremium: false, icon: Bookmark, color: "text-rose-500" },
       ],
