@@ -776,6 +776,7 @@ export default function Signup() {
                       checked={agreeToTerms}
                       onCheckedChange={(checked) => setAgreeToTerms(checked === true)}
                       className="mt-0.5"
+                      aria-label="input"
                     />
                     <Label
                       htmlFor="terms-desktop"
@@ -794,6 +795,7 @@ export default function Signup() {
                   <div className="w-full mx-auto flex justify-center">
                     <Button
                       type="submit"
+                      aria-label="button"
                       className="ctm-button btn-green mx-auto w-max !border-none !min-w-[200px]"
                       disabled={isLoading || isGoogleLoading || isAppleLoading}
                     >

@@ -271,6 +271,7 @@ export default function Store() {
                       type="email"
                       placeholder="Enter your email for updates"
                       value={email}
+                      aria-label='input'
                       onChange={(e) => setEmail(e.target.value)}
                       className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white min-h-[48px] text-base"
                       required
@@ -337,6 +338,7 @@ export default function Store() {
                       type="text"
                       placeholder="Search products..."
                       value={searchQuery}
+                      aria-label='input'
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
                     />
@@ -379,10 +381,6 @@ export default function Store() {
               </div>
 
               <motion.div
-                variants={containerVariants as any}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ margin: "-80px", once: true }}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
                 {(showAllProducts ? filteredProducts : filteredProducts.slice(0, 16)).map((product) => {
                   const isStrip =

@@ -302,6 +302,7 @@ viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-
                       <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">Full Name *</label>
                       <Input
                         value={formData.name}
+                        aria-label='input'
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Your full name"
                         required
@@ -313,6 +314,7 @@ viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-
                       <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">Email Address *</label>
                       <Input
                         type="email"
+                        aria-label='input'
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="your.email@example.com"
@@ -349,6 +351,7 @@ viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         placeholder="Brief description"
                         required
+                        aria-label='input'
                         data-testid="input-subject"
                         className="bg-white dark:bg-gray-800 border-gold/30 focus:border-gold focus:ring-gold/20"
                       />
@@ -363,6 +366,7 @@ viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-
                       placeholder="Please describe your inquiry in detail..."
                       rows={5}
                       required
+                      aria-label='textarea'
                       data-testid="textarea-message"
                       className="bg-white dark:bg-gray-800 border-gold/30 focus:border-green focus:ring-green/20"
                     />
@@ -372,6 +376,7 @@ viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-
                     <input
                       type="checkbox"
                       id="urgent"
+                      aria-label='input'
                       checked={formData.urgent}
                       onChange={(e) => setFormData({ ...formData, urgent: e.target.checked })}
                       className="w-4 h-4 rounded border-gold/30 text-gold focus:ring-gold/20"

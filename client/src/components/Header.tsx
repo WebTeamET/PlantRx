@@ -342,6 +342,7 @@ export default function Header() {
                     </Link>
                   ) : (
                     <button
+                    aria-label="button"
                       className="luxury-subheading text-base transition-all duration-300 whitespace-nowrap text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold flex items-center gap-1"
                     >
                       {item.label}
@@ -622,6 +623,7 @@ export default function Header() {
                             <>
                               <button
                                 onClick={() => setExpandedMobMenus(prev => ({ ...prev, [idx]: !isExpanded }))}
+                                aria-label="button"
                                 className={`group block w-full px-4 py-3 min-h-[48px] rounded-xl text-left text-base font-medium transition-all duration-300 ease-out flex items-center justify-between active:scale-[0.98] ${item.href && (location === item.href || location.startsWith(item.href + '/'))
                                   ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/20 dark:to-gold/10 text-gold dark:text-gold shadow-sm"
                                   : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-gold dark:hover:text-gold hover:shadow-sm"

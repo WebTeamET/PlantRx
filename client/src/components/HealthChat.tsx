@@ -520,6 +520,7 @@ export default function   HealthChat() {
                 onKeyDown={handleKeyPress}
                 placeholder="Ask about any health concern..."
                 disabled={isLoading}
+                aria-label="search-input"
                 className="w-full text-sm sm:text-base dark:text-black rounded-full bg-white dark:bg-white border border-gold dark:border-green focus-visible:ring-2 focus-visible:ring-green focus-visible:border-green px-4 sm:px-5 py-2.5 sm:py-3 min-h-[48px] shadow-sm placeholder:text-black dark:placeholder:text-green transition-all duration-200"
                 data-testid="input-health-question"
               />

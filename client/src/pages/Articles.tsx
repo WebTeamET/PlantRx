@@ -240,6 +240,7 @@ export default function Articles() {
                     type="text"
                     placeholder="Search articles, topics, or remedies..."
                     value={searchQuery}
+                    aria-label="search-input"
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 h-11 sm:h-12 lg:h-14 text-sm sm:text-base rounded-lg sm:rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm"
                     data-testid="articles-search-input"

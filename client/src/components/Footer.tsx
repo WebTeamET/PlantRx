@@ -108,6 +108,7 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 bg-gold/5 dark:bg-gray-900 border-gold/30 dark:border-gold/10 focus:border-gold focus:ring-gold/20 h-12"
                 data-testid="input-newsletter-email-mobile"
+                aria-label="email input"
               />
               <Button
                 type="submit"

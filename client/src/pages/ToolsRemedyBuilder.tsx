@@ -485,6 +485,7 @@ export default function ToolsRemedyBuilder() {
                         <Input
                           placeholder={t('home.generator.need.placeholder', 'Describe your health concern in detail...')}
                           value={remedyNeed}
+                          aria-label="search-input"
                           onChange={(e) => setRemedyNeed(e.target.value)}
                           className="text-sm sm:text-base lg:text-lg p-3 sm:p-5 lg:p-6 min-h-[44px] sm:min-h-[56px] border-2 border-gray-200/80 dark:border-gray-700/80 rounded-xl sm:rounded-2xl focus:border-gold dark:focus:border-gold focus:ring-4 focus:ring-gold/20 bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white shadow-sm hover:shadow-md transition-shadow"
                           data-testid="input-remedy-need"
@@ -497,6 +498,7 @@ export default function ToolsRemedyBuilder() {
                             <button
                               key={suggestion.label}
                               type="button"
+                              aria-label="button"
                               onClick={() => setRemedyNeed(prev => prev ? `${prev}, ${suggestion.label.toLowerCase()}` : suggestion.label.toLowerCase())}
                               className="inline-flex items-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-lg sm:rounded-xl border-2 border-gray-100 dark:border-gray-700 hover:border-gold dark:hover:border-gold hover:bg-gold/10 dark:hover:bg-gold/10 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group/btn"
                               data-testid={`suggestion-${suggestion.label.toLowerCase().replace(' ', '-')}`}
@@ -530,6 +532,7 @@ export default function ToolsRemedyBuilder() {
                       <Textarea
                         placeholder={t('home.generator.preferences.placeholder', 'Share your preferences...')}
                         value={preferences}
+                        aria-label="textarea"
                         onChange={(e) => setPreferences(e.target.value)}
                         className="resize-none h-20 sm:h-28 text-sm sm:text-base lg:text-lg p-3 sm:p-5 lg:p-6 border-2 border-gray-200/80 dark:border-gray-700/80 rounded-xl sm:rounded-2xl focus:border-green dark:focus:border-green focus:ring-4 focus:ring-green/20 bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white shadow-sm hover:shadow-md transition-shadow"
                         data-testid="input-preferences"

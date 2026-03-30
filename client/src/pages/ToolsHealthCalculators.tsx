@@ -462,6 +462,7 @@ export default function ToolsHealthCalculators() {
                       <div>
                         <Input
                           type="number"
+                          aria-label="input"
                           placeholder="e.g., 175"
                           value={heightCm}
                           onChange={(e) => setHeightCm(e.target.value)}
@@ -476,6 +477,7 @@ export default function ToolsHealthCalculators() {
                           <Input
                             type="number"
                             placeholder="Feet"
+                            aria-label="input"
                             value={feet}
                             onChange={(e) => setFeet(e.target.value)}
                             className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.feet ? "border-red-500" : ""}`}
@@ -487,6 +489,7 @@ export default function ToolsHealthCalculators() {
                           <Input
                             type="number"
                             placeholder="Inches"
+                            aria-label="input"
                             value={inches}
                             onChange={(e) => setInches(e.target.value)}
                             className={`h-14 sm:h-12 text-lg sm:text-base focus:border-gold focus:ring-gold/20 ${errors.inches ? "border-red-500" : ""}`}
@@ -513,6 +516,7 @@ export default function ToolsHealthCalculators() {
                     </div>
                     <Input
                       type="number"
+                      aria-label="input"
                       placeholder={weightUnit === "kg" ? "e.g., 70" : "e.g., 154"}
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
@@ -537,6 +541,7 @@ export default function ToolsHealthCalculators() {
                     </div>
                     <Input
                       type="number"
+                      aria-label="input"
                       placeholder={waistUnit === "cm" ? "e.g., 85" : "e.g., 33"}
                       value={waist}
                       onChange={(e) => setWaist(e.target.value)}
@@ -550,6 +555,7 @@ export default function ToolsHealthCalculators() {
                     <Label className="text-base sm:text-base font-medium text-gray-700 dark:text-gray-300">Age (optional)</Label>
                     <Input
                       type="number"
+                      aria-label="input"
                       placeholder="e.g., 35"
                       value={age}
                       onChange={(e) => setAge(e.target.value)}

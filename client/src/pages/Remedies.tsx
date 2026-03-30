@@ -751,6 +751,7 @@ export default function Remedies() {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-14 sm:pl-16 pr-12 py-3 sm:py-4 min-h-[48px] sm:min-h-[56px] text-sm sm:text-base border-2 outline-0 focus:outline-0 border-gray-200 dark:border-gray-700 rounded-xl sm:rounded-2xl focus:border-green dark:focus:border-gold focus:ring-4 focus:ring-green bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm transition-all duration-300 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         data-testid="search-input"
+                        aria-label='input'
                       />
                       {searchQuery && (
                         <Button

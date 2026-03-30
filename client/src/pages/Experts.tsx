@@ -171,6 +171,7 @@ function ExpertsContent() {
                       <Input
                         placeholder="Search experts by name or specialization..."
                         value=""
+                        aria-label='input'
                         className="pl-12 sm:pl-16 pr-4 sm:pr-6 py-4 sm:py-6 bg-transparent border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-300 focus:ring-0 text-base sm:text-lg rounded-xl sm:rounded-2xl"
                         disabled
                       />
@@ -281,6 +282,7 @@ function ExpertsContent() {
                       <Input
                         placeholder="Enter your email address"
                         type="email"
+                        aria-label='input'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required

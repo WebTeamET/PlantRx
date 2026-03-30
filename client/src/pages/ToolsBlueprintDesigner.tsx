@@ -203,6 +203,7 @@ function FeedbackForm() {
             <motion.button
               key={star}
               type="button"
+              aria-label="button"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setRating(star)}
