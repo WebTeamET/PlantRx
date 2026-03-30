@@ -131,7 +131,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                             initial="hidden"
                             animate="visible"
                             exit="exit"
-                            className="relative p-5 md:px-[25px] md:py-[50px] lg:p-[50px] z-10 w-full max-w-[1284px] max-h-[90dvh] overflow-y-auto bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px]"
+                            className="relative p-5 md:px-[25px] md:py-[50px] lg:p-[50px] z-10 w-full max-w-[1284px] max-h-[90dvh] overflow-y-hidden bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px]"
                             role="dialog"
                             aria-modal="true"
                             aria-label="Full ingredient list"

@@ -86,7 +86,7 @@ const CollectionBanner: React.FC<CollectionBannerProps> = ({ data }) => {
                                 </motion.div>
                             ))}
                     <div
-                        className="content-wrapper mx-auto xl:max-w-3xl max-w-xl ">
+                        className="content-wrapper mx-auto xl:max-w-[65rem] max-w-xl ">
                         <motion.h1
                             variants={slideUpVariants as any}
                             className='h1 mb-3 dark:text-black'

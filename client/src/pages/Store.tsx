@@ -9,10 +9,13 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Leaf, Sparkles, CheckCircle, Award, Mail, ShoppingCart, Loader2 } from 'lucide-react';
 import { shopifyService, type ShopifyProduct, getProductIngredients } from '@/lib/shopify';
-import ProductCard from '@/components/Category/ProductCard2';
 import { useCart } from '@/contexts/CartContext';
 import { ShoppingCart as CartComponent } from '@/components/ShoppingCart';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { containerVariants, slideRightVariantsFast, slideUpVariants } from '@/animation/framerMotionVariants';
+import { SplitText } from '@/utils/SplitText';
+import { motion } from 'framer-motion';
+import ProductCard2 from '@/components/Category/ProductCard2';
 
 export default function Store() {
   // Enhanced analytics tracking for store pages
@@ -172,40 +175,71 @@ export default function Store() {
       <Header />
 
       {/* Hero Section */}
-      <ScrollReveal variant="fadeUp">
-        <section className="relative py-16 sm:py-24 px-3 sm:px-4 text-center">
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 via-transparent to-cyan-600/10 dark:from-amber-600/5 dark:via-transparent dark:to-cyan-600/5" />
-          <div className="relative max-w-6xl mx-auto">
-            <div className="inline-flex items-center bg-gradient-to-r from-amber-500/20 to-cyan-500/20 backdrop-blur-sm border border-amber-400/30 rounded-full px-3 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8">
-              <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 text-amber-400 mr-1 sm:mr-2" />
-              <span className="text-amber-700 dark:text-amber-200 font-bold tracking-wide text-xs sm:text-sm">
-                <span className="hidden sm:inline">PREMIUM NATURAL PRODUCTS</span>
-                <span className="sm:hidden">PREMIUM PRODUCTS</span>
-              </span>
-              <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 text-cyan-400 ml-1 sm:ml-2" />
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
-              <div className="bg-gradient-to-br from-emerald-500 via-green-400 to-emerald-600 p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-2xl border border-emerald-400/50 backdrop-blur-sm sm:mr-6">
-                <Leaf className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white drop-shadow-lg" />
-              </div>
-              <h1 className="font-playfair text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white leading-tight">
-                <span className="block">PLANTRX</span>
-                <span className="block bg-gradient-to-r from-amber-400 via-yellow-300 to-cyan-400 bg-clip-text text-transparent">
-                  WELLNESS SHOP
-                </span>
-              </h1>
-            </div>
-
-            <p className="text-base sm:text-xl text-gray-600 dark:text-slate-300 max-w-4xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2 sm:px-0">
-              Experience the future of natural wellness with our premium collection of scientifically-backed, ethically-sourced products. Each item is verified by our expert team for maximum potency and effectiveness.
-            </p>
+       <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom hero-desktop">
+        {/* Premium Header */}
+        <div className="text-center mb-6 sm:mb-10 relative overflow-hidden py-6 sm:py-10">
+          <div className="absolute inset-0 -z-10 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-emerald-200/40 via-teal-200/30 to-green-200/40 dark:from-emerald-900/30 dark:via-teal-900/25 dark:to-green-900/30 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-1/4 w-[300px] h-[300px] bg-gradient-to-br from-amber-200/20 to-transparent dark:from-amber-900/15 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-1/4 w-[250px] h-[250px] bg-gradient-to-tr from-cyan-200/20 to-transparent dark:from-cyan-900/15 rounded-full blur-2xl"></div>
+            <div className="absolute top-8 left-[15%] w-3 h-3 bg-emerald-400/30 dark:bg-emerald-500/20 rounded-full animate-float-slow"></div>
+            <div className="absolute top-16 right-[20%] w-2 h-2 bg-teal-400/40 dark:bg-teal-500/25 rounded-full animate-float-delayed"></div>
+            <div className="absolute bottom-12 left-[25%] w-2.5 h-2.5 bg-green-400/35 dark:bg-green-500/20 rounded-full animate-float-slow"></div>
+            <div className="absolute bottom-8 right-[30%] w-2 h-2 bg-emerald-300/30 dark:bg-emerald-400/20 rounded-full animate-float-delayed"></div>
           </div>
-        </section>
-      </ScrollReveal>
+
+          <motion.div variants={slideUpVariants as any} initial="hidden" animate="visible">
+            <div className="flex justify-center mb-4">
+              <div className="relative">
+                <div className="absolute inset-0 shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] dark:bg-emerald-500/20 rounded-full blur-xl scale-150"></div>
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-green dark:bg-gold rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(194, 160, 88,0.1)] rotate-3 shadow-lg">
+                  <span className="text-2xl sm:text-3xl invert-[1] filter brightness-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/70 dark:bg-gold/20 backdrop-blur-md rounded-full border border-green/50 dark:border-gold/40 shadow-lg shadow-green/20 dark:shadow-gold/20">
+                <span className="flex h-2.5 w-2.5 sm:h-3 sm:w-3 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green dark:bg-gold opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-full w-full bg-green dark:bg-gold"></span>
+                </span>
+                <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold tracking-wide">
+                Premium Natural Products
+                </span>
+                
+              </div>
+            </div>
+          </motion.div>
+
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-5 tracking-tight leading-tight px-2 mt-5">
+            {/* <span className="text-black dark:from-white dark:via-gray-100 dark:to-white">
+              <SplitText className="" text={t('remedies.title', '166+ Expert-Verified')} />
+            </span> */}
+            <span className="text-green dark:text-white">
+              {/* Natural Remedies */}
+              <SplitText className="" text={"PlantRx Wellness Shop"} />
+            </span>
+          </h1>
+
+          <div className="flex items-center justify-center gap-3 mb-4 sm:mb-5">
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-gold"></div>
+            <div className="w-2 h-2 bg-gold dark:bg-gold rounded-full"></div>
+            <div className="w-12 sm:w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent dark:via-gold"></div>
+          </div>
+
+          <motion.p variants={slideUpVariants as any} initial="hidden" animate="visible"
+            className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-4"
+          >
+            {t('Experience the future of natural wellness with our premium collection of scientifically-backed, ethically-sourced products. Each item is verified by our expert team for maximum potency and effectiveness.')}
+          </motion.p>
+        </div>
+        </div>
 
       {/* Products Section */}
-      <section className="py-16 sm:py-32 px-3 sm:px-4 relative">
+      <section className="pb-16 sm:pb-32 px-3 sm:px-4 relative mt-10">
         <div className="max-w-7xl mx-auto">
 
           {loading ? (
@@ -279,7 +313,9 @@ export default function Store() {
           ) : (
             /* Products Display */
             <>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
+              <motion.div 
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
                   <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Discover our expertly curated collection of natural wellness products</p>
@@ -287,13 +323,19 @@ export default function Store() {
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                   {showAllProducts ? filteredProducts.length : Math.min(16, filteredProducts.length)} of {filteredProducts.length} products
                 </div>
-              </div>
+              </motion.div>
 
               {/* Filters */}
               <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5 sm:p-4 mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <motion.div 
+                variants={containerVariants as any}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Search */}
-                  <div>
+                  <motion.div
+                  variants={slideRightVariantsFast as any}
+                  >
                     <Input
                       type="text"
                       placeholder="Search products..."
@@ -301,10 +343,12 @@ export default function Store() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Availability */}
-                  <div>
+                  <motion.div
+                  variants={slideRightVariantsFast as any}
+                  >
                     <Select value={availabilityFilter} onValueChange={(value) => setAvailabilityFilter(value as any)}>
                       <SelectTrigger className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                         <SelectValue placeholder="Availability" />
@@ -315,10 +359,12 @@ export default function Store() {
                         <SelectItem value="out-of-stock">Out of Stock</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
+                  </motion.div>
 
                   {/* Sort */}
-                  <div>
+                  <motion.div
+                  variants={slideRightVariantsFast as any}
+                  >
                     <Select value={sortBy} onValueChange={(value) => setSortBy(value as any)}>
                       <SelectTrigger className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                         <SelectValue placeholder="Sort by" />
@@ -331,11 +377,16 @@ export default function Store() {
                         <SelectItem value="name-z-a">Name: Z to A</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch">
+              <motion.div 
+              variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ margin: "-80px", once: true }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
                 {(showAllProducts ? filteredProducts : filteredProducts.slice(0, 16)).map((product) => {
                   const isStrip =
                     product.productType?.toLowerCase().includes('strip') ||
@@ -348,7 +399,7 @@ export default function Store() {
                     : `/supplements/${product.handle}`;
 
                   return (
-                    <ProductCard
+                    <ProductCard2
                       key={product.id}
                       product={{
                         id: product.id,
@@ -363,14 +414,14 @@ export default function Store() {
                     />
                   );
                 })}
-              </div>
+              </motion.div>
 
               {/* View More Button */}
-              {filteredProducts.length > 16 && !showAllProducts && (
+              {filteredProducts.length > 20 && !showAllProducts && (
                 <div className="text-center mt-12">
                   <Button
                     onClick={() => setShowAllProducts(true)}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                    className="ctm-button btn-green"
                   >
                     View More Products ({filteredProducts.length - 16} more)
                   </Button>
@@ -380,29 +431,29 @@ export default function Store() {
           )}
 
           {/* Store Features - Always show */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-3 xl:gap-6 md:mt-[120px] mt-20 justify-between items-start">
             <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Expert Verified</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">All products vetted by our team of natural health experts</p>
+              <h3 className="text-lg font-bold text-black dark:text-white mb-1">Expert Verified</h3>
+              <p className="text-sm text-black dark:text-gray-300">All products vetted by our team of natural health experts</p>
             </div>
 
             <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
                 <Award className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Lab Tested</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Third-party tested for purity, potency, and safety</p>
+              <h3 className="text-lg font-bold text-black dark:text-white mb-1">Lab Tested</h3>
+              <p className="text-sm text-black dark:text-gray-300">Third-party tested for purity, potency, and safety</p>
             </div>
 
             <div className="text-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-[linear-gradient(to_right,#385127_0%,#c2a058_51%,#385127_100%)] bg-[length:200%_auto] rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Premium Quality</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Sustainably sourced from trusted global suppliers</p>
+              <h3 className="text-lg font-bold text-black dark:text-white mb-1">Premium Quality</h3>
+              <p className="text-sm text-black dark:text-gray-300">Sustainably sourced from trusted global suppliers</p>
             </div>
           </div>
 

@@ -620,7 +620,7 @@ export default function Remedies() {
       />
       <Header />
 
-      <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom">
+      <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom hero-desktop">
         {/* Premium Header */}
         <div className="text-center mb-6 sm:mb-10 relative overflow-hidden py-6 sm:py-10">
           <div className="absolute inset-0 -z-10 pointer-events-none">
