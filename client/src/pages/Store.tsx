@@ -315,7 +315,7 @@ export default function Store() {
                 variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
                 className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
                   <p className="text-sm sm:text-base text-black dark:text-white">Discover our expertly curated collection of natural wellness products</p>
                 </div>
                 <div className="text-sm text-black dark:text-white">
