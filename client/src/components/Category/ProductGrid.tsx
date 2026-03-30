@@ -106,7 +106,7 @@ function ProductGrid({ data: initialData, collectionName, title }: ProductGridPr
             <div className="container">
                 <motion.h2
                     variants={slideUpVariants as any}
-                    className='xl:mb-20 mb-10 text-center dark:text-black'
+                    className='xl:mb-20 mb-10 text-center dark:text-white'
                 >
                     {/* Discover <span className='text-gold dark:text-gold'>Strips</span> */}
                     {title || <>Discover <span className='text-gold'>Strips</span></>}

@@ -109,10 +109,10 @@ function ProductCard({ product }: ProductCardProps) {
 
         <div className="card-content flex flex-col items-center px-5 h-full">
           <h3 className='product-title text-center grow h-full'>
-            <a href={product.productLink} className='!font-recoletta parent-link-wrapper dark:text-black'>{product.title}</a>
+            <a href={product.productLink} className='!font-recoletta parent-link-wrapper dark:text-white'>{product.title}</a>
           </h3>
           <div className="price-container lg:mt-5 mt-3">
-            <p className='text-black dark:text-black'>${product.price}</p>
+            <p className='text-black dark:text-white'>${product.price}</p>
           </div>
         </div>
         <div className="add-to-cart-btn flex justify-center relative z-[41] ">
