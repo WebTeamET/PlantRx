@@ -1,8 +1,6 @@
-"use client";
-import { getMetafieldImage } from "@/lib/shopify";
-import { ShopifyProduct } from "@/lib/shopify";
+import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { ReactNode, CSSProperties } from "react";
 
 
@@ -36,7 +34,7 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
     right: "clamp(20px, 3vw, 60px)",
   };
 
-  const topics: Topic[] = [
+  const hardcodedTopics: Topic[] = [
     {
       title: "Brain Fog",
       img1: "/brain1.svg",
@@ -49,7 +47,7 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
     {
       title: "Difficulty concentrating",
       img1: "/brain3.svg",
-      img2: "/brain4.svg",
+      img2: "/brain2.svg",
       img1Position: { top: "clamp(0px, 3vw, 42px)", left: "clamp(12px, 3vw, 50px)", "--w": "208px", "--h": "208px" },
       img2Position: { top: "clamp(8px, 4vw, 60px)", right: "clamp(12px, 3vw, 50px)", "--w": "210px", "--h": "205px" },
     },
@@ -61,6 +59,25 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
       img2Position: { top: "clamp(0px, 0.5vw, 8px)", right: "clamp(20px, 4vw, 70px)", "--w": "170px", "--h": "220px" },
     },
   ];
+
+  const topics = useMemo(() => {
+    // iconWithText is now a mapped list of objects from the server
+    const list = product?.iconWithText;
+    if (!list || list.length === 0) return hardcodedTopics;
+
+    return list.map((node: any, i: number) => {
+      const fallback = hardcodedTopics[i % hardcodedTopics.length];
+      return {
+        title: node.text || fallback.title,
+        img1: node.left_icon || fallback.img1,
+        img2: node.right_icon || fallback.img2,
+        img1Position: fallback.img1Position,
+        img2Position: fallback.img2Position,
+        img1Rotate: fallback.img1Rotate,
+        img2Rotate: fallback.img2Rotate,
+      };
+    });
+  }, [product]);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -95,9 +112,9 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                <div className="w-full h-full" style={topic.img1Rotate ? { transform: `rotate(${topic.img1Rotate})` } : undefined}>
+                {/* <div className="w-full h-full" style={topic.img1Rotate ? { transform: `rotate(${topic.img1Rotate})` } : undefined}>
                   <img src={topic.img1} alt="mushroom-group" className="w-full h-full object-contain" />
-                </div>
+                </div> */}
               </motion.div>
 
               <motion.div
@@ -107,9 +124,9 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                <div className="w-full h-full" style={topic.img2Rotate ? { transform: `rotate(${topic.img2Rotate})` } : undefined}>
+                {/* <div className="w-full h-full" style={topic.img2Rotate ? { transform: `rotate(${topic.img2Rotate})` } : undefined}>
                   <img src={topic.img2} alt="brain" className="w-full h-full object-contain" />
-                </div>
+                </div> */}
               </motion.div>
 
               <span>{topic.title}</span>

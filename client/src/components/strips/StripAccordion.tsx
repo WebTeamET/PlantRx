@@ -1,7 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+
+interface StripAccordionProps {
+  product?: ShopifyProduct;
+}
 
 type QAItem = {
   question: string;
@@ -24,7 +29,33 @@ const QA_ITEMS: QAItem[] = [
   },
 ];
 
-export default function StripAccordion() {
+export default function StripAccordion({ product }: StripAccordionProps) {
+  const hardcodedQA: QAItem[] = [
+    {
+      question: "Is this a stimulant?",
+      answer: "No. It uses functional mushroom extracts traditionally associated with cognitive support.",
+    },
+    {
+      question: "Will it make me feel wired?",
+      answer: "You should feel clear and steady, not jittery. The formula favors focus over buzz.",
+    },
+    {
+      question: "When is best to take it?",
+      answer: "Most people enjoy it in the morning or early afternoon so the focus benefits line up with their day.",
+    },
+  ];
+
+  const qaItems = useMemo(() => {
+    // faqList is now a mapped object containing faq_list or faq_items (array of objects)
+    const list = product?.faqList?.faq_list || product?.faqList?.faq_items || product?.faqList?.questions;
+    if (!list || !Array.isArray(list) || list.length === 0) return hardcodedQA;
+
+    return list.map((node: any) => ({
+      question: node.question || node.faq_question || "",
+      answer: node.answer || node.faq_answer || "",
+    }));
+  }, [product]);
+
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -40,7 +71,7 @@ export default function StripAccordion() {
           </h2>
 
           <div className="space-y-4 lg:px-[100px]">
-            {QA_ITEMS.map((item, idx) => {
+            {qaItems.map((item, idx) => {
               const isOpen = openIndex === idx;
 
               return (

@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
+import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
 
 interface StripZigzagProps {
+  product?: ShopifyProduct;
   title?: string;
   subtitle?: string;
   paragraphs?: string[];
@@ -27,15 +29,39 @@ const defaultParagraphs = [
 ];
 
 export default function StripZigzag({
-  title = "Smarter Daily Wellness",
-  subtitle,
-  paragraphs = defaultParagraphs,
-  imageSrc = "/mushroom-focus-strips-product.png",
-  imageAlt = "Mushroom focus strips tin",
+  product,
+  title: initialTitle = "Smarter Daily Wellness",
+  subtitle: initialSubtitle,
+  paragraphs: initialParagraphs = defaultParagraphs,
+  imageSrc: initialImageSrc = "/mushroom-focus-strips-product.png",
+  imageAlt: initialImageAlt = "Mushroom focus strips tin",
   reverse = false,
-  eyebrow,
+  eyebrow: initialEyebrow,
   children,
 }: StripZigzagProps) {
+  const dynamicData = useMemo(() => {
+    // imageWithDetails is now a mapped object from the server
+    const node = product?.imageWithDetails;
+    if (!node) return null;
+    
+    const paragraphs = node.description ? node.description.split('\n') : initialParagraphs;
+
+    return {
+      title: node.title || initialTitle,
+      subtitle: node.subtitle || initialSubtitle,
+      paragraphs: paragraphs,
+      imageSrc: node.image || initialImageSrc,
+      imageAlt: node.image_alt || initialImageAlt,
+      eyebrow: node.eyebrow || initialEyebrow,
+    };
+  }, [product]);
+
+  const title = dynamicData?.title || initialTitle;
+  const subtitle = dynamicData?.subtitle || initialSubtitle;
+  const paragraphs = dynamicData?.paragraphs || initialParagraphs;
+  const imageSrc = dynamicData?.imageSrc || initialImageSrc;
+  const imageAlt = dynamicData?.imageAlt || initialImageAlt;
+  const eyebrow = dynamicData?.eyebrow || initialEyebrow;
   return (
     <section className="relative overflow-hidden w-full bg-gradient-to-t from-white via-[#F7EFE6] to-white py-[50px] md:py-24">
       <div className="mx-auto grid lg:grid-cols-3 gap-12 container">
@@ -52,7 +78,7 @@ export default function StripZigzag({
             <p className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</p>
           )}
           <div className="space-y-5 text-black dark:text-black font-light max-w-4xl">
-            {paragraphs.map((p, idx) => (
+            {paragraphs.map((p: string, idx: number) => (
               <p className="text-base lg:text-lg lg:leading-9 dark:text-black" key={idx}>{p}</p>
             ))}
           </div>

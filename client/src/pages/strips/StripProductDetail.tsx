@@ -167,8 +167,8 @@ export default function StripProductDetail() {
       </motion.div>
 
       <div className="relative z-10 min-h-screen">
-        <StickyStripImg />
-        <StripProductBanner />
+        <StickyStripImg product={product} />
+        <StripProductBanner product={product} />
         {/* <SvgLayout />
         
         <StripBanner product={product}>
@@ -185,20 +185,19 @@ export default function StripProductDetail() {
         <StripStory product={product} />
         <StripsBenefits product={product} />
         <StripsIngredients />
-        <StripHowToUse /> */}
-
         {/* Observer Target for Hide CTA */}
-        <StripContent />
-        <StripTopics />
         <div className="bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_51.44%,rgba(247,239,230,0)_100%)]">
-        <StripIngredients />
-        <StripBenefits />
+        <StripContent product={product} />
+        <StripTopics product={product} />
+
+        <StripIngredients product={product} />
+        <StripBenefits product={product} />
         </div>
-        <StripHowToUse />
-        <StripAvoid />
-        <StripAccordion />
-        <StripFeatures />
-        <StripZigzag />
+        <StripHowToUse product={product} />
+        <StripAvoid product={product} />
+        <StripAccordion product={product} />
+        <StripFeatures product={product} />
+        <StripZigzag product={product} />
         <div ref={footerRef} className="h-0" />
       </div>
     </>

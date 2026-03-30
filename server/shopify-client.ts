@@ -3,7 +3,8 @@ import Client from 'shopify-buy';
 // Initialize Shopify client with environment variables
 const client = Client.buildClient({
   domain: process.env.SHOPIFY_STORE_DOMAIN || '',
-  storefrontAccessToken: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || ''
+  storefrontAccessToken: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
+  apiVersion: '2024-01'
 });
 
 export default client;
@@ -59,7 +60,7 @@ export interface ShopifyProduct {
   vendor?: string;
   productType?: string;
   tags: string[];
-  
+
   // Metafields
   heroBanner?: ShopifyMetafield;
   productIngredients?: ShopifyMetafield;
@@ -67,7 +68,20 @@ export interface ShopifyProduct {
   sideIngredient?: ShopifyMetafield;
   activeTitle?: string;
   activeDescription?: string;
-  
+
+  // New user-provided metafields
+  heroSection?: any;
+  marquee?: any;
+  productDetails?: any;
+  iconWithText?: any;
+  keyIngredient?: any;
+  benefitsMeta?: any;
+  cardSpin?: any;
+  cardWithIcon?: any;
+  faqList?: any;
+  featuresMeta?: any;
+  imageWithDetails?: any;
+
   // Derived fields
   ingredients?: string[];
   sideIngredients?: string[];
@@ -110,6 +124,562 @@ export interface ShopifyCart {
   webUrl: string;
 }
 
+const PRODUCT_FIELDS_FRAGMENT = `
+  id
+  title
+  description
+  handle
+  vendor
+  productType
+  tags
+  images(first: 10) {
+    edges {
+      node {
+        id
+        url
+        altText
+      }
+    }
+  }
+  variants(first: 10) {
+    edges {
+      node {
+        id
+        title
+        availableForSale
+        price {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
+  heroBanner: metafield(namespace: "custom", key: "hero_banner") {
+    id
+    namespace
+    key
+    type
+    value
+    reference {
+      ... on MediaImage {
+        image {
+          url
+          altText
+        }
+      }
+    }
+  }
+  productIngredients: metafield(namespace: "custom", key: "product_ingredients") {
+    id
+    namespace
+    key
+    type
+    value
+    references(first: 10) {
+      edges {
+        node {
+          ... on MediaImage {
+            image {
+              url
+              altText
+            }
+          }
+          ... on GenericFile {
+            url
+          }
+        }
+      }
+    }
+  }
+  productCardIngredientsImage: metafield(namespace: "custom", key: "product_card_ingredients_image") {
+    id
+    namespace
+    key
+    type
+    value
+    reference {
+      ... on MediaImage {
+        image {
+          url
+          altText
+        }
+      }
+    }
+  }
+  sideIngredient: metafield(namespace: "custom", key: "side_ingredient") {
+    id
+    namespace
+    key
+    type
+    value
+    references(first: 10) {
+      edges {
+        node {
+          ... on MediaImage {
+            image {
+              url
+              altText
+            }
+          }
+          ... on GenericFile {
+            url
+          }
+        }
+      }
+    }
+  }
+  activeTitle: metafield(namespace: "custom", key: "active_title") {
+    value
+  }
+  activeDescription: metafield(namespace: "custom", key: "active_description") {
+    value
+  }
+  imageWithText: metafield(namespace: "custom", key: "image_with_text") {
+    references(first: 10) {
+      edges {
+        node {
+          ... on Metaobject {
+            fields {
+              key
+              value
+              reference {
+                ... on MediaImage {
+                  image {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  heroSection: metafield(namespace: "custom", key: "hero_section") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  marquee: metafield(namespace: "custom", key: "marquee") {
+    value
+  }
+  productDetails: metafield(namespace: "custom", key: "product_details") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  iconWithText: metafield(namespace: "custom", key: "icon_with_text") {
+    references(first: 10) {
+      edges {
+        node {
+          ... on Metaobject {
+            fields {
+              key
+              value
+              reference {
+                ... on MediaImage {
+                  image {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  keyIngredient: metafield(namespace: "custom", key: "key_ingredient") {
+    value
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  benefits: metafield(namespace: "custom", key: "benefits") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image {
+                url
+              }
+            }
+            ... on Metaobject {
+              fields {
+                key
+                value
+                reference {
+                  ... on MediaImage {
+                    image { url }
+                  }
+                }
+              }
+            }
+          }
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  cardSpin: metafield(namespace: "custom", key: "card_spin") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url }
+            }
+          }
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  cardWithIcon: metafield(namespace: "custom", key: "card_with_icon") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url }
+            }
+          }
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  faqList: metafield(namespace: "custom", key: "faq_list") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  features: metafield(namespace: "custom", key: "features") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url }
+            }
+          }
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  imageWithDetails: metafield(namespace: "custom", key: "image_with_details") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url }
+            }
+          }
+          references(first: 10) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// Shopify service functions for server-side use
+// Helper to parse Shopify RichText JSON to plain text
+const parseRichText = (input: any): string => {
+  if (!input) return '';
+  try {
+    const data = typeof input === 'string' ? JSON.parse(input) : input;
+    if (!data || typeof data !== 'object') return String(input);
+
+    const parseNode = (node: any): string => {
+      if (!node) return '';
+      if (node.type === 'text') return node.value || '';
+      if (node.type === 'paragraph') {
+        return (node.children?.map(parseNode).join('') || '') + '\n';
+      }
+      if (node.children && Array.isArray(node.children)) {
+        return node.children.map(parseNode).join('');
+      }
+      return '';
+    };
+    return parseNode(data).trim();
+  } catch (e) {
+    console.error('Error parsing RichText:', e);
+    return typeof input === 'string' ? input : JSON.stringify(input);
+  }
+};
+
+// Helper to parse JSON list strings
+const parseJsonList = (jsonString: string): string[] => {
+  try {
+    if (!jsonString || !jsonString.startsWith('[')) return [jsonString];
+    return JSON.parse(jsonString);
+  } catch (e) {
+    return [jsonString];
+  }
+};
+
+// Helper to extract fields from a metaobject reference
+const mapMetaobject = (metafield: any): any => {
+  const node = metafield?.reference || metafield;
+  if (!node || !node.fields) return null;
+
+  const result: any = { id: node.id };
+  node.fields.forEach((f: any) => {
+    let value = f.value;
+
+    // Handle RichText (string containing JSON structure or already object)
+    const isRichText = (val: any) => {
+      if (!val) return false;
+      if (typeof val === 'object' && val.type === 'root') return true;
+      if (typeof val === 'string' && val.includes('"type":"root"')) return true;
+      return false;
+    };
+
+    if (isRichText(value)) {
+      value = parseRichText(value);
+    }
+    // Handle JSON lists
+    else if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
+      value = parseJsonList(value);
+    }
+
+    // Handle Lists of Metaobjects (references/references)
+    const refNodes = f.references?.nodes || f.references?.edges?.map((e: any) => e.node);
+    if (refNodes && refNodes.length > 0) {
+      value = refNodes.map((n: any) => mapMetaobject({ reference: n })).filter(Boolean);
+    }
+    // Handle Single Metaobject reference with fields
+    else if (f.reference?.fields) {
+      value = mapMetaobject({ reference: f.reference });
+    }
+    // Handle Media Image
+    else if (f.reference?.image?.url) {
+      value = f.reference.image.url;
+    }
+
+    result[f.key] = value;
+  });
+  return result;
+};
+
+const mapMetaobjectsList = (metafield: any): any[] => {
+  const nodes = metafield?.references?.nodes || metafield?.references?.edges?.map((e: any) => e.node) || [];
+  return nodes.map((node: any) => mapMetaobject({ reference: node })).filter(Boolean);
+};
+
+// Internal product mapping logic shared between list and single fetch
+const mapShopifyProduct = (product: any): ShopifyProduct => {
+  const mainImage = product.images?.edges?.[0]?.node;
+  const images = product.images?.edges?.map((e: any) => ({
+    id: e.node.id,
+    url: e.node.url,
+    src: e.node.url,
+    altText: e.node.altText
+  })) || [];
+
+  const variants = product.variants?.edges?.map((e: any) => ({
+    id: e.node.id,
+    title: e.node.title,
+    price: e.node.price,
+    availableForSale: e.node.availableForSale
+  })) || [];
+
+  const bannerImg = product.heroBanner?.reference?.image?.url;
+  
+  const productIngredients = product.productIngredients?.references?.edges?.map((e: any) => ({
+    url: e.node.url || e.node.image?.url,
+    altText: e.node.image?.altText
+  })) || [];
+
+  const sideIngredients = product.sideIngredient?.references?.edges?.map((e: any) => ({
+    url: e.node.url || e.node.image?.url,
+    altText: e.node.image?.altText
+  })) || [];
+
+  const imageWithText = product.imageWithText?.references?.edges?.map((e: any) => mapMetaobject({ reference: e.node })) || [];
+
+  return {
+    id: product.id,
+    title: product.title,
+    description: product.description,
+    handle: product.handle,
+    vendor: product.vendor,
+    productType: product.productType,
+    tags: product.tags,
+    images: images,
+    variants: variants,
+    featuredImage: mainImage,
+    
+    heroBanner: bannerImg ? { image: { url: bannerImg } } : null,
+    productIngredients: productIngredients,
+    sideIngredients: sideIngredients,
+    imageWithText: imageWithText,
+    
+    heroSection: mapMetaobject(product.heroSection),
+    marquee: product.marquee?.value ? parseJsonList(product.marquee.value) : [],
+    productDetails: mapMetaobject(product.productDetails),
+    iconWithText: mapMetaobjectsList(product.iconWithText),
+    keyIngredient: mapMetaobject(product.keyIngredient),
+    benefitsMeta: mapMetaobject(product.benefits),
+    cardSpin: mapMetaobject(product.cardSpin),
+    cardWithIcon: mapMetaobject(product.cardWithIcon),
+    faqList: mapMetaobject(product.faqList),
+    featuresMeta: mapMetaobject(product.features),
+    imageWithDetails: mapMetaobject(product.imageWithDetails)
+  } as unknown as ShopifyProduct;
+};
+
 // Shopify service functions for server-side use
 export const serverShopifyService = {
   // GraphQL query for fetching products with metafields
@@ -120,136 +690,7 @@ export const serverShopifyService = {
           products(first: 50) {
             edges {
               node {
-                id
-                title
-                description
-                handle
-                vendor
-                productType
-                tags
-                images(first: 10) {
-                  edges {
-                    node {
-                      id
-                      url
-                      altText
-                    }
-                  }
-                }
-                variants(first: 10) {
-                  edges {
-                    node {
-                      id
-                      title
-                      availableForSale
-                      price {
-                        amount
-                        currencyCode
-                      }
-                    }
-                  }
-                }
-                heroBanner: metafield(namespace: "custom", key: "hero_banner") {
-                  id
-                  namespace
-                  key
-                  type
-                  value
-                  reference {
-                    ... on MediaImage {
-                      image {
-                        url
-                        altText
-                      }
-                    }
-                  }
-                }
-                productIngredients: metafield(namespace: "custom", key: "product_ingredients") {
-                  id
-                  namespace
-                  key
-                  type
-                  value
-                  references(first: 10) {
-                    edges {
-                      node {
-                        ... on MediaImage {
-                          image {
-                            url
-                            altText
-                          }
-                        }
-                        ... on GenericFile {
-                          url
-                        }
-                      }
-                    }
-                  }
-                }
-                productCardIngredientsImage: metafield(namespace: "custom", key: "product_card_ingredients_image") {
-                  id
-                  namespace
-                  key
-                  type
-                  value
-                  reference {
-                    ... on MediaImage {
-                      image {
-                        url
-                        altText
-                      }
-                    }
-                  }
-                }
-                sideIngredient: metafield(namespace: "custom", key: "side_ingredient") {
-                  id
-                  namespace
-                  key
-                  type
-                  value
-                  references(first: 10) {
-                    edges {
-                      node {
-                        ... on MediaImage {
-                          image {
-                            url
-                            altText
-                          }
-                        }
-                        ... on GenericFile {
-                          url
-                        }
-                      }
-                    }
-                  }
-                }
-                activeTitle: metafield(namespace: "custom", key: "active_title") {
-                  value
-                }
-                activeDescription: metafield(namespace: "custom", key: "active_description") {
-                  value
-                }
-                imageWithText: metafield(namespace: "custom", key: "image_with_text") {
-                  references(first: 10) {
-                    edges {
-                      node {
-                        ... on Metaobject {
-                          fields {
-                            key
-                            value
-                            reference {
-                              ... on MediaImage {
-                                image {
-                                  url
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+                ${PRODUCT_FIELDS_FRAGMENT}
               }
             }
           }
@@ -279,143 +720,92 @@ export const serverShopifyService = {
         throw new Error('GraphQL query returned errors');
       }
 
-      console.log(`✅ SERVER: GraphQL success - received ${data.products.edges.length} products`);
-      
-      // Check first product for metafields
-      if (data.products.edges.length > 0) {
-        const firstNode = data.products.edges[0].node;
-        console.log('🔍 SERVER: First product from Shopify API:', firstNode.title);
-        console.log('🔍 SERVER: heroBanner in API response?', firstNode.heroBanner ? 'YES ✅' : 'NO ❌');
-        
-        if (firstNode.productIngredients) {
-             console.log('🔍 SERVER: productIngredients found');
-             console.log('🔍 SERVER: productIngredients value:', firstNode.productIngredients.value);
-             console.log('🔍 SERVER: productIngredients references count:', firstNode.productIngredients.references?.edges?.length || 0);
-        } else {
-             console.log('🔍 SERVER: productIngredients NOT found');
-        }
-      }
+      const edges = data.products?.edges || [];
+      console.log(`✅ SERVER: GraphQL success - received ${edges.length} products`);
 
-      const products = data.products.edges.map((edge: any) => {
-        const product = edge.node;
-        
-        // Map ingredients from metafield references to clean array
-        const ingredients = product.productIngredients?.references?.edges?.map((edge: any) => 
-            edge.node.image?.url || edge.node.url
-        ).filter(Boolean) || [];
-
-        // Map side ingredients from metafield references to clean array
-        const sideIngredients = product.sideIngredient?.references?.edges?.map((edge: any) => 
-            edge.node.image?.url || edge.node.url
-        ).filter(Boolean) || [];
-
-        if (ingredients.length > 0) {
-            console.log(`✅ SERVER: Processed ${ingredients.length} ingredients for product: ${product.title}`);
-        }
-        if (sideIngredients.length > 0) {
-            console.log(`✅ SERVER: Processed ${sideIngredients.length} side ingredients for product: ${product.title}`);
-        }
-
-        // Map image_with_text metaobjects
-        const imageWithText = product.imageWithText?.references?.edges?.map((edge: any) => {
-          const fields = edge.node.fields;
-          const getFieldValue = (key: string) => fields.find((f: any) => f.key === key)?.value;
-          const getFieldReference = (key: string) => fields.find((f: any) => f.key === key)?.reference?.image?.url;
-
-          return {
-            title: getFieldValue('title') || '',
-            description: getFieldValue('description') || '',
-            icon: getFieldReference('icon') || '',
-            image: getFieldReference('image') || '',
-            isLeft: getFieldValue('isleft') === 'true'
-          };
-        }) || [];
-
-        return {
-          id: product.id,
-          title: product.title,
-          description: product.description,
-          handle: product.handle,
-          images: product.images.edges.map((imgEdge: any) => ({
-            id: imgEdge.node.id,
-            src: imgEdge.node.url,
-            url: imgEdge.node.url,
-            altText: imgEdge.node.altText,
-          })),
-          variants: product.variants.edges.map((varEdge: any) => ({
-            id: varEdge.node.id,
-            title: varEdge.node.title,
-            price: {
-              amount: varEdge.node.price.amount,
-              currencyCode: varEdge.node.price.currencyCode,
-            },
-            available: varEdge.node.availableForSale,
-            availableForSale: varEdge.node.availableForSale,
-          })),
-          vendor: product.vendor,
-          productType: product.productType,
-          tags: product.tags,
-          // Add metafields
-          heroBanner: product.heroBanner,
-          productIngredients: product.productIngredients,
-          productCardIngredientsImage: product.productCardIngredientsImage,
-          sideIngredient: product.sideIngredient,
-          activeTitle: product.activeTitle?.value || undefined,
-          activeDescription: product.activeDescription?.value || undefined,
-          
-          ingredients: ingredients,
-          sideIngredients: sideIngredients,
-          imageWithText: imageWithText
-        };
-      });
+      const products = edges.map((edge: any) => mapShopifyProduct(edge.node));
 
       console.log(`✅ SERVER: Mapped ${products.length} products`);
-      console.log('🔍 SERVER: First mapped product has heroBanner?', products[0]?.heroBanner ? 'YES ✅' : 'NO ❌');
       
       return products;
     } catch (error) {
       console.error('❌ SERVER: Error in fetchProductsWithGraphQL:', error);
       console.log('⚠️ SERVER: Falling back to SDK method');
-      // Fallback to SDK method
-      return this.fetchProductsWithSDK();
+      const sdkProducts = await this.fetchProductsWithSDK();
+      return sdkProducts.map(p => ({
+        ...p,
+        heroSection: {},
+        productDetails: {},
+        keyIngredient: {},
+        benefitsMeta: {},
+        cardSpin: {},
+        cardWithIcon: {},
+        faqList: {},
+        featuresMeta: {},
+        imageWithDetails: {},
+        iconWithText: [],
+        marquee: []
+      } as any));
     }
   },
 
-  // Original SDK-based fetch (renamed for clarity)
+  // Fetch a single product by handle with dynamic metafield mapping
+  async fetchProductByHandleWithGraphQL(handle: string): Promise<ShopifyProduct | null> {
+    try {
+      console.log(`🔄 SERVER: Fetching single product by handle: ${handle}`);
+      const query = `
+        query getProductByHandle($handle: String!) {
+          productByHandle(handle: $handle) {
+            ${PRODUCT_FIELDS_FRAGMENT}
+          }
+        }
+      `;
+
+      const response = await fetch(
+        `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2024-01/graphql.json`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
+          },
+          body: JSON.stringify({ 
+            query,
+            variables: { handle }
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`GraphQL request failed: ${response.statusText}`);
+      }
+
+      const { data, errors } = await response.json();
+
+      if (errors) {
+        console.error('GraphQL errors:', errors);
+        throw new Error('GraphQL query returned errors');
+      }
+
+      const product = data.productByHandle;
+      if (!product) {
+        console.log(`❌ SERVER: Product with handle "${handle}" not found`);
+        return null;
+      }
+
+      const mappedProduct = mapShopifyProduct(product);
+      console.log(`✅ SERVER: Successfully mapped single product: ${mappedProduct.title}`);
+      return mappedProduct;
+    } catch (error) {
+      console.error('❌ SERVER: Error in fetchProductByHandleWithGraphQL:', error);
+      return null;
+    }
+  },
+
+  // Original SDK-based fetch
   async fetchProductsWithSDK(): Promise<ShopifyProduct[]> {
     try {
-      let allProducts: any[] = [];
-      let hasMore = true;
-      let currentPage: any[] = [];
-      
-      // Start with a reasonable page size
-      currentPage = await client.product.fetchAll(50);
-      allProducts = [...currentPage];
-      
-      // Continue fetching pages until no more products
-      while (hasMore && currentPage.length > 0) {
-        try {
-          if (currentPage.length === 50) {
-            // Try to fetch next page
-            const nextPage = await client.product.fetchNextPage(currentPage);
-            if (nextPage && nextPage.length > 0) {
-              allProducts = [...allProducts, ...nextPage];
-              currentPage = nextPage;
-            } else {
-              hasMore = false;
-            }
-          } else {
-            // Less than 50 products means we've reached the end
-            hasMore = false;
-          }
-        } catch (error) {
-          console.log('No more pages available, total fetched:', allProducts.length);
-          hasMore = false;
-        }
-      }
-      
-      console.log(`⚠️ Fetched ${allProducts.length} products via SDK (no metafields)`);
-      
+      let allProducts: any[] = await client.product.fetchAll(50);
       return allProducts.map((product: any) => ({
         id: product.id,
         title: product.title,
@@ -440,7 +830,7 @@ export const serverShopifyService = {
         vendor: product.vendor,
         productType: product.productType,
         tags: product.tags
-      }));
+      })) as any[];
     } catch (error) {
       console.error('Error fetching products:', error);
       return [];
@@ -449,20 +839,8 @@ export const serverShopifyService = {
 
   // Main fetch products method - uses GraphQL by default
   async fetchProducts(): Promise<ShopifyProduct[]> {
-    console.log('🔄 SERVER: fetchProducts() called - will use GraphQL');
-    const result = await this.fetchProductsWithGraphQL();
-    
-    if (result.length > 0) {
-      console.log('🔍 SERVER: First product keys:', Object.keys(result[0]));
-      console.log('🔍 SERVER: Has heroBanner?', 'heroBanner' in result[0]);
-      if (result[0].heroBanner) {
-        console.log('✅ SERVER: heroBanner exists!', result[0].heroBanner);
-      }
-    }
-    
-    return result;
+    return this.fetchProductsWithGraphQL();
   },
-
 
   // Create cart
   async createCart(): Promise<ShopifyCart | null> {
@@ -488,11 +866,11 @@ export const serverShopifyService = {
           quantity: item.quantity
         })),
         subtotalPrice: {
-          amount: cart.subtotalPrice.amount,
+          amount: cart.subtotalPrice.amount.toString(),
           currencyCode: cart.subtotalPrice.currencyCode
         },
         totalPrice: {
-          amount: cart.totalPrice.amount,
+          amount: cart.totalPrice.amount.toString(),
           currencyCode: cart.totalPrice.currencyCode
         },
         webUrl: cart.webUrl
@@ -506,11 +884,7 @@ export const serverShopifyService = {
   // Add item to cart
   async addToCart(cartId: string, variantId: string, quantity: number = 1): Promise<ShopifyCart | null> {
     try {
-      const lineItemsToAdd = [{
-        variantId,
-        quantity
-      }];
-      
+      const lineItemsToAdd = [{ variantId, quantity }];
       const cart = await client.checkout.addLineItems(cartId, lineItemsToAdd);
       return {
         id: cart.id,
@@ -532,11 +906,11 @@ export const serverShopifyService = {
           quantity: item.quantity
         })),
         subtotalPrice: {
-          amount: cart.subtotalPrice.amount,
+          amount: cart.subtotalPrice.amount.toString(),
           currencyCode: cart.subtotalPrice.currencyCode
         },
         totalPrice: {
-          amount: cart.totalPrice.amount,
+          amount: cart.totalPrice.amount.toString(),
           currencyCode: cart.totalPrice.currencyCode
         },
         webUrl: cart.webUrl
@@ -550,11 +924,7 @@ export const serverShopifyService = {
   // Update cart item quantity
   async updateCartItem(cartId: string, lineItemId: string, quantity: number): Promise<ShopifyCart | null> {
     try {
-      const lineItemsToUpdate = [{
-        id: lineItemId,
-        quantity
-      }];
-      
+      const lineItemsToUpdate = [{ id: lineItemId, quantity }];
       const cart = await client.checkout.updateLineItems(cartId, lineItemsToUpdate);
       return {
         id: cart.id,
@@ -576,11 +946,11 @@ export const serverShopifyService = {
           quantity: item.quantity
         })),
         subtotalPrice: {
-          amount: cart.subtotalPrice.amount,
+          amount: cart.subtotalPrice.amount.toString(),
           currencyCode: cart.subtotalPrice.currencyCode
         },
         totalPrice: {
-          amount: cart.totalPrice.amount,
+          amount: cart.totalPrice.amount.toString(),
           currencyCode: cart.totalPrice.currencyCode
         },
         webUrl: cart.webUrl
@@ -615,11 +985,11 @@ export const serverShopifyService = {
           quantity: item.quantity
         })),
         subtotalPrice: {
-          amount: cart.subtotalPrice.amount,
+          amount: cart.subtotalPrice.amount.toString(),
           currencyCode: cart.subtotalPrice.currencyCode
         },
         totalPrice: {
-          amount: cart.totalPrice.amount,
+          amount: cart.totalPrice.amount.toString(),
           currencyCode: cart.totalPrice.currencyCode
         },
         webUrl: cart.webUrl
@@ -654,11 +1024,11 @@ export const serverShopifyService = {
           quantity: item.quantity
         })),
         subtotalPrice: {
-          amount: cart.subtotalPrice.amount,
+          amount: cart.subtotalPrice.amount.toString(),
           currencyCode: cart.subtotalPrice.currencyCode
         },
         totalPrice: {
-          amount: cart.totalPrice.amount,
+          amount: cart.totalPrice.amount.toString(),
           currencyCode: cart.totalPrice.currencyCode
         },
         webUrl: cart.webUrl

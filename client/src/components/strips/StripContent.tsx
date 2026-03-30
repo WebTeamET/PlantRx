@@ -1,6 +1,4 @@
-"use client";
-import { getMetafieldImage } from "@/lib/shopify";
-import { ShopifyProduct } from "@/lib/shopify";
+import { ShopifyProduct, getMetaobjectField } from "@/lib/shopify";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ReactNode } from "react";
@@ -25,7 +23,13 @@ export const letterVariants = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StripContent({ product, children }: StripContentProps) {
-  const sentence = "PlantRx Mushroom Focus Strips";
+  // Use mapped fields from the server
+  const metaTitle = product?.productDetails?.title || product?.heroSection?.product_name || null;
+  const metaDesc = product?.productDetails?.description || null;
+  
+  const sentence = metaTitle || "PlantRx Mushroom Focus Strips";
+  const description = metaDesc || "are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.";
+
   const sectionRef = useRef<HTMLElement>(null);
   const sectionInView = useInView(sectionRef, {
     margin: "0px 0px -40% 0px",
@@ -43,17 +47,17 @@ export default function StripContent({ product, children }: StripContentProps) {
             animate={sectionInView ? "visible" : "hidden"}
         >
             <div className="absolute -top-[30px] lg:-top-[140px] right-0 w-[12vw] h-auto">
-                <img src="/mushroom-group.png" alt="mushroom-group" />
+                <img src={product?.productDetails?.right_ingredient || "/mushroom-group.png"} alt="mushroom-group" />
             </div>
             <div className="absolute bottom-0 left-0 w-[6vw] h-auto">
-                <img src="/mushroom-group-2.png" alt="mushroom-group" />
+                <img src={product?.productDetails?.left_ingredient || "/mushroom-group-2.png"} alt="mushroom-group" />
             </div>
             <div className="new-container py-[50px] lg:pt-0 lg:pb-[100px]">
                 <div className="title title-anim-typewriter">
                     <motion.h2
                         className="pdp-title-style text-black dark:text-black font-semibold text-center mb-5"                        
                     >
-                        {sentence.split("").map((letter, i) => (
+                        {sentence.split("").map((letter: string, i: number) => (
                             <motion.span
                                 key={`${letter}-${i}`}
                                 variants={letterVariants}
@@ -65,7 +69,7 @@ export default function StripContent({ product, children }: StripContentProps) {
                 </div>
                 <div className="content text-center">
                     <p className=" text-[#818181] dark:text-[#818181] text-xl leading-8 md:text-2xl md:leading-10 lg:text-4xl lg:leading-[80px] 2xl:text-[40px] 2xl:leading-[100px] 2xl:max-w-[1346px] md:max-w-[90%] mx-auto capitalize">
-                        are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.      
+                        {description}      
                     </p>
                 </div>
             </div>

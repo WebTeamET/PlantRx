@@ -1,8 +1,6 @@
-"use client";
-import { getMetafieldImage } from "@/lib/shopify";
-import { ShopifyProduct } from "@/lib/shopify";
+import { ShopifyProduct, getMetaobjectField } from "@/lib/shopify";
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 
 
@@ -16,6 +14,20 @@ interface StripIngredientsProps {
 
 export default function StripIngredients({ product, children }: StripIngredientsProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Dynamic description from keyIngredient
+    const keyIngredientText = useMemo(() => {
+        // Use mapped field from the server
+        return product?.keyIngredient?.description || "Stay sharp and centered with Mushroom Focus Strips, a convenient and flavorful way to support your mental clarity and overall wellness. These smooth, chocolate-flavored oral strips dissolve on your tongue, delivering a curated blend of functional mushroom extracts traditionally valued for their role in promoting normal cognitive function and daily vitality.";
+    }, [product]);
+
+    const ingredientsList = product?.keyIngredient?.ingredient_list || product?.ingredients || [
+        "Hericium Erinaceus (Lion’s Mane) (30 mg)",
+        "Grifola Frondosa (Maitake) (25 mg)",
+        "Cordyceps Sinensis (Cordyceps) (25 mg)",
+        "Lentinus Edodes (Shiitake) (20 mg)",
+        "Pullulan, Cellulose, Lecithin, Chocolate Flavor, Monk Fruit Extract, Medium-Chain Triglycerides, Xanthan Gum, Steviol Glycosides."
+    ];
 
     // Lock body scroll when modal is open
     useEffect(() => {
@@ -53,21 +65,21 @@ export default function StripIngredients({ product, children }: StripIngredients
                                     `,
                                     }}
                                 >
-                                    Key Ingredients
+                                    {product?.keyIngredient?.title || "Key Ingredients"}
                                 </h2>
                             </div>
                             <div className="content">
                                 <p className="lg:text-[20px] font-normal text-black dark:text-black leading-[1.5] lg:leading-[40px] capitalize">
-                                    Stay sharp and centered with Mushroom Focus Strips, a convenient and flavorful way to support your mental clarity and overall wellness. These smooth, chocolate-flavored oral strips dissolve on your tongue, delivering a curated blend of functional mushroom extracts traditionally valued for their role in promoting normal cognitive function and daily vitality.
+                                    {keyIngredientText}
                                 </p>
                             </div>
                         </div>
                         <div className="w-full lg:flex-1">
                             <div className="relative">
                                 <div className="animate-spin-slow absolute -top-[33px] -left-[36px] w-[97px] h-[92px]">
-                                    <img src="/mushroom-small.png" alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
+                                    <img src={product?.keyIngredient?.ingredient_image || "/mushroom-small.png"} alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
                                 </div>
-                                <img src="/key-ingredients.png" alt="key-ingredients" width={982} height={652} className="w-full h-auto object-cover" />
+                                <img src={product?.keyIngredient?.image || "/key-ingredients.png"} alt="key-ingredients" width={982} height={652} className="w-full h-auto object-cover" />
                             </div>
                             <div className="flex justify-center mt-[20px] lg:mt-[48px] w-full">
                                 <button
@@ -152,7 +164,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                     `,
                                     }}
                                 >
-                                    Ingredients
+                                    {product?.keyIngredient?.ingredient_title || "Ingredients"}
                                 </h2>
 
                             </div>
@@ -160,45 +172,16 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 {children ? (
                                     children
                                 ) : (
-                                    <>
-                                        <ul className="flex flex-col gap-[10px]">
-                                            <li className="flex gap-[12px] items-start dark:text-black">
+                                    <ul className="flex flex-col gap-[10px]">
+                                        {ingredientsList.map((item: string, i: number) => (
+                                            <li key={i} className="flex gap-[12px] items-start dark:text-black">
                                                 <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
                                                 </svg>
-
-                                                Hericium Erinaceus (Lion’s Mane) (30 mg),
+                                                {item}
                                             </li>
-                                            <li className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
-                                                </svg>
-
-                                                Grifola Frondosa (Maitake) (25 mg),
-                                            </li>
-                                            <li className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
-                                                </svg>
-
-                                                Cordyceps Sinensis (Cordyceps) (25 mg),
-                                            </li>
-                                            <li className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
-                                                </svg>
-
-                                                Lentinus Edodes (Shiitake) (20 mg),
-                                            </li>
-                                            <li className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
-                                                </svg>
-
-                                                Pullulan, Cellulose, Lecithin, Chocolate Flavor, Monk Fruit Extract, Medium-Chain Triglycerides, Xanthan Gum, Steviol Glycosides.
-                                            </li>
-                                        </ul>
-                                    </>
+                                        ))}
+                                    </ul>
                                 )}
                             </div>
                         </motion.div>

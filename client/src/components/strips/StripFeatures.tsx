@@ -1,7 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+
+interface StripFeaturesProps {
+  product?: ShopifyProduct;
+}
 
 type Feature = {
   title: string;
@@ -11,59 +16,75 @@ type Feature = {
   rightAlt: string;
 };
 
-const FEATURES: Feature[] = [
-  {
-    title: "Capsules Are Outdated",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Capsule tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Focus strips tin",
-  },
-  {
-    title: "Mushroom Focus In Seconds",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Focus strips tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Capsule tin",
-  },
-  {
-    title: "Modern Nootropic Format",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Capsule tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Focus strips tin",
-  },
-  {
-    title: "Chocolate-Flavored Clarity",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Focus strips tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Capsule tin",
-  },
-  {
-    title: "No Water Needed.",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Capsule tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Focus strips tin",
-  },
-  {
-    title: "Cognitive Support Anywhere",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Focus strips tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Capsule tin",
-  },
-  {
-    title: "Focus In Your Pocket",
-    leftImage: "/mushroom-focus-strips-product.png",
-    leftAlt: "Capsule tin",
-    rightImage: "/mushroom-focus-strips-product.png",
-    rightAlt: "Focus strips tin",
-  },
-];
+export default function StripFeatures({ product }: StripFeaturesProps) {
+  const DEFAULT_FEATURES: Feature[] = [
+    {
+      title: "Capsules Are Outdated",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Capsule tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Focus strips tin",
+    },
+    {
+      title: "Mushroom Focus In Seconds",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Focus strips tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Capsule tin",
+    },
+    {
+      title: "Modern Nootropic Format",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Capsule tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Focus strips tin",
+    },
+    {
+      title: "Chocolate-Flavored Clarity",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Focus strips tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Capsule tin",
+    },
+    {
+      title: "No Water Needed.",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Capsule tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Focus strips tin",
+    },
+    {
+      title: "Cognitive Support Anywhere",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Focus strips tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Capsule tin",
+    },
+    {
+      title: "Focus In Your Pocket",
+      leftImage: "/mushroom-focus-strips-product.png",
+      leftAlt: "Capsule tin",
+      rightImage: "/mushroom-focus-strips-product.png",
+      rightAlt: "Focus strips tin",
+    },
+  ];
 
-export default function StripFeatures() {
+  const features = useMemo(() => {
+    // featuresMeta is now a mapped object from the server
+    const node = product?.featuresMeta;
+    const textList = node?.text_list || node?.features_list || node?.list;
+    if (!node || !textList) return DEFAULT_FEATURES;
+
+    return (textList as string[]).map((text: string) => ({
+      title: text,
+      leftImage: node.image_one || node.left_image || "/mushroom-focus-strips-product.png",
+      leftAlt: "feature left",
+      rightImage: node.image_two || node.right_image || "/mushroom-focus-strips-product.png",
+      rightAlt: "feature right",
+    }));
+  }, [product]);
+
+  const slides = features; // Alias for consistency with other components if needed
   const [active, setActive] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -74,7 +95,7 @@ export default function StripFeatures() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const activeFeature = FEATURES[active] ?? FEATURES[0];
+  const activeFeature = features[active] ?? features[0];
   const isOdd = ((active + 1) % 2) === 1; // 1-based odd
 
   return (
@@ -130,7 +151,7 @@ export default function StripFeatures() {
         {/* floating tins */}
 
         <div className="relative z-10 text-center space-y-4">
-          {FEATURES.map((item, idx) => {
+          {features.map((item: Feature, idx: number) => {
             const isActive = active === idx;
             return (
               <motion.button

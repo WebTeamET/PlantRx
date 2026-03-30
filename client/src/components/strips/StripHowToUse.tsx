@@ -6,11 +6,17 @@ import {
   MotionValue,
   useSpring
 } from "framer-motion"
+import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify"
 
 interface Slide {
   title: string
   description: string
   image: string
+  mobileImage?: string
+}
+
+interface StripHowToUseProps {
+  product?: ShopifyProduct
 }
 
 const titleShadow = `
@@ -20,7 +26,7 @@ const titleShadow = `
   3px -3px 0 #fff,-3px -3px 0 #fff
 `;
 
-const slides: Slide[] = [
+const DEFAULT_SLIDES: Slide[] = [
   {
     title: "Open & Take",
     description: "Open the tin and gently take out one oral strip with clean, dry hands.",
@@ -51,7 +57,7 @@ function getPageY(el: HTMLElement) {
   return rect.top + window.scrollY
 }
 
-function MobileHowToSlider() {
+function MobileHowToSlider({ slides }: { slides: Slide[] }) {
   const [current, setCurrent] = useState(0)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
@@ -62,7 +68,7 @@ function MobileHowToSlider() {
     }, 3200)
 
     return () => window.clearTimeout(id)
-  }, [current])
+  }, [current, slides.length])
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
@@ -100,8 +106,8 @@ function MobileHowToSlider() {
               <div key={slide.title} className="w-full flex-shrink-0">
                 <div className="p-6 text-center *:text-black dark:*:text-black title-stroke">
                   <h3 className="text-2xl font-semibold mb-3 dark:!text-black"
-                  style={{
-                    textShadow: `
+                    style={{
+                      textShadow: `
                       0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
                       0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
                       0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
@@ -111,7 +117,7 @@ function MobileHowToSlider() {
                       0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
                       0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
                     `,
-                  }}
+                    }}
                   >
                     {slide.title}
                   </h3>
@@ -120,7 +126,7 @@ function MobileHowToSlider() {
                 <div className="px-6 pb-6">
                   <div className="h-72 rounded-xl overflow-hidden">
                     <img
-                      src={slide.image}
+                      src={slide.mobileImage || slide.image}
                       alt={slide.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -138,9 +144,8 @@ function MobileHowToSlider() {
               key={idx}
               type="button"
               onClick={() => setCurrent(idx)}
-              className={`h-2.5 !min-w-fit !min-h-fit rounded-full transition-all duration-300 ${
-                current === idx ? "w-6 bg-black" : "w-2.5 bg-black/30"
-              }`}
+              className={`h-2.5 !min-w-fit !min-h-fit rounded-full transition-all duration-300 ${current === idx ? "w-6 bg-black" : "w-2.5 bg-black/30"
+                }`}
               aria-label={`Go to step ${idx + 1}`}
             />
           ))}
@@ -176,11 +181,10 @@ function SlideCard({
       className="flex-shrink-0 flex justify-center absolute left-0 top-0 h-full w-full origin-[center_100vw]"
       style={{
         rotate: rotate,
-        zIndex: totalSlides - index, 
+        zIndex: totalSlides - index,
       }}
     >
       <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative h-fit">
-        {/* <div className="absolute -top-16 left-1/2 -translate-x-1/2 h1 font-bold opacity-70 text-green">{totalSlides}</div> */}
         <div className="relative z-10 pb-3 p-7 text-center *:text-black dark:*:text-black">
           <h2
             className="mb-3 text-[clamp(28px,_5.5vw,_90px)] leading-[1.1]"
@@ -191,23 +195,36 @@ function SlideCard({
           <p className="xl:text-xl max-w-md mx-auto">
             {slide.description}
           </p>
-          </div>
-          <div className="h-[400px] pt-3 p-7">
-            <div className="w-full h-full rounded-lg overflow-hidden">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover transition-transform duration-700"
-                loading="lazy"
-              />
-            </div>
+        </div>
+        <div className="h-[400px] pt-3 p-7">
+          <div className="w-full h-full rounded-lg overflow-hidden">
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover transition-transform duration-700"
+              loading="lazy"
+            />
           </div>
         </div>
+      </div>
     </motion.div>
   )
 }
 
-function StripHowToUse() {
+export default function StripHowToUse({ product }: StripHowToUseProps) {
+  const slides = React.useMemo(() => {
+    // cardSpin is now a mapped object containing cards, card or card_list (array of objects)
+    const list = product?.cardSpin?.cards || product?.cardSpin?.card || product?.cardSpin?.card_list;
+    if (!list || !Array.isArray(list) || list.length === 0) return DEFAULT_SLIDES;
+
+    return list.map((node: any) => ({
+      title: node.title || node.card_title || "",
+      description: node.description || node.card_description || "",
+      image: node.image || node.card_image || "/strips-instruction-1.png",
+      mobileImage: node.mobile_image || node.mobile_card_image || node.image || "/strips-instruction-1.png",
+    }));
+  }, [product]);
+
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -219,13 +236,12 @@ function StripHowToUse() {
 
   return (
     <>
-      {/* Desktop / large screens: keep sticky scroll animation */}
       <section
         ref={containerRef}
-        className="how-to-wrapper relative ] hidden lg:block "
+        className="how-to-wrapper relative hidden lg:block "
         style={{ height: `${slides.length * 150}vh` }}
       >
-        <div className="how-to-sticky sticky top-[50px] py-24 lg:pb-28 lg:pt-[170px block h-screen justify-center overflow-hidden perspective-[1000px] bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_8.81%,#F7EFE6_51.44%,#F7EFE6_83.43%,rgba(247,239,230,0)_100%)]">
+        <div className="how-to-sticky sticky top-[50px] py-24 lg:pb-28 lg:pt-[170px] block h-screen justify-center overflow-hidden perspective-[1000px] bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_8.81%,#F7EFE6_51.44%,#F7EFE6_83.43%,rgba(247,239,230,0)_100%)]">
           <div className="how-to-stage relative w-full xl:max-w-[800px] max-w-[560px] mx-auto lg:aspect-[4/3]">
             {slides.map((slide, index) => (
               <SlideCard
@@ -240,15 +256,12 @@ function StripHowToUse() {
         </div>
       </section>
 
-      {/* Mobile / tablet: horizontal autoplay slider */}
-      <MobileHowToSlider />
+      <MobileHowToSlider slides={slides} />
     </>
   )
 }
 
-export default StripHowToUse
-
-export function StickyStripImg() {
+export function StickyStripImg({ product }: { product?: ShopifyProduct }) {
   const [visible, setVisible] = useState(false)
   const [inHowTo, setInHowTo] = useState(false)
   const [howToWidth, setHowToWidth] = useState<number | null>(null)
@@ -266,7 +279,7 @@ export function StickyStripImg() {
       const howToBottom = howToTop + howToEl.getBoundingClientRect().height
 
       const stickyStart = howToTop - 50
-      const stickyEnd = howToBottom - viewportH + 0
+      const stickyEnd = howToBottom - viewportH
 
       const active = scrollY >= stickyStart && scrollY <= stickyEnd
       setVisible(active)
@@ -287,6 +300,7 @@ export function StickyStripImg() {
   if (!ready) return null
 
   const width = howToWidth ? clamp(howToWidth * 0.35, 180, 340) : inHowTo ? 260 : 220
+  const imageSrc = product?.cardSpin?.mobile_image || "/strip-2.png"
 
   return (
     <motion.div
@@ -298,7 +312,7 @@ export function StickyStripImg() {
       aria-hidden={!visible}
     >
       <img
-        src="/strip-2.png"
+        src={imageSrc}
         alt="Mushroom focus strips"
         className="drop-shadow-2xl"
         style={{ width }}

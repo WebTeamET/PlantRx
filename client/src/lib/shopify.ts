@@ -139,9 +139,195 @@ export const PRODUCT_QUERY = `
           }
         }
       }
+
+      heroSection: metafield(namespace: "custom", key: "hero_section") {
+        value
+        reference {
+          ... on Metaobject {
+            fields {
+              key
+              value
+              reference {
+                ... on MediaImage {
+                  image {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      marquee: metafield(namespace: "custom", key: "marquee") {
+        value
+      }
+      productDetails: metafield(namespace: "custom", key: "product_details") {
+        value
+      }
+      iconWithText: metafield(namespace: "custom", key: "icon_with_text") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      keyIngredient: metafield(namespace: "custom", key: "key_ingredient") {
+        value
+        reference {
+          ... on Metaobject {
+            fields {
+              key
+              value
+              reference {
+                ... on MediaImage {
+                  image {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      benefits: metafield(namespace: "custom", key: "benefits") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      cardSpin: metafield(namespace: "custom", key: "card_spin") {
+        value
+      }
+      cardWithIcon: metafield(namespace: "custom", key: "card_with_icon") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      faqList: metafield(namespace: "custom", key: "faq_list") {
+        references(first: 20) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+      features: metafield(namespace: "custom", key: "features") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      imageWithDetails: metafield(namespace: "custom", key: "image_with_details") {
+        references(first: 10) {
+          edges {
+            node {
+              ... on Metaobject {
+                fields {
+                  key
+                  value
+                  reference {
+                    ... on MediaImage {
+                      image {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
+
+/**
+ * Extracts fields from a Metaobject reference
+ */
+export const getMetaobjectField = (metaobject: any, key: string): any => {
+  if (!metaobject || !metaobject.fields) return null;
+  const field = metaobject.fields.find((f: any) => f.key === key);
+  if (!field) return null;
+  if (field.reference && field.reference.image) {
+    return field.reference.image.url;
+  }
+  return field.value;
+};
+
+/**
+ * Extracts a list of metaobjects from a metafield reference
+ */
+export const getMetaobjectsList = (metafield: any): any[] => {
+  if (!metafield || !metafield.references || !metafield.references.edges) return [];
+  return metafield.references.edges.map((edge: any) => edge.node);
+};
 
 // Types for Shopify data
 export interface ShopifyMetafield {
@@ -197,7 +383,19 @@ export interface ShopifyProduct {
   productMetafields?: ShopifyMetafield[];
   activeTitle?: string;
   activeDescription?: string;
-  
+
+  heroSection?: any;
+  marquee?: string[];
+  productDetails?: any;
+  iconWithText?: any[];
+  keyIngredient?: any;
+  benefitsMeta?: any;
+  cardSpin?: any;
+  cardWithIcon?: any;
+  faqList?: any;
+  featuresMeta?: any;
+  imageWithDetails?: any;
+
   variants: Array<{
     id: string;
     title: string;
@@ -211,7 +409,7 @@ export interface ShopifyProduct {
   vendor?: string;
   productType?: string;
   tags: string[];
-  
+
   // Derived fields from server
   ingredients?: string[];
   sideIngredients?: string[];
@@ -271,7 +469,7 @@ export const getMetafieldImage = (
       return product.productCardIngredientsImage.reference.image.url;
     }
   }
-  
+
   return product.productMetafields?.find(
     (field) => field.namespace === namespace && field.key === key
   )?.reference?.image?.url;
@@ -395,7 +593,7 @@ export const getMetafieldValue = (
       return product.productCardIngredientsImage.value;
     }
   }
-  
+
   return product.productMetafields?.find(
     (field) => field.namespace === namespace && field.key === key
   )?.value;
@@ -406,19 +604,19 @@ export const shopifyService = {
   // Fetch all products
   async fetchProducts(): Promise<ShopifyProduct[]> {
     try {
-      
+
       // Add cache-busting parameter
       const cacheBuster = `?_=${Date.now()}`;
       const response = await fetch(`/api/shopify/products${cacheBuster}`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const products = await response.json();
-      
+
       console.log(`📦 CLIENT: Received ${products.length} products from API`);
-      
+
       if (products.length > 0) {
         const firstProduct = products[0];
         console.log('🔍 CLIENT: First product keys:', Object.keys(firstProduct));
@@ -426,16 +624,16 @@ export const shopifyService = {
         console.log('🔍 CLIENT: Has heroBanner?', 'heroBanner' in firstProduct);
         console.log('🔍 CLIENT: Has productIngredients?', 'productIngredients' in firstProduct);
         console.log('🔍 CLIENT: Has productCardIngredientsImage?', 'productCardIngredientsImage' in firstProduct);
-        
+
         if (firstProduct.heroBanner) {
           console.log('✅ CLIENT: heroBanner found!', firstProduct.heroBanner);
         } else {
           console.log('❌ CLIENT: heroBanner is undefined/null');
         }
-        
+
         console.log('🔍 CLIENT: Full first product:', firstProduct);
       }
-      
+
       return products;
     } catch (error) {
       console.error('❌ CLIENT: Error fetching products:', error);
@@ -447,11 +645,11 @@ export const shopifyService = {
   async fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
     try {
       console.log(`🔍 CLIENT: Fetching product by handle: ${handle}`);
-      
+
       // For now, fetch all products and find by handle
       const products = await this.fetchProducts();
       const product = products.find(p => p.handle === handle) || null;
-      
+
       if (product) {
         console.log(`✅ CLIENT: Found product "${product.title}"`);
         console.log('🔍 CLIENT: Product has heroBanner?', !!product.heroBanner);
@@ -459,7 +657,7 @@ export const shopifyService = {
       } else {
         console.log(`❌ CLIENT: Product with handle "${handle}" not found`);
       }
-      
+
       return product;
     } catch (error) {
       console.error('❌ CLIENT: Error fetching product:', error);

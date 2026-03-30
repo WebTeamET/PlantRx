@@ -35,27 +35,21 @@ interface DotConfig {
 }
 
 const DOTS: DotConfig[] = [
-  { top: "3%",  left: "36%",  cls: "w-[14px] h-[14px]", delay: "0s",    dur: "3.4s" },
-  { top: "8%", left: "79%", cls: "w-[14px] h-[14px]", delay: "0.7s",  dur: "4.1s" },
-  { top: "35%", left: "16%",  cls: "w-[14px] h-[14px]", delay: "1.2s",  dur: "3.8s" },
+  { top: "3%", left: "36%", cls: "w-[14px] h-[14px]", delay: "0s", dur: "3.4s" },
+  { top: "8%", left: "79%", cls: "w-[14px] h-[14px]", delay: "0.7s", dur: "4.1s" },
+  { top: "35%", left: "16%", cls: "w-[14px] h-[14px]", delay: "1.2s", dur: "3.8s" },
   { top: "40%", left: "70%", cls: "w-[14px] h-[14px]", delay: "0.4s", dur: "5.0s" },
-  { top: "58%", left: "26%",  cls: "w-[14px] h-[14px]", delay: "1.2s",  dur: "3.8s" },
+  { top: "58%", left: "26%", cls: "w-[14px] h-[14px]", delay: "1.2s", dur: "3.8s" },
 ];
 
-// ─── Marquee items ────────────────────────────────────────────────────────────
-
-const MARQUEE_ITEMS = [
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
-  "Clear Mind", "Sharp Focus", "Steady Energy",
+const DEFAULT_MARQUEE_ITEMS = [
+  "Clear Mind", "Sharp Focus", "Steady Energy"
 ];
 
-const MARQUEE_STRING = `${MARQUEE_ITEMS.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(60);
+// Re-generate MARQUEE_STRING inside the component or as a helper to allow dynamic content
+const getMarqueeString = (items: string[]) => {
+  return `${items.map((t) => t.toUpperCase()).join("   •   ")}   •   `.repeat(30);
+};
 const MARQUEE_TEXT_STYLE = {
   fontStyle: "normal" as const,
   fontWeight: 500,
@@ -96,8 +90,14 @@ interface StripBannerProps {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StripBanner({ product, children }: StripBannerProps) {
-  const activeTitle = product?.title || "Mushroom Focus Strips";
-  const mainImage   = product?.images?.[0]?.url || "/strip-2.png";
+  // Use mapped heroSection fields from the server
+  const activeTitle = product?.heroSection?.product_name || product?.title || "Mushroom Focus Strips";
+  const mainImage = product?.heroSection?.hero_image || product?.images?.[0]?.url || "/strip-2.png";
+  const heroIngredientImg = product?.heroSection?.hero_ingredient || "/masroom-baner-small.png";
+
+  // Dynamic marquee items from Shopify (server parses the JSON array)
+  const marqueeItems = Array.isArray(product?.marquee) ? product.marquee : DEFAULT_MARQUEE_ITEMS;
+  const marqueeString = getMarqueeString(marqueeItems);
   // Keep curved marquee between 50–100% to avoid disappearing text.
   const [marqueeOffset, setMarqueeOffset] = useState(50);
   const scrollStateRef = useRef({
@@ -264,7 +264,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
               >
                 {activeTitle}
               </motion.h2>
-              
+
               {/* ── Small mushroom image — pops in after SVG, then floats ── */}
               <motion.div
                 className="max-lg:hidden lg:absolute lg:right-0 lg:bottom-[-240px] max-w-[270px] z-[0]"
@@ -281,13 +281,13 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 }}
                 style={floatActive ? { animation: "mushroomFloat 5s ease-in-out infinite" } : undefined}
               >
-                <img src="/masroom-baner-small.png" alt="" />
+                <img src={heroIngredientImg} alt="Hero Ingredient" />
               </motion.div>
             </div>
-            
+
             {/* ── Product box image — slides in on load ── */}
             <motion.div
-              className="pdp-banner-img max-w-[664px] !rotate-[-6deg] mx-auto lg:mt-[-40px] relative z-[99]" 
+              className="pdp-banner-img max-w-[664px] !rotate-[-6deg] mx-auto lg:mt-[-40px] relative z-[99]"
               variants={slideUpVariants}
               initial="hidden"
               animate="visible"
@@ -300,7 +300,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 animate="visible"
               />
             </motion.div>
-            
+
           </div>
         </div>
 
@@ -343,15 +343,15 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 startOffset={`${marqueeOffset}%`}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                alignmentBaseline="middle"                
+                alignmentBaseline="middle"
               >
-                {MARQUEE_STRING}
+                {marqueeString}
               </textPath>
             </text>
           </svg>
 
           {/* Edge fade */}
-          
+
         </div>
 
         {children}
