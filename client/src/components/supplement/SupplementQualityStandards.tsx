@@ -6,6 +6,7 @@ import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { ShopifyProduct } from "@/lib/shopify";
 
 const badges = [
   { icon: "/quality-icon-gluten.png", label: "GLUTEN FREE", offsetY: 44 },
@@ -19,7 +20,7 @@ const badges = [
   { icon: "/quality-icon-vegan-sup.png", label: "VEGAN", offsetY: 73 },
 ];
 
-export default function SupplementQualityStandards() {
+export default function SupplementQualityStandards({ product }: { product: ShopifyProduct }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);

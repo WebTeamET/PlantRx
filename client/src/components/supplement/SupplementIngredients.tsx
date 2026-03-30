@@ -2,7 +2,7 @@
 import { containerVariants, itemScaleUpVariants, slideLeftVariantsFast, slideRightVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
+import { ShopifyProduct } from "@/lib/shopify";
 
 const leftLabels = [
   { text: "800mg Per <br/> Serving", svg: "/pointed-long-line.svg" },
@@ -16,7 +16,7 @@ const rightLabels = [
   { text: "Supports Daily <br/> Wellness", svg: "/pointed-short-line.svg" },
 ];
 
-export default function SupplementIngredients() {
+export default function SupplementIngredients({ product }: { product: ShopifyProduct }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 

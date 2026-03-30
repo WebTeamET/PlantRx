@@ -2,6 +2,7 @@
 import { slideUpVariants, slideUpVariantsFast } from "@/animation/framerMotionVariants";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { ShopifyProduct } from "@/lib/shopify";
 
 const productMeta = [
   { icon: "/quantity_icon.svg", label: "Quantity: 60 Capsules" },
@@ -26,7 +27,7 @@ const safetyNotes = [
   "Store in a cool, dry place",
 ];
 
-export default function SupplementWhoAvoid() {
+export default function SupplementWhoAvoid({ product }: { product: ShopifyProduct }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 

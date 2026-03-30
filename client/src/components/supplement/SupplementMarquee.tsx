@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Marquee from "react-fast-marquee";
+import { ShopifyProduct } from "@/lib/shopify";
 
 const marqueeItems = [
   "MORINGA",
@@ -13,9 +14,10 @@ const marqueeItems = [
 interface SupplementMarqueeProps {
   marginTop?: number;
   marginBottom?: number;
+  product: ShopifyProduct;
 }
 
-export default function SupplementMarquee({ marginTop = 0, marginBottom = 0 }: SupplementMarqueeProps) {
+export default function SupplementMarquee({ marginTop = 0, marginBottom = 0, product }: SupplementMarqueeProps) {
   const mtClasses = marginTop !== 0
     ? "-mt-[calc(var(--marquee-mt)_-_40px)] sm:-mt-[calc(var(--marquee-mt)_-_20px)] lg:-mt-[var(--marquee-mt)]"
     : "";

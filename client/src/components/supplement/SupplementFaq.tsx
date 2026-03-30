@@ -1,6 +1,7 @@
 "use client";
 
 import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { ShopifyProduct } from "@/lib/shopify";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -33,7 +34,7 @@ const QA_ITEMS: QAItem[] = [
   },
 ];
 
-export default function SupplementFaq() {
+export default function SupplementFaq({ product }: { product: ShopifyProduct }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (

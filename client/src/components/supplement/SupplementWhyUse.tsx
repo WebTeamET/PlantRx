@@ -1,5 +1,6 @@
 "use client";
 import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { ShopifyProduct } from "@/lib/shopify";
 import { SplitText } from "@/utils/SplitText";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -67,7 +68,7 @@ function WhyUseCard({ card, index, isInView }: { card: (typeof cards)[0]; index:
   );
 }
 
-export default function SupplementWhyUse() {
+export default function SupplementWhyUse({ product }: { product: ShopifyProduct }) {
   const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardsRef, { once: true, amount: 0.3 });
 

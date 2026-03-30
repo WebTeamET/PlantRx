@@ -103,7 +103,7 @@ const StripCategory = lazy(() => import("@/pages/Strips"));
 const SupplementCategory = lazy(() => import("@/pages/SupplementCategory"));
 const MushroomFocusStrips = lazy(() => import("@/pages/strips/MushroomFocusStrips"));
 
-const StripProductDetail = lazy(() => import("@/pages/strips/StripProductDetail") );
+const StripProductDetail = lazy(() => import("@/pages/strips/StripProductDetail"));
 
 // High-Value SEO Content Pages
 const HowNaturalRemediesHeal = lazy(
@@ -227,20 +227,21 @@ function Router() {
             <Route path="/" component={Home} />
             <Route path="/remedies" component={Remedies} />
             <Route path="/remedies/articles" component={RemedyArticlesHub} />
+            <Route path="/strips" component={StripCategory} />
+            <Route path="/supplements" component={SupplementCategory} />
+            <Route path="/strips/:handle" component={StripProductDetail} />
+            {/* <Route path="/supplement/:handle" component={StripProductDetail} /> */}
+            <Route path="/supplements/:handle" component={Supplements} />
             <Route
-              path="/strips"
-              component={StripCategory}
+              path="/supplement"
+              component={() => {
+                window.location.replace("/supplements");
+                return null;
+              }}
             />
-            <Route path="/supplement" component={SupplementCategory} />
-             <Route path="/strips/:handle" component={StripProductDetail} />
-             <Route path="/supplement/:handle" component={StripProductDetail} />
             <Route
               path="/essential-oils"
               component={EssentialOils}
-            />
-            <Route
-              path="/supplements"
-              component={Supplements}
             />
             <Route
               path="/remedies/category/:category"
@@ -254,7 +255,7 @@ function Router() {
             <Route path="/community" component={Community} />
             <Route path="/experts" component={Experts} />
             <Route path="/strips/:handle" component={StripProductDetail} />
-            {/* <Route path="/store" component={Store} /> */}
+            <Route path="/store" component={Store} />
             <Route
               path="/collections/Products"
               component={() => {
@@ -269,7 +270,7 @@ function Router() {
             <Route
               path="/planrx-creator"
               component={() => (
-                <PlanRxCreator user={null} onAuthRequired={() => {}} />
+                <PlanRxCreator user={null} onAuthRequired={() => { }} />
               )}
             />
             <Route path="/admin" component={Admin} />
@@ -385,7 +386,7 @@ function Router() {
               path="/learn/boost-immune-system"
               component={ImmuneSystemBoost}
             />
-            
+
 
             <Route component={NotFound} />
           </Switch>

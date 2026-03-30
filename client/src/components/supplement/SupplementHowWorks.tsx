@@ -2,8 +2,9 @@
 import { itemScaleUpVariants, slideUpVariants } from "@/animation/framerMotionVariants";
 import { SplitText } from "@/utils/SplitText";
 import { motion } from "framer-motion";
+import { ShopifyProduct } from "@/lib/shopify";
 
-export default function SupplementHowWorks() {
+export default function SupplementHowWorks({ product }: { product: ShopifyProduct }) {
   return (
     <section className="how-it-works-section relative overflow-hidden bg-white w-full max-lg:py-10">
       <div

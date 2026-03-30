@@ -255,7 +255,7 @@ export default function Header() {
       isPremium: false,
       subItems: [
         { href: "/strips", label: "Strips", isPremium: false, icon: Grip, color: "text-green-500" },
-        { href: "/supplement", label: "Supplement", isPremium: false, icon: Grip, color: "text-green-500" },
+        { href: "/supplements", label: "Supplements", isPremium: false, icon: Grip, color: "text-green-500" },
         // { href: "/store/saved", label: "Saved", isPremium: false, icon: Bookmark, color: "text-rose-500" },
         // { href: "/store/saved", label: "Saved", isPremium: false, icon: Bookmark, color: "text-rose-500" },
       ],
@@ -325,8 +325,8 @@ export default function Header() {
                       href={item.href}
                       data-testid={`nav-link-${item.href.replace(/\//g, '')}`}
                       className={`luxury-subheading text-base transition-all duration-300 whitespace-nowrap flex items-center gap-1 font-body ${location === item.href || (item.subItems && location.startsWith(item.href))
-                          ? "text-gold dark:text-gold font-semibold"
-                          : "text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold"
+                        ? "text-gold dark:text-gold font-semibold"
+                        : "text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold"
                         }`}
                       onMouseEnter={() => {
                         if (item.href === '/remedies') {
@@ -378,8 +378,8 @@ export default function Header() {
                               }}
                             >
                               <div className={`relative w-8 h-8 rounded-lg flex items-center justify-center mr-3 transition-all duration-200 ${subItem.isPremium
-                                  ? 'bg-gold/20 dark:bg-gold/20 group-hover/item:bg-gold/30 dark:group-hover/item:bg-gold/30'
-                                  : 'bg-gray-100 dark:bg-gray-800 group-hover/item:bg-white dark:group-hover/item:bg-gray-700'
+                                ? 'bg-gold/20 dark:bg-gold/20 group-hover/item:bg-gold/30 dark:group-hover/item:bg-gold/30'
+                                : 'bg-gray-100 dark:bg-gray-800 group-hover/item:bg-white dark:group-hover/item:bg-gray-700'
                                 }`}>
                                 {IconComponent && <IconComponent className={`w-4 h-4 ${subItem.color || 'text-gray-500'}`} />}
                                 {subItem.isPremium && (
@@ -440,13 +440,13 @@ export default function Header() {
                       key={size.id}
                       onClick={() => setTextSize(size.id)}
                       className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 ${textSize === size.id
-                          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                          : 'text-gray-700 dark:text-gray-300'
+                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                        : 'text-gray-700 dark:text-gray-300'
                         }`}
                     >
                       <span className={`font-medium ${size.id === 'small' ? 'text-sm' :
-                          size.id === 'medium' ? 'text-base' :
-                            size.id === 'large' ? 'text-lg' : 'text-xl'
+                        size.id === 'medium' ? 'text-base' :
+                          size.id === 'large' ? 'text-lg' : 'text-xl'
                         }`}>{size.label}</span>
                       {textSize === size.id && (
                         <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -473,8 +473,8 @@ export default function Header() {
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
                       className={`flex items-center space-x-3 px-3 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 ${language === lang.code
-                          ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
-                          : 'text-gray-700 dark:text-gray-300'
+                        ? 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+                        : 'text-gray-700 dark:text-gray-300'
                         }`}
                     >
                       <span className="text-lg">{lang.flag}</span>
@@ -608,8 +608,8 @@ export default function Header() {
                             <Link
                               href={item.href}
                               className={`group block w-full px-4 py-3 min-h-[48px] rounded-xl text-left text-base font-medium transition-all duration-300 ease-out active:scale-[0.98] ${location === item.href
-                                  ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/20 dark:to-gold/10 text-gold dark:text-gold border-l-4 border-gold shadow-sm"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-gold dark:hover:text-gold hover:pl-5 hover:shadow-sm"
+                                ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/20 dark:to-gold/10 text-gold dark:text-gold border-l-4 border-gold shadow-sm"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-gold dark:hover:text-gold hover:pl-5 hover:shadow-sm"
                                 }`}
                               onClick={() => setIsOpen(false)}
                             >
@@ -623,8 +623,8 @@ export default function Header() {
                               <button
                                 onClick={() => setExpandedMobMenus(prev => ({ ...prev, [idx]: !isExpanded }))}
                                 className={`group block w-full px-4 py-3 min-h-[48px] rounded-xl text-left text-base font-medium transition-all duration-300 ease-out flex items-center justify-between active:scale-[0.98] ${item.href && (location === item.href || location.startsWith(item.href + '/'))
-                                    ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/20 dark:to-gold/10 text-gold dark:text-gold shadow-sm"
-                                    : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-gold dark:hover:text-gold hover:shadow-sm"
+                                  ? "bg-gradient-to-r from-gold/10 to-gold/5 dark:from-gold/20 dark:to-gold/10 text-gold dark:text-gold shadow-sm"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100/50 dark:hover:from-gray-800/60 dark:hover:to-gray-800/40 hover:text-gold dark:hover:text-gold hover:shadow-sm"
                                   }`}
                               >
                                 <span>{item.label}</span>
@@ -652,8 +652,8 @@ export default function Header() {
                                         style={{ animationDelay: `${(subIdx + 1) * 30}ms` }}
                                       >
                                         <div className={`relative w-7 h-7 rounded-lg flex items-center justify-center mr-3 transition-all duration-300 group-hover/sub:scale-110 group-hover/sub:rotate-3 ${subItem.isPremium
-                                            ? 'bg-gold/20 dark:bg-gold/20 group-hover/sub:shadow-md group-hover/sub:shadow-gold/20'
-                                            : 'bg-gray-100 dark:bg-gray-700 group-hover/sub:bg-gold/10 dark:group-hover/sub:bg-gold/10'
+                                          ? 'bg-gold/20 dark:bg-gold/20 group-hover/sub:shadow-md group-hover/sub:shadow-gold/20'
+                                          : 'bg-gray-100 dark:bg-gray-700 group-hover/sub:bg-gold/10 dark:group-hover/sub:bg-gold/10'
                                           }`}>
                                           {IconComponent && <IconComponent className={`w-4 h-4 transition-transform duration-300 group-hover/sub:scale-110 ${subItem.color || 'text-gray-500'}`} />}
                                           {subItem.isPremium && (

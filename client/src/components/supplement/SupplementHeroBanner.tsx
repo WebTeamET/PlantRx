@@ -1,8 +1,9 @@
 "use client";
 import { itemScaleUpVariants, slideUpVariants } from "@/animation/framerMotionVariants";
 import { motion } from "framer-motion";
+import { ShopifyProduct } from "@/lib/shopify";
 
-export default function SupplementHeroBanner() {
+export default function SupplementHeroBanner({ product }: { product: ShopifyProduct }) {
   const leafVars = {
     initial: { opacity: 0, scale: 0.93 },
     animate: {
@@ -95,38 +96,38 @@ export default function SupplementHeroBanner() {
         aria-hidden="true"
       />
       <div className="flex flex-col items-center pt-10 md:pt-20 xl:pt-[155px] 2xl:pb-[61px] h-full justify-between gap-5 new-container">
-      <div
-        className="text-center"
-      >
-        <div className="title title-green title-stroke">
-          <motion.h1
-            className="font-heading font-semibold capitalize supplement-pdp-heading"
-            variants={slideUpVariants as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127", willChange: "transform, opacity" }}
-          >
-          Moringa Pure Capsules
-          </motion.h1>
+        <div
+          className="text-center"
+        >
+          <div className="title title-green title-stroke">
+            <motion.h1
+              className="font-heading font-semibold capitalize supplement-pdp-heading"
+              variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127", willChange: "transform, opacity" }}
+            >
+              {product.title}
+            </motion.h1>
+          </div>
         </div>
-      </div>
-      <motion.div
-        className="z-10"
-        variants={itemScaleUpVariants as any}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        style={{ willChange: "transform, opacity" }}
-      >
-        <img
-          src="/moringa-sup-hero-hands.png"
-          width={935}
-          height={623}
-          alt="Hands holding Moringa Pure Capsules supplement bottle"
-          className="w-full h-auto object-contain md:max-w-[61%] max-w-[90%] mx-auto"
-        />
-      </motion.div>
+        <motion.div
+          className="z-10"
+          variants={itemScaleUpVariants as any}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
+        >
+          <img
+            src="/moringa-sup-hero-hands.png"
+            width={935}
+            height={623}
+            alt={`Hands holding ${product.title} supplement bottle`}
+            className="w-full h-auto object-contain md:max-w-[61%] max-w-[90%] mx-auto"
+          />
+        </motion.div>
       </div>
 
 

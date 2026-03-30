@@ -2,8 +2,9 @@
 import { containerVariants, itemScaleUpVariants, slideRightVariants, slideRightVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { ShopifyProduct } from "@/lib/shopify";
 
-export default function SupplementHowToUse() {
+export default function SupplementHowToUse({ product }: { product: ShopifyProduct }) {
   return (
     <section className="how-to-use-section relative overflow-hidden lg:pt-[110px] lg:-mt-[110px] max-lg:flex flex-col items-center">
       <div className="relative w-full pointer-events-none rotate-180 -scale-x-100 -mt-1">
