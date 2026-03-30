@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { Link } from "wouter";
-import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
 import { UpgradeInterstitial } from "@/components/FeatureLock";
 import { Feature } from "@shared/subscriptionFeatures";
@@ -41,7 +40,6 @@ export default function SmartTools() {
         canonical="https://plantrxapp.com/smart-tools"
         ogType="website"
       />
-      <Header />
 
       <UpgradeInterstitial feature={Feature.AI_SYMPTOM_FINDER}>
 
@@ -51,7 +49,7 @@ export default function SmartTools() {
           <div className="text-center mb-6 sm:mb-10 lg:mb-16">
             <motion.div variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
               <Badge className="m-3 inline-flex items-center text-white gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-l from-green/50 via-green/30 to-green/10 rounded-full border border-green shadow-lg shadow-green/20">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 Expert-Powered Remedy Creation
               </Badge>
             </motion.div>

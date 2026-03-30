@@ -214,11 +214,11 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                     },
                   }}
                   className={`absolute max-w-[clamp(100px,18.75vw,270px)] max-h-[clamp(80px,16.67vw,240px)] z-[1] ${benefit.align === "left" ? "lg:-top-[12%] -right-[14%]" : "-top-[12%] right-0 lg:-right-[14%]"}`}>
-                  <img src={benefit.accent} width={270} height={240} alt="mushroom" />
+                  <img src={benefit.rightAccent} width={270} height={240} alt="mushroom" />
                 </motion.div>
                 <div
                   className={`absolute max-w-[clamp(40px,6.25vw,90px)] max-h-[clamp(80px,13.06vw,188px)] z-[1] ${benefit.align === "left" ? "bottom-[30px] lg:bottom-[24px] left-[5px]" : "bottom-[24px] left-[5px]"}`}>
-                  <img src={benefit.rightAccent} width={90} height={187} alt="mushroom" />
+                  <img src={benefit.accent} width={90} height={187} alt="mushroom" />
                 </div>
                 <div
                   style={{

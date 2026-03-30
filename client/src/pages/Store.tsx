@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import Header from '@/components/Header';
 import { SEOHead } from '@/components/SEOHead';
 import { useTranslation } from '@/contexts/TranslationContext';
 import { useEnhancedPageTracking } from '@/hooks/useAnalytics';
@@ -10,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Leaf, Sparkles, CheckCircle, Award, Mail, ShoppingCart, Loader2 } from 'lucide-react';
 import { shopifyService, type ShopifyProduct, getProductIngredients } from '@/lib/shopify';
 import { useCart } from '@/contexts/CartContext';
-import { ShoppingCart as CartComponent } from '@/components/ShoppingCart';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { containerVariants, slideRightVariantsFast, slideUpVariants } from '@/animation/framerMotionVariants';
 import { SplitText } from '@/utils/SplitText';
@@ -172,10 +170,9 @@ export default function Store() {
         keywords="natural products, premium supplements, plant-based wellness, herbal remedies, organic health products, spirulina, turmeric, ashwagandha, echinacea, reishi mushroom"
       />
 
-      <Header />
 
       {/* Hero Section */}
-       <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom hero-desktop">
+      <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom hero-desktop">
         {/* Premium Header */}
         <div className="text-center mb-6 sm:mb-10 relative overflow-hidden py-6 sm:py-10">
           <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -194,7 +191,7 @@ export default function Store() {
                 <div className="absolute inset-0 shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] dark:bg-emerald-500/20 rounded-full blur-xl scale-150"></div>
                 <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-green dark:bg-gold rounded-2xl flex items-center justify-center shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(194, 160, 88,0.1)] rotate-3 shadow-lg">
                   <span className="text-2xl sm:text-3xl invert-[1] filter brightness-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
                   </span>
                 </div>
               </div>
@@ -207,9 +204,9 @@ export default function Store() {
                   <span className="relative inline-flex rounded-full h-full w-full bg-green dark:bg-gold"></span>
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold tracking-wide">
-                Premium Natural Products
+                  Premium Natural Products
                 </span>
-                
+
               </div>
             </div>
           </motion.div>
@@ -236,7 +233,7 @@ export default function Store() {
             {t('Experience the future of natural wellness with our premium collection of scientifically-backed, ethically-sourced products. Each item is verified by our expert team for maximum potency and effectiveness.')}
           </motion.p>
         </div>
-        </div>
+      </div>
 
       {/* Products Section */}
       <section className="pb-16 sm:pb-32 px-3 sm:px-4 relative mt-10">
@@ -313,9 +310,9 @@ export default function Store() {
           ) : (
             /* Products Display */
             <>
-              <motion.div 
-              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
+              <motion.div
+                variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
                   <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Discover our expertly curated collection of natural wellness products</p>
@@ -327,14 +324,14 @@ export default function Store() {
 
               {/* Filters */}
               <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5 sm:p-4 mb-6">
-                <motion.div 
-                variants={containerVariants as any}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <motion.div
+                  variants={containerVariants as any}
+                  initial="hidden"
+                  animate="visible"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Search */}
                   <motion.div
-                  variants={slideRightVariantsFast as any}
+                    variants={slideRightVariantsFast as any}
                   >
                     <Input
                       type="text"
@@ -347,7 +344,7 @@ export default function Store() {
 
                   {/* Availability */}
                   <motion.div
-                  variants={slideRightVariantsFast as any}
+                    variants={slideRightVariantsFast as any}
                   >
                     <Select value={availabilityFilter} onValueChange={(value) => setAvailabilityFilter(value as any)}>
                       <SelectTrigger className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
@@ -363,7 +360,7 @@ export default function Store() {
 
                   {/* Sort */}
                   <motion.div
-                  variants={slideRightVariantsFast as any}
+                    variants={slideRightVariantsFast as any}
                   >
                     <Select value={sortBy} onValueChange={(value) => setSortBy(value as any)}>
                       <SelectTrigger className="min-h-[48px] text-base bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
@@ -381,12 +378,12 @@ export default function Store() {
                 </motion.div>
               </div>
 
-              <motion.div 
-              variants={containerVariants as any}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ margin: "-80px", once: true }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
+              <motion.div
+                variants={containerVariants as any}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ margin: "-80px", once: true }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
                 {(showAllProducts ? filteredProducts : filteredProducts.slice(0, 16)).map((product) => {
                   const isStrip =
                     product.productType?.toLowerCase().includes('strip') ||
@@ -459,9 +456,6 @@ export default function Store() {
 
         </div>
       </section>
-
-      {/* Shopping Cart Component */}
-      <CartComponent />
     </div>
   );
 }

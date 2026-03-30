@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "@/auth";
 import { useToast } from "@/hooks/use-toast";
 import type { User } from "firebase/auth";
-import Header from "@/components/Header";
 import { useClickAuthPrompt } from "@/hooks/useClickAuthPrompt";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -151,7 +150,6 @@ export default function Pricing() {
 
   return (
     <div className="min-h-screen bg-gold/5 dark:bg-gray-900">
-      <Header />
       <SEOHead
         title="Pricing Plans - PlantRx"
         description="Choose the perfect plan for your natural healing journey. Access expert-curated remedies, personalized wellness support, and premium features."

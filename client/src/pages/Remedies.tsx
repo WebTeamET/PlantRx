@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Search, Filter, ChevronDown, ChevronRight, BookOpen, X, Leaf, SlidersHorizontal } from "lucide-react";
 import RemedyCard from "@/components/RemedyCard";
-import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useLuxuryLoader } from "@/components/LuxuryLoader";
@@ -231,7 +230,6 @@ export default function Remedies() {
           canonical="https://plantrxapp.com/remedies"
           ogType="website"
         />
-        <Header />
 
         <div className="px-4 pt-4 pb-8 ios-safe-area-bottom">
 
@@ -618,7 +616,6 @@ export default function Remedies() {
           }
         }}
       />
-      <Header />
 
       <div className="max-w-7xl mx-auto mobile-safe-area py-4 sm:py-8 ios-safe-area-bottom hero-desktop">
         {/* Premium Header */}
@@ -652,7 +649,7 @@ export default function Remedies() {
                 <span className="text-xs sm:text-sm font-semibold text-green dark:text-gold tracking-wide">
                   Natural Remedies Collection
                 </span>
-                
+
               </div>
             </div>
           </motion.div>
@@ -688,7 +685,7 @@ export default function Remedies() {
           viewport={{ once: true, amount: 0 }}
         >
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden mb-4 sm:mb-6 md:mb-8">
- {/* <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
+            {/* <div className="absolute inset-0 bg-gradient-to-br from-white via-green/10 to-teal-50/30 dark:from-gray-900 dark:via-emerald-950/30 dark:to-teal-950/20"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green/10 via-transparent to-transparent dark:from-emerald-900/20"></div>
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green/5 to-transparent dark:from-emerald-800/20 rounded-bl-full"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-green/5 to-transparent dark:from-teal-800/20 rounded-tr-full"></div> */}

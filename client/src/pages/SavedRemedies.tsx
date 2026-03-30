@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Bookmark, AlertCircle } from "lucide-react";
 import { Link } from "wouter";
-import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
 import { SplitText } from "@/utils/SplitText";
 import { slideUpVariants } from "@/animation/framerMotionVariants";
@@ -24,8 +23,6 @@ export default function SavedRemedies() {
         keywords="saved remedies, favorites, natural remedies, plantrx"
         noindex={true}
       />
-
-      <Header />
 
       <div className="min-h-screen luxury-gradient-bg">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">

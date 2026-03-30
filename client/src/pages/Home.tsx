@@ -14,7 +14,6 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import RemedyCard from "@/components/RemedyCard";
-import Header from "@/components/Header";
 import { FileText, Download } from "lucide-react";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { SEOHead } from "@/components/SEOHead";
@@ -331,7 +330,6 @@ export default function Home() {
           }
         }}
       />
-      <Header />
 
       {/* Gold Trial Promotional Banner */}
       <GoldTrialBanner />
@@ -391,10 +389,10 @@ export default function Home() {
               }}
             >
               <div className={`w-6 h-6 sm:w-10 sm:h-10 rounded-full flex items-center justify-center backdrop-blur-sm ${item.icon === 'leaf'
-                  ? 'bg-green/15 dark:bg-gold/20'
-                  : item.icon === 'sparkle'
-                    ? 'bg-gold/35 dark:bg-amber-400/15'
-                    : 'bg-rose-500/10 dark:bg-rose-400/10'
+                ? 'bg-green/15 dark:bg-gold/20'
+                : item.icon === 'sparkle'
+                  ? 'bg-gold/35 dark:bg-amber-400/15'
+                  : 'bg-rose-500/10 dark:bg-rose-400/10'
                 }`}>
                 {item.icon === 'leaf' && <Leaf className="w-3 h-3 sm:w-5 sm:h-5 text-green dark:text-gold" />}
                 {item.icon === 'sparkle' && <Sparkles className="w-3 h-3 sm:w-5 sm:h-5 text-gold dark:text-amber-400" />}
@@ -468,12 +466,12 @@ export default function Home() {
           </motion.div>
 
           {/* Animated PlantRx Title with Split Text Effect */}
-          
+
           <div
             className="mb-4 sm:mb-6"
           >
-            <h1 
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
+            <h1
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight">
               <span
                 className="text-black dark:text-white block sm:inline"
               >
@@ -483,12 +481,12 @@ export default function Home() {
                 <span
                   className="text-green dark:text-gold"
                 >
-                   <SplitText text="Plant" />
+                  <SplitText text="Plant" />
                 </span>
                 <span
                   className="text-gold dark:text-amber-400 font-black"
                 >
-                  <SplitText text="R" /> 
+                  <SplitText text="R" />
                 </span>
                 <span
                   className="text-green dark:text-gold font-black"
@@ -558,12 +556,12 @@ export default function Home() {
             style={{ willChange: "transform, opacity" }}
             className="mt-8 sm:mt-12"
           >
-            <motion.div 
-            variants={containerVariants as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <motion.div
+              variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               {[
                 { href: '/store', label: 'Shop Store', icon: 'store', external: false },
                 { href: '/blog', label: 'Read Articles', icon: 'book', external: false },
@@ -718,7 +716,7 @@ export default function Home() {
               OUR METHODOLOGY
             </Badge>
             <h2
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-2 sm:mb-4 tracking-tight">
+              className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-2 sm:mb-4 tracking-tight">
               <SplitText text="How PlantRx Develops Every Remedy" />
             </h2>
             <motion.p variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="text-xs sm:text-base lg:text-lg text-black dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
@@ -728,14 +726,14 @@ export default function Home() {
 
           {/* 4-Step Process Grid */}
           <motion.div
-          variants={containerVariants as any}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+            variants={containerVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {/* Step 1: Deep Theoretical & Historical Analysis */}
             <motion.div
-            variants={slideUpVariants as any}
+              variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
                 {/* rounded-lg bg-card text-card-foreground shadow-sm luxury-glass hover:shadow-lg transition-all duration-300 border border-gold/20 dark:border-gold/10 h-full */}
@@ -759,7 +757,7 @@ export default function Home() {
 
             {/* Step 2: Scientific Research & Evidence Review */}
             <motion.div
-            variants={slideUpVariants as any}
+              variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
@@ -782,10 +780,10 @@ export default function Home() {
 
             {/* Step 3: Expert Evaluation & Safety Screening */}
             <motion.div
-            variants={slideUpVariants as any}
+              variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                 <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
@@ -805,15 +803,15 @@ export default function Home() {
 
             {/* Step 4: Real-World Testing & Final Selection */}
             <motion.div
-            variants={slideUpVariants as any}
+              variants={slideUpVariants as any}
             >
               <div className="group relative h-full">
-                 <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-green/30 to-green/30 dark:from-gold/30 dark:to-gold/30 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                 <div className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-5 lg:p-6 shadow-[0_4px_20px_-4px_rgba(56,81,39,0.15)] dark:shadow-[0_4px_20px_-4px_rgba(56,81,39,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.25)] dark:hover:shadow-[0_8px_30px_-4px_rgba(56,81,39,0.2)] transition-all duration-500 border border-green/50 dark:border-gold/30 h-full">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green dark:bg-gold rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-4 shadow-lg group-hover:scale-105 transition-all duration-300">
                     <Leaf className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
-                 <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                  <div className="inline-flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
                     <span className="text-[8px] sm:text-[10px] font-bold text-green dark:text-gold tracking-widest bg-transparent dark:bg-gold/10 border border-green dark:border-gold/30  px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">STEP 04</span>
                   </div>
                   <h3 className="text-xs sm:text-base lg:text-lg font-bold text-black dark:text-white mb-1 sm:mb-2 leading-tight">
@@ -835,13 +833,13 @@ export default function Home() {
           <div
             className="text-center mb-6 sm:mb-8"
           >
-            <h2 
-            className="text-xl sm:text-2xl lg:text-3xl font-bold text-black dark:text-white mb-3 sm:mb-3">
-              <SplitText text="Explore Remedies"/>
+            <h2
+              className="text-xl sm:text-2xl lg:text-3xl font-bold text-black dark:text-white mb-3 sm:mb-3">
+              <SplitText text="Explore Remedies" />
             </h2>
-            <motion.p 
-            variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-            className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
+            <motion.p
+              variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+              className="text-sm sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-['Playfair_Display'] leading-relaxed px-3">
               Discover our most trusted, expert-verified plant-based solutions including <a href="/remedy/turmeric-formula-2" className="text-green dark:text-gold hover:underline">turmeric for inflammation</a> and <a href="/remedy/ginger-formula-1" className="text-green dark:text-gold hover:underline">ginger for digestion</a>
             </motion.p>
           </div>
@@ -853,12 +851,12 @@ export default function Home() {
               ))}
             </div>
           ) : (
-            <motion.div 
-            variants={containerVariants as any}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            <motion.div
+              variants={containerVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(featuredRemedies as any[]).slice(0, 3).map((remedy: any, index: number) => (
                 <motion.div
                   variants={slideUpVariants as any}
@@ -929,8 +927,8 @@ export default function Home() {
                 </div>
 
                 {/* Text Content */}
-                <div 
-                className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
+                <div
+                  className="w-full md:w-1/2 p-6 sm:p-8 md:p-10 flex flex-col justify-center text-center md:text-left">
                   {/* Badge */}
                   <div className="inline-flex items-center gap-2 mb-4 justify-center md:justify-start">
                     <span className="px-3 py-1 text-xs font-semibold tracking-wider uppercase bg-green dark:bg-gold/20 text-white dark:text-gold rounded-full">
@@ -980,9 +978,9 @@ export default function Home() {
 
       {/* NEW: Understanding Clinical Herbal Medicine Section - 350+ Words - COLLAPSIBLE */}
       <section className="py-8 sm:py-12 bg-white dark:bg-gray-900">
-        <motion.div 
-        variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
-        className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <Collapsible>
             <CollapsibleTrigger asChild>
               <Button
@@ -1075,7 +1073,7 @@ export default function Home() {
 
           {/* Desktop: Full FAQ */}
           <motion.div
-                        variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
+            variants={slideUpVariants as any} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}
             className="hidden sm:block"
           >
             <FAQ

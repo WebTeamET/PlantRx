@@ -112,9 +112,9 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                {/* <div className="w-full h-full" style={topic.img1Rotate ? { transform: `rotate(${topic.img1Rotate})` } : undefined}>
+                <div className="w-full h-full" style={topic.img1Rotate ? { transform: `rotate(${topic.img1Rotate})` } : undefined}>
                   <img src={topic.img1} alt="mushroom-group" className="w-full h-full object-contain" />
-                </div> */}
+                </div>
               </motion.div>
 
               <motion.div
@@ -124,9 +124,9 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
                 initial={{ scale: 0.2 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
               >
-                {/* <div className="w-full h-full" style={topic.img2Rotate ? { transform: `rotate(${topic.img2Rotate})` } : undefined}>
+                <div className="w-full h-full" style={topic.img2Rotate ? { transform: `rotate(${topic.img2Rotate})` } : undefined}>
                   <img src={topic.img2} alt="brain" className="w-full h-full object-contain" />
-                </div> */}
+                </div>
               </motion.div>
 
               <span>{topic.title}</span>
