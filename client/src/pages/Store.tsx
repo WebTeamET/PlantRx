@@ -231,7 +231,7 @@ export default function Store() {
           </div>
 
           <motion.p variants={slideUpVariants as any} initial="hidden" animate="visible"
-            className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-4"
+            className="text-sm sm:text-base md:text-lg text-black dark:text-white max-w-2xl mx-auto leading-relaxed px-4"
           >
             {t('Experience the future of natural wellness with our premium collection of scientifically-backed, ethically-sourced products. Each item is verified by our expert team for maximum potency and effectiveness.')}
           </motion.p>
@@ -318,9 +318,9 @@ export default function Store() {
               className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-3">
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
-                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">Discover our expertly curated collection of natural wellness products</p>
+                  <p className="text-sm sm:text-base text-black dark:text-white">Discover our expertly curated collection of natural wellness products</p>
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-black dark:text-white">
                   {showAllProducts ? filteredProducts.length : Math.min(16, filteredProducts.length)} of {filteredProducts.length} products
                 </div>
               </motion.div>
