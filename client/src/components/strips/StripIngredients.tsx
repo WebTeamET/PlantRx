@@ -85,7 +85,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(true)}
-                                    className="uppercase font-heading font-semibold text-[#6B3A3A] dark:text-[#6B3A3A] text-[clamp(18px,2.08vw,30px)] leading-none underline decoration-[#6B3A3A] underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
+                                    className="uppercase font-heading font-semibold text-StripPrimary dark:text-StripPrimary text-[clamp(18px,2.08vw,30px)] leading-none underline decoration-StripPrimary underline-offset-[5px] px-5 py-3 transition-transform duration-200 hover:text-black hover:decoration-black"
                                 >
                                     Full Ingredient List
                                 </button>
@@ -104,10 +104,10 @@ export default function StripIngredients({ product, children }: StripIngredients
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}     
                     >
                         <motion.div
-                            className="absolute inset-0 bg-[#F7EFE6]/20 backdrop-blur-2xl"
+                            className="absolute inset-0  backdrop-blur-2xl"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1, transition: { duration: 0.2, ease: "easeOut" } }}
                             exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
@@ -131,10 +131,15 @@ export default function StripIngredients({ product, children }: StripIngredients
                             initial="hidden"
                             animate="visible"
                             exit="exit"
-                            className="relative p-5 md:px-[25px] md:py-[50px] lg:p-[50px] z-10 w-full max-w-[1284px] max-h-[90dvh] overflow-y-hidden bg-[#F7EFE6] border-[5px] border-[#643A3D] rounded-[20px]"
+                            className="relative p-5 md:px-[25px] md:py-[50px] lg:p-[50px] z-10 w-full max-w-[1284px] max-h-[90dvh] overflow-y-hidden bg-StripBackground border-[5px] border-StripPrimary rounded-[20px]"
                             role="dialog"
                             aria-modal="true"
                             aria-label="Full ingredient list"
+                            style={{
+                            "--product-primary-color": product?.colors?.primary_color || "#643A3D",
+                            "--product-secondary-color": product?.colors?.secondary_color || "#F0DDCE",
+                            "--product-background-color": product?.colors?.background_color || "#F7EFE6",
+                        } as React.CSSProperties}
                         >
                             <div className="absolute md:top-[30px] md:right-[30px] right-5 top-5">
                                 <button
@@ -175,8 +180,8 @@ export default function StripIngredients({ product, children }: StripIngredients
                                     <ul className="flex flex-col gap-[10px]">
                                         {ingredientsList.map((item: string, i: number) => (
                                             <li key={i} className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="#643A3D" />
+                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5 text-StripPrimary" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="currentColor" />
                                                 </svg>
                                                 {item}
                                             </li>

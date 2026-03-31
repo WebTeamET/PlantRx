@@ -62,7 +62,6 @@ function ProductCard({ product }: ProductCardProps) {
       <div className="card-inner flex flex-col lg:gap-5 gap-3 rounded-lg h-full">
         <div
           className="card-image-wrapper aspect-square rounded-lg relative overflow-visible"
-          style={{ background: product.cardBgColor }}
         >
           <img
             src={product.productImage}

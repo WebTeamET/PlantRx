@@ -304,6 +304,17 @@ export const PRODUCT_QUERY = `
           }
         }
       }
+        colors: metafield(namespace: "custom", key: "colors") {
+        reference {
+          ... on Metaobject {
+            id
+            fields {
+              key
+              value
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -374,6 +385,7 @@ export interface ShopifyProduct {
   images: Array<{
     id: string;
     url: string;
+    src: string;
     altText?: string;
   }>;
   heroBanner?: ShopifyMetafield;
@@ -395,11 +407,19 @@ export interface ShopifyProduct {
   faqList?: any;
   featuresMeta?: any;
   imageWithDetails?: any;
+  colors?: {
+    background_color?: string;
+    primary_color?: string;
+    secondary_color?: string;
+    [key: string]: any;
+  };
+
 
   variants: Array<{
     id: string;
     title: string;
     availableForSale: boolean;
+    available?: boolean;
     price: {
       amount: string;
       currencyCode: string;

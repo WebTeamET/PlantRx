@@ -47,6 +47,9 @@ module.exports = {
         cream: '#ffeede',
         green: '#385127',
         'light-orange': '#eab308',
+        StripPrimary: "var(--product-primary-color)",
+        StripSecondary: "var(--product-secondary-color)",
+        StripBackground: "var(--product-background-color)",
       },
 
       fontFamily: {

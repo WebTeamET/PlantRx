@@ -107,7 +107,7 @@ export default function StripFeatures({ product }: StripFeaturesProps) {
             key={`feature-${active}-left`}
             src={activeFeature.leftImage}
             alt={activeFeature.leftAlt}
-            className={`block absolute w-[100px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-0 max-lg:!bottom-auto" : "max-lg:!top-auto max-lg:!bottom-2.5"}`}
+            className={`block absolute w-[80px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-0 max-lg:!bottom-auto" : "max-lg:!top-auto max-lg:!bottom-2.5"}`}
             style={{
               left: isOdd ? "30px" : "30px",
               top: isOdd ? "40px" : "auto",
@@ -128,7 +128,7 @@ export default function StripFeatures({ product }: StripFeaturesProps) {
             key={`feature-${active}-right`}
             src={activeFeature.rightImage}
             alt={activeFeature.rightAlt}
-            className={`block absolute w-[100px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-auto max-lg:!bottom-0" : "max-lg:!top-2.5 max-lg:!bottom-auto"}`}
+            className={`block absolute w-[80px] md:w-[120px] lg:w-[230px] ${isOdd ? "max-lg:!top-auto max-lg:!bottom-0" : "max-lg:!top-2.5 max-lg:!bottom-auto"}`}
             style={{
               right: "30px",
               top: isOdd ? "auto" : "40px",
@@ -170,7 +170,7 @@ export default function StripFeatures({ product }: StripFeaturesProps) {
                     isActive ? "font-black" : "font-semibold"
                   }`}
                   animate={{
-                    color: isActive ? "#63383D" : "#000",
+                    color: isActive ? "var(--product-primary-color)" : "#000",
                   }}
                   transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >

@@ -98,7 +98,9 @@ export default function StripTopics({ product, children }: StripTopicsProps) {
               className="relative text-center font-heading capitalize text-[clamp(22px,_5vw,_80px)] py-[25px] px-[50px] lg:p-[70px] cursor-default"
               initial={false}
               animate={{
-                backgroundColor: isFocused ? "#643A3D" : "#F5E2D8",
+                backgroundColor: isFocused
+                ? "var(--product-primary-color)"
+                : "var(--product-secondary-color)",
                 color: isFocused ? "#FFFFFF" : "#000000",
                 filter: isFocused ? "blur(0px)" : "blur(8px)",
                 scale: isFocused ? 1 : 1,

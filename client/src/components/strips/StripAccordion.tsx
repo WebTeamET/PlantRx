@@ -59,10 +59,10 @@ export default function StripAccordion({ product }: StripAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] via-65% to-white py-[50px] lg:py-28">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_51.44%,transparent_100%)] py-[50px] lg:py-28">
       <div className="relative max-w-5xl mx-auto px-6 lg:px-10">
         <div
-          className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-[#6E4B4C]"
+          className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-StripPrimary"
         >
           <h2
             className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] dark:text-[#000] mb-10"
@@ -87,7 +87,7 @@ export default function StripAccordion({ product }: StripAccordionProps) {
                     layout
                     transition={{ type: "spring", stiffness: 120, damping: 20 }}
                     className={`rounded-[16px] sm:rounded-[18px] px-5 sm:px-6 py-4 sm:py-5 ${
-                      isOpen ? "bg-[#643A3D] text-white dark:*:text-white" : "bg-[#EDEDED] text-[#2B1E1E] dark:*:text-[#2B1E1E]"
+                      isOpen ? "bg-StripPrimary text-white dark:*:text-white" : "bg-[#EDEDED] text-[#2B1E1E] dark:*:text-[#2B1E1E]"
                     }`}
                   >
                     <div className="flex items-start gap-4 sm:gap-5">

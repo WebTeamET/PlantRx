@@ -81,6 +81,12 @@ export interface ShopifyProduct {
   faqList?: any;
   featuresMeta?: any;
   imageWithDetails?: any;
+  colors?: {
+    background_color?: string;
+    primary_color?: string;
+    secondary_color?: string;
+    [key: string]: any;
+  };
 
   // Derived fields
   ingredients?: string[];
@@ -531,6 +537,17 @@ const PRODUCT_FIELDS_FRAGMENT = `
       }
     }
   }
+    colors: metafield(namespace: "custom", key: "colors") {
+    reference {
+      ... on Metaobject {
+        id
+        fields {
+          key
+          value
+        }
+      }
+    }
+  }
 `;
 
 // Shopify service functions for server-side use
@@ -632,7 +649,8 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     id: e.node.id,
     title: e.node.title,
     price: e.node.price,
-    availableForSale: e.node.availableForSale
+    availableForSale: e.node.availableForSale,
+    available: e.node.availableForSale
   })) || [];
 
   const bannerImg = product.heroBanner?.reference?.image?.url;
@@ -676,7 +694,8 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     cardWithIcon: mapMetaobject(product.cardWithIcon),
     faqList: mapMetaobject(product.faqList),
     featuresMeta: mapMetaobject(product.features),
-    imageWithDetails: mapMetaobject(product.imageWithDetails)
+    imageWithDetails: mapMetaobject(product.imageWithDetails),
+    colors: mapMetaobject(product.colors)
   } as unknown as ShopifyProduct;
 };
 

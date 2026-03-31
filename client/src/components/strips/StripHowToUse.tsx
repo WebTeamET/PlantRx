@@ -94,7 +94,7 @@ function MobileHowToSlider({ slides }: { slides: Slide[] }) {
     <section className="lg:hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-14">
       <div className="max-w-5xl mx-auto px-5">
 
-        <div className="overflow-hidden rounded-2xl shadow-lg bg-[#F0DDCE]">
+        <div className="overflow-hidden rounded-2xl shadow-lg bg-StripSecondary">
           <div
             className="flex transition-transform duration-500 ease-[0.22,1,0.36,1]"
             style={{ transform: `translateX(-${current * 100}%)` }}
@@ -126,7 +126,7 @@ function MobileHowToSlider({ slides }: { slides: Slide[] }) {
                 <div className="px-6 pb-6">
                   <div className="h-72 rounded-xl overflow-hidden">
                     <img
-                      src={slide.mobileImage || slide.image}
+                      src={slide.image}
                       alt={slide.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -184,7 +184,7 @@ function SlideCard({
         zIndex: totalSlides - index,
       }}
     >
-      <div className="card-inner w-full bg-[#F0DDCE] rounded-lg relative h-fit">
+      <div className="card-inner w-full bg-StripSecondary rounded-[20px] xl:rounded-[32px] relative h-fit">
         <div className="relative z-10 pb-3 p-7 text-center *:text-black dark:*:text-black">
           <h2
             className="mb-3 text-[clamp(28px,_5.5vw,_90px)] leading-[1.1]"
@@ -192,11 +192,11 @@ function SlideCard({
           >
             {slide.title}
           </h2>
-          <p className="xl:text-xl max-w-md mx-auto">
+          <p className="2xl:text-[32px] 2xl:leading-[56px] max-w-[750px] mx-auto">
             {slide.description}
           </p>
         </div>
-        <div className="h-[400px] pt-3 p-7">
+        <div className="xl:h-[400px] h-[250px] pt-3 p-7">
           <div className="w-full h-full rounded-lg overflow-hidden">
             <img
               src={slide.image}
@@ -241,8 +241,8 @@ export default function StripHowToUse({ product }: StripHowToUseProps) {
         className="how-to-wrapper relative hidden lg:block "
         style={{ height: `${slides.length * 150}vh` }}
       >
-        <div className="how-to-sticky sticky top-[50px] py-24 lg:pb-28 lg:pt-[170px] block h-screen justify-center overflow-hidden perspective-[1000px] bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_8.81%,#F7EFE6_51.44%,#F7EFE6_83.43%,rgba(247,239,230,0)_100%)]">
-          <div className="how-to-stage relative w-full xl:max-w-[800px] max-w-[560px] mx-auto lg:aspect-[4/3]">
+        <div className="how-to-sticky sticky top-[50px] py-24 lg:pb-0 lg:pt-20 block h-screen justify-center overflow-hidden perspective-[1000px] bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_8.81%,var(--product-background-color)_51.44%,var(--product-background-color)_83.43%,transparent_100%)]">
+          <div className="how-to-stage relative w-full 2xl:max-w-[1200px] xl:max-w-[800px] max-w-[650px] mx-auto lg:aspect-[4/3]">
             {slides.map((slide, index) => (
               <SlideCard
                 key={index}
@@ -304,8 +304,7 @@ export function StickyStripImg({ product }: { product?: ShopifyProduct }) {
 
   return (
     <motion.div
-      className="pointer-events-none fixed z-[80] inset-x-0 flex justify-center"
-      style={{ bottom: inHowTo ? "0" : "30px" }}
+      className="pointer-events-none fixed z-[80] inset-x-0 flex justify-center bottom-[-190px]"
       initial={{ scale: 1 }}
       animate={{ scale: visible ? 1 : 1, opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
@@ -318,7 +317,7 @@ export function StickyStripImg({ product }: { product?: ShopifyProduct }) {
         style={{ width }}
         loading="lazy"
       />
-      <div className="absolute size-full bg-gradient-to-t to-transparent via-[#F7EFE6] from-[#F7EFE6]"></div>
+      <div className="absolute size-full bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_46.73%,var(--product-background-color)_43.21%,var(--product-background-color)_75.62%,transparent_91.76%)]"></div>
     </motion.div>
   )
 }

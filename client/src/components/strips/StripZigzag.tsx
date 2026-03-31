@@ -63,7 +63,7 @@ export default function StripZigzag({
   const imageAlt = dynamicData?.imageAlt || initialImageAlt;
   const eyebrow = dynamicData?.eyebrow || initialEyebrow;
   return (
-    <section className="relative overflow-hidden w-full bg-gradient-to-t from-white via-[#F7EFE6] to-white py-[50px] md:py-24">
+    <section className="relative overflow-hidden w-full bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_51.44%,transparent_100%)] py-[50px] md:py-24">
       <div className="mx-auto grid lg:grid-cols-3 gap-12 container">
         <div className={reverse ? "order-2 md:order-1" : "lg:col-span-2 lg:mb-[15vh]"}>
           {eyebrow && (
@@ -92,7 +92,7 @@ export default function StripZigzag({
             transition={{ type: "spring", stiffness: 180, damping: 20 }}
             className="w-full flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-lg:max-w-[420px]">
+            <div className="relative w-full max-lg:max-w-[420px] max-md:max-w-[300px]">
               <img
                 src={imageSrc}
                 alt={imageAlt}

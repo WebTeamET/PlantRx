@@ -25,7 +25,6 @@ import { useClickAuthPrompt } from "./hooks/useClickAuthPrompt";
 import { SuspenseFallback } from "./components/SuspenseFallback";
 import NotFound from "@/pages/not-found";
 import Footer from "@/components/Footer";
-import EssentialOils from "./pages/EssentialOils";
 import Supplements from "./pages/Supplements";
 
 // Lazy load analytics/SEO components - these are non-critical for initial render
@@ -101,7 +100,6 @@ const OrderDetails = lazy(() => import("@/pages/OrderDetails"));
 const Header = lazy(() => import("@/components/Header"));
 const StripCategory = lazy(() => import("@/pages/Strips"));
 const SupplementCategory = lazy(() => import("@/pages/SupplementCategory"));
-const MushroomFocusStrips = lazy(() => import("@/pages/strips/MushroomFocusStrips"));
 
 const StripProductDetail = lazy(() => import("@/pages/strips/StripProductDetail"));
 
@@ -238,10 +236,6 @@ function Router() {
                 window.location.replace("/supplements");
                 return null;
               }}
-            />
-            <Route
-              path="/essential-oils"
-              component={EssentialOils}
             />
             <Route
               path="/remedies/category/:category"

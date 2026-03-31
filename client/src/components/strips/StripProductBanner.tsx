@@ -97,7 +97,12 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
   // Dynamic marquee items from Shopify (server parses the JSON array)
   const marqueeItems = Array.isArray(product?.marquee) ? product.marquee : DEFAULT_MARQUEE_ITEMS;
+
+  // Dynamic colors from Shopify metaobject
+  const { background_color, primary_color, secondary_color } = product?.colors || {};
+
   const marqueeString = getMarqueeString(marqueeItems);
+
   // Keep curved marquee between 50–100% to avoid disappearing text.
   const [marqueeOffset, setMarqueeOffset] = useState(50);
   const scrollStateRef = useRef({
@@ -158,14 +163,16 @@ export default function StripBanner({ product, children }: StripBannerProps) {
     <>
       <style>{KEYFRAMES}</style>
 
-      <section className="hero-product-banner product-section relative overflow-hidden lg:min-h-svh flex flex-col bg-[#F7EFE6] dark:bg-[#F7EFE6] font-sans">
-
+      {/* <section className="hero-product-banner product-section relative overflow-hidden xl:min-h-svh flex flex-col bg-[#F7EFE6] dark:bg-[#F7EFE6] font-sans"> */}
+      <section 
+        className="hero-product-banner product-section relative overflow-hidden lg:min-h-svh flex flex-col bg-[var(--product-background-color)] dark:bg-[var(--product-background-color)] font-sans"
+      >
         {/* ── Animated decorative dots ── */}
         {DOTS.map((d, i) => (
           <span
             key={i}
             aria-hidden="true"
-            className={`absolute ${d.cls} bg-[#643A3D]/30 rounded-full pointer-events-none z-0`}
+            className={`absolute ${d.cls} bg-[var(--product-primary-color)]/30 rounded-full pointer-events-none z-0`}
             style={{
               top: d.top,
               left: d.left,
@@ -174,7 +181,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
           />
         ))}
 
-        <div className="max-w-[80rem] mx-auto">
+        {/* <div className="max-w-[80rem] mx-auto max-xl:pb-[100px] max-md:pb-10"> */}
+        <div 
+          className="max-w-[80rem] mx-auto max-xl:pb-[100px] max-md:pb-10"
+        >
           <div className="banner-inner relative pt-[50px] md:pt-[160px]">
             <div className="title-wrapper relative text-center w-fit mx-auto">
 
@@ -189,11 +199,11 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 animate="visible"
                 onAnimationComplete={handleSvgComplete}
               >
-                <svg className="w-[8.339dvw] h-auto" width="125" height="107" viewBox="0 0 125 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-[8.339dvw] h-auto text-StripPrimary" width="125" height="107" viewBox="0 0 125 107" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Petal 1 — bottom-left */}
                   <motion.path
                     d="M26.935 104.155C31.9285 107.339 38.5449 105.933 41.7907 100.97C41.9988 100.64 42.2068 100.309 42.3733 99.9779C42.4565 99.854 42.4981 99.6886 42.5813 99.5231L43.2471 97.5382L53.2341 66.2758C53.6919 64.7871 51.9026 63.6705 50.7791 64.7044L26.2692 86.7039L24.7296 88.1098C24.7296 88.1098 24.5214 88.358 24.3966 88.482C24.1469 88.7715 23.9388 89.061 23.7308 89.3918C20.5266 94.3541 21.9414 100.929 26.935 104.155Z"
-                    fill="#643A3D"
+                    fill="currentColor"
                     variants={{
                       hidden: { opacity: 0, scale: 0.2 },
                       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
@@ -203,7 +213,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                   {/* Petal 2 — left */}
                   <motion.path
                     d="M0.0530088 60.6111C0.635585 66.4831 5.9204 70.7424 11.8294 70.1635C12.2039 70.1635 12.5785 70.0807 12.953 69.9981C13.1194 69.9981 13.2859 69.9153 13.4106 69.874L15.3665 69.171L46.2015 57.4683C47.6579 56.9307 47.4498 54.8217 45.9101 54.5736L13.3275 49.2391L11.2468 48.9497C11.2468 48.9497 10.9139 48.9497 10.7475 48.9497C10.3729 48.9497 9.99843 48.9497 9.62391 48.991C3.75653 49.4873 -0.529568 54.739 0.0530088 60.6111Z"
-                    fill="#643A3D"
+                    fill="currentColor"
                     variants={{
                       hidden: { opacity: 0, scale: 0.2 },
                       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
@@ -213,7 +223,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                   {/* Petal 3 — top-left */}
                   <motion.path
                     d="M41.2082 1.06253C35.8818 3.62638 33.6347 9.99466 36.173 15.2878C36.3395 15.6185 36.5477 15.9494 36.714 16.2802C36.7973 16.4043 36.8805 16.5284 36.9638 16.6937L38.2953 18.3064L59.8924 43.118C60.891 44.2758 62.8468 43.3661 62.5555 41.836L56.4801 9.58113L56.0639 7.55487C56.0639 7.55487 55.9807 7.22404 55.8976 7.09998C55.7727 6.76917 55.6062 6.39699 55.4398 6.06618C52.8598 0.773062 46.4514 -1.45997 41.125 1.06253H41.2082Z"
-                    fill="#643A3D"
+                    fill="currentColor"
                     variants={{
                       hidden: { opacity: 0, scale: 0.2 },
                       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
@@ -223,7 +233,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                   {/* Petal 4 — top-right */}
                   <motion.path
                     d="M92.6399 1.06265C87.3136 -1.50121 80.8636 0.731829 78.3252 6.0663C78.1588 6.39711 77.9923 6.76929 77.8674 7.1001C77.8258 7.26551 77.7843 7.38957 77.701 7.55498L77.2849 9.6226L71.2095 41.8775C70.9182 43.4076 72.8324 44.3173 73.8726 43.1594L95.4697 18.3479L96.8012 16.7352C96.8012 16.7352 96.9677 16.4458 97.0508 16.3217C97.259 15.9908 97.4255 15.66 97.5919 15.3293C100.172 10.0361 97.9247 3.6265 92.5568 1.104L92.6399 1.06265Z"
-                    fill="#643A3D"
+                    fill="currentColor"
                     variants={{
                       hidden: { opacity: 0, scale: 0.2 },
                       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
@@ -233,7 +243,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                   {/* Petal 5 — right */}
                   <motion.path
                     d="M124.723 41.0097C123.392 35.2617 117.649 31.6641 111.865 32.9874C111.491 33.0701 111.116 33.1942 110.783 33.3182C110.617 33.3596 110.492 33.4422 110.326 33.4836L108.453 34.4348L79.3242 49.8178C77.9511 50.5621 78.4088 52.5885 79.9901 52.6711L112.947 53.953H115.028V53.9945C115.194 53.9945 115.361 53.9945 115.527 53.953C115.902 53.9117 116.276 53.8291 116.651 53.7463C122.435 52.4231 126.055 46.7164 124.723 40.9684V41.0097Z"
-                    fill="#643A3D"
+                    fill="currentColor"
                     variants={{
                       hidden: { opacity: 0, scale: 0.2 },
                       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
@@ -245,7 +255,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
               {/* ── Title: fade-up on load ── */}
               <motion.h2
-                className="pdp-title-style text-black dark:text-black relative z-[99]"
+                className="pdp-title-style text-black dark:text-black relative z-[99] 2xl:text-[120px] 2xl:leading-[150px] capitalize"
                 style={{
                   textShadow: `
                     0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
@@ -267,7 +277,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
               {/* ── Small mushroom image — pops in after SVG, then floats ── */}
               <motion.div
-                className="max-lg:hidden lg:absolute lg:right-0 lg:bottom-[-240px] max-w-[270px] z-[0]"
+                className="max-lg:hidden lg:absolute lg:right-0 lg:bottom-[-240px] xl:max-w-[22%] max-w-[30%] z-[0]"
                 animate={mushroomControls}
                 initial="hidden"
                 variants={{
@@ -287,7 +297,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
 
             {/* ── Product box image — slides in on load ── */}
             <motion.div
-              className="pdp-banner-img max-w-[664px] !rotate-[-6deg] mx-auto lg:mt-[-40px] relative z-[99]"
+              className="pdp-banner-img max-w-[54%] !rotate-[-6deg] mx-auto 2xl:mt-[-40px] xl:-mt-5 -mt-2 relative z-[99]"
               variants={slideUpVariants}
               initial="hidden"
               animate="visible"
@@ -305,7 +315,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
         </div>
 
         {/* ── Marquee strip ── */}
-        <div className="relative w-full overflow-hidden lg:mt-auto bg-gradient-to-t from-[#FFFFFF] to-[#F7EFE6]">
+        <div className="relative w-full overflow-hidden lg:mt-auto bg-gradient-to-t from-[#FFFFFF] to-[var(--product-background-color)]">
 
           {/* Background SVG arc */}
           <svg
@@ -313,7 +323,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
             fill="none"
             viewBox="0 0 1440 442"
             width="100%"
-            className="overflow-visible block text-[#643A3D] font-heading"
+            className="overflow-visible block text-StripPrimary font-heading"
             aria-hidden="true"
           >
             <defs>

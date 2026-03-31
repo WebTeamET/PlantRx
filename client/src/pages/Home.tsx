@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import Lenis from "lenis";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,26 +44,6 @@ export default function Home() {
   const { toast } = useToast();
   const { t } = useTranslation();
 
-  // lenis
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-    });
-
-    let rafId: number;
-
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, []);
 
   // Check authentication status
   useEffect(() => {

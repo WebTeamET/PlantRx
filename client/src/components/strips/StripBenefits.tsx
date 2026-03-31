@@ -10,8 +10,6 @@ interface StripBenefitsProps {
 
 interface BenefitItem {
   title: ReactNode;
-  bg: string;
-  textColor: string;
   accent: string;
   rightAccent: string;
   align: "left" | "right";
@@ -41,24 +39,18 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
           Clarity Support
         </>
       ),
-      bg: "#643A3D",
-      textColor: "#F9EDE3",
       accent: "/float-mushroom-new.png",
       rightAccent: "/float-mushroom-new.png",
       align: "left",
     },
     {
       title: "Cognitive Performance",
-      bg: "#D3B6A7",
-      textColor: "#2E1A18",
       accent: "/float-mushroom-2.png",
       rightAccent: "/float-mushroom-2.png",
       align: "right",
     },
     {
       title: "Steady Mental Energy",
-      bg: "#643A3D",
-      textColor: "#F9EDE3",
       accent: "/float-mushroom-new.png",
       rightAccent: "/float-mushroom-new.png",
       align: "left",
@@ -77,8 +69,8 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
 
       return {
         title: titleText ? <span dangerouslySetInnerHTML={{ __html: titleText.replace(/\n/g, '<br />') }} /> : fallback.title,
-        bg: node.background_color || node.bg || fallback.bg,
-        textColor: node.text_color || node.textColor || fallback.textColor,
+        // bg: node.background_color || node.bg || fallback.bg,
+        // textColor: node.text_color || node.textColor || fallback.textColor,
         accent: node.left_image || iconUrl,
         rightAccent: node.right_image || iconUrl,
         align: (i % 2 === 0) ? "left" : "right",
@@ -222,7 +214,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                 </div>
                 <div
                   style={{
-                    backgroundColor: benefit.bg,
+                    backgroundColor: `${(idx + 1) % 2 === 0 ? 'var(--product-secondary-color)' : 'var(--product-primary-color)'}`,
                     WebkitMaskImage: `url("data:image/svg+xml,${SHAPE_MASK_DATA_URI}")`,
                     maskImage: `url("data:image/svg+xml,${SHAPE_MASK_DATA_URI}")`,
                     WebkitMaskSize: "100%",
@@ -244,6 +236,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                     {benefit.align === "left" ? (
                       <>
                         <img src="/title-cream-pattern.svg" className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1]" width={598} height={141} alt="mushroom pattern 1" />
+                        
                       </>
                     ) : (
                       <>

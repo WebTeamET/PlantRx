@@ -144,13 +144,13 @@ export default function StripAvoid({ product }: StripAvoidProps) {
   return (
     <section
       ref={sectionRef}
-      className="avoid-wrapper relative overflow-hidden bg-gradient-to-b from-white via-[#F7EFE6] to-white py-[50px] lg:py-28"
+      className="avoid-wrapper relative overflow-hidden bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_51.44%,transparent_100%)] py-[50px] lg:py-28"
     >
 
-      <div className="relative container mx-auto space-y-12">
+      <div className="relative container mx-auto space-y-12 xl:space-y-[98px]">
         <div className="max-w-2xl">
           <h2
-            className="text-[clamp(42px,_5vw,_76px)] leading-[1.05] text-[#000] dark:text-black font-semibold"
+            className="text-[clamp(42px,_5vw,_76px)] leading-[1.05] text-[#000] dark:text-black font-semibold max-lg:text-center"
             dangerouslySetInnerHTML={{ __html: product?.cardWithIcon?.title || "Who Should<br />Avoid It" }}
           />
         </div>
@@ -159,7 +159,7 @@ export default function StripAvoid({ product }: StripAvoidProps) {
           {items.map((item, idx) => (
             <motion.div
               key={item.title}
-              className="relative lg:h-[375px] flex flex-col justify-between gap-[80px] rounded-[10px] border border-[#C2B3B0] bg-[#643A3D] text-white dark:text-white dark:*:text-white px-6 py-7"
+              className="relative lg:h-[375px] flex flex-col justify-between gap-[80px] rounded-[10px] bg-StripPrimary text-white dark:text-white dark:*:text-white px-6 py-7"
               style={isDesktop ? { y: idx % 2 === 0 ? evenParallax : oddParallax } : undefined}
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}

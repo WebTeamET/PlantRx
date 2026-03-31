@@ -1,7 +1,6 @@
 import React from 'react'
 import CollectionBanner from './CollectionBanner';
 import { stripsProductData } from './CategoryData';
-import SvgLayout from '../strips/SvgLayout';
 import ProductGrid from './ProductGrid';
 
 function SupplementCategoryListing() {
@@ -14,7 +13,6 @@ function SupplementCategoryListing() {
 
   return (
     <>
-      <SvgLayout />
       <CollectionBanner data={supplementCollectionData} />
       <ProductGrid 
         collectionName="Herbal Capsules" 

@@ -1,20 +1,15 @@
 "use client";
-import Header from "@/components/Header";
 import { SEOHead } from "@/components/SEOHead";
-import StripBanner from "@/components/strips/StripBanner";
 import StripHowToUse from "@/components/strips/StripHowToUse";
 import StripProductBanner from "@/components/strips/StripProductBanner";
 import StripContent from "@/components/strips/StripContent";
 import StripTopics from "@/components/strips/StripTopics";
-import StripsBenefits from "@/components/strips/StripsBenefits";
 import StripIngredients from "@/components/strips/StripIngredients";
 import StripBenefits from "@/components/strips/StripBenefits";
 import StripAvoid from "@/components/strips/StripAvoid";
 import StripAccordion from "@/components/strips/StripAccordion";
 import StripFeatures from "@/components/strips/StripFeatures";
 import StripZigzag from "@/components/strips/StripZigzag";
-import StripStory from "@/components/strips/StripsStory";
-import SvgLayout from "@/components/strips/SvgLayout";
 import { StickyStripImg } from "@/components/strips/StripHowToUse";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
@@ -28,7 +23,10 @@ export default function StripProductDetail() {
   const { handle } = useParams();
   const [, setLocation] = useLocation();
   const footerRef = useRef<HTMLDivElement | null>(null);
-  const [hideCTA, setHideCTA] = useState(false);
+  const howToUseRef = useRef<HTMLDivElement | null>(null);
+  const [footerVisible, setFooterVisible] = useState(false);
+  const [howToUseVisible, setHowToUseVisible] = useState(false);
+  const hideCTA = footerVisible || howToUseVisible;
   const [product, setProduct] = useState<ShopifyProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,11 +58,23 @@ export default function StripProductDetail() {
     if (!footerRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setHideCTA(entry.isIntersecting);
+        setFooterVisible(entry.isIntersecting);
       },
       { threshold: 0.15 }
     );
     observer.observe(footerRef.current);
+    return () => observer.disconnect();
+  }, [loading]);
+
+  useEffect(() => {
+    if (!howToUseRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHowToUseVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(howToUseRef.current);
     return () => observer.disconnect();
   }, [loading]);
 
@@ -102,14 +112,17 @@ export default function StripProductDetail() {
   }
 
   return (
-    <>
+    <div style={{
+      "--product-primary-color": product.colors?.primary_color || "#643A3D",
+      "--product-secondary-color": product.colors?.secondary_color || "#F0DDCE",
+      "--product-background-color": product.colors?.background_color || "#F7EFE6",
+    } as React.CSSProperties}>
       <SEOHead
         title={`${product.title} | PlantRx`}
         description={product.description.substring(0, 160)}
         ogImage={product.images?.[0]?.url}
       />
       
-      {/* Dynamic Floating CTA */}
       <motion.div
         className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
         animate={{
@@ -169,37 +182,22 @@ export default function StripProductDetail() {
       <div className="relative z-10 min-h-screen">
         <StickyStripImg product={product} />
         <StripProductBanner product={product} />
-        {/* <SvgLayout />
-        
-        <StripBanner product={product}>
-           <Button
-            onClick={() => setLocation("/strips")}
-            variant="ghost"
-            className="mb-4 lg:mb-6 text-black hover:text-green dark:text-gray-300 dark:hover:text-white product-section"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Strips
-          </Button>
-        </StripBanner>
-
-        <StripStory product={product} />
-        <StripsBenefits product={product} />
-        <StripsIngredients />
-        {/* Observer Target for Hide CTA */}
-        <div className="bg-[linear-gradient(180deg,rgba(247,239,230,0)_0%,#F7EFE6_51.44%,rgba(247,239,230,0)_100%)]">
         <StripContent product={product} />
         <StripTopics product={product} />
 
+        <div className="bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_51.44%,transparent_100%)]">
         <StripIngredients product={product} />
         <StripBenefits product={product} />
         </div>
-        <StripHowToUse product={product} />
+        <div ref={howToUseRef}>
+          <StripHowToUse product={product} />
+        </div>
         <StripAvoid product={product} />
         <StripAccordion product={product} />
         <StripFeatures product={product} />
         <StripZigzag product={product} />
         <div ref={footerRef} className="h-0" />
       </div>
-    </>
+    </div>
   );
 }
