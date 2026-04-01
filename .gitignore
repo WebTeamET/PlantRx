@@ -4,5 +4,3 @@ package-lock.json
 **/.DS_Store
 node_modules
 .env
-.serena
-CLAUDE.md
