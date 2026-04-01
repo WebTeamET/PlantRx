@@ -72,6 +72,24 @@ export default function SupplementWhyUse({ product }: { product: ShopifyProduct 
   const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardsRef, { once: true, amount: 0.3 });
 
+  // Map Shopify metafield data to cards or use hardcoded fallback
+  const displayCards = product.imagesWithInfo?.image_info?.map((item: any, index: number) => ({
+    image: item.image,
+    text: item.point,
+    textPosition: index % 2 === 0 ? ("bottom" as const) : ("top" as const)
+  })) || [
+    { image: "/why-use-card-1.jpg", text: "Supports general nutritional balance", textPosition: "bottom" as const },
+    { image: "/why-use-card-2.jpg", text: "Provides natural plant-based nutrients", textPosition: "top" as const },
+    { image: "/why-use-card-3.jpg", text: "Contains naturally occurring antioxidants", textPosition: "bottom" as const },
+    { image: "/why-use-card-4.jpg", text: "Supports overall wellbeing and vitality", textPosition: "top" as const },
+    { image: "/why-use-card-5.jpg", text: "Easy capsule format for daily use", textPosition: "bottom" as const },
+  ];
+
+  const title = product.imagesWithInfo?.title || "Why People Use";
+  const titleWords = title.split(" ");
+  const firstWord = titleWords[0];
+  const remainingTitle = titleWords.slice(1).join(" ");
+
   return (
     <section
       className="relative w-full overflow-hidden bg-green -mt-0.5"
@@ -91,9 +109,9 @@ export default function SupplementWhyUse({ product }: { product: ShopifyProduct 
               className="tracking-wide supplement-pdp-heading"
             style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#000" }}
             >
-              <SplitText text="Why" />
+              <SplitText text={firstWord} />
               <br />
-              <SplitText text="People Use" />
+              <SplitText text={remainingTitle} />
             </h2>
           </div>
           <div className="content content-white lg:ml-auto lg:max-w-[397px]">
@@ -104,13 +122,12 @@ export default function SupplementWhyUse({ product }: { product: ShopifyProduct 
              viewport={{ once: true, amount: 0.2 }}
              style={{ willChange: "transform, opacity" }}
             className="font-normal xl:text-xl xl:leading-10 capitalize">
-              Moringa leaves contain naturally occurring vitamins, minerals, and
-              antioxidants that support daily wellness.
+              {product.imagesWithInfo?.description || "Moringa leaves contain naturally occurring vitamins, minerals, and antioxidants that support daily wellness."}
             </motion.p>
           </div>
         </div>
         <div ref={cardsRef} className="grid grid-cols-5 items-start max-lg:grid max-lg:grid-cols-2 max-sm:grid-cols-1 gap-x-5 lg:gap-y-10 max-md:gap-[30px]">
-          {cards.map((card, i) => (
+          {displayCards.map((card: any, i: number) => (
             <WhyUseCard
               key={i}
               card={card}

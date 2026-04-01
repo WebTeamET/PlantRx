@@ -5,6 +5,15 @@ import { useRef } from "react";
 import { ShopifyProduct } from "@/lib/shopify";
 
 export default function SupplementHowToUse({ product }: { product: ShopifyProduct }) {
+  const title = product.howToUse?.title || "How To Use";
+  const rawDescription = product.howToUse?.description;
+  const descriptionParagraphs = rawDescription 
+    ? rawDescription.split('\n').filter((p: string) => p.trim() !== '')
+    : [
+        "Take two capsules once per day with water.",
+        "For best results, it is often recommended to take capsules before a meal or as directed by a healthcare professional."
+      ];
+
   return (
     <section className="how-to-use-section relative overflow-hidden lg:pt-[110px] lg:-mt-[110px] max-lg:flex flex-col items-center">
       <div className="relative w-full pointer-events-none rotate-180 -scale-x-100 -mt-1">
@@ -26,10 +35,10 @@ export default function SupplementHowToUse({ product }: { product: ShopifyProduc
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             style={{ willChange: "transform, opacity" }}
-              src="/how-to-use-bottle.png"
+              src={product.howToUse?.image || "/how-to-use-bottle.png"}
               width={2000}
               height={2000}
-              alt="Moringa Pure supplement bottle with moringa leaves"
+              alt={`${title} decoration`}
               className="h-full w-full object-contain"
             />
           </div>
@@ -50,19 +59,18 @@ export default function SupplementHowToUse({ product }: { product: ShopifyProduc
               <motion.h2 
               variants={slideUpVariants as any}
               className="supplement-pdp-heading">
-                How To Use
+                {title}
               </motion.h2>
             </div>
 
             <motion.div 
             variants={slideUpVariants as any}
             className="content content-black">
-              <p className="2xl:text-[30px] 2xl:leading-[50px] capitalize">
-                Take two capsules once per day with water.
-              </p>
-              <p className="2xl:text-[30px] 2xl:leading-[50px] capitalize mt-5 xl:mt-[30px]">
-                For best results, it is often recommended to take capsules before a meal or as directed by a healthcare professional.
-              </p>
+              {descriptionParagraphs.map((para: string, idx: number) => (
+                <p key={idx} className={`2xl:text-[30px] 2xl:leading-[50px] capitalize ${idx > 0 ? "mt-5 xl:mt-[30px]" : ""}`}>
+                  {para}
+                </p>
+              ))}
             </motion.div>
 
           </motion.div>

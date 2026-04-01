@@ -69,8 +69,9 @@ export interface ShopifyProduct {
   activeTitle?: string;
   activeDescription?: string;
 
-  // New user-provided metafields
   heroSection?: any;
+  supplementHero?: any;
+  imagesWithInfo?: any;
   marquee?: any;
   productDetails?: any;
   iconWithText?: any;
@@ -80,6 +81,10 @@ export interface ShopifyProduct {
   cardWithIcon?: any;
   faqList?: any;
   featuresMeta?: any;
+  supplementKeyIngredients?: any;
+  howToUse?: any;
+  qualityStandards?: any;
+  whoShouldAvoid?: any;
   imageWithDetails?: any;
   colors?: {
     background_color?: string;
@@ -505,7 +510,7 @@ const PRODUCT_FIELDS_FRAGMENT = `
       }
     }
   }
-  imageWithDetails: metafield(namespace: "custom", key: "image_with_details") {
+  supplementHero: metafield(namespace: "custom", key: "supplement_hero") {
     reference {
       ... on Metaobject {
         fields {
@@ -513,9 +518,19 @@ const PRODUCT_FIELDS_FRAGMENT = `
           value
           reference {
             ... on MediaImage {
-              image { url }
+              image { url altText }
             }
           }
+        }
+      }
+    }
+  }
+  imagesWithInfo: metafield(namespace: "custom", key: "images_with_info") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
           references(first: 10) {
             edges {
               node {
@@ -525,12 +540,111 @@ const PRODUCT_FIELDS_FRAGMENT = `
                     value
                     reference {
                       ... on MediaImage {
-                        image { url }
+                        image { url altText }
                       }
                     }
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    }
+  }
+  supplementKeyIngredients: metafield(namespace: "custom", key: "supplement_key_ingredients") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url altText }
+            }
+          }
+        }
+      }
+    }
+  }
+  howToUse: metafield(namespace: "custom", key: "how_to_use") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url altText }
+            }
+          }
+        }
+      }
+    }
+  }
+  qualityStandards: metafield(namespace: "custom", key: "quality_standards") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          references(first: 20) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url altText }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  whoShouldAvoid: metafield(namespace: "custom", key: "who_should_avoid_it") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          references(first: 20) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url altText }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  imageWithDetails: metafield(namespace: "custom", key: "image_with_details") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url }
             }
           }
         }
@@ -685,6 +799,12 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     imageWithText: imageWithText,
     
     heroSection: mapMetaobject(product.heroSection),
+    supplementHero: mapMetaobject(product.supplementHero),
+    imagesWithInfo: mapMetaobject(product.imagesWithInfo),
+    supplementKeyIngredients: mapMetaobject(product.supplementKeyIngredients),
+    howToUse: mapMetaobject(product.howToUse),
+    qualityStandards: mapMetaobject(product.qualityStandards),
+    whoShouldAvoid: mapMetaobject(product.whoShouldAvoid),
     marquee: product.marquee?.value ? parseJsonList(product.marquee.value) : [],
     productDetails: mapMetaobject(product.productDetails),
     iconWithText: mapMetaobjectsList(product.iconWithText),

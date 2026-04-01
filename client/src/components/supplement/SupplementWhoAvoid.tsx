@@ -31,6 +31,21 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
+  const title = product.whoShouldAvoid?.title || "Who Should Avoid It";
+  const description = product.whoShouldAvoid?.description || "Do not exceed the recommended daily intake. Food supplements should not be used as a substitute for a varied diet and healthy lifestyle.";
+  
+  const displayProductMeta = product.whoShouldAvoid?.product_specifications?.map((item: any) => ({
+    icon: item.icon,
+    label: item.text
+  })) || productMeta;
+
+  const displayAvoidCards = product.whoShouldAvoid?.who_should_avoid_this?.map((item: any) => ({
+    icon: item.icon,
+    label: item.text
+  })) || avoidCards;
+
+  const displaySafetyNotes = product.whoShouldAvoid?.safety_instructions?.map((item: any) => item.text) || safetyNotes;
+
   return (
     <section className="who-avoid-section relative overflow-hidden -mt-1">
       <div className="bg-green">
@@ -48,7 +63,7 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
                 className="supplement-pdp-heading text-center"
                 style={{ WebkitTextStroke: "clamp(2px,0.73vw,12px) #FFFFFF" }}
               >
-                Who Should Avoid It
+                {title}
               </h2>
             </motion.div>
 
@@ -61,8 +76,7 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
               style={{ willChange: "transform, opacity" }}
             >
               <p className="text-center 2xl:text-3xl 2xl:leading-[50px] capitalize font-normal max-w-[1110px] mx-auto">
-                Do not exceed the recommended daily intake. Food supplements should
-                not be used as a substitute for a varied diet and healthy lifestyle.
+                {description}
               </p>
             </motion.div>
 
@@ -75,7 +89,7 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
               style={{ willChange: "transform, opacity" }}
             >
               <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-                {productMeta.map((item, i) => (
+                {displayProductMeta.map((item: any, i: number) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-2"
@@ -103,7 +117,7 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
             </motion.div>
 
             <div className="grid md:grid-cols-2 grid-cols-1 justify-center gap-5 xl:gap-[29px] mb-10 xl:mb-[71px]">
-              {avoidCards.map((card, i) => (
+              {displayAvoidCards.map((card: any, i: number) => (
                 <motion.div
                   key={i}
                   className="flex items-center max-2xl:gap-1 bg-[#c2a058] border-2 md:border-4 border-black rounded-[10px] md:p-4 p-3 w-full md:w-auto"
@@ -137,7 +151,7 @@ export default function SupplementWhoAvoid({ product }: { product: ShopifyProduc
             viewport={{ once: true, amount: 0.2 }}
             style={{ willChange: "transform, opacity" }}
           >
-            {safetyNotes.map((note, i) => (
+            {displaySafetyNotes.map((note: string, i: number) => (
               <div key={i} className="flex items-center gap-1">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
                   <path d="M5 16.125L8.92875 20.625L18.75 9.375M25 9.45375L14.285 20.7037L13.75 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

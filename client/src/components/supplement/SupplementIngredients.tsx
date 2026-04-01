@@ -20,6 +20,26 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
+  const title = product.supplementKeyIngredients?.title || "Key Ingredients";
+  const points = product.supplementKeyIngredients?.points || [
+    "800mg Per <br/> Serving",
+    "Plant-Based <br/> Formula",
+    "Easy Daily <br/> Use",
+    "Nutrient-Dense <br/> Botanical",
+    "Traditional <br/> Herbal Use",
+    "Supports Daily <br/> Wellness"
+  ];
+
+  const midPoint = Math.ceil(points.length / 2);
+  const leftPoints = points.slice(0, midPoint).map((text: string, i: number) => ({
+    text,
+    svg: i === 0 ? "/pointed-long-line.svg" : "/pointed-short-line.svg"
+  }));
+  const rightPoints = points.slice(midPoint).map((text: string, i: number) => ({
+    text,
+    svg: i === 0 ? "/pointed-long-line.svg" : "/pointed-short-line.svg"
+  }));
+
   return (
     <section className="key-ingredients-section relative overflow-hidden -mb-1">
       <div className="bg-green">
@@ -35,7 +55,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
               viewport={{ once: true, amount: 0.2 }}
               style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#000", willChange: "transform, opacity" }}
             >
-              Key Ingredients
+              {title}
             </motion.h2>
           </div>
 
@@ -47,7 +67,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                whileInView="visible"
                viewport={{ once: true, amount: 0.2 }}
               className="flex-col gap-10 xl:gap-20 items-start hidden xl:flex max-w-[534px] flex-1">
-                {leftLabels.map((label, i) => (
+                {leftPoints.map((label: any, i: number) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-3 xl:gap-5"
@@ -74,7 +94,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                whileInView="visible"
                viewport={{ once: true, amount: 0.2 }}
               className="flex-col gap-10 xl:gap-20 items-end hidden xl:flex max-w-[534px] flex-1">
-                {rightLabels.map((label, i) => (
+                {rightPoints.map((label: any, i: number) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-3 xl:gap-5"
@@ -105,17 +125,15 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 style={{ willChange: "transform, opacity" }}
-                  src="/moringa-pure-bottle.png"
+                  src={product.supplementKeyIngredients?.image || "/moringa-pure-bottle.png"}
                   width={2000}
                   height={2000}
-                  alt="Moringa Pure Capsules supplement bottle"
+                  alt={title}
                   className="object-contain w-full h-full relative z-[3]"
                 />
               </div>
               </div>
             </div>
-
-           
 
             <motion.div 
             variants={containerVariants as any}
@@ -123,7 +141,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5 w-full xl:hidden">
-              {[...leftLabels, ...rightLabels].map((label, i) => (
+              {[...leftPoints, ...rightPoints].map((label: any, i: number) => (
                 <motion.div
                   key={i}
                   className="flex items-center gap-3 justify-center"

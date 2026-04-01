@@ -397,6 +397,8 @@ export interface ShopifyProduct {
   activeDescription?: string;
 
   heroSection?: any;
+  supplementHero?: any;
+  imagesWithInfo?: any;
   marquee?: string[];
   productDetails?: any;
   iconWithText?: any[];
@@ -406,6 +408,10 @@ export interface ShopifyProduct {
   cardWithIcon?: any;
   faqList?: any;
   featuresMeta?: any;
+  supplementKeyIngredients?: any;
+  howToUse?: any;
+  qualityStandards?: any;
+  whoShouldAvoid?: any;
   imageWithDetails?: any;
   colors?: {
     background_color?: string;

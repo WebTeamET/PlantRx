@@ -37,6 +37,11 @@ const QA_ITEMS: QAItem[] = [
 export default function SupplementFaq({ product }: { product: ShopifyProduct }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  const displayQaItems = product.faqList?.faq?.map((item: any) => ({
+    question: item.question,
+    answer: item.answer
+  })) || QA_ITEMS;
+
   return (
     <section className="relative overflow-hidden to-white py-10 md:py-16 xl:py-20 2xl:py-[150px] new-container">
       <div className="relative max-w-7xl mx-auto">
@@ -72,12 +77,12 @@ export default function SupplementFaq({ product }: { product: ShopifyProduct }) 
           </motion.h2>
 
           <div className="space-y-5 max-w-[880px] mx-auto">
-            {QA_ITEMS.map((item, idx) => {
+            {displayQaItems.map((item: any, idx: number) => {
               const isOpen = openIndex === idx;
 
               return (
                 <motion.button
-                  key={item.question}
+                  key={item.question + idx}
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   className="w-full text-left"

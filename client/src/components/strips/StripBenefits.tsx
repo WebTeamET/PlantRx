@@ -237,11 +237,11 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                     {benefit.title}
                     {
                       benefit.align === "left" ? (
-                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1] w-full text-StripSecondary">
+                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1] w-full text-StripSecondary dark:text-StripSecondary">
                           <BenefitDecorationLeft />
                         </div>
                       ) : (
-                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[35px] -z-[1] w-full text-StripPrimary">
+                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[35px] -z-[1] w-full text-StripPrimary dark:text-StripPrimary">
                           <BenefitDecorationRight />
                         </div>
                       )

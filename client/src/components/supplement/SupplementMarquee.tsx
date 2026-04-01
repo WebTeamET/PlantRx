@@ -25,6 +25,8 @@ export default function SupplementMarquee({ marginTop = 0, marginBottom = 0, pro
     ? "-mb-[calc(var(--marquee-mb)_-_40px)] sm:-mb-[calc(var(--marquee-mb)_-_20px)] lg:-mb-[var(--marquee-mb)]"
     : "";
 
+    const displayItems = (product.marquee && product.marquee.length > 0) ? product.marquee : marqueeItems;
+
   return (
     <section
       className={`relative overflow-hidden w-full supplement-marquee-section z-[1] ${mtClasses} ${mbClasses}`}
@@ -50,7 +52,7 @@ export default function SupplementMarquee({ marginTop = 0, marginBottom = 0, pro
             gradient={false}
             direction="left"
           >
-            {marqueeItems.map((item, i) => (
+            {displayItems.map((item, i) => (
               <div key={i} className="flex items-center">
                 <span className="text-white font-heading font-medium select-none text-[clamp(20px,3.77vw,72px)] leading-[100%] px-3">
                   &nbsp;•&nbsp;

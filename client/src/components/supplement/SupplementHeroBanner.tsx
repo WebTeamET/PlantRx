@@ -23,7 +23,7 @@ export default function SupplementHeroBanner({ product }: { product: ShopifyProd
         aria-hidden="true"
       >
         <img
-          src="/moringa-sup-left-leaf.png"
+          src={product.supplementHero?.left_image || "/moringa-sup-left-leaf.png"}
           width={500}
           height={593}
           alt="Moringa leaf branch left decoration"
@@ -39,7 +39,7 @@ export default function SupplementHeroBanner({ product }: { product: ShopifyProd
       >
         <div>
           <img
-            src="/moringa-sup-right-leaf.png"
+            src={product.supplementHero?.right_image || "/moringa-sup-right-leaf.png"}
             width={500}
             height={593}
             alt="Moringa leaf branch right decoration"
@@ -108,7 +108,7 @@ export default function SupplementHeroBanner({ product }: { product: ShopifyProd
               viewport={{ once: true, amount: 0.2 }}
               style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#385127", willChange: "transform, opacity" }}
             >
-              {product.title}
+              {product.supplementHero?.title || product.title}
             </motion.h1>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function SupplementHeroBanner({ product }: { product: ShopifyProd
           style={{ willChange: "transform, opacity" }}
         >
           <img
-            src="/moringa-sup-hero-hands.png"
+            src={product.supplementHero?.image || "/moringa-sup-hero-hands.png"}
             width={935}
             height={623}
             alt={`Hands holding ${product.title} supplement bottle`}

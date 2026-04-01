@@ -3,9 +3,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { ShopifyProduct } from "@/lib/shopify";
 
-const descriptionText =
-  'Moringa Pure capsules are made from the leaves of Moringa oleifera, a plant traditionally used in herbal wellness practices for generations. Often referred to as the "drumstick tree," moringa is known for its naturally occurring nutrients and plant compounds that support overall wellbeing.';
-
 function WordReveal({
   word,
   scrollProgress,
@@ -41,6 +38,8 @@ export default function SupplementDescription({ product }: { product: ShopifyPro
     offset: ["start 90%", "end 40%"],
   });
 
+  const descriptionText = product.productDetails?.description;
+
   const words = descriptionText.split(" ");
   const totalWords = words.length;
 
@@ -52,7 +51,7 @@ export default function SupplementDescription({ product }: { product: ShopifyPro
       <div className="new-container">
         <div className="content content-green">
           <p className="font-bold text-center capitalize font-body text-[clamp(18px,2.08vw,40px)] leading-[clamp(32px,5.2vw,100px)]">
-            {words.map((word, i) => {
+            {words.map((word: string, i: number) => {
               const wordStart = (i / totalWords) * 0.9;
               const wordEnd = ((i + 1) / totalWords) * 0.9;
 

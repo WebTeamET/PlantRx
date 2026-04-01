@@ -32,9 +32,16 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
     setCanSlideNext(!swiper.isEnd);
   };
 
+  const title = product.qualityStandards?.title || "Quality & Standards";
+  const displayBadges = product.qualityStandards?.icon_text?.map((item: any, i: number) => ({
+    icon: item.icon,
+    label: item.text,
+    offsetY: [44, 0, 78, 0, 78, 0, 63, 0, 73][i % 9] || 0
+  })) || badges;
+
   return (
     <section className="quality-standards-section relative overflow-hidden -mt-0.5">
-      <div className="bg-green">
+      <div className="bg-green" style={{ backgroundColor: product.colors?.background_color }}>
         <div
           ref={sectionRef}
           className="flex flex-col gap-10 md:gap-20 xl:gap-[150px] new-container py-10 lg:py-16 xl:py-20 2xl:py-[132px]">
@@ -48,18 +55,18 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
           >
             <h2
               className="capitalize supplement-pdp-heading max-xl:text-center"
-              style={{ WebkitTextStroke: "clamp(2px,0.73vw,10px) #FFFFFF" }}
+              style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#000" }}
             >
-              Quality &amp; Standards
+              {title}
             </h2>
           </motion.div>
           <div className="hidden xl:flex items-start justify-between pb-24 xl:pb-28 2xl:pb-[82px] xl:gap-5 gap-3 ">
-            {badges.map((badge, i) => (
+            {displayBadges.map((badge: any, i: number) => (
               <motion.div
                 key={i}
                 className="flex flex-col items-center gap-5 shrink"
-                initial={{ opacity: 0, y: badge.offsetY + 30 }}
-                animate={isInView ? { opacity: 1, y: badge.offsetY } : {}}
+                initial={{ opacity: 0, y: (badge.offsetY || 0) + 30 }}
+                animate={isInView ? { opacity: 1, y: badge.offsetY || 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
               >
                 <img
@@ -97,8 +104,8 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
               onSlideChange={updateNavigationState}
               onResize={updateNavigationState}
             >
-              {badges.map((badge, i) => (
-                <SwiperSlide key={badge.label}>
+              {displayBadges.map((badge: any, i: number) => (
+                <SwiperSlide key={badge.label + i}>
                   <motion.div
                     className="flex flex-col items-center gap-3"
                     initial={{ opacity: 0, y: 20 }}
@@ -128,7 +135,8 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
                 aria-label="Previous quality standard"
                 onClick={() => swiperInstance?.slidePrev()}
                 disabled={!canSlidePrev}
-                className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white text-[#385127] transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                style={{ color: product.colors?.background_color || '#385127' }}
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
@@ -137,7 +145,8 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
                 aria-label="Next quality standard"
                 onClick={() => swiperInstance?.slideNext()}
                 disabled={!canSlideNext}
-                className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white text-[#385127] transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                style={{ color: product.colors?.background_color || '#385127' }}
               >
                 <ArrowRight className="h-5 w-5" />
               </button>
