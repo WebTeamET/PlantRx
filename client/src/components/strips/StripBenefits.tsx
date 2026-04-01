@@ -3,6 +3,8 @@
 import { motion, useAnimationControls, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef, ReactNode, useEffect, useState, useMemo } from "react";
 import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+import BenefitDecorationLeft from "./BenefitDecorationLeft";
+import BenefitDecorationRight from "./BenefitDecorationRight";
 
 interface StripBenefitsProps {
   product?: ShopifyProduct;
@@ -229,20 +231,21 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                   className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden title-stroke"
                 >
                   <motion.h3
-                    className="relative text-center font-semibold text-black dark:text-black text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] "
+                    className="relative text-center font-semibold text-black dark:text-black text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] w-full"
                     style={{ WebkitTextStroke: "8px #FFFFFF", color: "#000", willChange: "transform, opacity" }}
                   >
                     {benefit.title}
-                    {benefit.align === "left" ? (
-                      <>
-                        <img src="/title-cream-pattern.svg" className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1]" width={598} height={141} alt="mushroom pattern 1" />
-                        
-                      </>
-                    ) : (
-                      <>
-                        <img src="/title-coco-pattern.svg" className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[35px] -z-[1]" width={598} height={141} alt="mushroom pattern 2" />
-                      </>
-                    )}
+                    {
+                      benefit.align === "left" ? (
+                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[30px] -z-[1] w-full text-StripSecondary">
+                          <BenefitDecorationLeft />
+                        </div>
+                      ) : (
+                        <div className="absolute left-1/2 -translate-x-1/2 lg:-translate-y-[35px] -z-[1] w-full text-StripPrimary">
+                          <BenefitDecorationRight />
+                        </div>
+                      )
+                    }
                   </motion.h3>
                 </div>
               </motion.div>
