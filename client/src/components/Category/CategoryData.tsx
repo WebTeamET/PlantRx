@@ -1,8 +1,8 @@
 export const stripsProductData = 
     {
         "collection": {
-            "tagline": "Plant-powered strips, just how you like it.",
-            "title": "What’s your pick?",
+            // "tagline": "Plant-powered strips, just how you like it.",
+            // "title": "What’s your pick?",
             // "productImage": "/strips-collection-banner-images.png",
             "productImages": [
               "Sustained-energy-alertness-product.png",

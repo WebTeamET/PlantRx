@@ -519,6 +519,14 @@ export const getProductIngredients = (product: ShopifyProduct): string[] => {
   const metafield = product.productIngredients;
   let ingredients: string[] = [];
 
+  // 0. Handle already mapped array from server (as seen in server/shopify-client.ts)
+  if (Array.isArray(metafield)) {
+    return (metafield as any[]).map(item => {
+      if (typeof item === 'string') return item;
+      return item.url || item.image?.url;
+    }).filter(Boolean);
+  }
+
   // 1. Try references.edges (list.file_reference with proper GraphQL structure)
   if (metafield.references?.edges && metafield.references.edges.length > 0) {
     ingredients = metafield.references.edges
@@ -783,6 +791,29 @@ export const shopifyService = {
       return cart;
     } catch (error) {
       console.error('Error fetching cart:', error);
+      return null;
+    }
+  },
+
+  // Fetch a single collection by handle
+  async fetchCollectionByHandle(handle: string): Promise<any | null> {
+    try {
+      console.log(`🔍 CLIENT: Fetching collection by handle: ${handle}`);
+      const response = await fetch(`/api/shopify/collections/${encodeURIComponent(handle)}`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          console.log(`❌ CLIENT: Collection with handle "${handle}" not found`);
+          return null;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const collection = await response.json();
+      console.log(`✅ CLIENT: Received collection "${collection.title}"`);
+      return collection;
+    } catch (error) {
+      console.error('❌ CLIENT: Error fetching collection:', error);
       return null;
     }
   }

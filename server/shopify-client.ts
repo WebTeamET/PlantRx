@@ -664,6 +664,46 @@ const PRODUCT_FIELDS_FRAGMENT = `
   }
 `;
 
+const COLLECTION_FIELDS_FRAGMENT = `
+  id
+  title
+  handle
+  collection_banner: metafield(namespace: "custom", key: "collection_banner") {
+    value
+    reference {
+      ... on Metaobject {
+        id
+        handle
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image {
+                url
+                altText
+              }
+            }
+          }
+          references(first: 20) {
+            edges {
+              node {
+                ... on MediaImage {
+                  image {
+                    url
+                    altText
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+
 // Shopify service functions for server-side use
 // Helper to parse Shopify RichText JSON to plain text
 const parseRichText = (input: any): string => {
@@ -728,7 +768,11 @@ const mapMetaobject = (metafield: any): any => {
     // Handle Lists of Metaobjects (references/references)
     const refNodes = f.references?.nodes || f.references?.edges?.map((e: any) => e.node);
     if (refNodes && refNodes.length > 0) {
-      value = refNodes.map((n: any) => mapMetaobject({ reference: n })).filter(Boolean);
+      value = refNodes.map((n: any) => {
+        if (n.image?.url) return n.image.url;
+        if (n.fields) return mapMetaobject({ reference: n });
+        return null;
+      }).filter(Boolean);
     }
     // Handle Single Metaobject reference with fields
     else if (f.reference?.fields) {
@@ -743,6 +787,7 @@ const mapMetaobject = (metafield: any): any => {
   });
   return result;
 };
+
 
 const mapMetaobjectsList = (metafield: any): any[] => {
   const nodes = metafield?.references?.nodes || metafield?.references?.edges?.map((e: any) => e.node) || [];
@@ -941,7 +986,68 @@ export const serverShopifyService = {
     }
   },
 
+  // Fetch a collection by handle with metafields
+  async fetchCollectionByHandle(handle: string): Promise<any | null> {
+    try {
+      console.log(`🔄 SERVER: Fetching collection by handle: ${handle}`);
+      const query = `
+        query getCollectionByHandle($handle: String!) {
+          collection(handle: $handle) {
+            ${COLLECTION_FIELDS_FRAGMENT}
+          }
+        }
+      `;
+
+      const response = await fetch(
+        `https://${process.env.SHOPIFY_STORE_DOMAIN}/api/2024-01/graphql.json`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
+          },
+          body: JSON.stringify({ 
+            query,
+            variables: { handle }
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`GraphQL request failed: ${response.statusText}`);
+      }
+
+      const { data, errors } = await response.json();
+
+      if (errors) {
+        console.error('GraphQL errors:', errors);
+        throw new Error('GraphQL query returned errors');
+      }
+
+      const collection = data.collection;
+      if (!collection) {
+        console.log(`❌ SERVER: Collection with handle "${handle}" not found`);
+        return null;
+      }
+
+      // Map the collection and its banner metafield
+      const result = {
+        id: collection.id,
+        title: collection.title,
+        handle: collection.handle,
+        banner: mapMetaobject(collection.collection_banner)
+      };
+
+      console.log(`✅ SERVER: Successfully fetched collection: ${result.title}`);
+      return result;
+    } catch (error) {
+      console.error('❌ SERVER: Error in fetchCollectionByHandle:', error);
+      return null;
+    }
+  },
+
   // Original SDK-based fetch
+
   async fetchProductsWithSDK(): Promise<ShopifyProduct[]> {
     try {
       let allProducts: any[] = await client.product.fetchAll(50);

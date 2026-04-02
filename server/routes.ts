@@ -6926,6 +6926,26 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
     }
   });
 
+   // Fetch a single collection by handle from Shopify
+  app.get("/api/shopify/collections/:handle", async (req, res) => {
+    try {
+      const { handle } = req.params;
+      console.log(`🔍 API: Fetching single collection by handle: ${handle}`);
+      const collection = await serverShopifyService.fetchCollectionByHandle(handle);
+
+      if (!collection) {
+        return res.status(404).json({ error: 'Collection not found' });
+      }
+
+      res.json(collection);
+    } catch (error: any) {
+      console.error('Error fetching Shopify collection by handle:', error);
+      res.status(500).json({ error: 'Failed to fetch collection' });
+    }
+  });
+
+
+
   // Create a new cart
   app.post("/api/shopify/cart", async (req, res) => {
     try {
