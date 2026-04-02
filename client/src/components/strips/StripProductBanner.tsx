@@ -181,14 +181,12 @@ export default function StripBanner({ product, children }: StripBannerProps) {
           />
         ))}
 
-        {/* <div className="max-w-[80rem] mx-auto max-xl:pb-[100px] max-md:pb-10"> */}
         <div 
-          className="max-w-[80rem] mx-auto max-xl:pb-[100px] max-md:pb-10"
+          className="px-5 max-xl:pb-[100px] max-md:pb-10"
         >
           <div className="banner-inner relative pt-[50px] md:pt-[160px]">
             <div className="title-wrapper relative text-center w-fit mx-auto">
 
-              {/* ── SVG asterisk — each petal animates in one by one ── */}
               <motion.div
                 className="absolute left-[-4dvw] top-[-4dvw]"
                 variants={{
@@ -275,9 +273,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 {activeTitle}
               </motion.h2>
 
+            </div>
               {/* ── Small mushroom image — pops in after SVG, then floats ── */}
               <motion.div
-                className="max-lg:hidden lg:absolute lg:right-0 lg:bottom-[-240px] xl:max-w-[22%] max-w-[30%] z-[0]"
+                className="max-lg:hidden lg:absolute xl:right-[10%] right-[5%] lg:top-[26%] xl:max-w-[14%] max-w-[20%] z-[0]"
                 animate={mushroomControls}
                 initial="hidden"
                 variants={{
@@ -293,11 +292,10 @@ export default function StripBanner({ product, children }: StripBannerProps) {
               >
                 <img src={heroIngredientImg} alt="Hero Ingredient" />
               </motion.div>
-            </div>
 
             {/* ── Product box image — slides in on load ── */}
             <motion.div
-              className="pdp-banner-img max-w-[54%] !rotate-[-6deg] mx-auto 2xl:mt-[-40px] xl:-mt-5 -mt-2 relative z-[99]"
+              className="pdp-banner-img 2xl:max-w-[54%] lg:max-w-[40%] max-w-[60%] !rotate-[-6deg] mx-auto 2xl:mt-[-40px] xl:-mt-5 -mt-2 relative z-[99] flex items-center justify-center"
               variants={slideUpVariants}
               initial="hidden"
               animate="visible"
@@ -308,6 +306,7 @@ export default function StripBanner({ product, children }: StripBannerProps) {
                 variants={imgSlideInVars}
                 initial="hidden"
                 animate="visible"
+                // className="size-full object-contain"
               />
             </motion.div>
 

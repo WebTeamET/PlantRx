@@ -117,15 +117,15 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
               </motion.div>
             </div>
             <div className="w-full md:max-w-[39.9%] max-w-[80%] mx-auto aspect-square flex justify-center relative z-[2]">
-              <div className="flex 2xl:pt-[94px] pt-12 relative w-full after:absolute after:top-1/2 after:-translate-y-1/2 after:w-full after:h-full after:bg-contain after:bg-[url(/supplement-bottle-green-bg.svg)] after:bg-center after:bg-no-repeat">
-              <div className=" max-w-[49%] pl-[18px] mx-auto">
+              <div className="flex 2xl:pt-[94px] pt-8 relative w-full after:absolute after:top-1/2 after:-translate-y-1/2 after:w-full after:h-full after:bg-contain after:bg-[url(/supplement-bottle-green-bg.svg)] after:bg-center after:bg-no-repeat">
+              <div className=" max-w-[50%] mx-auto">
                 <motion.img
                 variants={itemScaleUpVariants as any}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 style={{ willChange: "transform, opacity" }}
-                  src={product.supplementKeyIngredients?.image || "/moringa-pure-bottle.png"}
+                  src={product.supplementKeyIngredients?.image || "/main-product-image.png"}
                   width={2000}
                   height={2000}
                   alt={title}

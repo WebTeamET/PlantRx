@@ -1,6 +1,6 @@
 import { ShopifyProduct, getMetaobjectField } from "@/lib/shopify";
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useEffect, useState, useMemo } from "react";
+import { ReactNode, useEffect, useState, useMemo, JSXElementConstructor, Key, ReactElement, ReactPortal } from "react";
 import { createPortal } from "react-dom";
 
 
@@ -29,6 +29,21 @@ export default function StripIngredients({ product, children }: StripIngredients
         "Pullulan, Cellulose, Lecithin, Chocolate Flavor, Monk Fruit Extract, Medium-Chain Triglycerides, Xanthan Gum, Steviol Glycosides."
     ];
 
+    const supplementIngredients = useMemo(() => {
+        const activeIngredients = ingredientsList.filter((item: string) =>
+            /\(\d+\s*mg\)/i.test(item)
+        );
+        return activeIngredients.map((item: string) => {
+            const amountMatch = item.match(/\((\d+\s*mg)\)\s*$/i);
+            const amount = amountMatch ? amountMatch[1] : "";
+            const name = amountMatch ? item.replace(/\s*\(\d+\s*mg\)\s*$/i, "").trim() : item;
+            return { name, amount };
+        });
+    }, [ingredientsList]);
+
+    const primaryColor = product?.colors?.primary_color || "#385127";
+    const secondaryColor = product?.colors?.secondary_color || "#f5e8e5";
+
     // Lock body scroll when modal is open
     useEffect(() => {
         const previousOverflow = document.body.style.overflow;
@@ -47,8 +62,8 @@ export default function StripIngredients({ product, children }: StripIngredients
                 className="block w-full relative"
             >
                 <div className="new-container py-[50px] lg:pt-[180px] lg:pb-[30px]">
-                    <div className="flex flex-wrap items-start justify-center gap-10 2xl:gap-[84px] w-full">
-                        <div className="w-full lg:max-w-[600px]">
+                    <div className="flex items-start justify-center max-xl:flex-col gap-10 2xl:gap-[84px] w-full">
+                        <div className="w-full xl:max-w-[37.4%]">
                             <div className="title mb-[20px] lg:mb-[40px]">
                                 <h2
                                     className="pdp-title-style text-black dark:text-black font-semibold capitalize lg:max-w-[500px]"
@@ -74,12 +89,98 @@ export default function StripIngredients({ product, children }: StripIngredients
                                 </p>
                             </div>
                         </div>
-                        <div className="w-full lg:flex-1">
+                        <div className="w-full">
                             <div className="relative">
-                                <div className="animate-spin-slow absolute -top-[33px] -left-[36px] w-[97px] h-[92px]">
+                                {/* Spinning mushroom — top-left corner of the whole composition */}
+                                <div className="animate-spin-slow absolute -top-[33px] -left-[66px] w-[97px] h-[92px] z-30 max-md:hidden">
                                     <img src={product?.keyIngredient?.ingredient_image || "/mushroom-small.png"} alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
                                 </div>
-                                <img src={product?.keyIngredient?.image || "/key-ingredients.png"} alt="key-ingredients" width={982} height={652} className="w-full h-auto object-cover" />
+
+                                {/* Supplement Facts card + Product image — stacked on mobile, overlapping on desktop */}
+                                <div className="flex flex-col md:flex-row md:items-center gap-4 lg:gap-0">
+
+                                    {/* Supplement Facts Card */}
+                                    <div
+                                        className="w-full md:w-[60%] flex-shrink-0 bg-white rounded-[20px] p-3 md:p-5 min-[1900px]:pt-[71px] min-[1900px]:pb-[56px] 2xl:pl-[25px] md:pr-0 relative z-10"
+                                        style={{ border: `5px solid ${primaryColor}` }}
+                                    >
+                                        <div className="min-[1900px]:pr-[236px] pr-[25%] max-xl:pr-[50px] max-md:pr-0">
+                                        {/* Title */}
+                                        <h3
+                                            className="font-heading text-[24px] lg:text-[35px] md:mb-[14px] mb-2 leading-tight"
+                                            style={{ color: primaryColor }}
+                                        >
+                                            Supplement Facts
+                                        </h3>
+
+                                        {/* Serving info */}
+                                        <div className="flex flex-col gap-[7px] mb-4 text-[14px] xl:text-base 2xl:text-lg text-black capitalize">
+                                            <span>
+                                                <span className="font-bold">Serving Size</span>:{" "}
+                                                {product?.keyIngredient?.serving_size || "1 Oral Strip (260 mg)"}
+                                            </span>
+                                            <span>
+                                                <span className="font-bold">Serving Per Container:</span>{" "}
+                                                {product?.keyIngredient?.serving_per_container || "30"}
+                                            </span>
+                                        </div>
+
+                                        {/* Divider */}
+                                        <div className="h-1 rounded-full md:mb-4 mb-2" style={{ backgroundColor: secondaryColor }} />
+
+                                        {/* Column headers */}
+                                        <div className="flex items-end justify-between md:mb-4 mb-2">
+                                            <div className="flex-1" />
+                                            <div
+                                                className="flex gap-3 text-[12px] lg:text-sm font-bold leading-tight text-left capitalize"
+                                                style={{ color: primaryColor }}
+                                            >
+                                                <span className="w-[80px]">Amount Per Serving</span>
+                                                <span className="w-[50px]">%Daily Value</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Divider */}
+                                        <div className="h-1 rounded-full mb-3" style={{ backgroundColor: secondaryColor }} />
+
+                                        {/* Ingredient rows */}
+                                        <div className="flex flex-col gap-2.5">
+                                            {supplementIngredients.map((item: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; amount: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, i: Key | null | undefined) => (
+                                                <div key={i} className="flex items-center w-full text-sm lg:text-[14px] text-black">
+                                                    <span className="font-medium flex-1 pr-2 capitalize">{item.name}</span>
+                                                    <div className="flex gap-3 text-center flex-shrink-0">
+                                                        <span className="font-medium w-[70px]">{item.amount}</span>
+                                                        <span className="w-[50px] text-[16px] leading-none">†</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Bottom divider + footnotes */}
+                                        <div className="mt-4 flex flex-col gap-2.5">
+                                            <div className="h-1 rounded-full" style={{ backgroundColor: secondaryColor }} />
+                                            <div
+                                                className="flex flex-col gap-1 text-[12px] lg:text-sm font-medium capitalize"
+                                                style={{ color: primaryColor }}
+                                            >
+                                                <span>†Daily value not established.</span>
+                                                <span>**Percent Daily Values are based on a 2,000 calorie diet.</span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Product image — first on mobile, right + overlapping on desktop */}
+                                    <div className="order-1 lg:order-2 w-full max-md:max-w-[400px] max-md:mx-auto max-xl:-ml-[50px] -ml-[15%] max-md:m-0 min-[1900px]:-ml-[242px] relative z-20">
+                                        <img
+                                            src={product?.keyIngredient?.image || "/key-ingredients.png"}
+                                            alt="key-ingredients"
+                                            width={641}
+                                            height={634}
+                                            className="w-full h-auto object-cover"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             <div className="flex justify-center mt-[20px] lg:mt-[48px] w-full">
                                 <button

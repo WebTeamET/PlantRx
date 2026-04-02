@@ -11,14 +11,14 @@ import { ShopifyProduct } from "@/lib/shopify";
 const badges = [
   { icon: "/quality-icon-gluten.png", label: "GLUTEN FREE", offsetY: 44 },
   { icon: "/quality-icon-veg.png", label: "VEGETARIAN", offsetY: 0 },
-  { icon: "/quality-icon-lactose.png", label: "LACTOSE FREE", offsetY: 78 },
+  { icon: "/quality-icon-lactose.png", label: "LACTOSE FREE", offsetY: 44 },
   { icon: "/quality-icon-allergen.png", label: "ALLERGEN FREE", offsetY: 0 },
-  { icon: "/quality-icon-hormone.png", label: "HORMONE FREE", offsetY: 78 },
+  { icon: "/quality-icon-hormone.png", label: "HORMONE FREE", offsetY: 44 },
   { icon: "/quality-icon-natural-sup.png", label: "100% NATURAL", offsetY: 0 },
-  { icon: "/quality-icon-antibiotic.png", label: "ANTIBIOTIC FREE", offsetY: 63 },
+  { icon: "/quality-icon-antibiotic.png", label: "ANTIBIOTIC FREE", offsetY: 44 },
   { icon: "/quality-icon-corn.png", label: "CORN FREE", offsetY: 0 },
-  { icon: "/quality-icon-vegan-sup.png", label: "VEGAN", offsetY: 73 },
-];
+  { icon: "/quality-icon-vegan-sup.png", label: "VEGAN", offsetY: 44 },
+]; 
 
 export default function SupplementQualityStandards({ product }: { product: ShopifyProduct }) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -36,7 +36,7 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
   const displayBadges = product.qualityStandards?.icon_text?.map((item: any, i: number) => ({
     icon: item.icon,
     label: item.text,
-    offsetY: [44, 0, 78, 0, 78, 0, 63, 0, 73][i % 9] || 0
+    offsetY: i % 2 === 0 ? 44 : 0,
   })) || badges;
 
   return (
@@ -60,19 +60,19 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
               {title}
             </h2>
           </motion.div>
-          <div className="hidden xl:flex items-start justify-between pb-24 xl:pb-28 2xl:pb-[82px] xl:gap-5 gap-3 ">
+          <div className={`hidden xl:flex items-start justify-center pb-24 xl:pb-28 2xl:pb-[82px] xl:gap-10 2xl:gap-x-[55px] gap-3 gap-y-20${displayBadges.length > 9 ? " flex-wrap" : ""}`}>
             {displayBadges.map((badge: any, i: number) => (
               <motion.div
                 key={i}
-                className="flex flex-col items-center gap-5 shrink"
+                className="flex flex-col items-center gap-5 shrink-0 min-[1921px]:flex-1"
                 initial={{ opacity: 0, y: (badge.offsetY || 0) + 30 }}
                 animate={isInView ? { opacity: 1, y: badge.offsetY || 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
               >
                 <img
                   src={badge.icon}
-                  width={100}
-                  height={100}
+                  width={1000}
+                  height={1000}
                   alt={badge.label}
                   className="block w-16 min-[1800px]:!w-[100px] min-h-16 min-[1800px]:!min-h-[100px] flex-none"
                 />
