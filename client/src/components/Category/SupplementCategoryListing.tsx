@@ -26,7 +26,7 @@ function SupplementCategoryListing() {
             tagline: banner.title || "Plant-powered supplements, just how you like it.",
             title: banner.subtitle || "What’s your pick?",
             productImages: banner.card_image && banner.card_image.length > 0 
-              ? banner.card_image 
+              ? banner.card_image.slice(0, 3) 
               : stripsProductData.collection.productImages,
             // Map floating elements: Use dynamic images if available, otherwise empty for supplements
             floatingElements: banner.elements && banner.elements.length > 0
