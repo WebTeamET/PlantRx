@@ -3,44 +3,28 @@
 import { slideUpVariants } from "@/animation/framerMotionVariants";
 import { ShopifyProduct } from "@/lib/shopify";
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-type QAItem = {
-  question: string;
-  answer: string;
-};
-
-
-const QA_ITEMS: QAItem[] = [
-  {
-    question: "Is this a stimulant?",
-    answer: "No. Moringa is a natural plant-based supplement and is not classified as a stimulant. It supports overall wellness without causing jittery effects.",
-  },
-  {
-    question: "Will it make me feel energized?",
-    answer: "Yes, it naturally supports steady energy and reduces fatigue without caffeine spikes.",
-  },
-  {
-    question: "When is the best time to take it?",
-    answer: "Take it in the morning or before meals for best absorption and daily consistency.",
-  },
-  {
-    question: "Is it suitable for daily use?",
-    answer: "Yes, it is safe and effective for regular daily use as part of a healthy routine.",
-  },
-  {
-    question: "Who should avoid using it?",
-    answer: "Pregnant, breastfeeding individuals or those with medical conditions should consult a doctor before use.",
-  },
-];
+import { useState, useMemo } from "react";
 
 export default function SupplementFaq({ product }: { product: ShopifyProduct }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const displayQaItems = product.faqList?.faq?.map((item: any) => ({
-    question: item.question,
-    answer: item.answer
-  })) || QA_ITEMS;
+  const displayQaItems = useMemo(() => {
+    // Robustly find the list of FAQ items in the mapped faqList object
+    const list = product?.faqList?.faq_items || 
+                 product?.faqList?.faq_list || 
+                 product?.faqList?.questions || 
+                 product?.faqList?.faqs || 
+                 product?.faqList?.faq;
+                 
+    if (!list || !Array.isArray(list) || list.length === 0) return [];
+
+    return list.map((item: any) => ({
+      question: item.question || item.faq_question || item.title || "",
+      answer: item.answer || item.faq_answer || item.description || item.content || "",
+    })).filter(item => item.question && item.answer);
+  }, [product]);
+
+  if (displayQaItems.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden to-white py-10 md:py-16 xl:py-20 2xl:py-[150px] new-container">
@@ -73,7 +57,7 @@ export default function SupplementFaq({ product }: { product: ShopifyProduct }) 
           style={{ willChange: "transform, opacity" }}
             className="text-center text-[clamp(32px,5vw,80px)] leading-[clamp(34px,6.3vw,109px)] text-black dark:text-black mb-7 xl:mb-[50px]"
           >
-            Your Questions, Answered
+            {product.faqList?.title || "Your Questions, Answered"}
           </motion.h2>
 
           <div className="space-y-5 max-w-[880px] mx-auto">
