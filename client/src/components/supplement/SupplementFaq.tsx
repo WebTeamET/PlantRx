@@ -9,7 +9,6 @@ export default function SupplementFaq({ product }: { product: ShopifyProduct }) 
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const displayQaItems = useMemo(() => {
-    // Robustly find the list of FAQ items in the mapped faqList object
     const list = product?.faqList?.faq_items || 
                  product?.faqList?.faq_list || 
                  product?.faqList?.questions || 

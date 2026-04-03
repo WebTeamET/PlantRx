@@ -2,9 +2,10 @@
 
 import { motion, useAnimationControls, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef, ReactNode, useEffect, useState, useMemo } from "react";
-import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+import { ShopifyProduct } from "@/lib/shopify";
 import BenefitDecorationLeft from "./BenefitDecorationLeft";
 import BenefitDecorationRight from "./BenefitDecorationRight";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 
 interface StripBenefitsProps {
   product?: ShopifyProduct;
@@ -16,15 +17,6 @@ interface BenefitItem {
   rightAccent: string;
   align: "left" | "right";
 }
-
-const PATTERN_POINTS = [
-  { top: "12%", left: "8%", delay: 0 },
-  { top: "18%", left: "82%", delay: 0.4 },
-  { top: "46%", left: "6%", delay: 0.8 },
-  { top: "58%", left: "88%", delay: 1.2 },
-  { top: "76%", left: "12%", delay: 1.6 },
-  { top: "84%", left: "78%", delay: 2.0 },
-];
 
 const SHAPE_MASK_DATA_URI = encodeURIComponent(`
 <svg width="874" height="669" viewBox="0 0 874 669" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +52,6 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
   ];
 
   const benefits = useMemo(() => {
-    // benefitsMeta is now a mapped object containing benefits_list (array of objects)
     const list = product?.benefitsMeta?.benefits_list;
     if (!list || !Array.isArray(list) || list.length === 0) return hardcodedBenefits;
 
@@ -71,8 +62,6 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
 
       return {
         title: titleText ? <span dangerouslySetInnerHTML={{ __html: titleText.replace(/\n/g, '<br />') }} /> : fallback.title,
-        // bg: node.background_color || node.bg || fallback.bg,
-        // textColor: node.text_color || node.textColor || fallback.textColor,
         accent: node.left_image || iconUrl,
         rightAccent: node.right_image || iconUrl,
         align: (i % 2 === 0) ? "left" : "right",
@@ -85,10 +74,9 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   const { scrollYProgress: runnerProgress } = useScroll({
     target: cardsRef,
-    offset: ["start 20%", "end end"], // begin at first card, finish at last card
+    offset: ["start 20%", "end end"], 
   });
 
-  // Single strip image moves along provided SVG path on scroll
   const PATH_DEF = useMemo(() => {
     if (benefits.length <= 1) return "M 840 370";
     let path = "M 840 370";
@@ -101,11 +89,9 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
     }
     return path;
   }, [benefits.length]);
-  // Smooth the motion along the path for scroll
   const rawProgress = useTransform(runnerProgress, [0, 1], [0, 100]);
   const smoothProgress = useSpring(rawProgress, { stiffness: 40, damping: 18, mass: 0.2 });
   const pathProgress = useTransform(smoothProgress, (v) => `${v}%`);
-  // Rotate strip: start 11.14deg → mid -7.04deg → end 11.14deg
   const stripRotate = useTransform(smoothProgress, [0, 50, 100], [1.63, 10.04, 1.63]);
   const mushroomControls = useAnimationControls();
   const [floatActive, setFloatActive] = useState(true);
@@ -135,10 +121,13 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
         }
       `}</style>
 
-      {/* Runner image that follows the provided SVG path */}
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center max-md:mb-5 mb-[120px]">
-          <h2
+          <motion.h2
+          variants={slideUpVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
             className="pdp-title-style text-black dark:text-black font-semibold"
             style={{
               textShadow: `
@@ -154,7 +143,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
             }}
           >
             {product?.benefitsMeta?.title || "Benefits"}
-          </h2>
+          </motion.h2>
         </div>
 
         <div

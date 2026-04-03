@@ -1,4 +1,5 @@
 import { ShopifyProduct, getMetaobjectField } from "@/lib/shopify";
+import { slideLeftVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useEffect, useState, useMemo, JSXElementConstructor, Key, ReactElement, ReactPortal } from "react";
 import { createPortal } from "react-dom";
@@ -101,8 +102,12 @@ export default function StripIngredients({ product, children }: StripIngredients
                     <div className="flex items-start justify-center max-xl:flex-col gap-10 2xl:gap-[84px] w-full">
                         <div className="w-full xl:max-w-[37.4%]">
                             <div className="title mb-[20px] lg:mb-[40px]">
-                                <h2
+                                <motion.h2
                                     className="pdp-title-style text-black dark:text-black font-semibold capitalize lg:max-w-[500px]"
+                                    variants={slideUpVariants}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.2 }}
                                     style={{
                                         textShadow: `
                                         0 6px 0 #fff,  0 -6px 0 #fff,
@@ -117,12 +122,18 @@ export default function StripIngredients({ product, children }: StripIngredients
                                     }}
                                 >
                                     {product?.keyIngredient?.title || "Key Ingredients"}
-                                </h2>
+                                </motion.h2>
                             </div>
                             <div className="content">
-                                <p className="lg:text-[20px] font-normal text-black dark:text-black leading-[1.5] lg:leading-[40px] capitalize">
+                                <motion.p
+                                    className="lg:text-[20px] font-normal text-black dark:text-black leading-[1.5] lg:leading-[40px] capitalize"
+                                    variants={slideUpVariants}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.2 }}
+                                >
                                     {keyIngredientText}
-                                </p>
+                                </motion.p>
                             </div>
                         </div>
                         <div className="w-full">
@@ -220,7 +231,13 @@ export default function StripIngredients({ product, children }: StripIngredients
 
                                     {/* Product image — first on mobile, right + overlapping on desktop */}
                                     {sectionImage && (
-                                        <div className="order-1 lg:order-2 w-full max-md:max-w-[400px] max-md:mx-auto max-xl:-ml-[50px] -ml-[15%] max-md:m-0 min-[1900px]:-ml-[242px] relative z-20">
+                                        <motion.div
+                                            className="order-1 lg:order-2 w-full max-md:max-w-[400px] max-md:mx-auto max-xl:-ml-[50px] -ml-[15%] max-md:m-0 min-[1900px]:-ml-[242px] relative z-20"
+                                            variants={slideLeftVariantsFast}
+                                            initial="hidden"
+                                            whileInView="visible"
+                                            viewport={{ once: true, amount: 0.2 }}
+                                        >
                                             <img
                                                 src={sectionImage}
                                                 alt="key-ingredients"
@@ -228,7 +245,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                                 height={634}
                                                 className="w-full h-auto object-cover"
                                             />
-                                        </div>
+                                        </motion.div>
                                     )}
                                 </div>
                             </div>

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
-import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+import { ShopifyProduct } from "@/lib/shopify";
+import { slideUpVariants } from "@/animation/framerMotionVariants";
 
 interface StripAccordionProps {
   product?: ShopifyProduct;
@@ -13,21 +14,6 @@ type QAItem = {
   answer: string;
 };
 
-
-const QA_ITEMS: QAItem[] = [
-  {
-    question: "Is this a stimulant?",
-    answer: "No. It uses functional mushroom extracts traditionally associated with cognitive support.",
-  },
-  {
-    question: "Will it make me feel wired?",
-    answer: "You should feel clear and steady, not jittery. The formula favors focus over buzz.",
-  },
-  {
-    question: "When is best to take it?",
-    answer: "Most people enjoy it in the morning or early afternoon so the focus benefits line up with their day.",
-  },
-];
 
 export default function StripAccordion({ product }: StripAccordionProps) {
   const hardcodedQA: QAItem[] = [
@@ -46,7 +32,6 @@ export default function StripAccordion({ product }: StripAccordionProps) {
   ];
 
   const qaItems = useMemo(() => {
-    // faqList is now a mapped object containing faq_list or faq_items (array of objects)
     const list = product?.faqList?.faq_list || product?.faqList?.faq_items || product?.faqList?.questions;
     if (!list || !Array.isArray(list) || list.length === 0) return hardcodedQA;
 
@@ -64,11 +49,16 @@ export default function StripAccordion({ product }: StripAccordionProps) {
         <div
           className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-StripPrimary"
         >
-          <h2
+          <motion.h2
+          variants={slideUpVariants as any}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          style={{ willChange: "transform, opacity" }}
             className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] dark:text-[#000] mb-10"
           >
             Your Questions, Answered
-          </h2>
+          </motion.h2>
 
           <div className="space-y-4 lg:px-[100px]">
             {qaItems.map((item, idx) => {
@@ -82,6 +72,11 @@ export default function StripAccordion({ product }: StripAccordionProps) {
                   className="w-full text-left"
                   aria-expanded={isOpen}
                   aria-controls={`qa-panel-${idx}`}
+                  variants={slideUpVariants as any}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <motion.div
                     layout

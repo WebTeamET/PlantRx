@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ReactNode, useMemo } from "react";
 import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
+import { slideLeftVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 
 interface StripZigzagProps {
   product?: ShopifyProduct;
@@ -40,10 +41,9 @@ export default function StripZigzag({
   children,
 }: StripZigzagProps) {
   const dynamicData = useMemo(() => {
-    // imageWithDetails is now a mapped object from the server
     const node = product?.imageWithDetails;
     if (!node) return null;
-    
+
     const paragraphs = node.description ? node.description.split('\n') : initialParagraphs;
 
     return {
@@ -69,17 +69,33 @@ export default function StripZigzag({
           {eyebrow && (
             <p className="text-sm uppercase tracking-[0.2em] text-[#7a5a5c] dark:text-[#7a5a5c] mb-4">{eyebrow}</p>
           )}
-          <h2
+          <motion.h2
+            variants={slideUpVariants as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            style={{ willChange: "transform, opacity", textShadow: titleShadow }}
             className="text-[clamp(42px,_6vw,_76px)] leading-[1.3] font-semibold text-black dark:text-black mb-[30px] max-w-2xl"
-            style={{ textShadow: titleShadow }}
             dangerouslySetInnerHTML={{ __html: title }}
           />
           {subtitle && (
-            <p className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</p>
+            <motion.p
+              variants={slideUpVariants as any}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              style={{ willChange: "transform, opacity" }}
+              className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</motion.p>
           )}
           <div className="space-y-5 text-black dark:text-black font-light max-w-4xl">
             {paragraphs.map((p: string, idx: number) => (
-              <p className="text-base lg:text-lg lg:leading-9 dark:text-black" key={idx}>{p}</p>
+              <motion.p
+                variants={slideUpVariants as any}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                style={{ willChange: "transform, opacity" }}
+                className="text-base lg:text-lg lg:leading-9 dark:text-black" key={idx}>{p}</motion.p>
             ))}
           </div>
           {children}
@@ -92,13 +108,19 @@ export default function StripZigzag({
             transition={{ type: "spring", stiffness: 180, damping: 20 }}
             className="w-full flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-lg:max-w-[420px] max-md:max-w-[300px]">
+            <motion.div 
+            variants={slideLeftVariantsFast as any}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            style={{ willChange: "transform, opacity" }}
+            className="relative w-full max-lg:max-w-[420px] max-md:max-w-[300px]">
               <img
                 src={imageSrc}
                 alt={imageAlt}
                 className="w-full h-auto"
               />
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
