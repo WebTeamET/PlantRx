@@ -135,13 +135,13 @@ export default function StripProductDetail() {
           ease: "easeOut",
         }}
       >
-        <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white md:px-5 px-3 md:py-2 py-3 border border-gray-100 dark:border-gray-800">
+        <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white p-3 border border-gray-100 dark:border-gray-800">
           <div className="flex items-center md:gap-5 gap-2">
-            <div className="image-wrapper md:size-[100px] size-[70px] shrink-0">
+            <div className="image-wrapper md:size-[100px] size-[70px] shrink-0 rounded-[6px]">
               <img 
                 src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"} 
                 alt={product.title} 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain rounded-[6px]"
               />
             </div>
             <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black dark:*:text-black">

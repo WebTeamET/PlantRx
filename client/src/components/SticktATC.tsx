@@ -39,8 +39,8 @@ function AddToCart() {
       >
         <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white md:px-5 px-3 md:py-2 py-3">
           <div className="flex items-center md:gap-5 gap-2">
-            <div className="image-wrapper md:size-[100px] size-[70px] shrink-0"> 
-              <img src="/focus-strips.png" alt="prodyct-image" className="w-full h-full object-contain"></img>
+            <div className="image-wrapper md:size-[100px] size-[70px] shrink-0 rounded-[6px]"> 
+              <img src="/focus-strips.png" alt="prodyct-image" className="w-full h-full object-contain rounded-[6px]"></img>
             </div>
             <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black">
               <h4 className="md:text-xl text-base max-[370px]:text-sm">Mushroom Focus Strip</h4>

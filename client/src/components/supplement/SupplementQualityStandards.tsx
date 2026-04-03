@@ -27,9 +27,18 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
   const [canSlidePrev, setCanSlidePrev] = useState(false);
   const [canSlideNext, setCanSlideNext] = useState(true);
 
+  const [desktopSwiperInstance, setDesktopSwiperInstance] = useState<SwiperType | null>(null);
+  const [desktopCanSlidePrev, setDesktopCanSlidePrev] = useState(false);
+  const [desktopCanSlideNext, setDesktopCanSlideNext] = useState(true);
+
   const updateNavigationState = (swiper: SwiperType) => {
     setCanSlidePrev(!swiper.isBeginning);
     setCanSlideNext(!swiper.isEnd);
+  };
+
+  const updateDesktopNavigationState = (swiper: SwiperType) => {
+    setDesktopCanSlidePrev(!swiper.isBeginning);
+    setDesktopCanSlideNext(!swiper.isEnd);
   };
 
   const title = product.qualityStandards?.title || "Quality & Standards";
@@ -44,7 +53,7 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
       <div className="bg-green" style={{ backgroundColor: product.colors?.background_color }}>
         <div
           ref={sectionRef}
-          className="flex flex-col gap-10 md:gap-20 xl:gap-[150px] new-container py-10 lg:py-16 xl:py-20 2xl:py-[132px]">
+          className="flex flex-col gap-10 md:gap-20 xl:gap-[150px] new-container py-10 lg:py-16 xl:py-15 2xl:py-[132px]">
           <motion.div
             className="title title-black title-stroke"
             variants={slideUpVariants as any}
@@ -60,31 +69,96 @@ export default function SupplementQualityStandards({ product }: { product: Shopi
               {title}
             </h2>
           </motion.div>
-          <div className={`hidden xl:flex items-start justify-center pb-24 xl:pb-28 2xl:pb-[82px] xl:gap-10 2xl:gap-x-[55px] gap-3 gap-y-20${displayBadges.length > 9 ? " flex-wrap" : ""}`}>
-            {displayBadges.map((badge: any, i: number) => (
-              <motion.div
-                key={i}
-                className="flex flex-col items-center gap-5 shrink-0 min-[1921px]:flex-1"
-                initial={{ opacity: 0, y: (badge.offsetY || 0) + 30 }}
-                animate={isInView ? { opacity: 1, y: badge.offsetY || 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
+          {displayBadges.length > 9 ? (
+            <div className="hidden xl:block">
+              <Swiper
+                className="!overflow-visible"
+                spaceBetween={40}
+                slidesPerView={9}
+                breakpoints={{
+                  1280: { slidesPerView: 7, spaceBetween: 20 },
+                  1600: { slidesPerView: 9, spaceBetween: 55 },
+                }}
+                onSwiper={(swiper) => {
+                  setDesktopSwiperInstance(swiper);
+                  updateDesktopNavigationState(swiper);
+                }}
+                onSlideChange={updateDesktopNavigationState}
+                onResize={updateDesktopNavigationState}
               >
-                <img
-                  src={badge.icon}
-                  width={1000}
-                  height={1000}
-                  alt={badge.label}
-                  className="block w-16 min-[1800px]:!w-[100px] min-h-16 min-[1800px]:!min-h-[100px] flex-none"
-                />
-                <div className="content content-white">
-                  <p className="text-sm 2xl:text-xl 2xl:leading-[100%] font-normal text-center whitespace-nowrap">
-                    {badge.label}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
+                {displayBadges.map((badge: any, i: number) => (
+                  <SwiperSlide key={badge.label + i}>
+                    <motion.div
+                      className="flex flex-col items-center gap-5 shrink-0"
+                      initial={{ opacity: 0, y: (badge.offsetY || 0) + 30 }}
+                      animate={isInView ? { opacity: 1, y: badge.offsetY || 0 } : {}}
+                      transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
+                    >
+                      <img
+                        src={badge.icon}
+                        width={1000}
+                        height={1000}
+                        alt={badge.label}
+                        className="block w-16 min-[1800px]:!w-[100px] min-h-16 min-[1800px]:!min-h-[100px] flex-none"
+                      />
+                      <div className="content content-white">
+                        <p className="text-sm 2xl:text-xl 2xl:leading-[100%] font-normal text-center whitespace-nowrap">
+                          {badge.label}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="mt-10 xl:mt-[140px] flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  aria-label="Previous quality standard"
+                  onClick={() => desktopSwiperInstance?.slidePrev()}
+                  disabled={!desktopCanSlidePrev}
+                  className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                  style={{ color: product.colors?.background_color || '#385127' }}
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next quality standard"
+                  onClick={() => desktopSwiperInstance?.slideNext()}
+                  disabled={!desktopCanSlideNext}
+                  className="flex size-8 md:size-10 !min-h-fit !min-w-fit items-center justify-center rounded-full bg-white transition-opacity disabled:pointer-events-none disabled:opacity-45"
+                  style={{ color: product.colors?.background_color || '#385127' }}
+                >
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="hidden xl:flex items-start justify-center pb-24 xl:pb-28 2xl:pb-[140px] xl:gap-10 2xl:gap-x-[55px] gap-3 gap-y-20">
+              {displayBadges.map((badge: any, i: number) => (
+                <motion.div
+                  key={i}
+                  className="flex flex-col items-center gap-5 shrink-0 min-[1921px]:flex-1"
+                  initial={{ opacity: 0, y: (badge.offsetY || 0) + 30 }}
+                  animate={isInView ? { opacity: 1, y: badge.offsetY || 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.2 + i * 0.07, ease: [0.33, 1, 0.68, 1] }}
+                >
+                  <img
+                    src={badge.icon}
+                    width={1000}
+                    height={1000}
+                    alt={badge.label}
+                    className="block w-16 min-[1800px]:!w-[100px] min-h-16 min-[1800px]:!min-h-[100px] flex-none"
+                  />
+                  <div className="content content-white">
+                    <p className="text-sm 2xl:text-xl 2xl:leading-[100%] font-normal text-center whitespace-nowrap">
+                      {badge.label}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
           <div className="xl:hidden">
             <Swiper
               spaceBetween={24}

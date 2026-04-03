@@ -15,7 +15,7 @@ export default function SupplementHowToUse({ product }: { product: ShopifyProduc
       ];
 
   return (
-    <section className="how-to-use-section relative overflow-hidden lg:pt-[110px] lg:-mt-[110px] max-lg:flex flex-col items-center">
+    <section className="how-to-use-section relative overflow-hidden lg:pt-[110px] lg:-mt-[110px] max-lg:flex flex-col items-center -mt-0.5">
       <div className="relative w-full pointer-events-none rotate-180 -scale-x-100 -mt-1">
         <img
           src="/supplement-wave-pattern.svg"
@@ -26,7 +26,7 @@ export default function SupplementHowToUse({ product }: { product: ShopifyProduc
           className="w-full block"
         />
       </div>
-      <div className="rotate-[23.1deg] static lg:absolute pointer-events-none -left-[17%] top-[55%] lg:-translate-y-1/2 max-w-[80%] md:max-w-[58.3%] min-[1921px]:max-w-[50%] w-full h-auto z-[2]">
+      <div className="rotate-[23.1deg] static lg:absolute pointer-events-none -left-[13%] top-[53%] lg:-translate-y-1/2 max-w-[80%] md:max-w-[45%] xl:max-w-[49%] min-[1921px]:max-w-[50%] w-full h-auto z-[2]">
         <div className="origin-top-left">
           <div className="relative">
             <motion.img
@@ -76,7 +76,7 @@ export default function SupplementHowToUse({ product }: { product: ShopifyProduc
           </motion.div>
         </div>
       </div>
-      <div className="w-full pointer-events-none relative z-[2]">
+      <div className="w-full pointer-events-none relative z-[2] -mb-1">
         <img
           src="/supplement-wave-pattern.svg"
           width={2000}

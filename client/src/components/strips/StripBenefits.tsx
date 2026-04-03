@@ -164,7 +164,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
         >
           <motion.img
             src={product?.benefitsMeta?.scroll_image || "/strip-benefit-product-image.png"}
-            alt="Mushroom focus strips path runner"
+            alt="strips path runner"
             className="max-lg:hidden stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px]"
             style={{
               offsetPath: `path('${PATH_DEF}')`,
@@ -250,7 +250,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                 </div>
               </motion.div>
               <motion.img
-                src="/strip-2.png"
+                src={product?.benefitsMeta?.scroll_image || "/strip-benefit-product-image.png"}
                 alt="Mushroom focus strips path runner"
                 className="lg:hidden stripImg pointer-events-none absolute max-sm:-bottom-[50px] max-md:-bottom-[20px] bottom-0 left-1/2 -translate-x-1/2 max-sm:w-[130px] w-[180px] mx-auto drop-shadow-lg"
               />
