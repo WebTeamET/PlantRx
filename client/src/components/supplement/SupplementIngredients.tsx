@@ -116,7 +116,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                     alt={title}
                     width={928}
                     height={768}
-                    className="ki-product-image rounded-[10px]"
+                    className="ki-product-image rounded-[10px] size-full"
                   />
                 </motion.div>
 

@@ -163,7 +163,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                         </h3>
 
                                         {/* Serving info */}
-                                        <div className="flex flex-col gap-[7px] mb-4 text-[14px] xl:text-base 2xl:text-lg text-black capitalize">
+                                        <div className="flex flex-col gap-[7px] mb-4 text-[14px] xl:text-base 2xl:text-lg text-black dark:text-black capitalize">
                                             <span>
                                                 <span className="font-bold">Serving Size</span>:{" "}
                                                 {product?.ingredientsTable?.serving_size_value || product?.keyIngredient?.serving_size || ""}
@@ -195,11 +195,11 @@ export default function StripIngredients({ product, children }: StripIngredients
                                         {/* Ingredient rows */}
                                         <div className="flex flex-col gap-2.5">
                                             {supplementIngredients.map((item: any, i: number) => (
-                                                <div key={i} className="flex items-start justify-between w-full text-sm lg:text-[14px] text-black">
+                                                <div key={i} className="flex items-start justify-between w-full text-sm lg:text-[14px] text-black dark:text-black">
                                                     <span className="font-medium flex-1 pr-2 capitalize max-[1920px]:xl:max-w-[150px]">{item.name}</span>
                                                     <div className="flex gap-3 text-center flex-shrink-0">
-                                                        <span className="font-medium xl:w-[80px] w-[130px] text-center">{item.amount}</span>
-                                                        <span className="w-[50px] font-medium  text-sm text-center">
+                                                        <span className="font-medium xl:w-[80px] w-[130px] text-center text-black dark:text-black">{item.amount}</span>
+                                                        <span className="w-[50px] font-medium  text-sm text-center text-black dark:text-black">
                                                             {item.dailyValue || "†"}
                                                         </span>
                                                     </div>
