@@ -94,6 +94,18 @@ export interface ShopifyProduct {
     [key: string]: any;
   };
 
+  supplementIngredientsFaq?: {
+    image?: string;
+    title?: string;
+    product_name?: string;
+    ingredient_faq_list?: Array<{
+      question: string;
+      answer: string;
+      icon: string;
+    }>;
+  };
+
+
   // Derived fields
   ingredients?: string[];
   sideIngredients?: string[];
@@ -690,6 +702,38 @@ const PRODUCT_FIELDS_FRAGMENT = `
       }
     }
   }
+  supplementIngredientsFaq: metafield(namespace: "custom", key: "supplement_ingredients_faq") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              image { url altText }
+            }
+          }
+          references(first: 20) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url altText }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 const COLLECTION_FIELDS_FRAGMENT = `
@@ -889,8 +933,10 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     featuresMeta: mapMetaobject(product.features),
     imageWithDetails: mapMetaobject(product.imageWithDetails),
     ingredientsTable: mapMetaobject(product.ingredientsTable),
-    colors: mapMetaobject(product.colors)
+    colors: mapMetaobject(product.colors),
+    supplementIngredientsFaq: mapMetaobject(product.supplementIngredientsFaq)
   } as unknown as ShopifyProduct;
+
 };
 
 // Shopify service functions for server-side use

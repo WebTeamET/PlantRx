@@ -448,6 +448,18 @@ export interface ShopifyProduct {
     [key: string]: any;
   };
 
+  supplementIngredientsFaq?: {
+    image?: string;
+    title?: string;
+    product_name?: string;
+    ingredient_faq_list?: Array<{
+      question: string;
+      answer: string;
+      icon: string;
+    }>;
+  };
+
+
 
   variants: Array<{
     id: string;

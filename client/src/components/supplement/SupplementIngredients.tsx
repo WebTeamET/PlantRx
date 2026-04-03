@@ -4,27 +4,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { ShopifyProduct } from "@/lib/shopify";
 
-const keyIngredientsData = {
-  productImage: {
-    src: "/key-ingredients.png",
-    alt: "Key ingredients product infographic showing supplement benefits",
-    width: 928,
-    height: 768,
-  },
-  ingredients: [
-    {
-      id: 1,
-      icon: { src: "/sup-ingre-1.png", alt: "Moringa Oleifera Leaf ingredient icon", width: 41, height: 41 },
-      name: "Moringa Oleifera Leaf",
-      description:
-        "Moringa leaves are rich in naturally occurring nutrients and plant compounds. Traditionally used in herbal practices, the leaves contain antioxidants, vitamins, and minerals that contribute to the plant's reputation as a nutrient-dense botanical.",
-    }
-  ],
-};
+// Key ingredients data is now fetched dynamically from product.supplementIngredientsFaq
+
 
 export default function SupplementIngredients({ product }: { product: ShopifyProduct }) {
-  const title = product.supplementKeyIngredients?.title || "Key Ingredients";
+  const data = product.supplementIngredientsFaq;
+  const ingredients = data?.ingredient_faq_list || [];
+  const title = data?.title || product.supplementKeyIngredients?.title || "Key Ingredients";
+  const productImage = data?.image || "/key-ingredients.png";
   const [openIndex, setOpenIndex] = useState<number>(0);
+
 
   return (
     <>
@@ -58,28 +47,30 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
             viewport={{ once: true, amount: 0.1 }}
           >
             <div className="flex flex-col gap-5 flex-1">
-              {keyIngredientsData.ingredients.map((ingredient, index) => (
-                <motion.div key={ingredient.id} variants={slideRightVariantsFast}>
+              {ingredients.map((ingredient, index) => (
+                <motion.div key={index} variants={slideRightVariantsFast}>
                   <div className="ki-accordion-card p-8 md:p-9">
                     <div className="flex gap-5 items-start">
-                      <img
-                        src={ingredient.icon.src}
-                        alt={ingredient.icon.alt}
-                        width={ingredient.icon.width}
-                        height={ingredient.icon.height}
-                        className="ki-accordion-icon"
-                      />
+                      {ingredient.icon && (
+                        <img
+                          src={ingredient.icon}
+                          alt={ingredient.question}
+                          width={41}
+                          height={41}
+                          className="ki-accordion-icon"
+                        />
+                      )}
                       <div className="flex flex-col gap-5 flex-1">
                         <div className="flex items-center justify-between gap-4">
                           <div className="title title-black ki-ingredient-title">
-                            <h3>{ingredient.name}</h3>
+                            <h3>{ingredient.question}</h3>
                           </div>
                           <button
                             type="button"
                             aria-label={
                               openIndex === index
-                                ? `Collapse ${ingredient.name}`
-                                : `Expand ${ingredient.name}`
+                                ? `Collapse ${ingredient.question}`
+                                : `Expand ${ingredient.question}`
                             }
                             className="ki-toggle-btn p-1.5"
                             onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
@@ -101,7 +92,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                               style={{ overflow: "hidden", willChange: "height, opacity" }}
                             >
                               <div className="content content-black">
-                                <p>{ingredient.description}</p>
+                                <p>{ingredient.answer}</p>
                               </div>
                             </motion.div>
                           )}
@@ -116,13 +107,14 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
             {/* Right: Product Image */}
             <motion.div className="flex-1" variants={slideLeftVariantsFast}>
               <img
-                src={keyIngredientsData.productImage.src}
-                alt={keyIngredientsData.productImage.alt}
-                width={keyIngredientsData.productImage.width}
-                height={keyIngredientsData.productImage.height}
+                src={productImage}
+                alt={title}
+                width={928}
+                height={768}
                 className="ki-product-image"
               />
             </motion.div>
+
           </motion.div>
         </div>
       </section>
