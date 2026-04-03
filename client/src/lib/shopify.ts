@@ -315,6 +315,33 @@ export const PRODUCT_QUERY = `
           }
         }
       }
+      ingredientsTable: metafield(namespace: "custom", key: "ingredients_table") {
+        reference {
+          ... on Metaobject {
+            fields {
+              key
+              value
+              references(first: 20) {
+                edges {
+                  node {
+                    ... on Metaobject {
+                      fields {
+                        key
+                        value
+                        reference {
+                          ... on MediaImage {
+                            image { url altText }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -413,6 +440,7 @@ export interface ShopifyProduct {
   qualityStandards?: any;
   whoShouldAvoid?: any;
   imageWithDetails?: any;
+  ingredientsTable?: any;
   colors?: {
     background_color?: string;
     primary_color?: string;

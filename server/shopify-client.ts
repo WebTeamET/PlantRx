@@ -86,6 +86,7 @@ export interface ShopifyProduct {
   qualityStandards?: any;
   whoShouldAvoid?: any;
   imageWithDetails?: any;
+  ingredientsTable?: any;
   colors?: {
     background_color?: string;
     primary_color?: string;
@@ -662,6 +663,33 @@ const PRODUCT_FIELDS_FRAGMENT = `
       }
     }
   }
+  ingredientsTable: metafield(namespace: "custom", key: "ingredients_table") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          references(first: 20) {
+            edges {
+              node {
+                ... on Metaobject {
+                  fields {
+                    key
+                    value
+                    reference {
+                      ... on MediaImage {
+                        image { url altText }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 const COLLECTION_FIELDS_FRAGMENT = `
@@ -860,6 +888,7 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     faqList: mapMetaobject(product.faqList),
     featuresMeta: mapMetaobject(product.features),
     imageWithDetails: mapMetaobject(product.imageWithDetails),
+    ingredientsTable: mapMetaobject(product.ingredientsTable),
     colors: mapMetaobject(product.colors)
   } as unknown as ShopifyProduct;
 };

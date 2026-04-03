@@ -4,13 +4,11 @@ import { ReactNode, useEffect, useState, useMemo, JSXElementConstructor, Key, Re
 import { createPortal } from "react-dom";
 
 
-// ─── Props ────────────────────────────────────────────────────────────────────
 
 interface StripIngredientsProps {
     product?: ShopifyProduct;
     children?: ReactNode;
 }
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StripIngredients({ product, children }: StripIngredientsProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,20 +16,43 @@ export default function StripIngredients({ product, children }: StripIngredients
     // Dynamic description from keyIngredient
     const keyIngredientText = useMemo(() => {
         // Use mapped field from the server
-        return product?.keyIngredient?.description || "Stay sharp and centered with Mushroom Focus Strips, a convenient and flavorful way to support your mental clarity and overall wellness. These smooth, chocolate-flavored oral strips dissolve on your tongue, delivering a curated blend of functional mushroom extracts traditionally valued for their role in promoting normal cognitive function and daily vitality.";
+        return product?.keyIngredient?.description || "";
     }, [product]);
 
-    const ingredientsList = product?.keyIngredient?.ingredient_list || product?.ingredients || [
-        "Hericium Erinaceus (Lion’s Mane) (30 mg)",
-        "Grifola Frondosa (Maitake) (25 mg)",
-        "Cordyceps Sinensis (Cordyceps) (25 mg)",
-        "Lentinus Edodes (Shiitake) (20 mg)",
-        "Pullulan, Cellulose, Lecithin, Chocolate Flavor, Monk Fruit Extract, Medium-Chain Triglycerides, Xanthan Gum, Steviol Glycosides."
-    ];
+    const ingredientsListData = useMemo(() => {
+        if (product?.ingredientsTable?.ingredients_table_list) {
+            return product.ingredientsTable.ingredients_table_list;
+        }
+        return product?.keyIngredient?.ingredient_list || product?.ingredients || [];
+    }, [product]);
 
     const supplementIngredients = useMemo(() => {
-        const activeIngredients = ingredientsList.filter((item: string) =>
-            /\(\d+\s*mg\)/i.test(item)
+        if (!ingredientsListData) return [];
+
+        // Handle case where it's an array of objects (metaobjects)
+        if (ingredientsListData.length > 0 && typeof ingredientsListData[0] === 'object') {
+            return (ingredientsListData as any[]).map((item: any) => {
+                const rawName = (item.ingredient_name || item.name || item.title || item.ingredient || item.label || "").trim();
+                const rawAmount = (item.amount_per_serving || item.amount || item.value || "").trim();
+                const rawDailyValue = (item.daily_value || item.daily_value_value || "").trim();
+                
+                if (rawName && !rawAmount && /\(\d+\s*mg\)/i.test(rawName)) {
+                    const amountMatch = rawName.match(/\((\d+\s*mg)\)\s*$/i);
+                    const amount = amountMatch ? amountMatch[1] : "";
+                    const name = amountMatch ? rawName.replace(/\s*\(\d+\s*mg\)\s*$/i, "").trim() : rawName;
+                    return { name, amount, dailyValue: rawDailyValue };
+                }
+
+                return {
+                    name: rawName,
+                    amount: rawAmount,
+                    dailyValue: rawDailyValue
+                };
+            }).filter(item => item.name); 
+        }
+
+        const activeIngredients = ingredientsListData.filter((item: any) =>
+            typeof item === "string" && /\(\d+\s*mg\)/i.test(item)
         );
         return activeIngredients.map((item: string) => {
             const amountMatch = item.match(/\((\d+\s*mg)\)\s*$/i);
@@ -39,10 +60,22 @@ export default function StripIngredients({ product, children }: StripIngredients
             const name = amountMatch ? item.replace(/\s*\(\d+\s*mg\)\s*$/i, "").trim() : item;
             return { name, amount };
         });
-    }, [ingredientsList]);
+    }, [ingredientsListData]);
+
+    const footnotes = useMemo(() => {
+        if (product?.ingredientsTable?.ingredients_table_text) {
+            return Array.isArray(product.ingredientsTable.ingredients_table_text) 
+                ? product.ingredientsTable.ingredients_table_text 
+                : [product.ingredientsTable.ingredients_table_text];
+        }
+        return [];
+    }, [product]);
 
     const primaryColor = product?.colors?.primary_color || "#385127";
     const secondaryColor = product?.colors?.secondary_color || "#f5e8e5";
+
+    const spinningImage = product?.ingredientsTable?.spinning_image || product?.keyIngredient?.ingredient_image;
+    const sectionImage = product?.ingredientsTable?.section_image || product?.ingredientsTable?.image || product?.keyIngredient?.image;
 
     // Lock body scroll when modal is open
     useEffect(() => {
@@ -56,6 +89,9 @@ export default function StripIngredients({ product, children }: StripIngredients
             document.body.style.overflow = previousOverflow;
         };
     }, [isModalOpen]);
+
+    if (!product) return null;
+
     return (
         <>
             <section
@@ -92,9 +128,11 @@ export default function StripIngredients({ product, children }: StripIngredients
                         <div className="w-full">
                             <div className="relative">
                                 {/* Spinning mushroom — top-left corner of the whole composition */}
-                                <div className="animate-spin-slow absolute -top-[33px] -left-[66px] w-[97px] h-[92px] z-30 max-md:hidden">
-                                    <img src={product?.keyIngredient?.ingredient_image || "/mushroom-small.png"} alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
-                                </div>
+                                {spinningImage && (
+                                    <div className="animate-spin-slow absolute -top-[33px] -left-[66px] w-[97px] h-[92px] z-30 max-md:hidden">
+                                        <img src={spinningImage} alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
+                                    </div>
+                                )}
 
                                 {/* Supplement Facts card + Product image — stacked on mobile, overlapping on desktop */}
                                 <div className="flex flex-col md:flex-row md:items-center gap-4 lg:gap-0">
@@ -117,11 +155,11 @@ export default function StripIngredients({ product, children }: StripIngredients
                                         <div className="flex flex-col gap-[7px] mb-4 text-[14px] xl:text-base 2xl:text-lg text-black capitalize">
                                             <span>
                                                 <span className="font-bold">Serving Size</span>:{" "}
-                                                {product?.keyIngredient?.serving_size || "1 Oral Strip (260 mg)"}
+                                                {product?.ingredientsTable?.serving_size_value || product?.keyIngredient?.serving_size || ""}
                                             </span>
                                             <span>
                                                 <span className="font-bold">Serving Per Container:</span>{" "}
-                                                {product?.keyIngredient?.serving_per_container || "30"}
+                                                {product?.ingredientsTable?.serving_per_container_value || product?.keyIngredient?.serving_per_container || ""}
                                             </span>
                                         </div>
 
@@ -145,12 +183,14 @@ export default function StripIngredients({ product, children }: StripIngredients
 
                                         {/* Ingredient rows */}
                                         <div className="flex flex-col gap-2.5">
-                                            {supplementIngredients.map((item: { name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; amount: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }, i: Key | null | undefined) => (
+                                            {supplementIngredients.map((item: any, i: number) => (
                                                 <div key={i} className="flex items-center w-full text-sm lg:text-[14px] text-black">
                                                     <span className="font-medium flex-1 pr-2 capitalize">{item.name}</span>
                                                     <div className="flex gap-3 text-center flex-shrink-0">
                                                         <span className="font-medium w-[70px]">{item.amount}</span>
-                                                        <span className="w-[50px] text-[16px] leading-none">†</span>
+                                                        <span className="w-[50px] text-[16px] leading-none">
+                                                            {item.dailyValue || "†"}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             ))}
@@ -163,23 +203,33 @@ export default function StripIngredients({ product, children }: StripIngredients
                                                 className="flex flex-col gap-1 text-[12px] lg:text-sm font-medium capitalize"
                                                 style={{ color: primaryColor }}
                                             >
-                                                <span>†Daily value not established.</span>
-                                                <span>**Percent Daily Values are based on a 2,000 calorie diet.</span>
+                                                {footnotes.length > 0 ? (
+                                                    footnotes.map((text: string, i: number) => (
+                                                        <span key={i}>{text}</span>
+                                                    ))
+                                                ) : (
+                                                    <>
+                                                        <span>†Daily value not established.</span>
+                                                        <span>**Percent Daily Values are based on a 2,000 calorie diet.</span>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                         </div>
                                     </div>
 
                                     {/* Product image — first on mobile, right + overlapping on desktop */}
-                                    <div className="order-1 lg:order-2 w-full max-md:max-w-[400px] max-md:mx-auto max-xl:-ml-[50px] -ml-[15%] max-md:m-0 min-[1900px]:-ml-[242px] relative z-20">
-                                        <img
-                                            src={product?.keyIngredient?.image || "/key-ingredients.png"}
-                                            alt="key-ingredients"
-                                            width={641}
-                                            height={634}
-                                            className="w-full h-auto object-cover"
-                                        />
-                                    </div>
+                                    {sectionImage && (
+                                        <div className="order-1 lg:order-2 w-full max-md:max-w-[400px] max-md:mx-auto max-xl:-ml-[50px] -ml-[15%] max-md:m-0 min-[1900px]:-ml-[242px] relative z-20">
+                                            <img
+                                                src={sectionImage}
+                                                alt="key-ingredients"
+                                                width={641}
+                                                height={634}
+                                                className="w-full h-auto object-cover"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex justify-center mt-[20px] lg:mt-[48px] w-full">
@@ -279,14 +329,31 @@ export default function StripIngredients({ product, children }: StripIngredients
                                     children
                                 ) : (
                                     <ul className="flex flex-col gap-[10px]">
-                                        {ingredientsList.map((item: string, i: number) => (
-                                            <li key={i} className="flex gap-[12px] items-start dark:text-black">
-                                                <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5 text-StripPrimary" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="currentColor" />
-                                                </svg>
-                                                {item}
-                                            </li>
-                                        ))}
+                                        {ingredientsListData.map((item: any, i: number) => {
+                                            const name = typeof item === 'string' ? item : (item.ingredient_name || item.name || item.title || item.ingredient || item.label || "");
+                                            const amount = typeof item === 'string' ? "" : (item.amount_per_serving || item.amount || item.value || "");
+                                            
+                                            // Handle combined format in name field
+                                            if (name && !amount && /\(\d+\s*mg\)/i.test(name)) {
+                                                return (
+                                                    <li key={i} className="flex gap-[12px] items-start dark:text-black">
+                                                        <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5 text-StripPrimary" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="currentColor" />
+                                                        </svg>
+                                                        {name}
+                                                    </li>
+                                                );
+                                            }
+
+                                            return (
+                                                <li key={i} className="flex gap-[12px] items-start dark:text-black">
+                                                    <svg width="22" height="20" className="shrink-0 max-md:size-4 2xl:mt-4 mt-2 max-md:mt-1.5 text-StripPrimary" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M19.1627 0L22 2.01717L9.69779 20H6.86044L0 10.2575L2.83734 7.57511L8.27911 12.7253L19.1627 0Z" fill="currentColor" />
+                                                    </svg>
+                                                    {name} {amount && `(${amount})`}
+                                                </li>
+                                            );
+                                        })}
                                     </ul>
                                 )}
                             </div>
