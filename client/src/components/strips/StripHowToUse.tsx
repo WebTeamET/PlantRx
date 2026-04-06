@@ -305,8 +305,8 @@ export function StickyStripImg({ product }: { product?: ShopifyProduct }) {
   return (
     <motion.div
       className="pointer-events-none fixed z-[80] inset-x-0 flex justify-center bottom-[-190px]"
-      initial={{ scale: 1 }}
-      animate={{ scale: visible ? 1 : 1, opacity: visible ? 1 : 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       aria-hidden={!visible}
     >

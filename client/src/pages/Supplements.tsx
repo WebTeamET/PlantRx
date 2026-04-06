@@ -28,8 +28,10 @@ export default function Supplements() {
   const [addingToCart, setAddingToCart] = useState(false);
   const { addToCart, setCartOpen } = useCart();
   const footerRef = useRef<HTMLDivElement | null>(null);
+  const bannerRef = useRef<HTMLDivElement | null>(null);
   const [footerVisible, setFooterVisible] = useState(false);
-  const hideCTA = footerVisible;
+  const [bannerVisible, setBannerVisible] = useState(true);
+  const hideCTA = footerVisible || bannerVisible;
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -61,6 +63,18 @@ export default function Supplements() {
       { threshold: 0.15 }
     );
     observer.observe(footerRef.current);
+    return () => observer.disconnect();
+  }, [loading]);
+
+  useEffect(() => {
+    if (!bannerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setBannerVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(bannerRef.current);
     return () => observer.disconnect();
   }, [loading]);
 
@@ -127,6 +141,7 @@ export default function Supplements() {
 
       <motion.div
         className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
+        initial={{ y: 120, opacity: 0, scale: 0.95 }}
         animate={{
           y: hideCTA ? 120 : 0,
           opacity: hideCTA ? 0 : 1,
@@ -182,7 +197,9 @@ export default function Supplements() {
       </motion.div>
 
       <div className="relative z-10">
-        <SupplementHeroBanner product={product} />
+        <div ref={bannerRef}>
+          <SupplementHeroBanner product={product} />
+        </div>
         <SupplementWhyUse product={product} />
         <SupplementMarquee product={product} marginTop={90} />
         <SupplementHowWorks product={product} />

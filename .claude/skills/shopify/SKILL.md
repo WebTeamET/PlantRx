@@ -1,3 +1,8 @@
+---
+name: shopify-integration
+description: Use this skill for all Shopify-related work including metafields, GraphQL queries, product sections, cart logic, schema discovery, and API integration. Trigger whenever the user asks to add metafields, build product sections, modify Shopify queries, wire up cart functionality, map Shopify data, update TypeScript types for Shopify, or consume Shopify data in React components. Also use when working with server/shopify-client.ts, server/routes.ts, CartContext, or any Shopify Storefront API integration.
+---
+
 ========== SHOPIFY INTEGRATION RULES ==========
 
 This skill governs all Shopify-related work in PlantRx: adding new metafields, building product sections, modifying queries, or wiring up cart logic. Follow every rule in this file exactly.
@@ -127,6 +132,8 @@ server/shopify-client.ts
 5) Always alias metafields with camelCase names that match their corresponding TypeScript property on `ShopifyProduct` (e.g., `heroBanner: metafield(namespace: "custom", key: "hero_banner")`).
 
 6) Do NOT fetch metafields in the client-side `PRODUCT_QUERY` in `client/src/lib/shopify.ts` — that query is a reference/unused. All actual fetching goes through the server GraphQL queries in `server/shopify-client.ts`.
+
+7) STRICT SCOPE RULE: Fetch ONLY metafields; do NOT add or fetch ANY additional Shopify core product fields unless the task explicitly instructs to fetch that specific core field.
 
 ---
 

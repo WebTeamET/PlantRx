@@ -74,7 +74,7 @@ export default function SupplementFaq({ product }: { product: ShopifyProduct }) 
                   variants={slideUpVariants as any}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
+                  viewport={{ once: true, amount: 0.1 }}
                   style={{ willChange: "transform, opacity" }}
                 >
                   <motion.div

@@ -36,7 +36,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
             <div className="key-ingredients-content w-full">
               <motion.div
                 className="flex flex-col-reverse lg:flex-row gap-7 lg:gap-10 2xl:gap-16 items-start"
-                variants={containerVariants}
+                variants={slideRightVariantsFast}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}

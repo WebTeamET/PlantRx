@@ -24,9 +24,11 @@ export default function StripProductDetail() {
   const [, setLocation] = useLocation();
   const footerRef = useRef<HTMLDivElement | null>(null);
   const howToUseRef = useRef<HTMLDivElement | null>(null);
+  const bannerRef = useRef<HTMLDivElement | null>(null);
   const [footerVisible, setFooterVisible] = useState(false);
   const [howToUseVisible, setHowToUseVisible] = useState(false);
-  const hideCTA = footerVisible || howToUseVisible;
+  const [bannerVisible, setBannerVisible] = useState(true);
+  const hideCTA = footerVisible || howToUseVisible || bannerVisible;
   const [product, setProduct] = useState<ShopifyProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,6 +80,18 @@ export default function StripProductDetail() {
     return () => observer.disconnect();
   }, [loading]);
 
+  useEffect(() => {
+    if (!bannerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setBannerVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(bannerRef.current);
+    return () => observer.disconnect();
+  }, [loading]);
+
   const handleAddToCart = async () => {
     if (!product) return;
     setAddingToCart(true);
@@ -125,6 +139,7 @@ export default function StripProductDetail() {
       
       <motion.div
         className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
+        initial={{ y: 120, opacity: 0, scale: 0.95 }}
         animate={{
           y: hideCTA ? 120 : 0,
           opacity: hideCTA ? 0 : 1,
@@ -181,7 +196,9 @@ export default function StripProductDetail() {
 
       <div className="relative z-10 min-h-screen">
         <StickyStripImg product={product} />
-        <StripProductBanner product={product} />
+        <div ref={bannerRef}>
+          <StripProductBanner product={product} />
+        </div>
         <StripContent product={product} />
         <StripTopics product={product} />
 

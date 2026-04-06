@@ -25,7 +25,9 @@ export default function SupplementMarquee({ marginTop = 0, marginBottom = 0, pro
     ? "-mb-[calc(var(--marquee-mb)_-_40px)] sm:-mb-[calc(var(--marquee-mb)_-_20px)] lg:-mb-[var(--marquee-mb)]"
     : "";
 
-    const displayItems = (product.marquee && product.marquee.length > 0) ? product.marquee : marqueeItems;
+  const displayItems = marginBottom !== 0
+    ? (product.supplementMarquee2 && product.supplementMarquee2.length > 0 ? product.supplementMarquee2 : marqueeItems)
+    : (product.supplementMarquee1 && product.supplementMarquee1.length > 0 ? product.supplementMarquee1 : (product.marquee && product.marquee.length > 0 ? product.marquee : marqueeItems));
 
   return (
     <section
@@ -36,7 +38,7 @@ export default function SupplementMarquee({ marginTop = 0, marginBottom = 0, pro
         <svg
           viewBox="0 0 1927 273"
           className="w-full h-full block"
-          preserveAspectRatio="none" 
+          preserveAspectRatio="none"
         >
           <path
             d="M1925.5 90.5479V271.431L1.5 184.623V1.57031L1925.5 90.5479Z"

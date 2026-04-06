@@ -105,6 +105,8 @@ export interface ShopifyProduct {
     }>;
   };
 
+  supplementMarquee1?: string[];
+  supplementMarquee2?: string[];
 
   // Derived fields
   ingredients?: string[];
@@ -297,6 +299,12 @@ const PRODUCT_FIELDS_FRAGMENT = `
     }
   }
   marquee: metafield(namespace: "custom", key: "marquee") {
+    value
+  }
+  supplementMarquee1: metafield(namespace: "custom", key: "supplement_marquee_1") {
+    value
+  }
+  supplementMarquee2: metafield(namespace: "custom", key: "supplement_marquee_2") {
     value
   }
   productDetails: metafield(namespace: "custom", key: "product_details") {
@@ -885,7 +893,7 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
   })) || [];
 
   const bannerImg = product.heroBanner?.reference?.image?.url;
-  
+
   const productIngredients = product.productIngredients?.references?.edges?.map((e: any) => ({
     url: e.node.url || e.node.image?.url,
     altText: e.node.image?.altText
@@ -909,12 +917,12 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     images: images,
     variants: variants,
     featuredImage: mainImage,
-    
+
     heroBanner: bannerImg ? { image: { url: bannerImg } } : null,
     productIngredients: productIngredients,
     sideIngredients: sideIngredients,
     imageWithText: imageWithText,
-    
+
     heroSection: mapMetaobject(product.heroSection),
     supplementHero: mapMetaobject(product.supplementHero),
     imagesWithInfo: mapMetaobject(product.imagesWithInfo),
@@ -923,6 +931,8 @@ const mapShopifyProduct = (product: any): ShopifyProduct => {
     qualityStandards: mapMetaobject(product.qualityStandards),
     whoShouldAvoid: mapMetaobject(product.whoShouldAvoid),
     marquee: product.marquee?.value ? parseJsonList(product.marquee.value) : [],
+    supplementMarquee1: product.supplementMarquee1?.value ? parseJsonList(product.supplementMarquee1.value) : [],
+    supplementMarquee2: product.supplementMarquee2?.value ? parseJsonList(product.supplementMarquee2.value) : [],
     productDetails: mapMetaobject(product.productDetails),
     iconWithText: mapMetaobjectsList(product.iconWithText),
     keyIngredient: mapMetaobject(product.keyIngredient),
@@ -985,7 +995,7 @@ export const serverShopifyService = {
       const products = edges.map((edge: any) => mapShopifyProduct(edge.node));
 
       console.log(`✅ SERVER: Mapped ${products.length} products`);
-      
+
       return products;
     } catch (error) {
       console.error('❌ SERVER: Error in fetchProductsWithGraphQL:', error);
@@ -1028,7 +1038,7 @@ export const serverShopifyService = {
             'Content-Type': 'application/json',
             'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
           },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             query,
             variables: { handle }
           }),
@@ -1081,7 +1091,7 @@ export const serverShopifyService = {
             'Content-Type': 'application/json',
             'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
           },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             query,
             variables: { handle }
           }),

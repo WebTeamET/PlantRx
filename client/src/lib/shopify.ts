@@ -427,6 +427,8 @@ export interface ShopifyProduct {
   supplementHero?: any;
   imagesWithInfo?: any;
   marquee?: string[];
+  supplementMarquee1?: string[];
+  supplementMarquee2?: string[];
   productDetails?: any;
   iconWithText?: any[];
   keyIngredient?: any;
@@ -840,7 +842,7 @@ export const shopifyService = {
     try {
       console.log(`🔍 CLIENT: Fetching collection by handle: ${handle}`);
       const response = await fetch(`/api/shopify/collections/${encodeURIComponent(handle)}`);
-      
+
       if (!response.ok) {
         if (response.status === 404) {
           console.log(`❌ CLIENT: Collection with handle "${handle}" not found`);
