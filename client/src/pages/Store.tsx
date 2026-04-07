@@ -381,7 +381,7 @@ export default function Store() {
               </div>
 
               <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
+                className="grid max-[370px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-4 lg:gap-10 xl:gap-20 md:gap-10 gap-x-3 gap-y-10 items-stretch xl:mt-20 md:mt-12 mt-10">
                 {(showAllProducts ? filteredProducts : filteredProducts.slice(0, 16)).map((product) => {
                   const isStrip =
                     product.productType?.toLowerCase().includes('strip') ||

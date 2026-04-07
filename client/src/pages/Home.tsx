@@ -964,7 +964,7 @@ export default function Home() {
             <CollapsibleTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-auto h-auto rounded-2xl border-[3px] border-green dark:border-gold/40 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md whitespace-normal"
+                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-auto !h-auto rounded-2xl border-[3px] border-green dark:border-gold/40 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md whitespace-normal"
               >
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green/20">
