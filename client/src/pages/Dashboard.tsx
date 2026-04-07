@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEnhancedPageTracking } from '../hooks/useAnalytics';
 import { Button } from "@/components/ui/button";
@@ -11,13 +11,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import ProfilePictureUpload from "@/components/ProfilePictureUpload";
-import { 
-  Heart, 
-  ShoppingCart, 
-  Calendar, 
-  User, 
-  LogOut, 
-  Leaf, 
+import {
+  Heart,
+  ShoppingCart,
+  Calendar,
+  User,
+  LogOut,
+  Leaf,
   Star,
   Package,
   CreditCard,
@@ -120,15 +120,15 @@ const REMEDY_FORMS = [
   { id: "powder", label: "Powders", icon: "🥄" },
 ];
 
-export default function Dashboard() {
+const Dashboard = memo(function Dashboard() {
   useEnhancedPageTracking('dashboard', 'main');
-  
+
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Editable preferences state
   const [editMode, setEditMode] = useState({
     profile: false,
@@ -136,7 +136,7 @@ export default function Dashboard() {
     notifications: false,
     accessibility: false,
   });
-  
+
   // Form state for preferences
   const [preferences, setPreferences] = useState({
     fullName: "",
@@ -158,7 +158,7 @@ export default function Dashboard() {
     reducedMotion: false,
     screenReaderOptimized: false,
   });
-  
+
   const [expandedSections, setExpandedSections] = useState({
     overview: true,
     profile: false,
@@ -321,7 +321,7 @@ export default function Dashboard() {
     queryFn: async () => {
       const hasPreferences = preferences.healthGoals.length > 0 || preferences.preferredRemedyForms.length > 0;
       if (!hasPreferences) return null;
-      
+
       const response = await fetch('/api/remedies/suggestions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -362,7 +362,7 @@ export default function Dashboard() {
     setIsSaving(true);
     try {
       const dataToSave: any = {};
-      
+
       if (section === "profile" || section === "all") {
         dataToSave.fullName = preferences.fullName;
         dataToSave.firstName = preferences.firstName;
@@ -370,14 +370,14 @@ export default function Dashboard() {
         dataToSave.location = preferences.location;
         dataToSave.age = preferences.age ? parseInt(preferences.age) : undefined;
       }
-      
+
       if (section === "health" || section === "all") {
         dataToSave.healthGoals = preferences.healthGoals;
         dataToSave.dietaryRestrictions = preferences.dietaryRestrictions;
         dataToSave.allergies = preferences.allergies;
         dataToSave.preferredRemedyForms = preferences.preferredRemedyForms;
       }
-      
+
       if (section === "notifications" || section === "all") {
         dataToSave.emailNotifications = preferences.emailNotifications;
         dataToSave.pushNotifications = preferences.pushNotifications;
@@ -385,14 +385,14 @@ export default function Dashboard() {
         dataToSave.newRemedyAlerts = preferences.newRemedyAlerts;
         dataToSave.expertTipsEnabled = preferences.expertTipsEnabled;
       }
-      
+
       if (section === "accessibility" || section === "all") {
         dataToSave.textSize = preferences.textSize;
         dataToSave.highContrast = preferences.highContrast;
         dataToSave.reducedMotion = preferences.reducedMotion;
         dataToSave.screenReaderOptimized = preferences.screenReaderOptimized;
       }
-      
+
       await updatePreferencesMutation.mutateAsync(dataToSave);
     } finally {
       setIsSaving(false);
@@ -465,45 +465,45 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen luxury-gradient-bg relative">
-      <SEOHead 
+      <SEOHead
         title="My Dashboard - Personal Health Journey | PlantRx"
         description="Access your personalized PlantRx dashboard to track saved remedies, health progress, and manage your natural wellness journey."
         canonical="https://plantrxapp.com/dashboard"
         noindex={true}
       />
-      
+
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-yellow-200/20 to-green-200/20 dark:from-yellow-400/10 dark:to-green-400/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-blue-200/20 to-purple-200/20 dark:from-blue-400/10 dark:to-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 relative z-10">
         {/* Banners */}
         <GoldTrialDashboardBanner />
         <ExpiredTrialDiscountBanner />
-        
+
         {/* ==================== PERSONALIZED IDENTITY CARD ==================== */}
         <Card className="luxury-glass luxury-border shadow-2xl backdrop-blur-xl mb-6 sm:mb-8 overflow-hidden" data-testid="card-identity">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-50/30 via-transparent to-emerald-50/30 dark:from-yellow-400/5 dark:via-transparent dark:to-emerald-400/5"></div>
-          
+
           <CardContent className="p-4 sm:p-6 lg:p-8 relative z-10">
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 sm:gap-6">
               {/* Profile Picture */}
               <div className="relative flex-shrink-0">
-                <ProfilePictureUpload 
-                  user={currentUser} 
+                <ProfilePictureUpload
+                  user={currentUser}
                   size="lg"
                   showUploadButton={true}
                 />
               </div>
-              
+
               {/* User Info */}
               <div className="flex-1 text-center lg:text-left">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2" data-testid="text-welcome">
                   Welcome back, {(currentUser as any)?.fullName?.split(' ')[0] || (currentUser as any)?.firstName || user?.username || 'Explorer'}!
                 </h1>
-                
+
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <Badge className={`bg-gradient-to-r ${getSubscriptionColor()} px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2`} data-testid="badge-subscription">
                     {getSubscriptionIcon()}
@@ -514,7 +514,7 @@ export default function Dashboard() {
                     Active
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                   <div className="flex items-center justify-center lg:justify-start gap-1 sm:gap-2">
                     <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
@@ -530,7 +530,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
                 <Link href="/settings">
@@ -539,7 +539,7 @@ export default function Dashboard() {
                     Settings
                   </Button>
                 </Link>
-                <Button 
+                <Button
                   onClick={handleLogout}
                   variant="outline"
                   className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 min-h-[44px] w-full sm:w-auto text-sm sm:text-base"
@@ -569,7 +569,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card className="group relative overflow-hidden luxury-glass luxury-border shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1" data-testid="card-stat-custom">
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="p-4 sm:p-5 lg:p-6 relative">
@@ -584,7 +584,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card className="group relative overflow-hidden luxury-glass luxury-border shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1" data-testid="card-stat-orders">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="p-4 sm:p-5 lg:p-6 relative">
@@ -599,7 +599,7 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card className="group relative overflow-hidden luxury-glass luxury-border shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1" data-testid="card-stat-community">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="p-4 sm:p-5 lg:p-6 relative">
@@ -619,8 +619,8 @@ export default function Dashboard() {
         {/* ==================== MAIN DASHBOARD TABS ==================== */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto gap-1.5 sm:gap-2 bg-transparent p-0">
-            <TabsTrigger 
-              value="overview" 
+            <TabsTrigger
+              value="overview"
               className="luxury-glass luxury-border data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-green-600 data-[state=active]:text-white py-2 sm:py-3 min-h-[44px] text-xs sm:text-sm"
               data-testid="tab-overview"
             >
@@ -628,16 +628,16 @@ export default function Dashboard() {
               <span className="hidden xs:inline">Overview</span>
               <span className="xs:hidden">View</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="profile" 
+            <TabsTrigger
+              value="profile"
               className="luxury-glass luxury-border data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-600 data-[state=active]:text-white py-2 sm:py-3 min-h-[44px] text-xs sm:text-sm"
               data-testid="tab-profile"
             >
               <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
               Profile
             </TabsTrigger>
-            <TabsTrigger 
-              value="notifications" 
+            <TabsTrigger
+              value="notifications"
               className="luxury-glass luxury-border data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-amber-600 data-[state=active]:text-white py-2 sm:py-3 min-h-[44px] text-xs sm:text-sm"
               data-testid="tab-notifications"
             >
@@ -645,8 +645,8 @@ export default function Dashboard() {
               <span className="hidden xs:inline">Notifications</span>
               <span className="xs:hidden">Alerts</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="accessibility" 
+            <TabsTrigger
+              value="accessibility"
               className="luxury-glass luxury-border data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-rose-600 data-[state=active]:text-white py-2 sm:py-3 min-h-[44px] text-xs sm:text-sm"
               data-testid="tab-accessibility"
             >
@@ -788,7 +788,7 @@ export default function Dashboard() {
                       <p className="text-sm text-gray-500 dark:text-gray-500">Try adjusting your health goals or preferences</p>
                     </div>
                   )}
-                  
+
                   {suggestionsData?.suggestions?.length > 0 && (
                     <div className="mt-6 flex justify-center">
                       <Link href="/remedies">
@@ -843,7 +843,7 @@ export default function Dashboard() {
                       data-testid="input-fullname"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="location" className="text-gray-900 dark:text-white flex items-center gap-2">
                       <MapPin className="w-4 h-4" /> Location
@@ -858,7 +858,7 @@ export default function Dashboard() {
                       data-testid="input-location"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="age" className="text-gray-900 dark:text-white flex items-center gap-2">
                       <Cake className="w-4 h-4" /> Age
@@ -874,7 +874,7 @@ export default function Dashboard() {
                       data-testid="input-age"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label className="text-gray-900 dark:text-white flex items-center gap-2">
                       <Mail className="w-4 h-4" /> Email
@@ -953,7 +953,7 @@ export default function Dashboard() {
                       data-testid="switch-email"
                     />
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-4 luxury-glass luxury-border rounded-xl">
                     <div className="flex items-center gap-3">
                       <Bell className="w-5 h-5 text-purple-500" />
@@ -968,7 +968,7 @@ export default function Dashboard() {
                       data-testid="switch-push"
                     />
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-4 luxury-glass luxury-border rounded-xl">
                     <div className="flex items-center gap-3">
                       <Calendar className="w-5 h-5 text-green-500" />
@@ -983,7 +983,7 @@ export default function Dashboard() {
                       data-testid="switch-digest"
                     />
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-4 luxury-glass luxury-border rounded-xl">
                     <div className="flex items-center gap-3">
                       <Leaf className="w-5 h-5 text-emerald-500" />
@@ -998,7 +998,7 @@ export default function Dashboard() {
                       data-testid="switch-remedy-alerts"
                     />
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-4 luxury-glass luxury-border rounded-xl">
                     <div className="flex items-center gap-3">
                       <Award className="w-5 h-5 text-yellow-500" />
@@ -1061,11 +1061,10 @@ export default function Dashboard() {
                       <button
                         key={size.id}
                         onClick={() => setPreferences(prev => ({ ...prev, textSize: size.id }))}
-                        className={`p-3 rounded-xl border-2 transition-all ${
-                          preferences.textSize === size.id
-                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
-                        }`}
+                        className={`p-3 rounded-xl border-2 transition-all ${preferences.textSize === size.id
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
+                          }`}
                         data-testid={`button-textsize-${size.id}`}
                       >
                         <span className={`${size.size} font-medium text-gray-900 dark:text-white`}>{size.label}</span>
@@ -1136,4 +1135,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+})
+
+export default Dashboard;

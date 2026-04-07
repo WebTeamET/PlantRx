@@ -14,6 +14,8 @@ import { processShopifyWebhook, fullShopifySync, getStoreProducts } from "./shop
 import { serverShopifyService } from "./shopify-client";
 import { generateRemedyWithDualAI } from "./ai-remedy-service";
 import { db } from "./db";
+import { remedies as remediesTable } from "../shared/schema";
+import { eq, desc, and, like } from "drizzle-orm";
 import mailerLiteService from "./mailerlite-service";
 import { verifyFirebaseIdToken, initializeFirebaseAdmin } from "./firebase-admin";
 
@@ -35,16 +37,16 @@ if (process.env.GEMINI_API_KEY) {
 }
 
 // Initialize Stripe
-const stripe = process.env.STRIPE_SECRET_KEY 
+const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-10-29.clover",
-    })
+    apiVersion: "2025-10-29.clover",
+  })
   : null;
 
 // Stripe Price IDs for subscriptions
 const STRIPE_PRICES = {
   bronze: 'price_1SRd48QXtzJSV5CZ8KDKjMVn',
-  silver: 'price_1SRgLbQXtzJSV5CZMCtjS5so', 
+  silver: 'price_1SRgLbQXtzJSV5CZMCtjS5so',
   gold: 'price_1SRgQwQXtzJSV5CZE9cmhqvr',
 };
 
@@ -113,7 +115,7 @@ Your response must be a valid JSON object with these exact fields:
 const dualAI = {
   analyzeSymptomsWithDualAI: async (symptoms: string) => {
     const symptomText = Array.isArray(symptoms) ? symptoms.join(", ") : symptoms;
-    
+
     try {
       // Try ChatGPT first for primary analysis
       let primaryAnalysis = null;
@@ -128,7 +130,7 @@ const dualAI = {
             response_format: { type: "json_object" },
             max_completion_tokens: 2000
           });
-          
+
           const content = response.choices[0].message.content;
           if (content) {
             primaryAnalysis = JSON.parse(content);
@@ -137,7 +139,7 @@ const dualAI = {
           console.error("ChatGPT analysis error:", error);
         }
       }
-      
+
       // Use Gemini for secondary analysis if ChatGPT fails or for dual validation
       let secondaryAnalysis = null;
       if (gemini) {
@@ -172,7 +174,7 @@ const dualAI = {
             },
             contents: `${SYMPTOM_ANALYSIS_PROMPT}\n\nUser health question: ${symptomText}\n\nProvide comprehensive health analysis with scientific explanations, root causes, and targeted natural remedy recommendations.`
           });
-          
+
           const content = response.text;
           if (content) {
             secondaryAnalysis = JSON.parse(content);
@@ -181,10 +183,10 @@ const dualAI = {
           console.error("Gemini analysis error:", error);
         }
       }
-      
+
       // Use the best available analysis or combine insights
       const finalAnalysis = primaryAnalysis || secondaryAnalysis;
-      
+
       if (finalAnalysis) {
         // Convert to expected format for the frontend
         return {
@@ -208,35 +210,35 @@ const dualAI = {
           database_remedies: [] // Will be populated by remedy matching
         };
       }
-      
+
       // Fallback if both AI services fail
       throw new Error("AI services unavailable");
-      
+
     } catch (error) {
       console.error("Dual AI analysis error:", error);
-      
+
       // Fallback to intelligent pattern matching if AI fails
       const lowerSymptoms = symptomText.toLowerCase();
       let conditions: string[] = [];
       let recommendations: any[] = [];
       let rootCauses: string[] = [];
       let naturalRemedies: any[] = [];
-      
+
       if (lowerSymptoms.includes('cold') && lowerSymptoms.includes('sweat')) {
         conditions = ['Viral Infection with Fever Response', 'Immune System Activation', 'Early-stage Flu-like Illness'];
         rootCauses = ['Viral pathogen exposure', 'Compromised immune function', 'Inflammatory response'];
         recommendations = [
-          { 
+          {
             suggestion: "Immediate immune support with elderberry and echinacea",
             how_to: "Take elderberry syrup 1 tbsp every 2 hours, echinacea tincture 30 drops 3x daily",
             confidence: 92
           },
-          { 
-            suggestion: "Hydrate aggressively with electrolyte-rich fluids", 
+          {
+            suggestion: "Hydrate aggressively with electrolyte-rich fluids",
             how_to: "Drink 8-10 glasses warm water + coconut water + bone broth throughout day",
             confidence: 95
           },
-          { 
+          {
             suggestion: "Rest in controlled temperature environment",
             how_to: "Layer clothing to adjust as body temp fluctuates, rest in 68-72°F room",
             confidence: 88
@@ -249,7 +251,7 @@ const dualAI = {
             preparation: "Take until fever breaks, boosts immune system naturally"
           },
           {
-            remedy_name: "Echinacea Tincture", 
+            remedy_name: "Echinacea Tincture",
             dosage: "30 drops 3 times daily",
             preparation: "Mix with water or juice, helps fight infection"
           },
@@ -262,17 +264,17 @@ const dualAI = {
       } else if (lowerSymptoms.includes('headache') || lowerSymptoms.includes('head')) {
         conditions = ['Tension headache', 'Dehydration headache'];
         recommendations = [
-          { 
+          {
             suggestion: "Drink water immediately and apply peppermint oil to temples",
             how_to: "2 glasses water now, then 1 every hour. Mix 2 drops peppermint oil with coconut oil, massage temples",
             confidence: 88
           },
-          { 
-            suggestion: "Take magnesium and use ice/heat therapy", 
+          {
+            suggestion: "Take magnesium and use ice/heat therapy",
             how_to: "Magnesium 400mg with food. Ice pack 15 mins on forehead, then warm compress 15 mins on neck",
             confidence: 85
           },
-          { 
+          {
             suggestion: "Rest in dark room with deep breathing",
             how_to: "Lie down, eyes closed. Breathe: 4 counts in, hold 4, out 4. Repeat 10 times",
             confidence: 80
@@ -298,7 +300,7 @@ const dualAI = {
       } else {
         conditions = ['Need more specific symptoms'];
         recommendations = [
-          { 
+          {
             suggestion: "Describe your symptoms in more detail for better help",
             how_to: "Tell me exactly what you feel, where it hurts, and how long you've had it",
             confidence: 90
@@ -306,7 +308,7 @@ const dualAI = {
         ];
         naturalRemedies = [];
       }
-      
+
       return {
         primary_concern: symptomText,
         likely_conditions: conditions,
@@ -344,14 +346,14 @@ const dualAI = {
           ],
           max_completion_tokens: 1000
         });
-        
+
         return {
           primary: response.choices[0].message.content || "Expert analysis completed",
           confidence: 85,
           source: "Expert AI Analysis"
         };
       }
-      
+
       return {
         primary: "Professional health guidance based on your inquiry",
         confidence: 75,
@@ -377,14 +379,14 @@ const dualAI = {
           ],
           max_completion_tokens: 1000
         });
-        
+
         return {
           primary: response.choices[0].message.content || "Symptom analysis completed",
           confidence: 85,
           source: "Smart Analysis"
         };
       }
-      
+
       return {
         primary: "Professional symptom analysis based on your description",
         confidence: 75,
@@ -405,16 +407,16 @@ const getHealthAdvice = async (messages: any[], useGemini = false) => {
   try {
     // Get the latest user message for context
     const userMessage = messages[messages.length - 1]?.content || "";
-    
+
     // PlantRx answers ALL questions about the human body, health, wellness, fitness, nutrition, and wellbeing
     // No restrictions - this is a comprehensive health platform
 
     // Create intelligent health analysis based on symptoms
     return generateIntelligentHealthAdvice(userMessage, messages);
-    
+
   } catch (error: any) {
     console.error("AI Health Consultation Error:", error);
-    
+
     // NEVER fail - always provide intelligent health advice
     return generateIntelligentHealthAdvice(messages[messages.length - 1]?.content || "", messages);
   }
@@ -422,7 +424,7 @@ const getHealthAdvice = async (messages: any[], useGemini = false) => {
 
 function generateIntelligentHealthAdvice(symptoms: string, conversationHistory: any[] = []): string {
   const lowerSymptoms = symptoms.toLowerCase();
-  
+
   // Advanced symptom analysis with multiple conditions
   if (lowerSymptoms.includes('headache') || lowerSymptoms.includes('migraine')) {
     if (lowerSymptoms.includes('tired') || lowerSymptoms.includes('fatigue')) {
@@ -501,7 +503,7 @@ Magnesium deficiency affects 75% of adults and directly contributes to both head
 
 *This comprehensive approach addresses both immediate symptoms and underlying causes for lasting relief.*`;
     }
-    
+
     return `**🔍 SYMPTOM ANALYSIS**
 Headaches can stem from various causes including tension, dehydration, blood sugar imbalances, or underlying inflammation. Your specific pattern helps determine the most effective treatment approach.
 
@@ -567,7 +569,7 @@ Feverfew contains parthenolide, which inhibits inflammatory pathways. Magnesium 
 
 *Track your triggers and response to identify the most effective personalized approach.*`;
   }
-  
+
   if (lowerSymptoms.includes('tired') || lowerSymptoms.includes('fatigue') || lowerSymptoms.includes('energy')) {
     return `**🔍 SYMPTOM ANALYSIS**
 Chronic fatigue often indicates underlying metabolic imbalances, nutrient deficiencies, or disrupted energy production at the cellular level. Your fatigue pattern suggests we need to address multiple systems simultaneously.
@@ -644,7 +646,7 @@ Rhodiola increases ATP production and reduces cortisol dysregulation. B-vitamins
 
 *Energy restoration requires addressing root causes, not just symptoms. Patience and consistency are key to sustainable results.*`;
   }
-  
+
   if (lowerSymptoms.includes('bloat') || lowerSymptoms.includes('gas') || lowerSymptoms.includes('digest') || lowerSymptoms.includes('stomach')) {
     return `**🔍 SYMPTOM ANALYSIS**
 Digestive discomfort often indicates imbalanced gut microbiome, impaired digestive enzyme production, or food sensitivities. The timing and triggers of your symptoms provide important clues for targeted treatment.
@@ -721,7 +723,7 @@ Digestive enzymes break down macronutrients, reducing undigested food that feeds
 
 *Digestive healing requires patience as the gut lining regenerates every 3-5 days, but full restoration takes 2-3 months.*`;
   }
-  
+
   // Default comprehensive health consultation
   return `**🔍 SYMPTOM ANALYSIS**
 Based on your health concerns, I'm analyzing multiple factors that could be contributing to your symptoms. Every person's health picture is unique, requiring a personalized approach to achieve optimal wellness.
@@ -802,10 +804,10 @@ Optimal health requires addressing multiple systems simultaneously. Research sho
 
 // REMOVED RESTRICTIVE HEALTH FILTER - PlantRx now answers ALL body/health/wellness questions
 import { eq, and, or, desc, asc, ilike, like, sql } from "drizzle-orm";
-import { 
-  insertUserSchema, 
-  insertRemedySchema, 
-  insertReviewSchema, 
+import {
+  insertUserSchema,
+  insertRemedySchema,
+  insertReviewSchema,
   insertFeedbackSchema,
   insertBusinessSchema,
   insertBusinessReviewSchema,
@@ -867,20 +869,20 @@ function extractIngredients(text: string): string[] {
     /(?:use|with|contains?)[:\-\s]*([^\n]*)/i,
     /materials?[:\-\s]*([^\n]*)/i
   ];
-  
+
   for (const pattern of ingredientPatterns) {
     const match = text.match(pattern);
     if (match && match[1]) {
       return match[1].split(/[,;]/).map(i => i.trim()).filter(i => i.length > 0);
     }
   }
-  
+
   // Fallback: extract common natural ingredients
   const commonIngredients = ['ginger', 'turmeric', 'honey', 'lemon', 'garlic', 'tea', 'oil', 'salt'];
-  const found = commonIngredients.filter(ingredient => 
+  const found = commonIngredients.filter(ingredient =>
     text.toLowerCase().includes(ingredient)
   );
-  
+
   return found.length > 0 ? found : ['Natural ingredients'];
 }
 
@@ -890,22 +892,22 @@ function extractBenefits(text: string): string[] {
     /helps?[:\-\s]*([^\n]*)/i,
     /(?:good|useful) for[:\-\s]*([^\n]*)/i
   ];
-  
+
   for (const pattern of benefitPatterns) {
     const match = text.match(pattern);
     if (match && match[1]) {
       return match[1].split(/[,;]/).map(b => b.trim()).filter(b => b.length > 0);
     }
   }
-  
+
   return ['Natural health benefits', 'Supports wellness'];
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  
+
   // NOTE: sitemap.xml and robots.txt are already defined in server/index.ts
   // No need for duplicate endpoints here
-  
+
   // Username availability check
   app.get("/api/auth/check-username/:username", async (req, res) => {
     try {
@@ -926,21 +928,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         firstName,
         lastName
       });
-      
+
       // Check if user already exists by email
       const existingUser = await storage.getUserByEmail(userData.email);
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
       }
-      
+
       // Check if username already exists
       const existingUsername = await storage.getUserByUsername(userData.username);
       if (existingUsername) {
         return res.status(400).json({ message: "Username is already taken" });
       }
-      
+
       const user = await storage.createUser(userData);
-      
+
       // Create user profile with privacy settings
       if (user.id) {
         try {
@@ -953,7 +955,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error("Failed to create user profile:", profileError);
         }
       }
-      
+
       res.json({ user: { ...user, password: undefined } });
     } catch (error: any) {
       res.status(400).json({ message: error.message });
@@ -964,13 +966,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register/customer", async (req, res) => {
     try {
       const userData = customerRegistrationSchema.parse(req.body);
-      
+
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(userData.email);
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
       }
-      
+
       const user = await storage.createCustomer(userData);
       res.json({ user: { ...user, password: undefined } });
     } catch (error: any) {
@@ -981,13 +983,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/register/expert", async (req, res) => {
     try {
       const userData = expertRegistrationSchema.parse(req.body);
-      
+
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(userData.email);
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
       }
-      
+
       const user = await storage.createExpert(userData);
       res.json({ user: { ...user, password: undefined } });
     } catch (error: any) {
@@ -998,16 +1000,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/login", async (req, res) => {
     try {
       const { email, password } = req.body;
-      
+
       const user = await storage.getUserByEmail(email);
       if (!user || user.password !== password) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
-      
+
       // Set up session
       req.session.userId = user.id;
       req.session.userEmail = user.email;
-      
+
       res.json({ user: { ...user, password: undefined } });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -1021,11 +1023,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(404).json({ message: "Test user not found" });
       }
-      
+
       // Set up session
       req.session.userId = user.id;
       req.session.userEmail = user.email;
-      
+
       // Save session explicitly
       await new Promise<void>((resolve, reject) => {
         req.session.save((err) => {
@@ -1038,7 +1040,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         });
       });
-      
+
       res.json({ user: { ...user, password: undefined } });
     } catch (error: any) {
       console.error("Test login error:", error);
@@ -1058,7 +1060,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const idToken = authHeader.substring(7); // Remove 'Bearer '
-      
+
       // Verify Firebase ID token server-side
       let decodedToken;
       try {
@@ -1071,7 +1073,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Extract verified user data from token (no PII logging)
       const { uid, email, name, picture } = decodedToken;
       console.log("Firebase sync request for UID:", uid ? uid.substring(0, 8) + '...' : 'unknown');
-      
+
       if (!email || !uid) {
         return res.status(400).json({ message: "Invalid token: missing email or UID" });
       }
@@ -1079,7 +1081,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if user exists in database
       let user = await storage.getUserByEmail(email);
       console.log("Existing user found:", user ? user.id : 'none');
-      
+
       if (!user) {
         // Create new user if doesn't exist
         console.log("Creating new user for UID:", uid.substring(0, 8) + '...');
@@ -1104,7 +1106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       req.session.userId = user.id;
       req.session.userEmail = user.email;
       console.log("Session set with userId:", user.id);
-      
+
       // Save session explicitly to ensure it persists
       await new Promise<void>((resolve, reject) => {
         req.session.save((err) => {
@@ -1117,20 +1119,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         });
       });
-      
+
       // Check if trial should be started (passed from client when user had trial intent)
       const { startTrial } = req.body;
       let trialStarted = false;
-      
+
       if (startTrial) {
         console.log("[TRIAL] Starting trial as part of firebase-sync for user:", user.id);
-        
+
         // Check if user already has a trial or is on a paid subscription
         const [currentUser] = await db
           .select()
           .from(users)
           .where(eq(users.id, user.id));
-        
+
         if (currentUser && !currentUser.goldTrialUsedOnce && !currentUser.goldTrialStartedAt) {
           // Start the trial
           const now = new Date();
@@ -1142,21 +1144,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
               subscriptionStatus: "active",
             })
             .where(eq(users.id, user.id));
-          
+
           trialStarted = true;
           console.log(`[TRIAL] User ${user.id} started 24-hour Gold trial via firebase-sync`);
         } else {
           console.log(`[TRIAL] User ${user.id} cannot start trial - already used or active subscription`);
         }
       }
-      
+
       // Save session explicitly
       req.session.save((err) => {
         if (err) {
           console.error("Session save error:", err);
           return res.status(500).json({ message: "Failed to save session" });
         }
-        res.json({ 
+        res.json({
           user: { ...user, password: undefined },
           trialStarted
         });
@@ -1188,16 +1190,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log("Session data:", req.session);
       console.log("Session userId:", req.session?.userId);
-      
+
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       const user = await storage.getUser(req.session.userId);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       res.json({ ...user, password: undefined });
     } catch (error: any) {
       console.error("Get current user error:", error);
@@ -1212,25 +1214,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       // Fetch user from database to get latest subscription data
       const [currentUser] = await db
         .select()
         .from(users)
         .where(eq(users.id, req.session.userId));
-      
+
       if (!currentUser) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       // Check if trial is active - this determines effective subscription tier
       let effectiveTier = currentUser.subscriptionTier || 'bronze';
       let effectiveStatus = currentUser.subscriptionStatus || 'active';
-      
+
       if (currentUser.goldTrialStartedAt) {
         const trialEndTime = new Date(currentUser.goldTrialStartedAt.getTime() + 24 * 60 * 60 * 1000);
         const isTrialActive = new Date() < trialEndTime;
-        
+
         if (isTrialActive) {
           // Trial is active - user gets Gold access
           effectiveTier = 'gold';
@@ -1246,13 +1248,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
               subscriptionStatus: "active",
             })
             .where(eq(users.id, currentUser.id));
-          
+
           effectiveTier = 'bronze';
           effectiveStatus = 'active';
           console.log(`[USER/ME] User ${currentUser.id} trial expired - reverted to Bronze`);
         }
       }
-      
+
       // Return user with effective subscription data
       res.json({
         ...currentUser,
@@ -1398,7 +1400,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/expert/generate-remedy", async (req, res) => {
     try {
       const { need, preferences } = req.body;
-      
+
       if (!need) {
         return res.status(400).json({ message: "Health need is required" });
       }
@@ -1453,12 +1455,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const generatedRemedy = JSON.parse(content);
-      
+
       // Validate the response has required fields
       if (!generatedRemedy.name || !generatedRemedy.ingredients || !generatedRemedy.instructions) {
         throw new Error("Incomplete remedy generated");
       }
-      
+
       // Ensure professional format
       const professionalRemedy = {
         name: generatedRemedy.name,
@@ -1475,7 +1477,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(professionalRemedy);
     } catch (error: any) {
       console.error("Expert remedy generation error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to generate remedy at this time",
         error: "Please try again or consult our experts directly"
       });
@@ -1486,16 +1488,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/expert/symptom-finder", async (req, res) => {
     try {
       const { symptoms, age, duration } = req.body;
-      
+
       if (!symptoms) {
         return res.status(400).json({ message: "Symptoms are required" });
       }
 
       // Use dual AI system for expert symptom analysis
       const analysisPrompt = `Analyze symptoms: ${symptoms}${age ? ` (Age: ${age})` : ''}${duration ? ` (Duration: ${duration})` : ''}. Provide natural remedy recommendations.`;
-      
+
       const dualResponse = await dualAI.generateDualExpertResponse(
-        analysisPrompt, 
+        analysisPrompt,
         'expert_symptom_analysis'
       );
 
@@ -1507,7 +1509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Expert symptom analysis error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to analyze symptoms at this time",
         error: "Please try again or consult our experts directly"
       });
@@ -1518,17 +1520,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/expert/search-remedies", async (req, res) => {
     try {
       const { query } = req.body;
-      
+
       if (!query) {
         return res.status(400).json({ message: "Search query is required" });
       }
 
       // Search existing remedies
       const searchResults = await storage.searchRemedies(query);
-      
+
       // Enhance results with expert analysis
       const dualResponse = await dualAI.generateDualExpertResponse(
-        `Provide expert analysis for remedies related to: ${query}`, 
+        `Provide expert analysis for remedies related to: ${query}`,
         'expert_remedy_search'
       );
 
@@ -1540,7 +1542,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Expert remedy search error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to search remedies at this time",
         error: "Please try again or browse our remedy database"
       });
@@ -1550,19 +1552,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Smart Symptom Analysis Chat Endpoint
   app.post("/api/expert/chat", async (req, res) => {
     const { messages } = req.body;
-    
+
     if (!messages || !Array.isArray(messages)) {
       return res.status(400).json({ message: "Messages array is required" });
     }
 
     try {
       const latestMessage = messages[messages.length - 1];
-      const conversationHistory = messages.length > 1 ? 
+      const conversationHistory = messages.length > 1 ?
         messages.slice(0, -1).map(m => m.content) : [];
 
       // Use advanced smart symptom analysis with dual AI
       const analysis = await dualAI.generateSmartSymptomAnalysis(
-        latestMessage.content, 
+        latestMessage.content,
         conversationHistory
       );
 
@@ -1574,15 +1576,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Smart symptom analysis error:", error);
-      
+
       // Fallback to regular dual AI expert response
       try {
         const latestMessage = messages[messages.length - 1];
-        const conversationContext = messages.length > 1 ? 
+        const conversationContext = messages.length > 1 ?
           messages.slice(0, -1).map(m => `${m.role}: ${m.content}`).join('\n') : '';
 
         const fallbackResponse = await dualAI.generateDualExpertResponse(
-          latestMessage.content, 
+          latestMessage.content,
           conversationContext
         );
 
@@ -1593,7 +1595,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           analysisType: "general_expert"
         });
       } catch (fallbackError) {
-        res.status(500).json({ 
+        res.status(500).json({
           message: "Unable to analyze symptoms at this time",
           reply: "I'm temporarily unavailable for symptom analysis. Please try again later or browse our remedy database for immediate solutions."
         });
@@ -1642,7 +1644,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const sessionId = parseInt(req.params.sessionId);
-      
+
       // Verify session belongs to user
       const [session] = await db
         .select()
@@ -1773,7 +1775,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const [updatedSession] = await db
         .update(chatSessions)
-        .set({ 
+        .set({
           ...(title && { title }),
           ...(summary && { summary }),
           updatedAt: new Date()
@@ -1907,7 +1909,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/newsletter/subscribe", async (req, res) => {
     try {
       const { email, name, source } = req.body;
-      
+
       if (!email) {
         return res.status(400).json({ message: "Email is required" });
       }
@@ -1924,14 +1926,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         source: source || 'footer'
       });
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: "Successfully subscribed to newsletter!",
-        subscriber: result 
+        subscriber: result
       });
     } catch (error: any) {
       console.error('Newsletter subscription error:', error.message || error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to subscribe to newsletter. Please try again later.",
         error: typeof error === 'string' ? error : (error.message || 'Unknown error')
       });
@@ -1941,19 +1943,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/newsletter/unsubscribe", async (req, res) => {
     try {
       const { email } = req.body;
-      
+
       if (!email) {
         return res.status(400).json({ message: "Email is required" });
       }
 
       await mailerLiteService.unsubscribeFromNewsletter(email);
-      res.json({ 
-        success: true, 
-        message: "Successfully unsubscribed from newsletter" 
+      res.json({
+        success: true,
+        message: "Successfully unsubscribed from newsletter"
       });
     } catch (error: any) {
       console.error('Newsletter unsubscribe error:', error.message || error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to unsubscribe. Please try again later.",
         error: typeof error === 'string' ? error : (error.message || 'Unknown error')
       });
@@ -1964,15 +1966,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { email } = req.params;
       const subscriber = await mailerLiteService.getSubscriber(email);
-      
+
       if (!subscriber) {
         return res.status(404).json({ message: "Subscriber not found" });
       }
-      
+
       res.json(subscriber);
     } catch (error: any) {
       console.error('Get subscriber error:', error.message || error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to get subscriber information",
         error: typeof error === 'string' ? error : (error.message || 'Unknown error')
       });
@@ -1983,13 +1985,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/remedies", async (req, res) => {
     try {
       const { category, search } = req.query;
-      
+
       let remedies;
       if (search) {
-        const { db } = await import('./db');
-        const { remedies: remediesTable } = await import('../shared/schema');
-        const { eq, and, like } = await import('drizzle-orm');
-        
         remedies = await db.select().from(remediesTable).where(
           and(
             eq(remediesTable.isActive, true),
@@ -1997,10 +1995,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           )
         );
       } else if (category) {
-        const { db } = await import('./db');
-        const { remedies: remediesTable } = await import('../shared/schema');
-        const { eq, and, like } = await import('drizzle-orm');
-        
         // Handle special headache/migraine category mapping
         let categoryFilter = category as string;
         if (category === 'headache') {
@@ -2025,19 +2019,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           );
         }
       } else {
-        const { db } = await import('./db');
-        const { remedies: remediesTable } = await import('../shared/schema');
-        const { eq, desc } = await import('drizzle-orm');
-        
         remedies = await db.select()
           .from(remediesTable)
           .where(eq(remediesTable.isActive, true))
           .orderBy(desc(remediesTable.createdAt));
       }
-      
+
       // Ensure proper JSON structure and validate data
       console.log(`Returning ${remedies.length} remedies`);
-      
+
       // Return complete remedy data structure - no cleaning needed, data is already complete
       res.setHeader('Content-Type', 'application/json');
       res.json(remedies);
@@ -2052,17 +2042,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Add performance caching headers
       res.setHeader('Cache-Control', 'public, max-age=300'); // 5 minute cache
       res.setHeader('ETag', 'featured-remedies-v1');
-      
-      const { db } = await import('./db');
-      const { remedies } = await import('../shared/schema');
-      const { eq, desc } = await import('drizzle-orm');
-      
+
       const featuredRemedies = await db.select()
         .from(remedies)
         .where(eq(remedies.isActive, true))
         .orderBy(desc(remedies.averageRating))
         .limit(6);
-      
+
       res.json(featuredRemedies);
     } catch (error: any) {
       console.error("Error fetching featured remedies:", error);
@@ -2087,7 +2073,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Extract health conditions and ingredients from user's custom remedies
       const searchTerms = [];
-      
+
       userCustomRemedies.forEach(remedy => {
         // Extract condition keywords from remedy names
         if (remedy.name) {
@@ -2099,7 +2085,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (name.includes('anxiety') || name.includes('stress')) searchTerms.push('anxiety', 'stress', 'calming');
           if (name.includes('sleep') || name.includes('insomnia')) searchTerms.push('sleep', 'insomnia', 'calming');
         }
-        
+
         // Extract ingredient keywords
         if (Array.isArray(remedy.ingredients)) {
           remedy.ingredients.forEach((ing: string) => {
@@ -2117,10 +2103,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (searchTerms.length > 0) {
         const uniqueTerms = [...new Set(searchTerms)];
         const searchQuery = uniqueTerms.slice(0, 3).join(' ');
-        
+
         try {
           const relatedRemedies = await storage.searchRemedies(searchQuery);
-          
+
           if (relatedRemedies.length >= 3) {
             return res.json(relatedRemedies.slice(0, 6));
           }
@@ -2148,11 +2134,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/remedies/suggestions", async (req, res) => {
     try {
       const { healthGoals, dietaryRestrictions, allergies, preferredRemedyForms } = req.body;
-      
-      const { db } = await import('./db');
-      const { remedies } = await import('../shared/schema');
-      const { eq, desc } = await import('drizzle-orm');
-      
+
       // Map health goals to remedy categories and search terms
       const goalToCategoryMap: Record<string, string[]> = {
         'weight_loss': ['digestive', 'detox', 'metabolism'],
@@ -2166,7 +2148,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'mental_clarity': ['cognitive', 'brain', 'focus'],
         'heart_health': ['cardiovascular', 'heart', 'circulation'],
       };
-      
+
       // Map remedy form preferences to database form values
       const formMap: Record<string, string[]> = {
         'tea': ['tea', 'infusion', 'decoction'],
@@ -2176,7 +2158,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'essential_oil': ['oil', 'essential oil', 'aromatherapy'],
         'powder': ['powder', 'raw'],
       };
-      
+
       // Collect categories to search based on health goals
       const categoriesToSearch: string[] = [];
       if (healthGoals && healthGoals.length > 0) {
@@ -2187,7 +2169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         });
       }
-      
+
       // Collect forms to filter by
       const formsToFilter: string[] = [];
       if (preferredRemedyForms && preferredRemedyForms.length > 0) {
@@ -2198,25 +2180,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         });
       }
-      
+
       // Build the query with dynamic filtering
       let allRemedies = await db.select()
         .from(remedies)
         .where(eq(remedies.isActive, true))
         .orderBy(desc(remedies.averageRating));
-      
+
       // Filter by categories if we have health goals
       if (categoriesToSearch.length > 0) {
         const uniqueCategories = [...new Set(categoriesToSearch)];
-        allRemedies = allRemedies.filter(remedy => 
-          uniqueCategories.some(cat => 
+        allRemedies = allRemedies.filter(remedy =>
+          uniqueCategories.some(cat =>
             remedy.category?.toLowerCase().includes(cat.toLowerCase()) ||
             remedy.description?.toLowerCase().includes(cat.toLowerCase()) ||
             remedy.name?.toLowerCase().includes(cat.toLowerCase())
           )
         );
       }
-      
+
       // Filter by remedy forms if specified
       if (formsToFilter.length > 0) {
         const uniqueForms = [...new Set(formsToFilter)];
@@ -2226,7 +2208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           )
         );
       }
-      
+
       // Filter out remedies with allergens if user has allergies
       if (allergies && allergies.length > 0) {
         const allergenKeywords: Record<string, string[]> = {
@@ -2241,25 +2223,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'ragweed': ['ragweed', 'chamomile', 'echinacea'],
           'latex': ['latex', 'rubber'],
         };
-        
+
         allRemedies = allRemedies.filter(remedy => {
-          const ingredients = Array.isArray(remedy.ingredients) 
-            ? remedy.ingredients.join(' ').toLowerCase() 
+          const ingredients = Array.isArray(remedy.ingredients)
+            ? remedy.ingredients.join(' ').toLowerCase()
             : '';
           const description = remedy.description?.toLowerCase() || '';
           const combined = ingredients + ' ' + description;
-          
+
           return !allergies.some((allergy: string) => {
             const keywords = allergenKeywords[allergy] || [allergy];
             return keywords.some(keyword => combined.includes(keyword.toLowerCase()));
           });
         });
       }
-      
+
       // Return up to 6 suggestions with match reasons
       const suggestions = allRemedies.slice(0, 6).map(remedy => {
         const matchReasons: string[] = [];
-        
+
         // Determine why this remedy matches
         if (healthGoals && healthGoals.length > 0) {
           healthGoals.forEach((goal: string) => {
@@ -2287,7 +2269,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           });
         }
-        
+
         if (preferredRemedyForms && preferredRemedyForms.length > 0) {
           const formLabels: Record<string, string> = {
             'tea': 'Herbal Tea',
@@ -2304,13 +2286,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           });
         }
-        
+
         return {
           ...remedy,
           matchReasons: [...new Set(matchReasons)].slice(0, 3),
         };
       });
-      
+
       res.json({
         suggestions,
         totalMatches: allRemedies.length,
@@ -2328,12 +2310,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/remedies/:slug", async (req, res) => {
     try {
-      const { db } = await import('./db');
-      const { remedies } = await import('../shared/schema');
-      const { eq } = await import('drizzle-orm');
-      
       const [remedy] = await db.select().from(remedies).where(eq(remedies.slug, req.params.slug));
-      
+
       if (!remedy) {
         return res.status(404).json({ message: "Remedy not found" });
       }
@@ -2347,12 +2325,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Alias route for /api/remedy/:slug (singular) - redirects to plural version
   app.get("/api/remedy/:slug", async (req, res) => {
     try {
-      const { db } = await import('./db');
-      const { remedies } = await import('../shared/schema');
-      const { eq } = await import('drizzle-orm');
-      
       const [remedy] = await db.select().from(remedies).where(eq(remedies.slug, req.params.slug));
-      
+
       if (!remedy) {
         return res.status(404).json({ message: "Remedy not found" });
       }
@@ -2414,13 +2388,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { remedyId, name, ingredients, instructions, category, description, benefits, form, safety, scientific_basis } = req.body;
       console.log("Received body:", req.body);
       console.log("Extracted values:", { remedyId, name, ingredients, instructions });
-      
+
       let finalRemedyId = remedyId;
 
       // If no remedyId provided, create a new custom remedy
       if (!remedyId && name && ingredients && instructions) {
         console.log("Creating new custom remedy:", { name, ingredients, instructions });
-        
+
         // Create a new remedy in the database
         const [newRemedy] = await db.insert(remedies).values({
           name: name,
@@ -2434,7 +2408,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           isGenerated: true,
           imageUrl: '/placeholder-remedy.jpg'
         }).returning();
-        
+
         finalRemedyId = newRemedy.id;
         console.log("Created new remedy with ID:", finalRemedyId);
       } else if (!remedyId) {
@@ -2471,7 +2445,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log("Session data:", req.session);
       console.log("Session userId:", req.session?.userId);
-      
+
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
@@ -2492,10 +2466,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: remedies.createdAt,
         savedAt: savedRemedies.createdAt
       })
-      .from(savedRemedies)
-      .innerJoin(remedies, eq(savedRemedies.remedyId, remedies.id))
-      .where(eq(savedRemedies.userId, req.session.userId))
-      .orderBy(desc(savedRemedies.createdAt));
+        .from(savedRemedies)
+        .innerJoin(remedies, eq(savedRemedies.remedyId, remedies.id))
+        .where(eq(savedRemedies.userId, req.session.userId))
+        .orderBy(desc(savedRemedies.createdAt));
 
       res.json(userSavedRemedies);
     } catch (error: any) {
@@ -2511,7 +2485,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const remedyId = parseInt(req.params.remedyId);
-      
+
       await db.delete(savedRemedies)
         .where(and(
           eq(savedRemedies.userId, req.session.userId),
@@ -2573,7 +2547,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const customRemedyId = parseInt(req.params.id);
-      
+
       await db.delete(customRemedies)
         .where(and(
           eq(customRemedies.id, customRemedyId),
@@ -2588,7 +2562,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // ==================== ORDER HISTORY API ====================
-  
+
   // Get all orders for the logged-in user
   app.get("/api/orders", async (req, res) => {
     try {
@@ -2616,7 +2590,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const orderId = parseInt(req.params.id);
-      
+
       if (isNaN(orderId)) {
         return res.status(400).json({ message: "Invalid order ID" });
       }
@@ -2695,17 +2669,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Update status history
-      const statusHistory = Array.isArray(currentOrder.statusHistory) 
+      const statusHistory = Array.isArray(currentOrder.statusHistory)
         ? [...currentOrder.statusHistory, {
-            status,
-            timestamp: new Date().toISOString(),
-            note: note || `Order status updated to ${status}`
-          }]
+          status,
+          timestamp: new Date().toISOString(),
+          note: note || `Order status updated to ${status}`
+        }]
         : [{
-            status,
-            timestamp: new Date().toISOString(),
-            note: note || `Order status updated to ${status}`
-          }];
+          status,
+          timestamp: new Date().toISOString(),
+          note: note || `Order status updated to ${status}`
+        }];
 
       // Update the order
       const updateData: any = {
@@ -2736,25 +2710,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/search-remedies", async (req, res) => {
     try {
       const { query } = req.body;
-      
+
       if (!query) {
         return res.status(400).json({ message: "Query is required" });
       }
 
       // First get all remedies
       const allRemedies = await storage.getRemedies();
-      
+
       // Use OpenAI to analyze the query and match with remedies
       const prompt = `
         Analyze this health concern: "${query}"
         
         Available remedies: ${JSON.stringify(allRemedies.map(r => ({
-          id: r.id,
-          name: r.name,
-          description: r.description,
-          benefits: r.benefits,
-          category: r.category
-        })))}
+        id: r.id,
+        name: r.name,
+        description: r.description,
+        benefits: r.benefits,
+        category: r.category
+      })))}
         
         Return a JSON array of remedy IDs that would be helpful for this concern, ordered by relevance.
         Include a confidence score (0-100) for each. Format: [{"id": number, "confidence": number, "reasoning": "brief explanation"}]
@@ -2763,7 +2737,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!openai) {
         // Fallback to simple text search if AI not available
         const fallbackResults = await storage.searchRemedies(query);
-        return res.json({ 
+        return res.json({
           results: fallbackResults.slice(0, 5).map(r => ({ ...r, confidence: 75 }))
         });
       }
@@ -2798,10 +2772,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ results });
     } catch (error: any) {
       console.error("AI search error:", error);
-      
+
       // Fallback to simple text search
       const fallbackResults = await storage.searchRemedies(req.body.query);
-      res.json({ 
+      res.json({
         results: fallbackResults.slice(0, 5).map(r => ({ ...r, confidence: 75 }))
       });
     }
@@ -2811,7 +2785,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/symptom-finder", async (req, res) => {
     try {
       const { symptoms, age, duration } = req.body;
-      
+
       if (!symptoms) {
         return res.status(400).json({ message: "Symptoms are required" });
       }
@@ -2821,7 +2795,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Use dual AI system for enhanced symptom analysis
       const analysis = await dualAI.analyzeSymptomsWithDualAI(symptomList);
-      
+
       // Enhance analysis with matching remedies from database
       try {
         const matchingRemedies = await storage.searchRemedies(symptoms);
@@ -2834,14 +2808,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             reason: `Natural remedy from PlantRx database that may help with your symptoms`,
             database_match: true
           }));
-          
+
           (analysis as any).database_remedies = dbRemedies;
           (analysis as any).remedy_count = matchingRemedies.length;
         }
       } catch (error) {
         console.log("Could not fetch matching remedies from database:", error);
       }
-      
+
       // Save search history if storage method exists
       try {
         await storage.saveSearchHistory(null, symptoms, analysis, "symptom");
@@ -2860,7 +2834,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(enhancedAnalysis);
     } catch (error: any) {
       console.error("Symptom analysis error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to analyze symptoms at this time",
         analysis: [],
         suggestions: [],
@@ -2873,7 +2847,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/health-chat", async (req, res) => {
     try {
       const { messages, useGemini = false } = req.body;
-      
+
       if (!messages || !Array.isArray(messages)) {
         return res.status(400).json({ message: "Messages are required" });
       }
@@ -2890,13 +2864,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const latestMessage = messages[messages.length - 1];
         const relevantRemedies = await storage.searchRemedies(latestMessage.content);
         if (relevantRemedies && relevantRemedies.length > 0) {
-          const remedyList = relevantRemedies.slice(0, 3).map(r => 
+          const remedyList = relevantRemedies.slice(0, 3).map(r =>
             `• ${r.name}: ${r.benefits ? (r.benefits as string[])[0] : 'Natural remedy for your symptoms'}`
           ).join('\n');
-          
+
           const enhancedReply = reply + `\n\n**🌿 FROM PLANTRX DATABASE - MATCHING REMEDIES:**\n${remedyList}\n\nView these remedies in our database for detailed preparation instructions.`;
-          
-          res.json({ 
+
+          res.json({
             reply: enhancedReply,
             source: useGemini ? 'gemini' : 'openai',
             hasRemedyMatches: true
@@ -2907,14 +2881,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("Could not fetch matching remedies from database");
       }
 
-      res.json({ 
+      res.json({
         reply,
         source: useGemini ? 'gemini' : 'openai',
         hasRemedyMatches: false
       });
     } catch (error: any) {
       console.error("PlantRx AI chat error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to process chat at this time",
         reply: "I'm temporarily unavailable. Please try again later or consult our remedy database for natural health solutions."
       });
@@ -2925,7 +2899,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/website-assistant", async (req, res) => {
     try {
       const { question, context } = req.body;
-      
+
       if (!question) {
         return res.status(400).json({ message: "Question is required" });
       }
@@ -2976,9 +2950,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ reply });
     } catch (error: any) {
       console.error("Website assistant error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to get AI response",
-        error: error.message 
+        error: error.message
       });
     }
   });
@@ -2987,7 +2961,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/generate-custom-remedy", async (req, res) => {
     try {
       const { symptoms, preferences, restrictions, severity } = req.body;
-      
+
       if (!symptoms || !Array.isArray(symptoms) || symptoms.length === 0) {
         return res.status(400).json({ message: "Symptoms array is required" });
       }
@@ -3001,7 +2975,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const generatedRemedy = await dualAI.generateDualCustomRemedy(remedyRequest);
-      
+
       // Try to save to database if user is authenticated
       let savedRemedy = null;
       try {
@@ -3025,7 +2999,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Dual expert remedy generation error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to generate custom remedy at this time",
         error: "Please try again or contact our experts for personalized remedy creation"
       });
@@ -3036,7 +3010,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/generate-remedy", async (req, res) => {
     try {
       const { need, preferences } = req.body;
-      
+
       if (!need) {
         return res.status(400).json({ message: "Health need is required" });
       }
@@ -3096,12 +3070,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const generatedRemedy = JSON.parse(content);
-      
+
       // Validate the response has required fields
       if (!generatedRemedy.name || !generatedRemedy.ingredients || !generatedRemedy.instructions) {
         throw new Error("Incomplete remedy generated");
       }
-      
+
       // Save search history
       try {
         await storage.saveSearchHistory(null, need, generatedRemedy, "generate");
@@ -3113,7 +3087,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(generatedRemedy);
     } catch (error: any) {
       console.error("Remedy generation error:", error);
-      
+
       // Provide more specific error messages
       let errorMessage = "Unable to generate remedy at this time";
       if (error.message?.includes("API key")) {
@@ -3123,8 +3097,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (error.message?.includes("JSON")) {
         errorMessage = "Error processing remedy. Please try rephrasing your request.";
       }
-      
-      res.status(500).json({ 
+
+      res.status(500).json({
         message: errorMessage,
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       });
@@ -3135,7 +3109,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/chat", async (req, res) => {
     try {
       const { message, context } = req.body;
-      
+
       if (!message) {
         return res.status(400).json({ message: "Message is required" });
       }
@@ -3162,7 +3136,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ reply });
     } catch (error: any) {
       console.error("Chat error:", error);
-      res.json({ 
+      res.json({
         reply: "I'm sorry, I'm having trouble responding right now. Please try again or browse our remedies for natural health solutions."
       });
     }
@@ -3173,14 +3147,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const remedyId = parseInt(req.params.remedyId);
       console.log(`🔍 Fetching reviews for remedy ID: ${remedyId}, type: ${typeof remedyId}`);
-      
+
       const reviews = await storage.getReviewsByRemedyId(remedyId);
       console.log(`📊 Retrieved ${reviews.length} reviews from storage`);
-      
+
       // Filter to only show reviews with rating 3 and above
       const filteredReviews = reviews.filter(review => review.rating >= 3);
       console.log(`✅ Filtered to ${filteredReviews.length} reviews (3+ stars)`);
-      
+
       // Add username to each review
       const reviewsWithUsernames = await Promise.all(
         filteredReviews.map(async (review) => {
@@ -3191,7 +3165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           };
         })
       );
-      
+
       console.log(`👥 Added usernames, returning ${reviewsWithUsernames.length} reviews`);
       res.json(reviewsWithUsernames);
     } catch (error: any) {
@@ -3227,7 +3201,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: req.session?.userId || null,
       });
       const feedback = await storage.createFeedback(feedbackData);
-      
+
       // Send feedback notification email to info@plantrxapp.com
       try {
         const { sendFeedbackNotification } = await import('./mailerlite-service.js');
@@ -3243,7 +3217,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Failed to send feedback notification email:', emailError.message);
         // Don't fail the entire request if email fails
       }
-      
+
       res.json(feedback);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
@@ -3256,13 +3230,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       // Check if user is admin
       const user = await storage.getUserById(req.session.userId);
       if (!user || user.role !== 'admin') {
         return res.status(403).json({ message: "Admin access required" });
       }
-      
+
       const feedback = await storage.getFeedback();
       res.json(feedback);
     } catch (error: any) {
@@ -3275,13 +3249,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       // Check if user is admin
       const user = await storage.getUserById(req.session.userId);
       if (!user || user.role !== 'admin') {
         return res.status(403).json({ message: "Admin access required" });
       }
-      
+
       const feedback = await storage.getFeedbackById(parseInt(req.params.id));
       if (!feedback) {
         return res.status(404).json({ message: "Feedback not found" });
@@ -3297,19 +3271,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       // Check if user is admin
       const user = await storage.getUserById(req.session.userId);
       if (!user || user.role !== 'admin') {
         return res.status(403).json({ message: "Admin access required" });
       }
-      
+
       // Validate status using Zod schema
       const validStatuses = ['pending', 'reviewed', 'resolved', 'dismissed'];
       if (!validStatuses.includes(req.body.status)) {
         return res.status(400).json({ message: "Invalid status value" });
       }
-      
+
       const { status } = req.body;
       const feedback = await storage.updateFeedbackStatus(parseInt(req.params.id), status);
       res.json(feedback);
@@ -3323,13 +3297,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!req.session?.userId) {
         return res.status(401).json({ message: "Authentication required" });
       }
-      
+
       // Check if user is admin
       const user = await storage.getUserById(req.session.userId);
       if (!user || user.role !== 'admin') {
         return res.status(403).json({ message: "Admin access required" });
       }
-      
+
       await storage.markFeedbackAsRead(parseInt(req.params.id));
       res.json({ message: "Feedback marked as read" });
     } catch (error: any) {
@@ -3397,7 +3371,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         storage.getSearchHistory(userId),
         storage.getAISuggestions(userId)
       ]);
-      
+
       res.json({
         savedRemedies,
         searchHistory,
@@ -3413,7 +3387,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     app.post("/api/create-payment-intent", async (req, res) => {
       try {
         const { amount, items } = req.body;
-        
+
         const paymentIntent = await stripe.paymentIntents.create({
           amount: Math.round(amount * 100), // Convert to cents
           currency: "usd",
@@ -3421,7 +3395,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             items: JSON.stringify(items)
           }
         });
-        
+
         res.json({ clientSecret: paymentIntent.client_secret });
       } catch (error: any) {
         res.status(500).json({ message: "Error creating payment intent: " + error.message });
@@ -3449,7 +3423,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 
   // ========== SHOPIFY INTEGRATION & STORE SYNC ==========
-  
+
   // Store products API (live from database)
   app.get("/api/store/products", async (req, res) => {
     try {
@@ -3465,16 +3439,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log('🔄 Manual Shopify sync triggered...');
       const syncedCount = await fullShopifySync();
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: `Successfully synced ${syncedCount} products from Shopify`,
-        syncedCount 
+        syncedCount
       });
     } catch (error: any) {
       console.error('❌ Manual sync failed:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: error.message 
+      res.status(500).json({
+        success: false,
+        message: error.message
       });
     }
   });
@@ -3517,13 +3491,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!remedy) {
         return res.status(404).json({ message: "Remedy not found" });
       }
-      
+
       const ingredients = remedy.ingredients as string[];
-      
+
       // Import dynamic mapping function
       const { findProductLinksForIngredientsLive } = await import("./dynamic-ingredient-mapping");
       const productLinks = await findProductLinksForIngredientsLive(ingredients);
-      
+
       res.json(productLinks);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -3536,13 +3510,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!remedy) {
         return res.status(404).json({ message: "Remedy not found" });
       }
-      
+
       const ingredients = remedy.ingredients as string[];
-      
+
       // Import dynamic mapping function  
       const { getUnlinkedIngredientsLive } = await import("./dynamic-ingredient-mapping");
       const unlinkedIngredients = await getUnlinkedIngredientsLive(ingredients);
-      
+
       res.json(unlinkedIngredients);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -3554,7 +3528,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const remedies = await storage.getRemedies();
       const currentDate = new Date().toISOString().split('T')[0];
-      
+
       let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -3667,11 +3641,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Add category-specific URLs for better SEO coverage
       const categories = [
-        'digestive', 'anti-inflammatory', 'skin-care', 'sleep', 'pain-relief', 
-        'wound-care', 'immune-support', 'stress-relief', 'antioxidant', 
+        'digestive', 'anti-inflammatory', 'skin-care', 'sleep', 'pain-relief',
+        'wound-care', 'immune-support', 'stress-relief', 'antioxidant',
         'antimicrobial', 'brain-health', 'throat-health', 'kidney-health', 'liver-health'
       ];
-      
+
       for (const category of categories) {
         sitemap += `
   <url>
@@ -3802,7 +3776,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Block any hair-care related remedy URLs that don't exist
   app.get("/remedies/*hair-care*", (req, res) => {
-    res.status(410).json({ 
+    res.status(410).json({
       error: "Content permanently removed",
       message: "This content has been permanently removed and is no longer available."
     });
@@ -3887,12 +3861,12 @@ Crawl-delay: 1`;
   });
 
   // Workout System API Routes
-  
+
   // Get workouts for a specific muscle group
   app.get("/api/workouts", async (req, res) => {
     try {
       const { muscle } = req.query;
-      
+
       if (muscle) {
         // Filter by muscle group if specified
         const workouts = await storage.getWorkoutsByMuscle(muscle as string);
@@ -3924,12 +3898,12 @@ Crawl-delay: 1`;
     try {
       const sessionData = req.body;
       sessionData.userId = req.session?.userId || 1; // Default user for demo
-      
+
       // Convert Date objects to proper timestamp format
       if (sessionData.startedAt) {
         sessionData.startedAt = new Date(sessionData.startedAt);
       }
-      
+
       const session = await storage.createWorkoutSession(sessionData);
       res.json(session);
     } catch (error) {
@@ -3943,9 +3917,9 @@ Crawl-delay: 1`;
     try {
       const sessionId = parseInt(req.params.id);
       const updateData = req.body;
-      
+
       const session = await storage.completeWorkoutSession(sessionId, updateData);
-      
+
       // Update user progress
       if (session && updateData.completedSets > 0) {
         await storage.updateWorkoutProgress(session.userId, session.workout?.primaryMuscle, {
@@ -3955,7 +3929,7 @@ Crawl-delay: 1`;
           lastWorkout: new Date(),
         });
       }
-      
+
       res.json(session);
     } catch (error) {
       console.error("Error completing workout session:", error);
@@ -3992,7 +3966,7 @@ Crawl-delay: 1`;
     try {
       const userId = req.session?.userId || 1;
       const progress = await storage.getUserWorkoutProgress(userId);
-      
+
       // AI-powered recommendations based on user progress
       const recommendations = await storage.getWorkoutRecommendations(userId, progress);
       res.json(recommendations);
@@ -4016,7 +3990,7 @@ Crawl-delay: 1`;
   app.post("/api/health-plans/generate", async (req, res) => {
     try {
       const { planType, questionsAnswered, userId } = req.body;
-      
+
       if (!planType || !questionsAnswered) {
         return res.status(400).json({ message: "Plan type and questions are required" });
       }
@@ -4096,9 +4070,9 @@ Crawl-delay: 1`;
         model: "gpt-4o",
         messages: [
           { role: "system", content: systemPrompt },
-          { 
-            role: "user", 
-            content: `Create a personalized ${planType} plan based on these responses:\n\n${userAnswersText}` 
+          {
+            role: "user",
+            content: `Create a personalized ${planType} plan based on these responses:\n\n${userAnswersText}`
           }
         ],
         max_tokens: 4000,
@@ -4127,7 +4101,7 @@ Crawl-delay: 1`;
           expectedResults: ["Improved health outcomes", "Sustainable habits", "Long-term wellness"]
         };
       }
-      
+
       // Save to database if userId provided
       let savedPlan = null;
       if (userId) {
@@ -4142,20 +4116,20 @@ Crawl-delay: 1`;
         savedPlan = await storage.createHealthPlan(planData);
       }
 
-      res.json({ 
+      res.json({
         plan: generatedContent,
         savedPlan
       });
     } catch (error: any) {
       console.error("Health plan generation error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Unable to generate health plan at this time"
       });
     }
   });
 
   // Blog System API Routes
-  
+
   // Get all published blog posts
   app.get("/api/blog/posts", async (req, res) => {
     try {
@@ -4163,7 +4137,7 @@ Crawl-delay: 1`;
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
-      
+
       const posts = await blogStorage.getBlogPosts();
       // Inject featuredImage from mapping if missing
       const postsWithImages = posts.map((post: any) => ({
@@ -4217,7 +4191,7 @@ Crawl-delay: 1`;
     try {
       const { category } = req.params;
       res.setHeader('Cache-Control', 'public, max-age=600');
-      
+
       const posts = await blogStorage.getBlogPostsByCategory(category);
       const postsWithImages = posts.map((post: any) => ({
         ...post,
@@ -4235,17 +4209,17 @@ Crawl-delay: 1`;
     try {
       const { slug } = req.params;
       const post = await blogStorage.getBlogPost(slug);
-      
+
       if (!post) {
         return res.status(404).json({ message: "Blog post not found" });
       }
-      
+
       // Inject featuredImage if missing
       const postWithImage = {
         ...post,
         featuredImage: post.featuredImage || getArticleImage(post.slug, post.category)
       };
-      
+
       res.json(postWithImage);
     } catch (error) {
       console.error("Error fetching blog post:", error);
@@ -4301,7 +4275,7 @@ Crawl-delay: 1`;
   app.post('/api/community/seed', async (req, res) => {
     try {
       console.log('🌱 Creating diverse global community with 123 realistic posts...');
-      
+
       // Create diverse users from different countries with varied interests
       const globalUsers = [
         { username: "sarah_wellness_UK", email: "sarah.uk@demo.com", location: "London, UK" },
@@ -4344,55 +4318,55 @@ Crawl-delay: 1`;
         { type: "question", content: "Can someone explain the difference between different types of magnesium? So many options at the store!", category: "supplements" },
         { type: "question", content: "Is it safe to take adaptogenic herbs while pregnant? My naturopath suggested some but I want other opinions.", category: "pregnancy" },
         { type: "question", content: "Does anyone know if elderberry really prevents colds or is it just marketing hype?", category: "immune-system" },
-        
+
         // Personal experiences/success stories
         { type: "story", content: "After years of insomnia, I finally found what works: magnesium glycinate + chamomile tea + lavender pillow spray. Sleeping 8 hours straight now!", category: "sleep" },
         { type: "story", content: "My grandmother's turmeric paste recipe cleared up my eczema in 2 weeks. Traditional remedies really work sometimes!", category: "skin-care" },
         { type: "story", content: "Started drinking green tea instead of coffee 3 months ago. More sustained energy, no afternoon crashes, and I lost 5 pounds without trying.", category: "energy" },
         { type: "story", content: "Ginger shots every morning have completely eliminated my morning nausea during pregnancy. Natural is definitely better!", category: "pregnancy" },
         { type: "story", content: "Fire cider (apple cider vinegar + horseradish + ginger + honey) knocked out my cold in 2 days. Making a big batch for winter!", category: "immune-system" },
-        
+
         // Discussions/advice
         { type: "discussion", content: "Why is everyone so obsessed with detox teas? Your liver and kidneys already detox naturally. Marketing or real benefits?", category: "detox" },
         { type: "discussion", content: "Traditional Chinese medicine vs Ayurveda - has anyone tried both approaches? Which worked better for you?", category: "traditional-medicine" },
         { type: "advice", content: "Pro tip: Add black pepper to turmeric for better absorption. The piperine increases bioavailability by 2000%!", category: "inflammation" },
         { type: "advice", content: "If you're taking probiotics, eat them with a small amount of fat for better survival through stomach acid.", category: "gut-health" },
         { type: "discussion", content: "Intermittent fasting helped my insulin resistance, but my friend says it worsened her hormones. Why such different results?", category: "hormones" },
-        
+
         // Warning/safety posts
         { type: "warning", content: "PSA: St. John's Wort can interfere with birth control pills and many medications. Always check with your doctor first!", category: "safety" },
         { type: "warning", content: "Be careful with essential oils around pets! Tea tree oil is toxic to cats and dogs. Always research first.", category: "safety" },
-        
+
         // Cultural/regional posts
         { type: "cultural", content: "In Scandinavia, we use lingonberries for UTI prevention. Works just as well as cranberries but easier to find here!", category: "urinary-health" },
         { type: "cultural", content: "My Indian mother-in-law taught me to use fenugreek seeds for milk supply while breastfeeding. Game changer!", category: "breastfeeding" },
         { type: "cultural", content: "Growing up in Morocco, we always used argan oil for everything - hair, skin, even cooking. Now it's trendy worldwide!", category: "beauty" },
         { type: "cultural", content: "In traditional Chinese medicine, we don't drink cold water with meals. Room temperature aids digestion better.", category: "digestion" },
-        
+
         // Lifestyle posts
         { type: "lifestyle", content: "Started a medicinal herb garden this spring. Planted echinacea, calendula, and chamomile. So excited to make my own tinctures!", category: "gardening" },
         { type: "lifestyle", content: "Switched to sea salt instead of table salt. The mineral content makes such a difference in how I feel throughout the day.", category: "nutrition" },
         { type: "lifestyle", content: "Cold showers every morning for 30 days now. Increased alertness and energy, plus my skin looks better!", category: "biohacking" },
-        
+
         // Recipe/preparation posts
         { type: "recipe", content: "Golden milk recipe: 1 tsp turmeric, pinch black pepper, ginger, cinnamon, coconut milk, honey. Perfect before bed!", category: "beverages" },
         { type: "recipe", content: "Homemade bone broth in the slow cooker: grass-fed bones + ACV + herbs for 24 hours. Liquid gold for gut health!", category: "nutrition" },
-        
+
         // Frustration/seeking help
         { type: "help", content: "Struggling with chronic fatigue for 2 years. Doctors say everything is normal. Has anyone been through this? What helped?", category: "chronic-illness" },
         { type: "help", content: "Teenage daughter has terrible acne and doesn't want harsh chemicals. Natural options that actually work for teens?", category: "teenage-health" },
-        
+
         // Seasonal posts
         { type: "seasonal", content: "Winter is coming and I always get SAD. Starting light therapy now. Any other natural mood boosters you swear by?", category: "mental-health" },
         { type: "seasonal", content: "Harvesting rosehips from my garden for vitamin C through winter. Nature's pharmacy right outside my door!", category: "foraging" },
-        
+
         // Beginner questions
         { type: "beginner", content: "New to herbal medicine. What are the safest, most effective herbs for a complete beginner to start with?", category: "herbs" },
         { type: "beginner", content: "Want to eat more anti-inflammatory foods but overwhelmed by information. Simple starter tips?", category: "anti-inflammatory" },
-        
+
         // Product recommendations
         { type: "recommendation", content: "Finally found a probiotic that works! 50 billion CFUs, multiple strains, survived my antibiotic treatment.", category: "gut-health" },
-        
+
         // Skeptical/questioning posts
         { type: "skeptical", content: "Am I the only one skeptical about all these superfood trends? Seems like every week there's a new 'miracle' berry or seed.", category: "nutrition" },
         { type: "skeptical", content: "Essential oils for everything seems excessive. Which uses actually have scientific backing vs just nice smells?", category: "aromatherapy" }
@@ -4429,7 +4403,7 @@ Crawl-delay: 1`;
       for (let i = 0; i < 123; i++) {
         const randomUser = createdUsers[Math.floor(Math.random() * createdUsers.length)];
         const randomPost = diverseHealthPosts[Math.floor(Math.random() * diverseHealthPosts.length)];
-        
+
         // Vary posting dates over last 45 days for more realistic timeline
         const daysAgo = Math.floor(Math.random() * 45);
         const hoursAgo = Math.floor(Math.random() * 24);
@@ -4460,7 +4434,7 @@ Crawl-delay: 1`;
           await db.insert(communityPosts).values({
             authorId: randomUser.id,
             content: randomPost.content,
-            postType: randomPost.type || "general", 
+            postType: randomPost.type || "general",
             category: randomPost.category,
             likesCount: likesCount,
             commentsCount: commentsCount,
@@ -4475,8 +4449,8 @@ Crawl-delay: 1`;
       }
 
       console.log(`✅ Successfully created ${postCount} diverse health community posts from global users`);
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: `Community seeded with ${postCount} diverse posts from users worldwide covering questions, experiences, discussions, and cultural perspectives`,
         stats: { posts: postCount, users: createdUsers.length }
       });
@@ -4521,14 +4495,14 @@ Crawl-delay: 1`;
         db.select({ count: sql<number>`count(*)` }).from(healthLogs).where(and(eq(healthLogs.userId, userId), eq(healthLogs.type, 'remedy_taken'))),
         db.select({ count: sql<number>`count(*)` }).from(healthLogs).where(eq(healthLogs.userId, userId)),
         db.select({ count: sql<number>`count(*)` }).from(healthGoals).where(and(eq(healthGoals.userId, userId), eq(healthGoals.status, 'completed'))),
-        db.select({ 
-          streak: sql<number>`COALESCE(MAX((streaks->>'current')::int), 0)` 
+        db.select({
+          streak: sql<number>`COALESCE(MAX((streaks->>'current')::int), 0)`
         }).from(healthMetrics).where(eq(healthMetrics.userId, userId)),
         db.select({ count: sql<number>`count(DISTINCT ${savedRemedies.remedyId})` }).from(savedRemedies).where(eq(savedRemedies.userId, userId)),
         db.select({ count: sql<number>`count(*)` }).from(chatSessions).where(eq(chatSessions.userId, userId)),
         db.select({ count: sql<number>`count(*)` }).from(reviews).where(eq(reviews.userId, userId)),
-        db.select({ 
-          days: sql<number>`count(DISTINCT date(created_at))` 
+        db.select({
+          days: sql<number>`count(DISTINCT date(created_at))`
         }).from(healthLogs).where(eq(healthLogs.userId, userId))
       ]);
 
@@ -4612,7 +4586,7 @@ Crawl-delay: 1`;
       const activitiesWithDescriptions = await Promise.all(
         recentActivities.map(async (activity) => {
           let description = "Unknown activity";
-          
+
           try {
             switch (activity.activityType) {
               case 'remedy_view':
@@ -4743,13 +4717,13 @@ Crawl-delay: 1`;
       const language = req.params.language;
       const { translations } = await import("@shared/schema");
       const translationResults = await db.select().from(translations).where(eq(translations.languageCode, language));
-      
+
       // Convert to key-value pairs for easier frontend consumption
       const translationMap = translationResults.reduce((acc, t) => {
         acc[t.key] = t.value;
         return acc;
       }, {} as Record<string, string>);
-      
+
       res.json(translationMap);
     } catch (error: any) {
       console.error("Get translations error:", error);
@@ -4792,10 +4766,10 @@ Crawl-delay: 1`;
       });
     } catch (error: any) {
       console.error("Comprehensive translation seeding error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         success: false,
-        message: "Failed to seed comprehensive translations", 
-        error: error.message 
+        message: "Failed to seed comprehensive translations",
+        error: error.message
       });
     }
   });
@@ -4812,10 +4786,10 @@ Crawl-delay: 1`;
       });
     } catch (error: any) {
       console.error("Content translation seeding error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         success: false,
-        message: "Failed to seed content translations", 
-        error: error.message 
+        message: "Failed to seed content translations",
+        error: error.message
       });
     }
   });
@@ -4832,10 +4806,10 @@ Crawl-delay: 1`;
       });
     } catch (error: any) {
       console.error("Remedy translation seeding error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         success: false,
-        message: "Failed to seed remedy translations", 
-        error: error.message 
+        message: "Failed to seed remedy translations",
+        error: error.message
       });
     }
   });
@@ -4852,10 +4826,10 @@ Crawl-delay: 1`;
       });
     } catch (error: any) {
       console.error("Comprehensive translation seeding error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         success: false,
-        message: "Failed to seed comprehensive translations", 
-        error: error.message 
+        message: "Failed to seed comprehensive translations",
+        error: error.message
       });
     }
   });
@@ -4899,8 +4873,8 @@ Crawl-delay: 1`;
     try {
       const { updateCurrencyRates } = await import("./currency-service");
       const updatedCount = await updateCurrencyRates();
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         updatedCount,
         message: `Updated ${updatedCount} currency rates`,
         lastUpdated: new Date().toISOString()
@@ -4919,16 +4893,16 @@ Crawl-delay: 1`;
   async function canViewUserContent(viewerId: number | null, targetUserId: number): Promise<boolean> {
     // Always allow viewing your own content
     if (viewerId === targetUserId) return true;
-    
+
     // Check if target user has private profile
     const [targetProfile] = await db
       .select()
       .from(userProfiles)
       .where(eq(userProfiles.userId, targetUserId));
-    
+
     // If user doesn't have a profile entry or isPrivate is false, they are public
     if (!targetProfile?.isPrivate) return true;
-    
+
     // For private profiles (completely invisible mode), no one can see the content
     // This makes users completely invisible and unsearchable in the community
     return false;
@@ -4939,7 +4913,7 @@ Crawl-delay: 1`;
     try {
       const { type, category, limit = "20", offset = "0", following } = req.query;
       const viewerId = req.session?.userId || null;
-      
+
       // If following=true, return empty for now (no auth context yet)
       if (following === 'true') {
         res.json([]);
@@ -5097,7 +5071,7 @@ Crawl-delay: 1`;
         .set({ likesCount: parseInt(likeCount[0].count.toString()) })
         .where(eq(communityPosts.id, parseInt(postId)));
 
-      res.json({ 
+      res.json({
         liked: !existingLike,
         likesCount: parseInt(likeCount[0].count.toString())
       });
@@ -5195,20 +5169,20 @@ Crawl-delay: 1`;
 
       const postId = parseInt(req.params.postId);
       const userId = req.session.userId;
-      
+
       // Check if post exists
       const [post] = await db.select().from(communityPosts).where(eq(communityPosts.id, postId));
       if (!post) {
         return res.status(404).json({ message: "Post not found" });
       }
-      
+
       // Delete related records first to avoid foreign key constraints
       await db.delete(postLikes).where(eq(postLikes.postId, postId));
       await db.delete(postComments).where(eq(postComments.postId, postId));
-      
+
       // Now delete the post
       await db.delete(communityPosts).where(eq(communityPosts.id, postId));
-      
+
       res.json({ success: true, message: "Post deleted successfully" });
     } catch (error: any) {
       console.error("Delete post error:", error);
@@ -5225,7 +5199,7 @@ Crawl-delay: 1`;
 
       const postId = parseInt(req.params.postId);
       const userId = req.session.userId;
-      
+
       // For now, just return success - implement actual save logic later
       res.json({ success: true, message: "Post saved successfully" });
     } catch (error: any) {
@@ -5244,7 +5218,7 @@ Crawl-delay: 1`;
       const postId = parseInt(req.params.postId);
       const userId = req.session.userId;
       const { reason } = req.body;
-      
+
       // For now, just return success - implement actual report logic later
       res.json({ success: true, message: "Post reported successfully" });
     } catch (error: any) {
@@ -5258,13 +5232,13 @@ Crawl-delay: 1`;
     try {
       const { q, limit = "10" } = req.query;
       const viewerId = req.session?.userId || null;
-      
+
       if (!q || typeof q !== 'string') {
         return res.status(400).json({ error: "Search query is required" });
       }
 
       const searchTerm = `%${q.toLowerCase()}%`;
-      
+
       // Get users with their privacy settings
       const foundUsers = await db
         .select({
@@ -5396,7 +5370,7 @@ Crawl-delay: 1`;
       } else {
         // Determine follow status based on privacy settings
         let status = 'accepted'; // Default for public accounts
-        
+
         if (targetProfile?.isPrivate && !targetProfile?.allowFollowRequests) {
           return res.status(403).json({ error: "This private account doesn't accept follow requests" });
         } else if (targetProfile?.isPrivate) {
@@ -5410,8 +5384,8 @@ Crawl-delay: 1`;
           status: status,
         });
 
-        res.json({ 
-          following: true, 
+        res.json({
+          following: true,
           status: status,
           message: status === 'pending' ? 'Follow request sent' : 'Following'
         });
@@ -5422,65 +5396,65 @@ Crawl-delay: 1`;
     }
   });
 
-// Get user's posts with privacy controls
-app.get("/api/community/users/:userId/posts", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { limit = "20", offset = "0" } = req.query;
-    const viewerId = req.session?.userId || null;
+  // Get user's posts with privacy controls
+  app.get("/api/community/users/:userId/posts", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { limit = "20", offset = "0" } = req.query;
+      const viewerId = req.session?.userId || null;
 
-    // Check if viewer can access this user's posts
-    const canView = await canViewUserContent(viewerId, parseInt(userId));
-    if (!canView) {
-      return res.status(403).json({ error: "Private account - follow to see posts" });
+      // Check if viewer can access this user's posts
+      const canView = await canViewUserContent(viewerId, parseInt(userId));
+      if (!canView) {
+        return res.status(403).json({ error: "Private account - follow to see posts" });
+      }
+
+      const userPosts = await db
+        .select({
+          id: communityPosts.id,
+          title: communityPosts.title,
+          content: communityPosts.content,
+          postType: communityPosts.postType,
+          category: communityPosts.category,
+          tags: communityPosts.tags,
+          imageUrl: communityPosts.imageUrl,
+          likesCount: communityPosts.likesCount,
+          commentsCount: communityPosts.commentsCount,
+          createdAt: communityPosts.createdAt,
+          author: {
+            id: users.id,
+            username: users.username,
+            fullName: users.fullName,
+            profilePictureUrl: users.profilePictureUrl,
+            role: users.role,
+            isVerified: users.isVerified,
+          }
+        })
+        .from(communityPosts)
+        .innerJoin(users, eq(communityPosts.authorId, users.id))
+        .where(and(eq(communityPosts.authorId, parseInt(userId)), eq(communityPosts.isDeleted, false)))
+        .orderBy(desc(communityPosts.createdAt))
+        .limit(parseInt(limit as string))
+        .offset(parseInt(offset as string));
+
+      res.json(userPosts);
+    } catch (error) {
+      console.error("Error fetching user posts:", error);
+      res.status(500).json({ error: "Failed to fetch user posts" });
     }
-
-    const userPosts = await db
-      .select({
-        id: communityPosts.id,
-        title: communityPosts.title,
-        content: communityPosts.content,
-        postType: communityPosts.postType,
-        category: communityPosts.category,
-        tags: communityPosts.tags,
-        imageUrl: communityPosts.imageUrl,
-        likesCount: communityPosts.likesCount,
-        commentsCount: communityPosts.commentsCount,
-        createdAt: communityPosts.createdAt,
-        author: {
-          id: users.id,
-          username: users.username,
-          fullName: users.fullName,
-          profilePictureUrl: users.profilePictureUrl,
-          role: users.role,
-          isVerified: users.isVerified,
-        }
-      })
-      .from(communityPosts)
-      .innerJoin(users, eq(communityPosts.authorId, users.id))
-      .where(and(eq(communityPosts.authorId, parseInt(userId)), eq(communityPosts.isDeleted, false)))
-      .orderBy(desc(communityPosts.createdAt))
-      .limit(parseInt(limit as string))
-      .offset(parseInt(offset as string));
-
-    res.json(userPosts);
-  } catch (error) {
-    console.error("Error fetching user posts:", error);
-    res.status(500).json({ error: "Failed to fetch user posts" });
-  }
-});
+  });
 
   // User search API with privacy controls
   app.get("/api/community/users/search", async (req, res) => {
     try {
       const { query } = req.query;
-      
+
       if (!query || typeof query !== 'string' || query.trim().length < 2) {
         return res.json([]);
       }
 
       const searchTerm = `%${query.trim().toLowerCase()}%`;
-      
+
       // Search users by username or full name
       const searchResults = await db
         .select({
@@ -5717,23 +5691,23 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         // Check for custom production domain first (plantrxapp.com)
         const customDomain = process.env.CUSTOM_DOMAIN || 'plantrxapp.com';
         const isProduction = process.env.NODE_ENV === 'production' || process.env.REPLIT_DEPLOYMENT === '1';
-        
+
         // In production, prefer custom domain for Stripe redirects
         if (isProduction && customDomain) {
           return `https://${customDomain}`;
         }
-        
+
         // Prefer req.headers.origin (includes scheme) for development
         if (req.headers.origin) {
           return req.headers.origin;
         }
-        
+
         // Fall back to constructing from REPLIT_DOMAINS or localhost
         const domain = process.env.REPLIT_DOMAINS?.split(',')[0];
         if (domain) {
           return `https://${domain}`;
         }
-        
+
         return 'http://localhost:5000';
       };
 
@@ -5796,9 +5770,9 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       // Validate request body using schema
       const validation = subscriptionUpdateSchema.safeParse(req.body);
       if (!validation.success) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           message: "Invalid subscription data",
-          errors: validation.error.errors 
+          errors: validation.error.errors
         });
       }
 
@@ -5807,8 +5781,8 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       // SECURITY: Only allow Bronze tier activation without Stripe verification
       // Silver and Gold tiers require Stripe webhook confirmation
       if (subscriptionTier !== "bronze") {
-        return res.status(403).json({ 
-          message: "Premium tiers require payment verification. Please complete checkout via Stripe." 
+        return res.status(403).json({
+          message: "Premium tiers require payment verification. Please complete checkout via Stripe."
         });
       }
 
@@ -5864,7 +5838,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
 
       // Check if trial has already been used
       if (currentUser.goldTrialUsedOnce) {
-        return res.status(403).json({ 
+        return res.status(403).json({
           message: "You've already used your free Gold trial. Upgrade to continue enjoying premium features!",
           alreadyUsed: true
         });
@@ -5874,7 +5848,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       if (currentUser.goldTrialStartedAt) {
         const trialEndTime = new Date(currentUser.goldTrialStartedAt.getTime() + 24 * 60 * 60 * 1000);
         if (new Date() < trialEndTime) {
-          return res.status(400).json({ 
+          return res.status(400).json({
             message: "Your Gold trial is already active!",
             trialActive: true,
             trialEndTime: trialEndTime.toISOString(),
@@ -5924,8 +5898,8 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
     try {
       const userId = req.session?.userId;
       if (!userId) {
-        return res.json({ 
-          trialActive: false, 
+        return res.json({
+          trialActive: false,
           trialUsed: false,
           authenticated: false
         });
@@ -6089,7 +6063,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       }
 
       const { isPublicProfile } = req.body;
-      
+
       // Validate input
       if (typeof isPublicProfile !== 'boolean') {
         return res.status(400).json({ message: "isPublicProfile must be a boolean" });
@@ -6130,7 +6104,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       const languageCode = req.params.languageCode || 'en';
       const translations = await storage.getTranslations(languageCode);
       const languages = await storage.getLanguages();
-      
+
       res.json({
         translations,
         languages,
@@ -6145,7 +6119,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   app.post('/api/user-language-preference', async (req, res) => {
     try {
       const { languageCode } = req.body;
-      
+
       if (!languageCode) {
         return res.status(400).json({ error: 'Language code is required' });
       }
@@ -6154,10 +6128,10 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       if (req.session?.userId) {
         await storage.setUserLanguagePreference(req.session.userId, languageCode);
       }
-      
+
       // Also save to session for non-authenticated users
       req.session.languageCode = languageCode;
-      
+
       res.json({ success: true, languageCode });
     } catch (error: any) {
       console.error('Error setting language preference:', error);
@@ -6168,7 +6142,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   app.get('/api/user-language-preference', async (req, res) => {
     try {
       let languageCode = 'en'; // default
-      
+
       // For authenticated users, get from database
       if (req.session?.userId) {
         const preference = await storage.getUserLanguagePreference(req.session.userId);
@@ -6176,12 +6150,12 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
           languageCode = preference.languageCode;
         }
       }
-      
+
       // Fallback to session
       if (!languageCode && req.session?.languageCode) {
         languageCode = req.session.languageCode;
       }
-      
+
       res.json({ languageCode });
     } catch (error: any) {
       console.error('Error getting language preference:', error);
@@ -6203,7 +6177,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   // Helper function to map health concerns to categories
   function mapHealthConcernToCategory(healthConcern: string): string {
     const concern = healthConcern.toLowerCase();
-    
+
     // Sleep and stress
     if (concern.includes('sleep') || concern.includes('insomnia') || concern.includes('tired') || concern.includes('fatigue')) {
       return 'sleep';
@@ -6232,7 +6206,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
     if (concern.includes('energy') || concern.includes('vitality') || concern.includes('weak')) {
       return 'energy';
     }
-    
+
     // Default category
     return 'general';
   }
@@ -6241,38 +6215,38 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   app.post('/api/generate-remedy', async (req, res) => {
     try {
       const { healthConcern, preferences } = req.body;
-      
+
       if (!healthConcern || healthConcern.trim().length === 0) {
         return res.status(400).json({ error: 'Health concern is required' });
       }
-      
+
       console.log(`🔮 Generating AI remedy for: "${healthConcern}"`);
-      
+
       const remedy = await generateRemedyWithDualAI({
         healthConcern: healthConcern.trim(),
         preferences: preferences?.trim() || undefined
       });
-      
+
       console.log(`✅ Successfully generated remedy: "${remedy.name}"`);
-      
+
       // Automatically save the generated remedy to the main remedies table
       try {
         console.log(`💾 Saving generated remedy to database...`);
-        
+
         // Generate a unique slug
         const baseSlug = generateSlug(remedy.name);
         let uniqueSlug = baseSlug;
         let counter = 1;
-        
+
         // Ensure slug is unique
         while (await storage.getRemedyBySlug(uniqueSlug)) {
           uniqueSlug = `${baseSlug}-${counter}`;
           counter++;
         }
-        
+
         // Map health concern to category
         const category = mapHealthConcernToCategory(healthConcern);
-        
+
         // Prepare remedy data for database
         const remedyData = {
           name: remedy.name,
@@ -6288,11 +6262,11 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
           category: category,
           isActive: true
         };
-        
+
         // Save to database
         const savedRemedy = await storage.createRemedy(remedyData);
         console.log(`✅ Remedy saved to database with ID: ${savedRemedy.id}`);
-        
+
         // Return the complete remedy with database ID and slug
         const completeRemedy = {
           ...remedy,
@@ -6302,21 +6276,21 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
           imageUrl: savedRemedy.imageUrl,
           isGenerated: true
         };
-        
+
         res.json(completeRemedy);
-        
+
       } catch (saveError: any) {
         console.error(`❌ Failed to save remedy to database:`, saveError);
         // Still return the remedy even if save failed
         res.json(remedy);
       }
-      
+
     } catch (error: any) {
       console.error('❌ Remedy generation failed:', error);
-      
+
       let statusCode = 500;
       let errorMessage = 'Failed to generate remedy';
-      
+
       if (error.message?.includes('only provide guidance on health')) {
         statusCode = 400;
         errorMessage = error.message;
@@ -6324,7 +6298,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         statusCode = 503;
         errorMessage = 'AI services are temporarily unavailable. Please try again later.';
       }
-      
+
       res.status(statusCode).json({ error: errorMessage });
     }
   });
@@ -6349,17 +6323,17 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   app.post('/api/generate-pdf', async (req, res) => {
     try {
       const { type, planData, answers } = req.body;
-      
+
       if (!type || !['diet', 'fitness', 'skincare', 'wellness', 'recovery'].includes(type)) {
         return res.status(400).json({ error: 'Invalid plan type' });
       }
-      
+
       console.log(`🔮 Generating ${type} PDF using bullet-proof system...`);
-      
+
       // Import the new PDF system
       const { htmlToPdfBuffer } = await import('../pdf/make.js');
       const { renderDiet, renderFitness, renderSkincare, renderWellness, renderRecovery } = await import('../pdf/templates.js');
-      
+
       // Template mapping
       const TPL = {
         diet: renderDiet,
@@ -6368,10 +6342,10 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         wellness: renderWellness,
         recovery: renderRecovery,
       };
-      
+
       const render = TPL[type];
       if (!render) return res.status(400).json({ error: "Unknown type" });
-      
+
       // Format answers for the PDF system
       const formattedAnswers = {
         user: { name: answers?.name || 'User' },
@@ -6392,22 +6366,22 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         time_per_day_min: answers?.time_available ? parseInt(answers.time_available) : 30,
         weight_kg: answers?.weight ? parseFloat(answers.weight) : null
       };
-      
+
       console.log('📊 Formatted answers for new system:', formattedAnswers);
-      
+
       // Generate HTML and convert to PDF
       const html = render(formattedAnswers);
       const pdfBuffer = await htmlToPdfBuffer(html);
-      
+
       // ✅ Correct headers (and content length so Chrome doesn't choke)
       res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", `attachment; filename="plantrx-${type}-plan-${new Date().toISOString().slice(0,10)}.pdf"`);
+      res.setHeader("Content-Disposition", `attachment; filename="plantrx-${type}-plan-${new Date().toISOString().slice(0, 10)}.pdf"`);
       res.setHeader("Content-Length", String(pdfBuffer.length));
-      
+
       console.log(`✅ PDF generated successfully: ${pdfBuffer.length} bytes`);
-      
+
       return res.end(pdfBuffer);
-      
+
     } catch (error: any) {
       console.error('❌ PDF generation failed:', error);
       return res.status(500).json({ error: "PDF generation failed" });
@@ -6533,7 +6507,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         // Unsave - remove from saved remedies
         await db.delete(savedRemedies)
           .where(and(eq(savedRemedies.userId, userId), eq(savedRemedies.remedyId, remedyId)));
-        
+
         // Log activity
         await db.insert(userActivities).values({
           userId,
@@ -6614,7 +6588,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         // Unlike - remove like
         await db.delete(postLikes)
           .where(and(eq(postLikes.userId, userId), eq(postLikes.postId, postId)));
-        
+
         // Update like count
         await db.update(communityPosts)
           .set({ likesCount: sql`${communityPosts.likesCount} - 1` })
@@ -6660,7 +6634,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       }
 
       const { title, content, category = 'general', imageUrl } = req.body;
-      
+
       if (!content || content.trim().length === 0) {
         return res.status(400).json({ error: 'Content is required' });
       }
@@ -6747,7 +6721,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       }
 
       const { title, summary, messages } = req.body;
-      
+
       if (!title || !messages || !Array.isArray(messages) || messages.length === 0) {
         return res.status(400).json({ error: 'Title and messages are required' });
       }
@@ -6827,7 +6801,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
     try {
       const fs = await import("fs/promises");
       const { htmlToPdfBuffer } = await import("../pdf/make.js");
-      
+
       const css = await fs.readFile("pdf/print.css", "utf8");
       const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css}</style></head>
       <body><main><h1>PDF OK</h1><p>Health check.</p></main></body></html>`;
@@ -6852,7 +6826,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
 
       const requestData = req.body || {};
       const answers = requestData.answers || {};
-      
+
       // Extract user data from session or request
       const userData = {
         name: req.session?.userEmail?.split('@')[0] || answers.name || 'Valued Member',
@@ -6874,19 +6848,19 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
 
       res.set({
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="planrx-${type}-plan-${new Date().toISOString().slice(0,10)}.pdf"`,
+        "Content-Disposition": `attachment; filename="planrx-${type}-plan-${new Date().toISOString().slice(0, 10)}.pdf"`,
         "Content-Length": String(pdf.length),
         "Cache-Control": "no-store"
       });
-      
+
       console.log(`[PDF] Successfully generated ${type} plan (${pdf.length} bytes)`);
       return res.end(pdf);
-      
+
     } catch (e: any) {
-      const errorPayload = { 
-        error: "PDF generation failed", 
-        message: e.message, 
-        stack: e.stack 
+      const errorPayload = {
+        error: "PDF generation failed",
+        message: e.message,
+        stack: e.stack
       };
       console.error("[PDF ERROR]", errorPayload);
       res.status(500).json(errorPayload);
@@ -6914,11 +6888,11 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
       const { handle } = req.params;
       console.log(`🔍 API: Fetching single product by handle: ${handle}`);
       const product = await serverShopifyService.fetchProductByHandleWithGraphQL(handle);
-      
+
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
       }
-      
+
       res.json(product);
     } catch (error: any) {
       console.error('Error fetching Shopify product by handle:', error);
@@ -6926,7 +6900,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
     }
   });
 
-   // Fetch a single collection by handle from Shopify
+  // Fetch a single collection by handle from Shopify
   app.get("/api/shopify/collections/:handle", async (req, res) => {
     try {
       const { handle } = req.params;
@@ -7044,16 +7018,16 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   app.get('*', async (req, res, next) => {
     const userAgent = req.get('User-Agent') || '';
     const isBot = /googlebot|bingbot|yandexbot|facebookexternalhit|twitterbot|linkedinbot|slackbot|whatsapp|pinterest|crawl|spider|bot/i.test(userAgent);
-    
+
     console.log(`🤖 Request from ${userAgent} to ${req.path} - Bot detected: ${isBot}`);
-    
+
     if (isBot && !req.path.startsWith('/api')) {
       try {
         // Generate basic pre-rendered content for bots
         let title = 'PlantRx - Expert Natural Health Platform';
         let description = 'Discover 133+ verified plant-based remedies, backed by experts.';
         let content = 'PlantRx offers comprehensive natural health solutions.';
-        
+
         // Customize content based on URL path
         if (req.path.startsWith('/remedies/')) {
           const slug = req.path.split('/remedies/')[1];
@@ -7082,7 +7056,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
           description = 'Shop premium natural health products, organic herbs, and expert-recommended supplements with free shipping.';
           content = 'Discover premium natural health products curated by our experts.';
         }
-        
+
         const preRenderedHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7116,7 +7090,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
   </main>
 </body>
 </html>`;
-        
+
         res.setHeader('Content-Type', 'text/html');
         res.setHeader('Cache-Control', 'public, max-age=3600');
         return res.send(preRenderedHTML);
@@ -7125,7 +7099,7 @@ app.get("/api/community/users/:userId/posts", async (req, res) => {
         // Fall through to normal SPA serving
       }
     }
-    
+
     next();
   });
 

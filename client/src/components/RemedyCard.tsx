@@ -1,9 +1,10 @@
+import React, { memo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Star } from "lucide-react";
 import { useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
-import { RemedyImage } from "@/lib/remedyImageGenerator"; 
+import { RemedyImage } from "@/lib/remedyImageGenerator";
 import { trackEvent, trackRemedyView } from "@/utils/analytics";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useContentAuthGate } from "@/hooks/useContentAuthGate";
@@ -30,30 +31,30 @@ interface RemedyCardProps {
   isSaved?: boolean;
 }
 
-export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps) {
+const RemedyCard = memo(function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps) {
   const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const { trackRemedyClick } = useContentAuthGate();
   const isMobile = useIsMobile();
-  
+
   const handleRemedyClick = () => {
     // Use auth gate to track clicks - will redirect to signup after 3 clicks if not authenticated
     trackRemedyClick(() => {
       // Track remedy card click and remedy view
       trackEvent('remedy_click', 'remedies', remedy.name);
       trackRemedyView(remedy.name, remedy.id.toString());
-      
+
       // Use client-side navigation (fast, no reload)
       setLocation(`/remedy/${remedy.slug}`);
     });
   };
-  
+
   // Get translated remedy content
   const getTranslatedContent = () => {
     // Try to get translated benefits from database first
     const translatedBenefitsStr = t(`remedy.${remedy.id}.benefits`, '');
     let translatedBenefits: string[] = [];
-    
+
     if (translatedBenefitsStr) {
       try {
         translatedBenefits = JSON.parse(translatedBenefitsStr);
@@ -85,11 +86,10 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-4 h-4 ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-current"
-            : "text-gray-300 dark:text-gray-600"
-        }`}
+        className={`w-4 h-4 ${i < Math.floor(rating)
+          ? "text-yellow-400 fill-current"
+          : "text-gray-300 dark:text-gray-600"
+          }`}
       />
     ));
   };
@@ -97,7 +97,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
   const getDifficultyLevel = () => {
     const ingredients = remedy.ingredients?.length || 0;
     const instructionLength = remedy.instructions?.length || 0;
-    
+
     if (ingredients <= 3 && instructionLength <= 100) return { level: "easy", color: "bg-green-500", icon: "🟢" };
     if (ingredients <= 6 && instructionLength <= 300) return { level: "medium", color: "bg-yellow-500", icon: "🟡" };
     return { level: "advanced", color: "bg-red-500", icon: "🔴" };
@@ -106,12 +106,12 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
   const getPreparationTime = () => {
     const form = remedy.form?.toLowerCase();
     const instructions = remedy.instructions?.toLowerCase() || "";
-    
-    if (form === "raw" || instructions.includes("immediately") || instructions.includes("instant")) 
+
+    if (form === "raw" || instructions.includes("immediately") || instructions.includes("instant"))
       return { time: "instant", icon: "⚡" };
-    if (form === "tea" || instructions.includes("5 min") || instructions.includes("steep")) 
+    if (form === "tea" || instructions.includes("5 min") || instructions.includes("steep"))
       return { time: "5min", icon: "🚀" };
-    if (form === "drink" || instructions.includes("mix") || instructions.includes("blend")) 
+    if (form === "drink" || instructions.includes("mix") || instructions.includes("blend"))
       return { time: "10min", icon: "⏰" };
     return { time: "30min", icon: "🕐" };
   };
@@ -130,7 +130,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
   // MOBILE LAYOUT - Interactive card with hover effect matching desktop
   if (isMobile) {
     return (
-      <div 
+      <div
         onClick={handleRemedyClick}
         onMouseEnter={handleMouseEnter}
         className="block w-full h-[220px] cursor-pointer group active:scale-[0.98] transition-transform"
@@ -141,20 +141,20 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
           <div className="absolute inset-0 transition-transform duration-500 ease-in-out group-hover:-translate-y-full">
             {/* Image Section */}
             <div className="relative h-[140px] overflow-hidden">
-              <RemedyImage 
+              <RemedyImage
                 remedy={remedy}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               {/* Gradient overlay for text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              
+
               {/* Difficulty indicator - top left */}
               <div className="absolute top-1.5 left-1.5">
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-black/60 text-white text-[10px] font-medium">
                   {difficulty.icon}
                 </span>
               </div>
-              
+
               {/* Rating - bottom right on image */}
               {remedy.averageRating && remedy.averageRating > 0 && (
                 <div className="absolute bottom-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-black/60 text-white">
@@ -163,7 +163,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
                 </div>
               )}
             </div>
-            
+
             {/* Title Section */}
             <div className="p-2 h-[80px] flex flex-col justify-center bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700">
               <h3 className="text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-tight mb-1 group-hover:text-gold dark:group-hover:text-yellow-400 transition-colors">
@@ -176,7 +176,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
               )}
             </div>
           </div>
-          
+
           {/* Back Panel - Details (revealed on hover) */}
           <div className="absolute inset-0 p-2 translate-y-full transition-transform duration-500 ease-in-out group-hover:translate-y-0 bg-white dark:bg-gray-800 flex flex-col overflow-hidden">
             {/* Header - Compact */}
@@ -198,7 +198,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             <p className="text-gray-600 dark:text-gray-400 text-[9px] mb-1.5 leading-snug line-clamp-2">
               {translatedContent.description}
             </p>
-            
+
             {/* Key Benefits - Compact */}
             {translatedContent.benefits && translatedContent.benefits.length > 0 && (
               <div className="flex-1 overflow-hidden">
@@ -212,7 +212,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
                 </ul>
               </div>
             )}
-            
+
             {/* Tap prompt */}
             <p className="text-[8px] text-gold dark:text-white font-medium mt-auto pt-1 text-center">
               Tap to view details →
@@ -225,7 +225,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
 
   // DESKTOP LAYOUT - Full interactive card with hover effects
   return (
-    <div 
+    <div
       onClick={handleRemedyClick}
       onMouseEnter={handleMouseEnter}
       className="block w-full h-[220px] sm:h-[340px] md:h-[400px] lg:h-[440px] mx-auto group cursor-pointer"
@@ -237,16 +237,16 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
           <div className="relative h-3/5 overflow-hidden">
             {/* Static Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 via-blue-400/20 to-purple-400/20 opacity-30"></div>
-            
+
             {/* Main Image with Enhanced Animations */}
-            <RemedyImage 
+            <RemedyImage
               remedy={remedy}
               className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 filter group-hover:brightness-110 relative z-10"
             />
-            
+
             {/* Animated Overlay Effects */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
+
             {/* Static Overlay - No Animation */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-20 rounded-lg"></div>
             {onSave && (
@@ -278,20 +278,20 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
               </div>
             </div>
           </div>
-          
+
           {/* Enhanced Title Section with Animation */}
           <div className="h-2/5 p-2 sm:p-3 lg:p-4 flex flex-col items-center justify-center bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 relative overflow-hidden">
             {/* Animated Background Pattern */}
             <div className="absolute inset-0 opacity-5 dark:opacity-10">
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-green-200 via-blue-200 to-purple-200 dark:from-green-800 dark:via-blue-800 dark:to-purple-800 animate-pulse"></div>
-              <div className="absolute top-2 left-2 w-3 h-3 bg-green-300/30 rounded-full animate-ping" style={{animationDelay: '0s'}}></div>
-              <div className="absolute bottom-2 right-2 w-2 h-2 bg-blue-300/30 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
-              <div className="absolute top-1/2 right-3 w-1.5 h-1.5 bg-yellow-300/30 rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
+              <div className="absolute top-2 left-2 w-3 h-3 bg-green-300/30 rounded-full animate-ping" style={{ animationDelay: '0s' }}></div>
+              <div className="absolute bottom-2 right-2 w-2 h-2 bg-blue-300/30 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute top-1/2 right-3 w-1.5 h-1.5 bg-yellow-300/30 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
             </div>
-            
+
             {/* Moving Gradient Border */}
             <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/10 to-green-400/0 group-hover:animate-pulse"></div>
-            
+
             <h3 className="text-[11px] sm:text-sm lg:text-lg font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-gold dark:group-hover:text-white text-center line-clamp-2 sm:line-clamp-3 leading-tight transition-all duration-500 relative z-10 group-hover:scale-105 group-hover:drop-shadow-lg">
               {translatedContent.name}
             </h3>
@@ -305,7 +305,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             <h3 className="text-[10px] sm:text-xs lg:text-sm font-bold luxury-heading text-gray-900 dark:text-white group-hover:text-gold dark:group-hover:text-white transition-colors duration-300 line-clamp-2">
               {translatedContent.name}
             </h3>
-            
+
             {/* Star Rating Display - Also on back panel for visibility */}
             {remedy.averageRating && remedy.averageRating > 0 && (
               <div className="flex items-center gap-1 mt-1.5" data-testid={`rating-back-${remedy.id}`}>
@@ -322,7 +322,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
                 )}
               </div>
             )}
-            
+
             <p className="text-[9px] sm:text-[10px] text-gold dark:text-white font-medium mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {t('ui.click_details', 'Click to view details →')}
             </p>
@@ -334,7 +334,7 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
             <p className="text-gray-600 dark:text-gray-400 text-[9px] sm:text-xs lg:text-sm mb-2 sm:mb-3 luxury-body leading-relaxed line-clamp-3 sm:line-clamp-5 lg:line-clamp-6">
               {translatedContent.description}
             </p>
-            
+
             {/* Key Benefits */}
             {translatedContent.benefits && translatedContent.benefits.length > 0 && (
               <div className="mb-2 sm:mb-3">
@@ -371,4 +371,6 @@ export default function RemedyCard({ remedy, onSave, isSaved }: RemedyCardProps)
       </div>
     </div>
   );
-}
+})
+
+export default RemedyCard;

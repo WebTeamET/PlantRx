@@ -25,8 +25,10 @@ declare module "express-session" {
     userId?: number;
     userEmail?: string;
     languageCode?: string;
+    csrfToken?: string;
   }
 }
+
 
 const app = express();
 
@@ -144,8 +146,8 @@ app.use((req, res, next) => {
 // Stripe webhook - must be BEFORE express.json() to receive raw body for signature verification
 const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-10-29.clover",
-    })
+    apiVersion: "2025-10-29.clover",
+  })
   : null;
 
 app.post(
@@ -274,6 +276,7 @@ app.use(
       secure: process.env.NODE_ENV === "production", // HTTPS in production
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: "strict",
     },
   })
 );
@@ -609,15 +612,6 @@ app.get("/robots.txt", (req, res) => {
     const robots = `User-agent: *
 Allow: /
 
-# Disallow only truly private/sensitive areas
-Disallow: /api/admin/
-Disallow: /api/auth/
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /checkout/
-Disallow: /settings/
-Disallow: /api/generate-pdf
-
 # Allow all public content
 Allow: /remedies/
 Allow: /store/
@@ -695,8 +689,7 @@ app.use((req, res, next) => {
     // Enhanced logging for bots and critical paths
     if (isBot || isCriticalPath || res.statusCode >= 400) {
       console.log(
-        `🔍 ${
-          isBot ? "🤖 BOT" : "👤 USER"
+        `🔍 ${isBot ? "🤖 BOT" : "👤 USER"
         } ${logLine} | UA: ${userAgent.substring(0, 50)}`
       );
 

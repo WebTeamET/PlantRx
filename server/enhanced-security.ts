@@ -100,7 +100,7 @@ export function preventSQLInjection(req: Request, res: Response, next: NextFunct
 // API key validation for external integrations
 export function validateAPIKey(req: Request, res: Response, next: NextFunction) {
   const apiKey = req.headers['x-api-key'] || req.query.api_key;
-  
+
   if (!apiKey) {
     return res.status(401).json({ error: 'API key required' });
   }
@@ -121,7 +121,7 @@ export function validateAPIKey(req: Request, res: Response, next: NextFunction) 
 // Enhanced session security
 export const sessionConfig = {
   name: 'plantrx.sid',
-  secret: process.env.SESSION_SECRET || 'plantrx-dev-secret-key-change-in-production',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -182,9 +182,9 @@ export function secureErrorHandler(err: any, req: Request, res: Response, next: 
   if (process.env.NODE_ENV === 'production') {
     res.status(500).json({ error: 'Internal server error' });
   } else {
-    res.status(500).json({ 
+    res.status(500).json({
       error: err.message,
-      stack: err.stack 
+      stack: err.stack
     });
   }
 }

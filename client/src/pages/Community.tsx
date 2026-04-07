@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,15 +13,15 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { UpgradeInterstitial } from "@/components/FeatureLock";
 import { Feature } from "@shared/subscriptionFeatures";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { 
-  Heart, 
-  MessageCircle, 
-  Share2, 
-  Users, 
-  Lock, 
-  UserCheck, 
-  Search, 
-  Plus, 
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Users,
+  Lock,
+  UserCheck,
+  Search,
+  Plus,
   Filter,
   UserPlus,
   UserMinus,
@@ -99,15 +99,17 @@ const categories = [
   "nutrition", "exercise", "mental-health", "remedies", "sleep", "stress", "immunity", "digestive", "skin-care", "general"
 ];
 
-export default function Community() {
+const Community = memo(function Community() {
   return (
     <UpgradeInterstitial feature={Feature.COMMUNITY_FORUM}>
       <CommunityContent />
     </UpgradeInterstitial>
   );
-}
+})
 
-function CommunityContent() {
+export default Community;
+
+const CommunityContent = memo(function CommunityContent() {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [newPost, setNewPost] = useState("");
@@ -186,10 +188,10 @@ function CommunityContent() {
   const toggleComments = (postId: number) => {
     const post = posts.find(p => p.id === postId);
     if (!post) return;
-    
+
     setSelectedPostForComments(post);
     setCommentsSidebarOpen(true);
-    
+
     // Fetch comments if not loaded yet
     if (!commentsData[postId]) {
       fetchComments(postId);
@@ -219,7 +221,7 @@ function CommunityContent() {
         credentials: 'include',
         body: JSON.stringify({ content: comment })
       });
-      
+
       if (response.ok) {
         const newComment = await response.json();
         setCommentsData(prev => ({
@@ -231,7 +233,7 @@ function CommunityContent() {
           title: "💬 Comment added!",
           description: "Your comment has been posted",
         });
-        
+
         // Update post comments count
         queryClient.invalidateQueries({ queryKey: ['/api/community/posts'] });
       }
@@ -250,27 +252,27 @@ function CommunityContent() {
       'spam', 'scam', 'fake', 'buy now', 'get rich', 'miracle cure',
       'inappropriate', 'offensive', 'harmful', 'dangerous', 'illegal'
     ];
-    
+
     const lowerContent = content.toLowerCase();
-    
+
     // Check for forbidden words
     for (const word of forbiddenWords) {
       if (lowerContent.includes(word)) {
         return { isValid: false, reason: 'Content contains inappropriate language' };
       }
     }
-    
+
     // Check for excessive caps (spam indicator)
     const capsRatio = (content.match(/[A-Z]/g) || []).length / content.length;
     if (capsRatio > 0.5 && content.length > 20) {
       return { isValid: false, reason: 'Excessive use of capital letters' };
     }
-    
+
     // Check for minimum length
     if (content.trim().length < 10) {
       return { isValid: false, reason: 'Post content is too short' };
     }
-    
+
     return { isValid: true };
   };
 
@@ -311,20 +313,20 @@ function CommunityContent() {
     onMutate: async (postId: number) => {
       // Cancel outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ['/api/community/posts'] });
-      
+
       // Snapshot the previous value
       const previousPosts = queryClient.getQueryData(['/api/community/posts']);
-      
+
       // Optimistically update to the new value
       queryClient.setQueryData(['/api/community/posts'], (old: any) => {
         if (!old) return old;
-        return old.map((post: any) => 
-          post.id === postId 
+        return old.map((post: any) =>
+          post.id === postId
             ? { ...post, likesCount: post.likesCount + (post.isLiked ? -1 : 1), isLiked: !post.isLiked }
             : post
         );
       });
-      
+
       return { previousPosts };
     },
     onError: (err, postId, context) => {
@@ -445,7 +447,7 @@ function CommunityContent() {
     return (
       <div className="min-h-screen luxury-gradient-bg">
         <Header />
-        
+
         {/* Authentication Required Section */}
         <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-50/20 via-transparent to-yellow-50/20 dark:from-yellow-900/10 dark:via-transparent dark:to-yellow-900/10"></div>
@@ -454,18 +456,18 @@ function CommunityContent() {
               <div className="w-24 h-24 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <Lock className="w-12 h-12 text-white" />
               </div>
-              
+
               <Badge className="bg-gradient-to-r from-yellow-100 to-yellow-200 dark:from-yellow-900/50 dark:to-yellow-800/50 text-yellow-800 dark:text-yellow-200 border-yellow-300 dark:border-yellow-700/50 mb-8 text-sm px-6 py-3 font-semibold tracking-wide">
                 🌿 Exclusive Community Access
               </Badge>
-              
+
               <h1 className="text-5xl md:text-6xl luxury-heading text-gray-900 dark:text-white mb-8 leading-tight">
                 Join Our Premium
                 <span className="luxury-text-gradient block">Health Community</span>
               </h1>
-              
+
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed luxury-body">
-                Connect with certified experts, share your wellness journey, and discover personalized 
+                Connect with certified experts, share your wellness journey, and discover personalized
                 natural health solutions in our exclusive member community.
               </p>
 
@@ -481,7 +483,7 @@ function CommunityContent() {
                     Connect directly with verified health professionals
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Users className="w-8 h-8 text-white" />
@@ -493,7 +495,7 @@ function CommunityContent() {
                     Share experiences with like-minded wellness enthusiasts
                   </p>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <MessageCircle className="w-8 h-8 text-white" />
@@ -506,7 +508,7 @@ function CommunityContent() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/login">
                   <Button className="luxury-button-primary px-12 py-4 text-lg">
@@ -519,7 +521,7 @@ function CommunityContent() {
                   </Button>
                 </Link>
               </div>
-              
+
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-8 luxury-body">
                 Join thousands of members already transforming their health naturally
               </p>
@@ -533,7 +535,7 @@ function CommunityContent() {
   // Main authenticated community view
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-      <SEOHead 
+      <SEOHead
         title="PlantRx Community Lounge - Natural Health Support & Expert Network"
         description="Join PlantRx's exclusive health community lounge. Connect with verified experts, share wellness journeys, and discover natural remedies with like-minded health enthusiasts."
         keywords="PlantRx community, health support network, natural wellness community, expert health advice, wellness discussions, herbal medicine forum"
@@ -541,132 +543,132 @@ function CommunityContent() {
         ogType="website"
       />
       <Header />
-      
+
       {/* Top Section - Trending & Guidelines */}
       <ScrollReveal variant="fadeUp">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8 pt-6 pb-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Trending Topics */}
             <Card className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
-                <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
-                What's Trending
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 pt-0">
-              {[
-                { tag: "natural-immunity", posts: 45, trending: true },
-                { tag: "herbal-remedies", posts: 32, trending: true },
-                { tag: "meditation", posts: 28, trending: false },
-                { tag: "nutrition-tips", posts: 24, trending: true }
-              ].map((topic, index) => (
-                <div key={topic.tag} className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                      {index + 1}
-                    </span>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                  <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+                  What's Trending
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 pt-0">
+                {[
+                  { tag: "natural-immunity", posts: 45, trending: true },
+                  { tag: "herbal-remedies", posts: 32, trending: true },
+                  { tag: "meditation", posts: 28, trending: false },
+                  { tag: "nutrition-tips", posts: 24, trending: true }
+                ].map((topic, index) => (
+                  <div key={topic.tag} className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition-colors">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          #{topic.tag.replace('-', ' ')}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {topic.posts} posts
+                        </p>
+                      </div>
+                    </div>
+                    {topic.trending && (
+                      <Badge className="bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-xs">
+                        Hot
+                      </Badge>
+                    )}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Community Guidelines - Comprehensive */}
+            <Card className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                  <ShieldCheck className="w-5 h-5 mr-2 text-green-600" />
+                  Community Rules
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-0">
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-2">
+                    <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center mt-0.5">
+                      <span className="text-white text-xs font-bold">1</span>
+                    </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        #{topic.tag.replace('-', ' ')}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        {topic.posts} posts
-                      </p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">No Medical Advice</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Share experiences, not diagnoses. Always consult healthcare professionals.</p>
                     </div>
                   </div>
-                  {topic.trending && (
-                    <Badge className="bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-xs">
-                      Hot
-                    </Badge>
-                  )}
-                </div>
-              ))}
-            </CardContent>
-          </Card>
 
-          {/* Community Guidelines - Comprehensive */}
-          <Card className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
-                <ShieldCheck className="w-5 h-5 mr-2 text-green-600" />
-                Community Rules
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-0">
-              <div className="space-y-3">
-                <div className="flex items-start space-x-2">
-                  <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-white text-xs font-bold">1</span>
+                  <div className="flex items-start space-x-2">
+                    <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center mt-0.5">
+                      <span className="text-white text-xs font-bold">2</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">Evidence-Based Sharing</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Support claims with credible sources when discussing health topics.</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">No Medical Advice</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Share experiences, not diagnoses. Always consult healthcare professionals.</p>
+
+                  <div className="flex items-start space-x-2">
+                    <div className="w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center mt-0.5">
+                      <span className="text-white text-xs font-bold">3</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">Respectful Discourse</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Be kind, supportive, and constructive in all interactions.</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-start space-x-2">
-                  <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-white text-xs font-bold">2</span>
+
+                  <div className="flex items-start space-x-2">
+                    <div className="w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center mt-0.5">
+                      <span className="text-white text-xs font-bold">4</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">No Commercial Spam</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Focus on community value, not self-promotion or sales.</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Evidence-Based Sharing</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Support claims with credible sources when discussing health topics.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-2">
-                  <div className="w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-white text-xs font-bold">3</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Respectful Discourse</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Be kind, supportive, and constructive in all interactions.</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-2">
-                  <div className="w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-white text-xs font-bold">4</span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">No Commercial Spam</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Focus on community value, not self-promotion or sales.</p>
+
+                  <div className="flex items-start space-x-2">
+                    <div className="w-4 h-4 bg-red-600 rounded-full flex items-center justify-center mt-0.5">
+                      <span className="text-white text-xs font-bold">5</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">Safety First</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">Report dangerous or misleading health information immediately.</p>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-2">
-                  <div className="w-4 h-4 bg-red-600 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-white text-xs font-bold">5</span>
+
+                <div className="pt-3 border-t border-gray-200 dark:border-slate-700">
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <Badge className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-xs">
+                      <Heart className="w-3 h-3 mr-1" />
+                      Support Others
+                    </Badge>
+                    <Badge className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs">
+                      <Users className="w-3 h-3 mr-1" />
+                      Be Inclusive
+                    </Badge>
+                    <Badge className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-xs">
+                      <TrendingUp className="w-3 h-3 mr-1" />
+                      Share Knowledge
+                    </Badge>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Safety First</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Report dangerous or misleading health information immediately.</p>
-                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <strong>Remember:</strong> We're here to support each other's wellness journey. Share personal experiences, ask questions, and learn together while respecting diverse approaches to natural health.
+                  </p>
                 </div>
-              </div>
-              
-              <div className="pt-3 border-t border-gray-200 dark:border-slate-700">
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <Badge className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-xs">
-                    <Heart className="w-3 h-3 mr-1" />
-                    Support Others
-                  </Badge>
-                  <Badge className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs">
-                    <Users className="w-3 h-3 mr-1" />
-                    Be Inclusive
-                  </Badge>
-                  <Badge className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-xs">
-                    <TrendingUp className="w-3 h-3 mr-1" />
-                    Share Knowledge
-                  </Badge>
-                </div>
-                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                  <strong>Remember:</strong> We're here to support each other's wellness journey. Share personal experiences, ask questions, and learn together while respecting diverse approaches to natural health.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </ScrollReveal>
@@ -674,18 +676,18 @@ function CommunityContent() {
       {/* Modern Social Media Layout */}
       <div className="max-w-7xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8 py-3 sm:py-6">
         <div className="flex gap-6">
-          
+
           {/* Main Feed Area */}
           <div className="flex-1 min-w-0">
-            
+
             {/* Quick Create Post - At Top */}
             <Card className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm mb-3 sm:mb-4">
               <CardContent className="p-3 sm:p-4">
                 <Dialog open={createPostOpen} onOpenChange={setCreatePostOpen}>
                   <DialogTrigger asChild>
                     <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer">
-                      <ProfilePictureUpload 
-                        user={currentUser} 
+                      <ProfilePictureUpload
+                        user={currentUser}
                         size="sm"
                         showUploadButton={false}
                       />
@@ -695,111 +697,110 @@ function CommunityContent() {
                       </div>
                     </div>
                   </DialogTrigger>
-              <DialogContent className="max-w-2xl bg-white dark:bg-slate-800" aria-describedby="create-post-description">
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-white">
-                    Create Post
-                  </DialogTitle>
-                  <p id="create-post-description" className="text-sm text-gray-500 dark:text-gray-400">
-                    Share your health insights with the community
-                  </p>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 pb-4 border-b border-gray-200 dark:border-slate-700">
-                    <ProfilePictureUpload 
-                      user={currentUser} 
-                      size="sm"
-                      showUploadButton={false}
-                    />
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        {(currentUser as any)?.username || (currentUser as any)?.email}
+                  <DialogContent className="max-w-2xl bg-white dark:bg-slate-800" aria-describedby="create-post-description">
+                    <DialogHeader>
+                      <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+                        Create Post
+                      </DialogTitle>
+                      <p id="create-post-description" className="text-sm text-gray-500 dark:text-gray-400">
+                        Share your health insights with the community
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Public • Health Community
-                      </p>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-3 pb-4 border-b border-gray-200 dark:border-slate-700">
+                        <ProfilePictureUpload
+                          user={currentUser}
+                          size="sm"
+                          showUploadButton={false}
+                        />
+                        <div>
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {(currentUser as any)?.username || (currentUser as any)?.email}
+                          </p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Public • Health Community
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {postTypes.map(type => (
+                          <button
+                            key={type.value}
+                            onClick={() => setSelectedPostType(type.value)}
+                            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${selectedPostType === type.value
+                              ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-600'
+                              : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                              }`}
+                          >
+                            {type.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                        <SelectTrigger className="w-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-200 dark:border-slate-600">
+                          <SelectValue placeholder="Choose a category (optional)" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
+                          {categories.map(category => (
+                            <SelectItem key={category} value={category} className="text-gray-900 dark:text-white">
+                              #{category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      {(selectedPostType === "question" || selectedPostType === "discussion") && (
+                        <Input
+                          placeholder="Add a title for your post..."
+                          value={postTitle}
+                          onChange={(e) => setPostTitle(e.target.value)}
+                          className="text-lg font-medium bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-200 dark:border-slate-600"
+                        />
+                      )}
+
+                      <Textarea
+                        placeholder="Share your thoughts about natural health, wellness tips, ask questions, or discuss your journey with the community..."
+                        value={newPost}
+                        onChange={(e) => setNewPost(e.target.value)}
+                        className="min-h-[120px] text-lg resize-none border-0 focus:ring-0 p-0 bg-transparent text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                      />
+
+                      <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-slate-700">
+                        <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400">
+                          <button
+                            onClick={() => {
+                              toast({
+                                title: "Photo upload",
+                                description: "Photo upload feature coming soon!",
+                              });
+                            }}
+                            className="hover:text-green-600 transition-colors"
+                          >
+                            <Image className="w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="flex space-x-3">
+                          <Button variant="ghost" onClick={() => setCreatePostOpen(false)} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={handleCreatePost}
+                            disabled={createPostMutation.isPending || !newPost.trim()}
+                            className="bg-green-600 hover:bg-green-700 text-white px-6"
+                          >
+                            {createPostMutation.isPending ? "Posting..." : "Post"}
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {postTypes.map(type => (
-                      <button
-                        key={type.value}
-                        onClick={() => setSelectedPostType(type.value)}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                          selectedPostType === type.value
-                            ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 border border-green-300 dark:border-green-600'
-                            : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
-                        }`}
-                      >
-                        {type.label}
-                      </button>
-                    ))}
-                  </div>
-                  
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-full bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-200 dark:border-slate-600">
-                      <SelectValue placeholder="Choose a category (optional)" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
-                      {categories.map(category => (
-                        <SelectItem key={category} value={category} className="text-gray-900 dark:text-white">
-                          #{category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  
-                  {(selectedPostType === "question" || selectedPostType === "discussion") && (
-                    <Input
-                      placeholder="Add a title for your post..."
-                      value={postTitle}
-                      onChange={(e) => setPostTitle(e.target.value)}
-                      className="text-lg font-medium bg-white dark:bg-slate-800 text-gray-900 dark:text-white border-gray-200 dark:border-slate-600"
-                    />
-                  )}
-                  
-                  <Textarea
-                    placeholder="Share your thoughts about natural health, wellness tips, ask questions, or discuss your journey with the community..."
-                    value={newPost}
-                    onChange={(e) => setNewPost(e.target.value)}
-                    className="min-h-[120px] text-lg resize-none border-0 focus:ring-0 p-0 bg-transparent text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
-                  />
-                  
-                  <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-slate-700">
-                    <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400">
-                      <button 
-                        onClick={() => {
-                          toast({
-                            title: "Photo upload",
-                            description: "Photo upload feature coming soon!",
-                          });
-                        }}
-                        className="hover:text-green-600 transition-colors"
-                      >
-                        <Image className="w-5 h-5" />
-                      </button>
-                    </div>
-                    <div className="flex space-x-3">
-                      <Button variant="ghost" onClick={() => setCreatePostOpen(false)} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                        Cancel
-                      </Button>
-                      <Button 
-                        onClick={handleCreatePost}
-                        disabled={createPostMutation.isPending || !newPost.trim()}
-                        className="bg-green-600 hover:bg-green-700 text-white px-6"
-                      >
-                        {createPostMutation.isPending ? "Posting..." : "Post"}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </DialogContent>
+                  </DialogContent>
                 </Dialog>
-                
+
                 <div className="flex justify-between items-center mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-gray-200 dark:border-slate-700">
                   <div className="flex space-x-3 sm:space-x-4">
-                    <button 
+                    <button
                       onClick={() => {
                         toast({
                           title: "Photo upload",
@@ -815,7 +816,7 @@ function CommunityContent() {
                       </span>
                     </button>
                   </div>
-                  <Button 
+                  <Button
                     onClick={() => setCreatePostOpen(true)}
                     size="sm"
                     className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6"
@@ -830,14 +831,14 @@ function CommunityContent() {
             <div className="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 p-2 sm:p-4 mb-3 sm:mb-4 z-10">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <TabsList className="grid w-full grid-cols-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 h-10 sm:h-auto">
-                  <TabsTrigger 
-                    value="world" 
+                  <TabsTrigger
+                    value="world"
                     className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white text-gray-700 dark:text-gray-300 text-xs sm:text-sm py-2 sm:py-3"
                   >
                     <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                     For You
                   </TabsTrigger>
-                  <TabsTrigger 
+                  <TabsTrigger
                     value="following"
                     className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white text-gray-700 dark:text-gray-300 text-xs sm:text-sm py-2 sm:py-3"
                   >
@@ -867,7 +868,7 @@ function CommunityContent() {
                               {post.author.username[0].toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
-                          
+
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center space-x-1 sm:space-x-2 mb-1 flex-wrap">
                               <h3 className="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm">
@@ -890,17 +891,17 @@ function CommunityContent() {
                                 {formatTimeAgo(post.createdAt)}
                               </span>
                             </div>
-                            
+
                             {post.title && (
                               <h4 className="font-semibold text-gray-900 dark:text-white mb-2 text-sm sm:text-base">
                                 {post.title}
                               </h4>
                             )}
-                            
+
                             <p className="text-gray-900 dark:text-white text-sm sm:text-[15px] leading-relaxed mb-2 sm:mb-3">
                               {post.content}
                             </p>
-                            
+
                             {post.category && (
                               <div className="mb-2 sm:mb-3">
                                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 dark:bg-slate-700 text-green-600 dark:text-green-400">
@@ -908,17 +909,17 @@ function CommunityContent() {
                                 </span>
                               </div>
                             )}
-                            
+
                             {post.imageUrl && (
                               <div className="mb-3 rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600">
-                                <img 
-                                  src={post.imageUrl} 
-                                  alt="Post image" 
+                                <img
+                                  src={post.imageUrl}
+                                  alt="Post image"
                                   className="w-full h-auto"
                                 />
                               </div>
                             )}
-                            
+
                             <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-slate-700">
                               <div className="flex items-center space-x-4 sm:space-x-6">
                                 <button
@@ -929,14 +930,14 @@ function CommunityContent() {
                                   <Heart className="w-3 h-3 sm:w-4 sm:h-4 group-hover:fill-red-500 group-hover:text-red-500" />
                                   <span className="text-xs sm:text-sm font-medium">{post.likesCount}</span>
                                 </button>
-                                <button 
+                                <button
                                   onClick={() => toggleComments(post.id)}
                                   className="flex items-center space-x-1 sm:space-x-2 hover:text-blue-500 transition-colors cursor-pointer"
                                 >
                                   <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                                   <span className="text-xs sm:text-sm font-medium">{post.commentsCount}</span>
                                 </button>
-                                <button 
+                                <button
                                   onClick={async () => {
                                     try {
                                       const postUrl = `${window.location.origin}/community#post-${post.id}`;
@@ -984,17 +985,17 @@ function CommunityContent() {
                                   </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
-                                  <DropdownMenuItem 
+                                  <DropdownMenuItem
                                     onClick={() => savePostMutation.mutate(post.id)}
                                     className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700"
                                   >
                                     <Bookmark className="w-4 h-4" />
                                     <span>Save Post</span>
                                   </DropdownMenuItem>
-                                  
+
                                   {/* Only show delete button if the post belongs to the current user */}
                                   {currentUser && post.author.id === (currentUser as any)?.id ? (
-                                    <DropdownMenuItem 
+                                    <DropdownMenuItem
                                       onClick={() => {
                                         if (confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
                                           deletePostMutation.mutate(post.id);
@@ -1006,10 +1007,10 @@ function CommunityContent() {
                                       <span>Delete My Post</span>
                                     </DropdownMenuItem>
                                   ) : null}
-                                  
+
                                   {/* Show report button only for posts that don't belong to the current user */}
                                   {currentUser && post.author.id !== (currentUser as any)?.id ? (
-                                    <DropdownMenuItem 
+                                    <DropdownMenuItem
                                       onClick={() => {
                                         if (confirm('Are you sure you want to report this post for inappropriate content?')) {
                                           reportPostMutation.mutate(post.id);
@@ -1047,7 +1048,7 @@ function CommunityContent() {
                             Join thousands of natural health enthusiasts sharing remedies, asking questions, and supporting each other's wellness journey.
                           </p>
                           <div className="flex flex-wrap gap-3 justify-center">
-                            <Button 
+                            <Button
                               onClick={() => {
                                 setSelectedPostType("question");
                                 setCreatePostOpen(true);
@@ -1057,7 +1058,7 @@ function CommunityContent() {
                             >
                               ❓ Ask a Question
                             </Button>
-                            <Button 
+                            <Button
                               onClick={() => {
                                 setSelectedPostType("story");
                                 setCreatePostOpen(true);
@@ -1067,7 +1068,7 @@ function CommunityContent() {
                             >
                               🌟 Share Your Story
                             </Button>
-                            <Button 
+                            <Button
                               onClick={() => setCreatePostOpen(true)}
                               data-testid="cta-create-post"
                               className="bg-green-700 hover:bg-green-800 text-white font-semibold"
@@ -1086,7 +1087,7 @@ function CommunityContent() {
                         <ShieldCheck className="w-5 h-5 mr-2 text-green-600 dark:text-green-400" />
                         Sample Posts to Get You Started
                       </h3>
-                      
+
                       {[
                         {
                           type: "question",
@@ -1169,7 +1170,7 @@ function CommunityContent() {
                         <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
                           Share your experiences, ask questions, or offer advice. Our community thrives on authentic conversations about natural health.
                         </p>
-                        <Button 
+                        <Button
                           onClick={() => setCreatePostOpen(true)}
                           size="lg"
                           data-testid="final-cta-create-post"
@@ -1202,7 +1203,7 @@ function CommunityContent() {
                           Follow experts, wellness enthusiasts, and like-minded individuals to create a personalized health feed just for you.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                          <Button 
+                          <Button
                             onClick={() => setActiveTab("world")}
                             size="lg"
                             data-testid="explore-community-btn"
@@ -1211,7 +1212,7 @@ function CommunityContent() {
                             <Users className="w-5 h-5 mr-2" />
                             Discover People
                           </Button>
-                          <Button 
+                          <Button
                             onClick={() => setCreatePostOpen(true)}
                             size="lg"
                             variant="outline"
@@ -1267,7 +1268,7 @@ function CommunityContent() {
 
           {/* Right Sidebar - Community Engagement */}
           <div className="hidden lg:block w-80 space-y-4 flex-shrink-0">
-            
+
             {/* Quick Actions */}
             <Card className="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 border-green-200 dark:border-green-800">
               <CardHeader className="pb-3">
@@ -1427,8 +1428,8 @@ function CommunityContent() {
                     </Button>
                   </div>
                 ))}
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="w-full text-sm text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300"
                   onClick={() => {
                     toast({
@@ -1481,15 +1482,14 @@ function CommunityContent() {
       {commentsSidebarOpen && selectedPostForComments && (
         <>
           {/* Backdrop */}
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setCommentsSidebarOpen(false)}
           />
-          
+
           {/* Sidebar Panel */}
-          <div className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-slate-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-            commentsSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}>
+          <div className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-slate-800 shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${commentsSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}>
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-slate-700">
               <div className="flex items-center space-x-3">
@@ -1550,9 +1550,9 @@ function CommunityContent() {
                       <Input
                         placeholder="Write a comment..."
                         value={commentInputs[selectedPostForComments.id] || ''}
-                        onChange={(e) => setCommentInputs(prev => ({ 
-                          ...prev, 
-                          [selectedPostForComments.id]: e.target.value 
+                        onChange={(e) => setCommentInputs(prev => ({
+                          ...prev,
+                          [selectedPostForComments.id]: e.target.value
                         }))}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' && !e.shiftKey) {
@@ -1603,7 +1603,7 @@ function CommunityContent() {
                   </div>
                 </div>
               ))}
-              
+
               {commentsData[selectedPostForComments.id]?.length === 0 && (
                 <div className="text-center py-8">
                   <MessageCircle className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
@@ -1618,4 +1618,4 @@ function CommunityContent() {
       )}
     </div>
   );
-}
+})

@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useLuxuryLoader } from "@/components/LuxuryLoader";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { containerVariants, slideRightVariants, slideRightVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
+import { containerVariants, slideRightVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
 import { SplitText } from "@/utils/SplitText";
 
 export default function Remedies() {
@@ -142,40 +141,42 @@ export default function Remedies() {
     return "30min";
   };
 
-  const allFilteredRemedies = allRemedies
-    .filter((remedy: any) => {
-      if (difficultyFilter !== "all") {
-        const difficulty = getDifficultyLevel(remedy);
-        if (difficulty !== difficultyFilter) return false;
-      }
-      if (timeFilter !== "all") {
-        const time = getPreparationTime(remedy);
-        if (time !== timeFilter) return false;
-      }
-      if (formFilter !== "all") {
-        if (remedy.form !== formFilter) return false;
-      }
-      return true;
-    })
-    .sort((a: any, b: any) => {
-      switch (sortBy) {
-        case "name":
-          return a.name.localeCompare(b.name);
-        case "difficulty":
-          const difficultyOrder = { "easy": 1, "medium": 2, "advanced": 3 };
-          return difficultyOrder[getDifficultyLevel(a) as keyof typeof difficultyOrder] -
-            difficultyOrder[getDifficultyLevel(b) as keyof typeof difficultyOrder];
-        case "time":
-          const timeOrder = { "instant": 1, "5min": 2, "10min": 3, "30min": 4 };
-          return timeOrder[getPreparationTime(a) as keyof typeof timeOrder] -
-            timeOrder[getPreparationTime(b) as keyof typeof timeOrder];
-        case "ingredients":
-          return (a.ingredients?.length || 0) - (b.ingredients?.length || 0);
-        case "newest":
-        default:
-          return b.id - a.id;
-      }
-    });
+  const allFilteredRemedies = useMemo(() => {
+    return allRemedies
+      .filter((remedy: any) => {
+        if (difficultyFilter !== "all") {
+          const difficulty = getDifficultyLevel(remedy);
+          if (difficulty !== difficultyFilter) return false;
+        }
+        if (timeFilter !== "all") {
+          const time = getPreparationTime(remedy);
+          if (time !== timeFilter) return false;
+        }
+        if (formFilter !== "all") {
+          if (remedy.form !== formFilter) return false;
+        }
+        return true;
+      })
+      .sort((a: any, b: any) => {
+        switch (sortBy) {
+          case "name":
+            return a.name.localeCompare(b.name);
+          case "difficulty":
+            const difficultyOrder = { "easy": 1, "medium": 2, "advanced": 3 };
+            return difficultyOrder[getDifficultyLevel(a) as keyof typeof difficultyOrder] -
+              difficultyOrder[getDifficultyLevel(b) as keyof typeof difficultyOrder];
+          case "time":
+            const timeOrder = { "instant": 1, "5min": 2, "10min": 3, "30min": 4 };
+            return timeOrder[getPreparationTime(a) as keyof typeof timeOrder] -
+              timeOrder[getPreparationTime(b) as keyof typeof timeOrder];
+          case "ingredients":
+            return (a.ingredients?.length || 0) - (b.ingredients?.length || 0);
+          case "newest":
+          default:
+            return b.id - a.id;
+        }
+      });
+  }, [allRemedies, difficultyFilter, timeFilter, formFilter, sortBy]);
 
   const remedies = allFilteredRemedies;
 
