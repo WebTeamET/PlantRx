@@ -112,7 +112,7 @@ function ProductGrid({ data: initialData, collectionName, title }: ProductGridPr
                     {title || <>Discover <span className='text-gold'>Strips</span></>}
                 </motion.h2>
                 <div
-                    className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-20 md:gap-10 gap-x-5 gap-y-10 items-stretch">
+                    className="grid lg:grid-cols-3 grid-cols-2 max-[370px]:grid-cols-1 xl:gap-20 md:gap-10 gap-x-3 gap-y-10 items-stretch">
                     {products && products.map((product, idx) => (
                         <ProductCard key={product.id || idx} product={product} />
                     ))}

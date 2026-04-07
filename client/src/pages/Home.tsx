@@ -824,7 +824,7 @@ export default function Home() {
           </div>
 
           {isLoadingFeatured ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            <div className="grid max-[370px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-lg h-48 animate-pulse"></div>
               ))}
@@ -835,7 +835,7 @@ export default function Home() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+              className="grid max-[370px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(featuredRemedies as any[]).slice(0, 3).map((remedy: any, index: number) => (
                 <motion.div
                   variants={slideUpVariants as any}
@@ -964,7 +964,7 @@ export default function Home() {
             <CollapsibleTrigger asChild>
               <Button
                 variant="outline"
-                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-[80px] sm:min-h-[96px] rounded-2xl border-[3px] border-green dark:border-gold/40 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md"
+                className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-6 min-h-auto h-auto rounded-2xl border-[3px] border-green dark:border-gold/40 bg-white dark:bg-gray-900 transition-all group shadow-sm hover:shadow-md whitespace-normal"
               >
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green dark:bg-gold rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-green/20">

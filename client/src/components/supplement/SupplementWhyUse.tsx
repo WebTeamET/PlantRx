@@ -28,8 +28,8 @@ function WhyUseCard({ card, index, isInView }: { card: (typeof cards)[0]; index:
         initial={{ rotateY: flipFrom, opacity: 0 }}
         animate={isInView ? { rotateY: 0, opacity: 1 } : { rotateY: flipFrom, opacity: 0 }}
         transition={{
-          rotateY: { duration: 0.8, delay, ease: [0.22, 0.61, 0.36, 1] },
-          opacity: { duration: 0.8, delay, ease: "easeOut" },
+          rotateY: { duration: 0.6, delay, ease: [0.22, 0.61, 0.36, 1] },
+          opacity: { duration: 0.6, delay, ease: "easeOut" },
         }}
         style={{
           transformStyle: "preserve-3d",
@@ -40,13 +40,13 @@ function WhyUseCard({ card, index, isInView }: { card: (typeof cards)[0]; index:
       >
         {isTextTop && (
           <div className="content content-white md:mb-[clamp(8px,2.6vw,20px)] lg:max-w-[220px]">
-            <p className="font-bold 2xl:text-xl 2xl:leading-7.5 xl:text-lg xl:leading-6 text-base leading-5 capitalize">
+            <p className="md:font-bold font-medium 2xl:text-xl 2xl:leading-7.5 xl:text-lg xl:leading-6 text-base leading-[22px] capitalize">
               {card.text}
             </p>
           </div>
         )}
 
-        <div className="overflow-hidden rounded-[20px] border-4 border-black w-full aspect-[320/311]">
+        <div className="overflow-hidden md:rounded-[20px] rounded-[10px] md:border-4 border-[3px] border-black w-full aspect-[320/311]">
           <img
             src={card.image}
             width={320}
@@ -58,7 +58,7 @@ function WhyUseCard({ card, index, isInView }: { card: (typeof cards)[0]; index:
 
         {!isTextTop && (
           <div className="content content-white md:mt-[clamp(8px,2.6vw,20px)] lg:max-w-[230px]">
-            <p className="font-bold 2xl:text-xl 2xl:leading-7.5 xl:text-lg xl:leading-6 text-base leading-5 capitalize">
+            <p className="md:font-bold font-medium 2xl:text-xl 2xl:leading-7.5 xl:text-lg xl:leading-6 text-base leading-[22px] capitalize">
               {card.text}
             </p>
           </div>
@@ -72,7 +72,6 @@ export default function SupplementWhyUse({ product }: { product: ShopifyProduct 
   const cardsRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardsRef, { once: true, amount: 0.3 });
 
-  // Map Shopify metafield data to cards or use hardcoded fallback
   const displayCards = product.imagesWithInfo?.image_info?.map((item: any, index: number) => ({
     image: item.image,
     text: item.point,
@@ -126,7 +125,7 @@ export default function SupplementWhyUse({ product }: { product: ShopifyProduct 
             </motion.p>
           </div>
         </div>
-        <div ref={cardsRef} className="grid grid-cols-5 items-start max-lg:grid max-lg:grid-cols-2 max-sm:grid-cols-1 gap-x-5 lg:gap-y-10 max-md:gap-[30px]">
+        <div ref={cardsRef} className="grid grid-cols-5 items-start max-lg:grid max-lg:grid-cols-2 max-[370px]:grid-cols-1 gap-x-5 lg:gap-y-10 max-md:gap-y-[30px] max-md:gap-x-3">
           {displayCards.map((card: any, i: number) => (
             <WhyUseCard
               key={i}

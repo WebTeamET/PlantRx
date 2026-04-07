@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "wouter";
-import Lenis from "lenis";
 import { shopifyService, type ShopifyProduct } from "@/lib/shopify";
 import SupplementHeroBanner from "@/components/supplement/SupplementHeroBanner";
 import SupplementWhyUse from "@/components/supplement/SupplementWhyUse";
@@ -77,26 +76,6 @@ export default function Supplements() {
     observer.observe(bannerRef.current);
     return () => observer.disconnect();
   }, [loading]);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-    });
-
-    let rafId: number;
-
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-
-    rafId = requestAnimationFrame(raf); 
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
-  }, []);
 
   const handleAddToCart = async () => {
     if (!product) return;

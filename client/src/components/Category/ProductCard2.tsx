@@ -55,19 +55,21 @@ function ProductCard({ product }: ProductCardProps) {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className='card-product-wrapper h-auto relative'
+      className='card-product-wrapper h-auto relative group'
     >
 
 
-      <div className="card-inner flex flex-col lg:gap-5 gap-3 rounded-lg h-full">
+      <div className="card-inner flex flex-col lg:gap-5 gap-3 h-full">
         <div
-          className="card-image-wrapper aspect-square rounded-lg relative overflow-visible"
+          className="card-image-wrapper aspect-square relative overflow-visible"
         >
-          <img
-            src={product.productImage}
-            alt='product-image'
-            className='w-full h-full object-contain relative z-[9] transition-all'
-          />
+          <div className="overflow-hidden md:rounded-[20px] rounded-[10px]">
+            <img
+              src={product.productImage}
+              alt='product-image'
+              className='w-full h-full relative z-[9] md:rounded-[20px] rounded-[10px] group-hover:scale-110 transition-transform duration-700 ease-out'
+            />
+          </div>
           <AnimatePresence>
             {!isTablet && isHovered && product.ingredients.map?.((imgSrc, index) => {
               const pos = ingredientPositions[index % ingredientPositions.length];
@@ -106,7 +108,7 @@ function ProductCard({ product }: ProductCardProps) {
           </AnimatePresence>
         </div>
 
-        <div className="card-content flex flex-col items-center px-5 h-full">
+        <div className="card-content flex flex-col items-center h-full">
           <h3 className='product-title text-center grow h-full'>
             <a href={product.productLink} className='!font-recoletta parent-link-wrapper dark:text-white'>{product.title}</a>
           </h3>
@@ -116,7 +118,7 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="add-to-cart-btn flex justify-center relative z-[41] ">
           <button
-            className={`ctm-button btn-green  ${loading ? "loading" : ""}`}
+            className={`ctm-button btn-green max-sm:px-3 max-sm:w-full max-sm:text-base max-sm:leading-5  ${loading ? "loading" : ""}`}
             onClick={handleClick}
             disabled={loading}
           >

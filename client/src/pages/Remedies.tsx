@@ -816,7 +816,7 @@ export default function Remedies() {
                 {showAdvancedFilters && (
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 space-y-3 sm:space-y-4">
                     <h4 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">Advanced Filters</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="grid max-[370px]:grid-cols-1 grid-cols-2 sm:grid-cols-3 gap-4">
                       <div>
                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">🎯 Difficulty Level</label>
                         <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
@@ -1095,7 +1095,7 @@ export default function Remedies() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
+            <div className="grid max-[370px]:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8 auto-rows-fr">
               {(remedies as any[]).map((remedy: any, index: number) => (
                 <motion.div
                   key={remedy.id}

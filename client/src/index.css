@@ -1499,11 +1499,10 @@ iframe[src*="tawk.to"] {
     transition: 0.5s;
   }
 
-  .btn-green:hover {
+  .btn-green:hover , .product-section .card-product-wrapper:hover .ctm-button{
     background-position: right center;
     @apply text-white;
   }
-
   .btn-white {
     @apply bg-white text-green dark:bg-white dark:text-green hover:bg-black hover:text-white dark:hover:bg-black dark:hover:text-white duration-300 delay-150 ease-in-out;
   }
