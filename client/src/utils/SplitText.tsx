@@ -34,7 +34,7 @@ export const SplitText: React.FC<SplitTextProps> = ({ text, className = "" }) =>
       variants={container}
       initial="hidden"
     whileInView="show"
-    viewport={{ once: true, amount: 0.2 }}
+    viewport={{ once: true, amount: 0.1 }}
       className={className}
       style={{ display: "inline-block" }}
     >

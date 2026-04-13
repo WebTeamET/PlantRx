@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ReactNode, useMemo } from "react";
 import { ShopifyProduct, getMetaobjectsList, getMetaobjectField } from "@/lib/shopify";
 import { slideLeftVariantsFast, slideUpVariants } from "@/animation/framerMotionVariants";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface StripZigzagProps {
   product?: ShopifyProduct;
@@ -40,6 +41,7 @@ export default function StripZigzag({
   eyebrow: initialEyebrow,
   children,
 }: StripZigzagProps) {
+  const isMobile = useIsMobile();
   const dynamicData = useMemo(() => {
     const node = product?.imageWithDetails;
     if (!node) return null;
@@ -73,7 +75,7 @@ export default function StripZigzag({
             variants={slideUpVariants as any}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
             style={{ willChange: "transform, opacity", textShadow: titleShadow }}
             className="text-[clamp(42px,_6vw,_76px)] leading-[1.3] font-semibold text-black dark:text-black mb-[30px] max-w-2xl"
             dangerouslySetInnerHTML={{ __html: title }}
@@ -83,7 +85,7 @@ export default function StripZigzag({
               variants={slideUpVariants as any}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
               style={{ willChange: "transform, opacity" }}
               className="text-lg text-black dark:text-black mb-4 max-w-2xl">{subtitle}</motion.p>
           )}
@@ -93,7 +95,7 @@ export default function StripZigzag({
                 variants={slideUpVariants as any}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
                 style={{ willChange: "transform, opacity" }}
                 className="text-base lg:text-lg lg:leading-9 dark:text-black" key={idx}>{p}</motion.p>
             ))}

@@ -3,6 +3,7 @@ import { containerVariants, slideLeftVariantsFast, slideRightVariantsFast, slide
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { ShopifyProduct } from "@/lib/shopify";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Key ingredients data is now fetched dynamically from product.supplementIngredientsFaq
 
@@ -12,6 +13,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
   const ingredients = data?.ingredient_faq_list || [];
   const title = data?.title || product.supplementKeyIngredients?.title || "Key Ingredients";
   const productImage = data?.image || "/key-ingredients.png";
+  const isMobile = useIsMobile();
   const [openIndex, setOpenIndex] = useState<number>(0);
 
 
@@ -27,7 +29,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                 variants={slideUpVariants as any}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: '-90px' }}
+                viewport={{ once: true, margin: isMobile ? '0px' : '-90px', amount: isMobile ? 0.05 : 0.2 }}
                 style={{ WebkitTextStroke: "clamp(2px, 0.7vw, 14px) #FFFFFF", color: "#000", willChange: "transform, opacity" }}
               >
                 {title}
@@ -39,7 +41,7 @@ export default function SupplementIngredients({ product }: { product: ShopifyPro
                 variants={slideRightVariantsFast}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
+                viewport={{ once: true, amount: isMobile ? 0.05 : 0.1 }}
               >
                 <div className="flex flex-col gap-5 flex-1">
                   {ingredients.map((ingredient, index) => (

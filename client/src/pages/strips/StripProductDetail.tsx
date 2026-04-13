@@ -136,7 +136,7 @@ export default function StripProductDetail() {
         description={product.description.substring(0, 160)}
         ogImage={product.images?.[0]?.url}
       />
-      
+
       <motion.div
         className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
         initial={{ y: 120, opacity: 0, scale: 0.95 }}
@@ -153,9 +153,9 @@ export default function StripProductDetail() {
         <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white p-3 border border-gray-100 dark:border-gray-800">
           <div className="flex items-center md:gap-5 gap-2">
             <div className="image-wrapper md:size-[100px] size-[70px] shrink-0 rounded-[6px]">
-              <img 
-                src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"} 
-                alt={product.title} 
+              <img
+                src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"}
+                alt={product.title}
                 className="w-full h-full object-contain rounded-[6px]"
               />
             </div>
@@ -174,9 +174,8 @@ export default function StripProductDetail() {
           </div>
           <div className="add-to-cart-btn shrink-0">
             <button
-              className={`button relative overflow-hidden ctm-button btn-green max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-4 max-md:py-2 max-md:min-w-full max-md:min-h-[34px] ${
-                addingToCart ? "loading" : ""
-              }`}
+              className={`button relative overflow-hidden ctm-button btn-green max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-4 max-md:py-2 max-md:min-w-full max-md:min-h-[34px] ${addingToCart ? "loading" : ""
+                }`}
               onClick={handleAddToCart}
               disabled={addingToCart}
             >
@@ -203,8 +202,8 @@ export default function StripProductDetail() {
         <StripTopics product={product} />
 
         <div className="bg-[linear-gradient(180deg,transparent_0%,var(--product-background-color)_51.44%,transparent_100%)]">
-        <StripIngredients product={product} />
-        <StripBenefits product={product} />
+          <StripIngredients product={product} />
+          <StripBenefits product={product} />
         </div>
         <div ref={howToUseRef}>
           <StripHowToUse product={product} />

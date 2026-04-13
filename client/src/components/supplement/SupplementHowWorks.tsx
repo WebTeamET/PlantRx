@@ -3,8 +3,11 @@ import { itemScaleUpVariants, slideUpVariants } from "@/animation/framerMotionVa
 import { SplitText } from "@/utils/SplitText";
 import { motion } from "framer-motion";
 import { ShopifyProduct } from "@/lib/shopify";
+import { useIsMobile } from "@/hooks/use-mobile";
+
 
 export default function SupplementHowWorks({ product }: { product: ShopifyProduct }) {
+  const isMobile = useIsMobile();
   const title = product.imageWithDetails?.title || "How It Works";
   const rawDescription = product.imageWithDetails?.description;
   const descriptionParagraphs = rawDescription 
@@ -26,7 +29,7 @@ export default function SupplementHowWorks({ product }: { product: ShopifyProduc
              variants={slideUpVariants as any}
              initial="hidden"
              whileInView="visible"
-             viewport={{ once: true, amount: 0.2 }}
+             viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
              style={{ willChange: "transform, opacity" }}
             className="capitalize! supplement-pdp-heading">
               {title}
@@ -37,7 +40,7 @@ export default function SupplementHowWorks({ product }: { product: ShopifyProduc
             variants={slideUpVariants as any}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
             style={{ willChange: "transform, opacity" }}
           >
             {descriptionParagraphs.map((para: string, idx: number) => (
@@ -53,7 +56,7 @@ export default function SupplementHowWorks({ product }: { product: ShopifyProduc
              variants={itemScaleUpVariants as any}
              initial="hidden"
              whileInView="visible"
-             viewport={{ once: true, amount: 0.2 }}
+             viewport={{ once: true, amount: isMobile ? 0.1 : 0.2 }}
              style={{ willChange: "transform, opacity" }}
               src={product.imageWithDetails?.image || "/how-works-banner.png"}
               width={2000}

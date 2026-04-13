@@ -5,6 +5,9 @@ import { useRef } from "react";
 import { ReactNode } from "react";
 
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
+
 interface StripContentProps {
     product?: ShopifyProduct;
     children?: ReactNode;
@@ -48,10 +51,10 @@ export default function StripContent({ product, children }: StripContentProps) {
     const metaDesc = product?.productDetails?.description || null;
 
     const description = metaDesc || "are fast-dissolving oral strips formulated with functional mushroom extracts traditionally used to support cognitive function, focus, and daily mental performance — in a convenient, water-free format.";
-
+    const isMobile = useIsMobile();
     const sectionRef = useRef<HTMLElement>(null);
     const sectionInView = useInView(sectionRef, {
-        margin: "0px 0px -10% 0px",
+        margin: isMobile ? "0px" : "0px 0px -10% 0px",
         amount: 0,
         once: false,
     });
