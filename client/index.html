@@ -180,9 +180,41 @@
     <script type="module" src="/src/main.tsx"></script>
     <!-- Replit dev banner removed per security requirements -->
     
-    <!--Start of Tawk.to Script - Deferred until after page load for LCP optimization -->
+    <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    
+    // Official Tawk.to customization — set strict bottom position for mobile
+    Tawk_API.customStyle = {
+      visibility : {
+        mobile : {
+          position : 'br',
+          xOffset : 14,
+          yOffset : 4
+        }
+      }
+    };
+
+    // Inject scaling styles dynamically when Tawk loads
+    Tawk_API.onLoad = function() {
+      if (window.innerWidth <= 767) {
+        var style = document.createElement('style');
+        style.id = 'tawk-mobile-custom-styles';
+        style.textContent = `
+          iframe[src*="tawk.to"], 
+          iframe[title*="chat widget"],
+          #tawk-default-container, 
+          #tawkchat-container, 
+          div[id^="tawk"], 
+          .tawk-min-container {
+            transform: scale(0.6) !important;
+            transform-origin: bottom right !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    };
+
     window.addEventListener('load', function() {
       setTimeout(function() {
         var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
