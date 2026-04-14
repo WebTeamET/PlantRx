@@ -51,14 +51,10 @@ export function MobileOptimization() {
       
       if (isIOS) {
         document.body.classList.add('ios-device');
-        // iOS-specific optimizations
-        document.documentElement.style.setProperty('-webkit-transform', 'translate3d(0,0,0)');
       }
-      
+
       if (isAndroid) {
         document.body.classList.add('android-device');
-        // Android-specific optimizations
-        document.documentElement.style.setProperty('transform', 'translateZ(0)');
       }
     }
 

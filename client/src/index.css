@@ -1825,3 +1825,18 @@ iframe[src*="tawk.to"] {
 .pdp-title-style {
   @apply text-[32px] leading-[34px] md:text-[40px] md:leading-[48px] lg:text-[48px] lg:leading-[56px] xl:text-[70px] xl:leading-[90px] 2xl:text-[96px] 2xl:leading-[120px] font-heading;
 }
+
+/* ── Sticky Add-to-Cart Banner ─────────────────────────────────────────────
+   Safe-area-aware bottom positioning for the fixed cart banner on mobile.
+   Uses CSS max() so the banner always clears the iOS home indicator even
+   when viewport-fit=cover pushes env(safe-area-inset-bottom) up to 34-44px.
+   On desktop md:bottom-10 is re-applied via the media query.
+   ──────────────────────────────────────────────────────────────────────── */
+.sticky-atc-banner {
+  bottom: max(50px, calc(16px + env(safe-area-inset-bottom, 0px)));
+}
+@media (min-width: 768px) {
+  .sticky-atc-banner {
+    bottom: 2.5rem; /* 40px — same as md:bottom-10 */
+  }
+}

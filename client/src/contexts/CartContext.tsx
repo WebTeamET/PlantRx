@@ -11,6 +11,7 @@ interface CartContextType {
   getTotalItems: () => number;
   getTotalPrice: () => number;
   isLoading: boolean;
+  loadingId: string | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -18,7 +19,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<ShopifyCart | null>(null);
   const [cartOpen, setCartOpenState] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const isLoading = loadingId !== null;
 
   const setCartOpen = (open: boolean) => {
     setCartOpenState(open);
@@ -60,7 +62,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const addToCart = async (product: ShopifyProduct, variantId: string, quantity: number = 1): Promise<boolean> => {
     if (!cart) return false;
 
-    setIsLoading(true);
+    setLoadingId('adding');
     try {
       const updatedCart = await shopifyService.addToCart(cart.id, variantId, quantity);
       if (updatedCart) {
@@ -72,14 +74,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       console.error('Error adding to cart:', error);
       return false;
     } finally {
-      setIsLoading(false);
+      setLoadingId(null);
     }
   };
 
   const updateCartItem = async (lineItemId: string, quantity: number): Promise<boolean> => {
     if (!cart) return false;
 
-    setIsLoading(true);
+    setLoadingId(lineItemId);
     try {
       const updatedCart = await shopifyService.updateCartItem(cart.id, lineItemId, quantity);
       if (updatedCart) {
@@ -91,14 +93,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       console.error('Error updating cart item:', error);
       return false;
     } finally {
-      setIsLoading(false);
+      setLoadingId(null);
     }
   };
 
   const removeFromCart = async (lineItemId: string): Promise<boolean> => {
     if (!cart) return false;
 
-    setIsLoading(true);
+    setLoadingId(lineItemId);
     try {
       const updatedCart = await shopifyService.removeFromCart(cart.id, lineItemId);
       if (updatedCart) {
@@ -110,7 +112,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       console.error('Error removing from cart:', error);
       return false;
     } finally {
-      setIsLoading(false);
+      setLoadingId(null);
     }
   };
 
@@ -135,7 +137,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         getTotalItems,
         getTotalPrice,
-        isLoading
+        isLoading,
+        loadingId
       }}
     >
       {children}

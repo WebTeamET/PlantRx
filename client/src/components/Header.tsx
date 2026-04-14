@@ -296,11 +296,11 @@ export default function Header() {
   };
 
   return (
-    <nav className="luxury-glass fixed top-0 left-0 right-0 z-50 luxury-border backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="luxury-glass fixed top-0 left-0 right-0 z-50 luxury-border backdrop-blur-lg md:backdrop-blur-xl">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group ml-1 sm:ml-2 sm:-ml-4">
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4 flex-shrink-0 group sm:ml-2 sm:-ml-4">
             {/* <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg sm:rounded-xl lg:rounded-2xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
               <div className="relative w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-lg sm:rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
@@ -342,7 +342,7 @@ export default function Header() {
                     </Link>
                   ) : (
                     <button
-                    aria-label="button"
+                      aria-label="button"
                       className="luxury-subheading text-base transition-all duration-300 whitespace-nowrap text-gray-700 dark:text-gray-300 hover:text-gold dark:hover:text-gold flex items-center gap-1"
                     >
                       {item.label}
@@ -420,7 +420,7 @@ export default function Header() {
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center space-x-2 flex-shrink-0">
+          <div className="flex items-center space-x-0.5 sm:space-x-2 flex-shrink-0">
             {/* Theme Toggle, Text Size & Language Selector - Right Side */}
             <div className="flex items-center">
               {/* Text Size Selector */}
@@ -429,7 +429,7 @@ export default function Header() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+                    className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
                     data-testid="header-text-size-button"
                   >
                     <Type className="w-4 h-4 text-gray-600 dark:text-gray-400" />
@@ -463,7 +463,7 @@ export default function Header() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
+                    className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
                   >
                     <Globe className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                   </Button>
@@ -496,7 +496,7 @@ export default function Header() {
               type="button"
               variant="ghost"
               size="sm"
-              className="w-10 h-10 relative hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 !m-0"
+              className="w-7 h-7 sm:w-10 sm:h-10 relative hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 !m-0"
               onClick={() => setCartOpen(true)}
               data-testid="header-cart-button"
             >
@@ -510,7 +510,7 @@ export default function Header() {
 
             {/* Authentication UI */}
             {user ? (
-              <div className="flex items-center space-x-2">
+              <div className="hidden sm:flex items-center space-x-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="sm" className="hidden sm:flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
@@ -548,7 +548,7 @@ export default function Header() {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="hidden sm:flex items-center space-x-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -575,7 +575,7 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="xl:hidden min-w-[44px] min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 !ml-0"
+                  className="xl:hidden min-w-[30px] min-h-[30px] sm:min-w-[44px] sm:min-h-[44px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 !ml-0"
                 >
                   <Menu className="w-5 h-5" />
                 </Button>

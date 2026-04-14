@@ -19,7 +19,8 @@ export function ShoppingCart({ trigger }: ShoppingCartProps) {
     removeFromCart,
     getTotalItems,
     getTotalPrice,
-    isLoading
+    isLoading,
+    loadingId
   } = useCart();
 
   const formatPrice = (amount: string, currencyCode: string) => {
@@ -113,14 +114,18 @@ export function ShoppingCart({ trigger }: ShoppingCartProps) {
                           </div>
                           
                           {/* Remove Button */}
-                          <Button
+                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeFromCart(item.id)}
                             className="!p-1 max-sm:min-h-3 max-sm:min-w-8 sm:!p-3 hover:bg-green/10 hover:dark:bg-emerald-900/40 text-green dark:[&_svg_line]:stroke-white dark:[&_svg_path]:stroke-white border-green dark:border-green [&_svg_path]:stroke-green [&_svg_line]:stroke-green hover:[&_svg_path]:stroke-primary hover:[&_svg_line]:stroke-primary"
                             disabled={isLoading}
                           >
-                            <Trash2 className="w-4 h-4" />
+                            {loadingId === item.id ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-4 h-4" />
+                            )}
                           </Button>
                         </div>
                         
@@ -138,7 +143,7 @@ export function ShoppingCart({ trigger }: ShoppingCartProps) {
                             </Button>
                             
                             <div className="sm:w-8 w-5 text-center">
-                              {isLoading ? (
+                              {loadingId === item.id ? (
                                 <Loader2 className="w-4 h-4 animate-spin mx-auto" />
                               ) : (
                                 <span className="font-bold text-green dark:text-white text-base">

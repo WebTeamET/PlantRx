@@ -138,7 +138,7 @@ export default function StripProductDetail() {
       />
 
       <motion.div
-        className="fixed md:bottom-10 bottom-[50px] z-[999] flex justify-center items-center w-full product-section px-5"
+        className="fixed sticky-atc-banner z-[999] flex justify-center items-center w-full product-section px-4 sm:px-5"
         initial={{ y: 120, opacity: 0, scale: 0.95 }}
         animate={{
           y: hideCTA ? 120 : 0,
@@ -150,19 +150,19 @@ export default function StripProductDetail() {
           ease: "easeOut",
         }}
       >
-        <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white p-3 border border-gray-100 dark:border-gray-800">
-          <div className="flex items-center md:gap-5 gap-2">
-            <div className="image-wrapper md:size-[100px] size-[70px] shrink-0 rounded-[6px]">
+        <div className="max-w-2xl w-full rounded-lg shadow-xl flex items-center justify-between md:gap-10 gap-3 bg-white p-3 max-md:pl-3 max-md:pr-1.5 border border-gray-100 dark:border-gray-800">
+          <div className="flex items-center md:gap-5 gap-2 min-w-0 flex-1">
+            <div className="image-wrapper md:size-[100px] sm:size-[70px] size-[50px] shrink-0 rounded-[6px]">
               <img
                 src={product.images?.[0]?.url || "/mushroom-strip_label_box.png"}
                 alt={product.title}
                 className="w-full h-full object-contain rounded-[6px]"
               />
             </div>
-            <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black dark:*:text-black">
-              <h4 className="md:text-xl text-base max-[370px]:text-sm font-recoletta">{product.title}</h4>
+            <div className="flex items-start justify-start flex-col md:gap-2 gap-1 *:text-black dark:*:text-black min-w-0">
+              <h4 className="md:text-xl text-base font-recoletta truncate w-full">{product.title}</h4>
               <div className="price flex items-center gap-2">
-                <p className="text-base max-[370px]:text-sm font-semibold opacity-70 dark:text-black">
+                <p className="text-base font-semibold opacity-70 dark:text-black">
                   ${product.variants[0]?.price.amount}
                 </p>
                 <div className="flex items-center text-yellow-500 dark:text-yellow-500 scale-75 origin-left">
@@ -174,12 +174,11 @@ export default function StripProductDetail() {
           </div>
           <div className="add-to-cart-btn shrink-0">
             <button
-              className={`button relative overflow-hidden ctm-button btn-green max-md:text-xs max-md:leading-[15px] text-white md:min-w-[180px] max-md:px-4 max-md:py-2 max-md:min-w-full max-md:min-h-[34px] ${addingToCart ? "loading" : ""
-                }`}
+              className={`button relative overflow-hidden ctm-button btn-green text-white md:min-w-[180px] max-md:px-4 max-md:min-w-[120px] max-md:min-h-11 ${addingToCart ? "loading" : ""}`}
               onClick={handleAddToCart}
               disabled={addingToCart}
             >
-              <span className="text-base leading-[26px] font-semibold block relative max-md:text-xs max-md:leading-[15px] text-white tracking-[0.3px]">
+              <span className="text-base leading-[26px] font-semibold block relative max-md:text-sm text-white tracking-[0.3px]">
                 {addingToCart ? "Adding..." : "Add to cart"}
               </span>
               <div className="cart">
