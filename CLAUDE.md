@@ -12,9 +12,6 @@ npm run dev          # Start dev server (Express + Vite HMR on port 5000)
 npm run build        # Build client (Vite) + server (esbuild) → dist/
 npm run start        # Run production build
 
-# Type checking
-npm run check        # TypeScript type checking (tsc)
-
 # Database
 npm run db:push      # Push Drizzle schema changes to PostgreSQL
 ```
