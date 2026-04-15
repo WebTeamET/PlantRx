@@ -145,9 +145,7 @@ export default function StripFeatures({ product }: StripFeaturesProps) {
                  aria-pressed={isActive}
                >
                  <motion.p
-                   className={`block text-[clamp(20px,_6vw,_54px)] leading-[1.1] font-heading ${
-                     isActive ? "font-black" : "font-semibold"
-                   }`}
+                   className={`block text-[clamp(20px,_6vw,_54px)] leading-[1.1] font-heading font-semibold`}
                    animate={{
                      color: isActive ? "var(--product-primary-color)" : "#000",
                    }}
