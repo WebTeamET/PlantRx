@@ -96,7 +96,7 @@ export default function StripIngredients({ product, children }: StripIngredients
     return (
         <>
             <section
-                className="block w-full relative"
+                className="block w-full relative overflow-hidden"
             >
                 <div className="new-container py-[50px] lg:pt-[180px] lg:pb-[30px]">
                     <div className="flex items-start justify-center max-xl:flex-col gap-10 2xl:gap-[84px] w-full">
@@ -138,31 +138,24 @@ export default function StripIngredients({ product, children }: StripIngredients
                         </div>
                         <div className="w-full">
                             <div className="relative">
-                                {/* Spinning mushroom — top-left corner of the whole composition */}
                                 {spinningImage && (
                                     <div className="animate-spin-slow absolute -top-[33px] -left-[66px] w-[97px] h-[92px] z-30 max-md:hidden">
                                         <img src={spinningImage} alt="key-ingredients" width={97} height={92} className="w-full h-auto object-cover" />
                                     </div>
                                 )}
 
-                                {/* Supplement Facts card + Product image — stacked on mobile, overlapping on desktop */}
                                 <div className="flex flex-col md:flex-row md:items-center gap-4 lg:gap-0">
-
-                                    {/* Supplement Facts Card */}
                                     <div
                                         className="w-full md:w-[60%] flex-shrink-0 bg-white rounded-[20px] p-3 md:p-5 min-[1900px]:pt-[71px] min-[1900px]:pb-[56px] 2xl:pl-[25px] md:pr-0 relative z-10"
                                         style={{ border: `5px solid ${primaryColor}` }}
                                     >
                                         <div className="min-[1900px]:pr-[236px] pr-[25%] max-xl:pr-[50px] max-md:pr-0">
-                                        {/* Title */}
                                         <h3
                                             className="font-heading text-[24px] lg:text-[35px] md:mb-[14px] mb-2 leading-tight"
                                             style={{ color: primaryColor }}
                                         >
                                             Supplement Facts
                                         </h3>
-
-                                        {/* Serving info */}
                                         <div className="flex flex-col gap-[7px] mb-4 text-[14px] xl:text-base 2xl:text-lg text-black dark:text-black capitalize">
                                             <span>
                                                 <span className="font-bold">Serving Size</span>:{" "}

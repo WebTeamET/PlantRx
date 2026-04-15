@@ -26,13 +26,7 @@ const SHAPE_MASK_DATA_URI = encodeURIComponent(`
 export default function StripBenefits({ product }: StripBenefitsProps) {
   const hardcodedBenefits: BenefitItem[] = [
     {
-      title: (
-        <>
-          Focus And
-          <br />
-          Clarity Support
-        </>
-      ),
+      title: (<>Focus And<br />Clarity Support</>),
       accent: "/float-mushroom-new.png",
       rightAccent: "/float-mushroom-new.png",
       align: "left",
@@ -71,7 +65,9 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
+  const firstCardRef = useRef<HTMLDivElement | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  
   const { scrollYProgress: runnerProgress } = useScroll({
     target: cardsRef,
     offset: ["start 20%", "end end"], 
@@ -89,12 +85,35 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
     }
     return path;
   }, [benefits.length]);
+
   const rawProgress = useTransform(runnerProgress, [0, 1], [0, 100]);
-  const smoothProgress = useSpring(rawProgress, { stiffness: 40, damping: 18, mass: 0.2 });
+  const smoothProgress = useSpring(rawProgress, { stiffness: 80, damping: 25, mass: 0.1 });
   const pathProgress = useTransform(smoothProgress, (v) => `${v}%`);
   const stripRotate = useTransform(smoothProgress, [0, 50, 100], [1.63, 10.04, 1.63]);
+
+  const [mobileContainerHeight, setMobileContainerHeight] = useState(800);
+  const [mobileStartPos, setMobileStartPos] = useState(250);
+
+  useEffect(() => {
+    const update = () => {
+      if (cardsRef.current) setMobileContainerHeight(cardsRef.current.offsetHeight);
+      if (firstCardRef.current) {
+        const cardHeight = firstCardRef.current.offsetHeight;
+        setMobileStartPos(cardHeight - 30);
+      }
+    };
+    const timer = setTimeout(update, 100);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      clearTimeout(timer);
+    };
+  }, [benefits]);
+
+  const mobileYRaw = useTransform(runnerProgress, [0, 1], [mobileStartPos, mobileContainerHeight - 40]);
+  const mobileYSpring = useSpring(mobileYRaw, { stiffness: 100, damping: 30, mass: 0.1 });
+  const mobileStripRotate = useTransform(runnerProgress, [0, 0.5, 1], [1.63, 10.04, 1.63]);
   const mushroomControls = useAnimationControls();
-  const [floatActive, setFloatActive] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
@@ -110,7 +129,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
   return (
     <section
       ref={sectionRef}
-      className="strip-benefits-section relative overflow-hidden py-[50px] lg:pt-[120px] lg:pb-[150px]"
+      className="strip-benefits-section relative overflow-hidden py-[50px] lg:pt-[120px] md:pb-[150px]"
     >
       <style>{`
         @keyframes floatSway {
@@ -124,22 +143,13 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
       <div className="max-w-6xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center max-md:mb-5 mb-[120px]">
           <motion.h2
-          variants={slideUpVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+            variants={slideUpVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             className="pdp-title-style text-black dark:text-black font-semibold"
             style={{
-              textShadow: `
-                0 0.5vw 0 #fff,  0 -0.5vw 0 #fff,
-                0.5vw 0 0 #fff,  -0.5vw 0 0 #fff,
-                0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff,
-                0.38vw -0.38vw 0 #fff,-0.38vw -0.38vw 0 #fff,
-                0.45vw 0.25vw 0 #fff,-0.45vw 0.25vw 0 #fff,
-                0.45vw -0.25vw 0 #fff,-0.45vw -0.25vw 0 #fff,
-                0.25vw 0.45vw 0 #fff,-0.25vw 0.45vw 0 #fff,
-                0.25vw -0.45vw 0 #fff,-0.25vw -0.45vw 0 #fff
-              `,
+              textShadow: `0 0.5vw 0 #fff, 0 -0.5vw 0 #fff, 0.5vw 0 0 #fff, -0.5vw 0 0 #fff, 0.38vw 0.38vw 0 #fff, -0.38vw 0.38vw 0 #fff, 0.38vw -0.38vw 0 #fff, -0.38vw -0.38vw 0 #fff`,
             }}
           >
             {product?.benefitsMeta?.title || "Benefits"}
@@ -154,7 +164,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
           <motion.img
             src={product?.benefitsMeta?.scroll_image || "/strip-benefit-product-image.png"}
             alt="strips path runner"
-            className="max-lg:hidden stripImg pointer-events-none absolute left-[0%] top-[0] z-[5] w-[180px] md:w-[315px] lg:w-[355px]"
+            className="max-lg:hidden stripImg pointer-events-none absolute -left-[2%] top-[0] z-[5] w-[180px] md:w-[315px] xl:w-[355px]"
             style={{
               offsetPath: `path('${PATH_DEF}')`,
               WebkitOffsetPath: `path('${PATH_DEF}')`,
@@ -163,15 +173,28 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
               offsetRotate: "0deg",
               WebkitOffsetRotate: "0deg",
               rotate: stripRotate,
+              willChange: "transform",
             } as any}
+          />
+          <motion.img
+            src={product?.benefitsMeta?.scroll_image || "/strip-benefit-product-image.png"}
+            alt="strips path runner"
+            className="lg:hidden stripImg pointer-events-none absolute left-1/2 top-0 z-[15] max-sm:w-[130px] w-[250px] drop-shadow-lg !mt-0"
+            style={{
+              x: "-50%",
+              y: mobileYSpring,
+              translateY: "-50%",
+              rotate: mobileStripRotate,
+              willChange: "transform",
+            }}
           />
           {benefits.map((benefit: BenefitItem, idx: number) => (
             <div
               key={idx}
-              className={`img-block relative flex flex-col lg:flex-row ${benefit.align === "left" ? "lg:items-end lg:justify-start" : "lg:items-start lg:justify-end"
-                } gap-8`}
+              className={`img-block relative flex flex-col lg:flex-row ${benefit.align === "left" ? "lg:items-end lg:justify-start" : "lg:items-start lg:justify-end"} gap-8`}
             >
               <motion.div
+                ref={idx === 0 ? firstCardRef : null}
                 className="relative w-full lg:w-[68%]"
                 initial={{ opacity: 0, y: 40, rotate: benefit.align === "left" ? -1.5 : 1.5 }}
                 whileInView={{
@@ -237,12 +260,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                     }
                   </motion.h3>
                 </div>
-              </motion.div>
-              <motion.img
-                src={product?.benefitsMeta?.scroll_image || "/strip-benefit-product-image.png"}
-                alt="Mushroom focus strips path runner"
-                className="lg:hidden stripImg pointer-events-none absolute max-sm:-bottom-[50px] max-md:-bottom-[20px] bottom-0 left-1/2 -translate-x-1/2 max-sm:w-[130px] w-[180px] mx-auto drop-shadow-lg"
-              />
+              </motion.div> 
             </div>
           ))}
         </div>
