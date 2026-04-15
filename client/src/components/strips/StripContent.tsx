@@ -90,7 +90,7 @@ export default function StripContent({ product, children }: StripContentProps) {
                         >{metaTitle}</h2>
                     </div>
                     <div className="content text-center">
-                        <p className="font-bold text-center capitalize text-xl leading-8 md:text-2xl md:leading-10 lg:text-4xl lg:leading-[80px] 2xl:text-[40px] 2xl:leading-[100px] 2xl:max-w-[1346px] md:max-w-[90%] mx-auto">
+                        <p className="font-bold text-center capitalize max-[370px]:text-base text-xl leading-8 md:text-2xl md:leading-10 lg:text-4xl lg:leading-[80px] 2xl:text-[40px] 2xl:leading-[100px] 2xl:max-w-[1346px] md:max-w-[90%] mx-auto">
                             {words.map((word: string, i: number) => {
                                 const wordStart = (i / totalWords) * 0.9;
                                 const wordEnd = ((i + 1) / totalWords) * 0.9;

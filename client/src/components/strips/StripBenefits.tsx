@@ -110,7 +110,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
     };
   }, [benefits]);
 
-  const mobileYRaw = useTransform(runnerProgress, [0, 1], [mobileStartPos, mobileContainerHeight - 40]);
+  const mobileYRaw = useTransform(runnerProgress, [0, 1], [mobileStartPos, mobileContainerHeight]);
   const mobileYSpring = useSpring(mobileYRaw, { stiffness: 100, damping: 30, mass: 0.1 });
   const mobileStripRotate = useTransform(runnerProgress, [0, 0.5, 1], [1.63, 10.04, 1.63]);
   const mushroomControls = useAnimationControls();
@@ -129,7 +129,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
   return (
     <section
       ref={sectionRef}
-      className="strip-benefits-section relative overflow-hidden py-[50px] lg:pt-[120px] md:pb-[150px]"
+      className="strip-benefits-section relative overflow-hidden pt-[50px] pb-[100px] lg:pt-[120px] md:pb-[150px]"
     >
       <style>{`
         @keyframes floatSway {
@@ -243,7 +243,7 @@ export default function StripBenefits({ product }: StripBenefitsProps) {
                   className="relative h-full w-full flex flex-col items-center justify-center px-8 lg:px-10 overflow-hidden title-stroke"
                 >
                   <motion.h3
-                    className="relative text-center font-semibold text-black dark:text-black text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] w-full"
+                    className="relative text-center font-semibold text-black dark:text-black max-[370px]:text-xl max-[370px]:leading-6 text-[26px] leading-[30px] md:text-[40px] md:leading-[50px] xl:text-[56px] xl:leading-[72px] 2xl:text-[93px] 2xl:leading-[123px] w-full benefit-title"
                     style={{ WebkitTextStroke: "8px #FFFFFF", color: "#000", willChange: "transform, opacity" }}
                   >
                     {benefit.title}

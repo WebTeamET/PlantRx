@@ -146,8 +146,8 @@ export default function StripIngredients({ product, children }: StripIngredients
 
                                 <div className="flex flex-col md:flex-row md:items-center gap-4 lg:gap-0">
                                     <div
-                                        className="w-full md:w-[60%] flex-shrink-0 bg-white rounded-[20px] p-3 md:p-5 min-[1900px]:pt-[71px] min-[1900px]:pb-[56px] 2xl:pl-[25px] md:pr-0 relative z-10"
-                                        style={{ border: `5px solid ${primaryColor}` }}
+                                        className="w-full md:w-[60%] md:border-[5px] border-[3px] flex-shrink-0 bg-white rounded-[20px] p-3 md:p-5 min-[1900px]:pt-[71px] min-[1900px]:pb-[56px] 2xl:pl-[25px] md:pr-0 relative z-10"
+                                        style={{ borderColor: `${primaryColor}` }}
                                     >
                                         <div className="min-[1900px]:pr-[236px] pr-[25%] max-xl:pr-[50px] max-md:pr-0">
                                         <h3
@@ -188,8 +188,8 @@ export default function StripIngredients({ product, children }: StripIngredients
                                         {/* Ingredient rows */}
                                         <div className="flex flex-col gap-2.5">
                                             {supplementIngredients.map((item: any, i: number) => (
-                                                <div key={i} className="flex items-start justify-between w-full text-sm lg:text-[14px] text-black dark:text-black">
-                                                    <span className="font-medium flex-1 pr-2 capitalize max-[1920px]:xl:max-w-[150px]">{item.name}</span>
+                                                <div key={i} className="flex items-start justify-between w-full max-[370px]:text-xs text-sm lg:text-[14px] text-black dark:text-black">
+                                                    <span className="font-medium flex-1 lg:pr-2 capitalize max-[1920px]:xl:max-w-[150px]">{item.name}</span>
                                                     <div className="flex gap-3 text-center flex-shrink-0">
                                                         <span className="font-medium xl:w-[80px] w-[130px] text-center text-black dark:text-black">{item.amount}</span>
                                                         <span className="w-[50px] font-medium  text-sm text-center text-black dark:text-black">
@@ -204,7 +204,7 @@ export default function StripIngredients({ product, children }: StripIngredients
                                         <div className="mt-4 flex flex-col gap-2.5">
                                             <div className="h-1 rounded-full" style={{ backgroundColor: secondaryColor }} />
                                             <div
-                                                className="flex flex-col gap-1 text-sm font-medium capitalize"
+                                                className="flex flex-col gap-1 text-sm font-medium capitalize max-[370px]:text-xs"
                                                 style={{ color: primaryColor }}
                                             >
                                                 {footnotes.length > 0 ? (

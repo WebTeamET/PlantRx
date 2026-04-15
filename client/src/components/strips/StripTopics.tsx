@@ -60,7 +60,7 @@ function TopicItem({
       onMouseEnter={() => setHoverIndex(index)}
       onMouseLeave={() => setHoverIndex(null)}
       onClick={() => setActiveIndex(index)}
-      className="relative text-center font-heading capitalize text-[22px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[40px] md:leading-[46px] xl:text-[56px] xl:leading-[64px] 2xl:text-[80px] 2xl:leading-[90px] p-5 lg:px-[50px] xl:py-[70px] xl:px-[240px] cursor-default max-xl:flex items-center justify-between gap-5"
+      className="relative text-center font-heading capitalize max-[370px]:text-base text-[22px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[40px] md:leading-[46px] xl:text-[56px] xl:leading-[64px] 2xl:text-[80px] 2xl:leading-[90px] p-5 lg:px-[50px] xl:py-[70px] xl:px-[240px] cursor-default max-xl:flex items-center justify-between gap-5"
       initial={false}
       animate={{
         backgroundColor: isFocused
@@ -80,8 +80,8 @@ function TopicItem({
         className="xl:absolute z-[9]
           top-1/2 max-[1799px]:xl:!-translate-y-1/2 min-[1800px]:top-[var(--img-top)]
           left-[10px] sm:left-[20px] md:left-[30px] min-[1800px]:left-[var(--img-left)]
-          w-20 md:w-[100px] xl:w-[140px] min-[1800px]:w-[var(--img-w)]
-          h-20 md:h-[100px] xl:h-[140px] min-[1800px]:h-[var(--img-h)]"
+          w-20 md:w-[100px] xl:w-[140px] min-[1800px]:w-[var(--img-w)] max-[370px]:!w-16
+          h-20 md:h-[100px] xl:h-[140px] min-[1800px]:h-[var(--img-h)] max-[370px]:!h-16"
         style={img1Vars as CSSProperties}
         animate={{ opacity: isFocused ? 1 : 0, scale: isFocused ? 1 : 0.2 }}
         initial={{ scale: 0.2 }}
@@ -101,8 +101,8 @@ function TopicItem({
         className="xl:absolute z-[9]
           top-1/2 max-[1799px]:xl:!-translate-y-1/2 min-[1800px]:top-[var(--img-top)]
           right-[10px] sm:right-[20px] md:right-[30px] min-[1800px]:right-[var(--img-right)]
-          w-20 md:w-[100px] xl:w-[140px] min-[1800px]:w-[var(--img-w)]
-          h-20 md:h-[100px] xl:h-[140px] min-[1800px]:h-[var(--img-h)]"
+          max-[370px]:!w-16 w-20 md:w-[100px] xl:w-[140px] min-[1800px]:w-[var(--img-w)]
+          max-[370px]:!h-16 h-20 md:h-[100px] xl:h-[140px] min-[1800px]:h-[var(--img-h)]"
         style={img2Vars as CSSProperties}
         animate={{ opacity: isFocused ? 1 : 0, scale: isFocused ? 1 : 0.2 }}
         initial={{ scale: 0.2 }}

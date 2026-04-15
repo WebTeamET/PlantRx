@@ -1863,3 +1863,8 @@ iframe[src*="tawk.to"] {
     bottom: 2.5rem; /* 40px — same as md:bottom-10 */
   }
 }
+@media (max-width: 767px) {
+  .strip-benefits-section .benefit-title {
+    -webkit-text-stroke-width: 4px !important;
+  }
+}

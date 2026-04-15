@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { ShopifyProduct } from "@/lib/shopify";
-import { slideUpVariants } from "@/animation/framerMotionVariants";
+import { slideUpVariants, slideUpVariantsFast } from "@/animation/framerMotionVariants";
 
 interface StripAccordionProps {
   product?: ShopifyProduct;
@@ -50,10 +50,10 @@ export default function StripAccordion({ product }: StripAccordionProps) {
           className="rounded-[25px] bg-white px-5 py-10 md:px-10 md:py-12 border-[2px] border-dashed border-StripPrimary"
         >
           <motion.h2
-          variants={slideUpVariants as any}
+          variants={slideUpVariantsFast as any}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-50px" }}
           style={{ willChange: "transform, opacity" }}
             className="text-center font-semibold text-[clamp(38px,_6vw,_64px)] leading-[1.05] text-[#000] dark:text-[#000] mb-10"
           >
@@ -72,7 +72,7 @@ export default function StripAccordion({ product }: StripAccordionProps) {
                   className="w-full text-left"
                   aria-expanded={isOpen}
                   aria-controls={`qa-panel-${idx}`}
-                  variants={slideUpVariants as any}
+                  variants={slideUpVariantsFast as any}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
@@ -86,11 +86,11 @@ export default function StripAccordion({ product }: StripAccordionProps) {
                     }`}
                   >
                     <div className="flex items-start gap-4 sm:gap-5">
-                      <div className={`pt-[2px] text-[17px] font-semibold ${
+                      <div className={`pt-[2px] ext-base md:text-lg font-semibold ${
                           isOpen ? "text-white dark:text-white" : "text-[#2B1E1E] dark:text-[#2B1E1E]"
                         }`}>{idx + 1}.</div>
                       <div className="flex-1 space-y-2">
-                        <div className={`text-[17px] sm:text-[18px] font-semibold ${
+                        <div className={`text-base md:text-lg font-semibold ${
                           isOpen ? "text-white dark:text-white" : "text-[#2B1E1E] dark:text-[#2B1E1E]"
                         }`}>{item.question}</div>
                         
